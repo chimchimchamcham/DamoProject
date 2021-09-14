@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- mapper에 대한 선언문 -->
+<!DOCTYPE configuration PUBLIC
+   "-//mybatis.org//DTD Config 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-config.dtd"
+>
+<!-- 클래스 하나만 잡아서 처리하는 경우 -->
+<!-- <configuration>
+	<typeAliase>
+		<typeAliase type="com.spring.bbs.dto" alias=""/>
+	</typeAliase>
+</configuration> -->
+
+<configuration>
+	<typeAliases>
+		<package name="com.dumveloper.damo.dto"/>
+	</typeAliases>
+</configuration>

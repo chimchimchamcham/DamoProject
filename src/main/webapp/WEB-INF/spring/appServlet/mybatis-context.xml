@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+<!-- DB 접속해서 쿼리 사용 설정 -->
+	<!--  name : 정해져있음 / id : 맘대로 정해준 이름-->
+	<!-- 위에 정해놓은 datasource 참고해서 가져옴 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 사용할 DataBase 지정 -->
+		<property name="dataSource" ref="datasource" />
+		<!--  쿼리가 존재하는 곳 지정 (지정한 경로가 실제 없으면 에러 발생)-->
+		<!-- 여러개 지정하고 싶은 경우 아래처럼 지정하면됨 -->
+		<property name="mapperLocations" >
+			<list>
+				<value>classpath:com/dumveloper/damo/fit/dao/*.xml</value>
+				<value>classpath:com/dumveloper/damo/diary/dao/*.xml</value>
+				<value>classpath:com/dumveloper/damo/user/dao/*.xml</value>
+			 </list>
+		</property>
+		<property name="configLocation" value="classpath:config/aliase.xml"/>
+	</bean>
+	
+	
+	<!-- 마이바티스 간편 설정(마이바티스를 별다른 코드 없이 실행할 수 있도록 빈 등록) -->
+	<mybatis-spring:scan base-package="com.dumveloper.damo.fit.dao"/>
+	<mybatis-spring:scan base-package="com.dumveloper.damo.diary.dao"/>
+	<mybatis-spring:scan base-package="com.dumveloper.damo.user.dao"/>
+	
+	<tx:annotation-driven proxy-target-class="false"/>
+
+
+
+</beans>
