@@ -31,8 +31,8 @@
 	<mybatis-spring:scan base-package="com.dumveloper.damo.diary.dao"/>
 	<mybatis-spring:scan base-package="com.dumveloper.damo.user.dao"/>
 	
-	<tx:annotation-driven proxy-target-class="false"/>
 
+	<tx:annotation-driven proxy-target-class="false"/>
 
 
 </beans>
