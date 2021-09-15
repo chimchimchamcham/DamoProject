@@ -28,6 +28,7 @@ public class DamoDTO {
 	private String c_content;
 	private int c_tarKcal;
 	private int c_tarExe;
+
 	
 	//일
 	
