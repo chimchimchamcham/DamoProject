@@ -7,6 +7,7 @@
 	<title>Home</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
 <h1>
 	Hello world!  
 </h1>
@@ -16,5 +17,7 @@
 <p>test2</p>
 <a href="Goidandpassfind">idandpassfind</a>
 <a href="Gologin">login</a>
+<img alt="dd" src="resources/img/logo.png">
+
 </body>
 </html>
