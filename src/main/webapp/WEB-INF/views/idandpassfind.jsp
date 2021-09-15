@@ -34,6 +34,9 @@
 	  color: white !important;
 	  background-color: #3b5998;
 	}
+	.pass{
+		display: none;
+	}
 </style>
 <body>
     <div class="container">
@@ -41,59 +44,82 @@
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
-              <h5 class="card-title text-center mb-5 fw-light fs-5">아이디 찾기</h5>
+              <h5 class="card-title text-center mb-5 fw-light fs-5">아이디 비밀번호 찾기</h5>
               <div class="btn-group row d-flex justify-content-center align-items-center my-3">
-                <button class="col-5 btn btn-outline-primary active rounded-pill m-1 p-1">아이디</button>
-                <button class="col-5 btn btn-outline-primary rounded-pill m-1 p-1">비밀번호 찾기</button>
+                <button id="id_find_button" class="col-5 btn btn-outline-primary active rounded-pill m-1 p-1">아이디</button>
+                <button id="pass_find_button" class="col-5 btn btn-outline-primary rounded-pill m-1 p-1">비밀번호 찾기</button>
               </div>
-              <form>
-                <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="name" placeholder="이름">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="email" placeholder="이메일">
-                </div>
-                <div class="d-grid">
-                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">아이디 찾기</button>
-                </div>
-                <div class="row d-flex justify-content-end align-items-center mt-2">
-                    <a href="" class="mr-3">로그인 가기</a>
-                </div>
-              	</form>
-              	
-              	
-              <!-- <h5 class="card-title text-center mb-5 fw-light fs-5">비밀번호 찾기</h5>
-              <div class="btn-group row d-flex justify-content-center align-items-center my-3">
-                <button class="col-5 btn btn-outline-primary active rounded-pill m-1 p-1">아이디</button>
-                <button class="col-5 btn btn-outline-primary rounded-pill m-1 p-1">비밀번호 찾기</button>
+              
+              <!-- 아이디 찾기 찾기 -->	
+              <div class="id">
+		              	<form>
+		                <div class="form-floating mb-3">
+		                  <input type="text" class="form-control" id="name" placeholder="이름">
+		                </div>
+		                <div class="form-floating mb-3">
+		                  <input type="password" class="form-control" id="email" placeholder="이메일">
+		                </div>
+		                <div class="d-grid">
+		                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">아이디 찾기</button>
+		                </div>
+		                <div class="row d-flex justify-content-end align-items-center mt-2">
+		                    <a href="" class="mr-3">로그인 가기</a>
+		                </div>
+		              	</form>
               </div>
-              <form>
-                <div class="form-floating mb-3">
-                  <input type="id" class="form-control" id="id" placeholder="아이디">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="name" placeholder="이름">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="id" class="form-control" id="email" placeholder="이메일">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="email" placeholder="이메일">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="id" class="form-control" id="newpass" placeholder="새 비밀번호">
-                </div>
-                <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="checkpass" placeholder="비밀번호 확인">
-                </div>
-                <div class="d-grid">
-                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">비밀번호 찾기</button>
-                </div>
-              </form> -->
-               </div>
+              
+              <!-- 비밀번호 찾기 -->	
+              <div class="pass">
+	              <form>
+	                <div class="form-floating mb-3">
+	                  <input type="id" class="form-control" id="id" placeholder="아이디">
+	                </div>
+	                <div class="form-floating mb-3">
+	                  <input type="password" class="form-control" id="name" placeholder="이름">
+	                </div>
+	                <div class="form-floating mb-3">
+	                  <input type="id" class="form-control" id="email" placeholder="이메일">
+	                </div>
+	                <div class="form-floating mb-3">
+	                  <input type="password" class="form-control" id="email" placeholder="이메일">
+	                </div>
+	                <div class="form-floating mb-3">
+	                  <input type="id" class="form-control" id="newpass" placeholder="새 비밀번호">
+	                </div>
+	                <div class="form-floating mb-3">
+	                  <input type="password" class="form-control" id="checkpass" placeholder="비밀번호 확인">
+	                </div>
+	                <div class="d-grid">
+	                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">비밀번호 찾기</button>
+	                </div>
+	              </form>
+              </div>
+              
+             </div>
             </div>
           </div>
         </div>
       </div>
   </body>
+  <script type="text/javascript">
+  
+  $(document).on("click",function(){
+      
+      $('#id_find_button').click(function(){
+        $('#pass_find_button').removeClass('active');
+        $('#id_find_button').addClass('active');
+        $('.pass').hide();
+		$('.id').show();
+      });
+      $('#pass_find_button').click(function(){
+        $('#id_find_button').removeClass('active');
+        $('#pass_find_button').addClass('active');
+        $('.id').hide();
+		$('.pass').show();
+      });
+    });
+  
+  </script>
+  
+  
 </html>

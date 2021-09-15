@@ -42,7 +42,7 @@
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <div class="row">
-                    <img src="logo3.png" class="col-11 mx-auto my-5">
+                    <img src="photo/logo3.png" class="col-11 mx-auto my-5">
               </div>
               <form> 
                 <div class="form-floating mb-3">
