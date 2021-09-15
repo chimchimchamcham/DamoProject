@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/Gologin", method = RequestMethod.GET)
 	public String login(Model model) {
 		logger.info("login");
 		return "login";
 	}
-	
-	
-	@RequestMapping(value = "/idandpassfind", method = RequestMethod.GET)
+	@RequestMapping(value = "/Goidandpassfind", method = RequestMethod.GET)
 	public String findid(Model model) {
 		logger.info("find");
 		return "idandpassfind";
 	}
+	
 	
 }

@@ -63,7 +63,7 @@
 		                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">아이디 찾기</button>
 		                </div>
 		                <div class="row d-flex justify-content-end align-items-center mt-2">
-		                    <a href="" class="mr-3">로그인 가기</a>
+		                    <a href="Gologin" class="mr-3">로그인 가기</a>
 		                </div>
 		              	</form>
               </div>

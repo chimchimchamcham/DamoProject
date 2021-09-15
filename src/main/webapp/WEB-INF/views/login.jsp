@@ -59,7 +59,7 @@
                 
                 <div class="row d-flex justify-content-around align-items-center text-center text-nowrap mt-2">
                     <a href="" class="">회원가입</a>
-                    <a href="" class="">아이디/비밀번호 찾기</a>
+                    <a href="Goidandpassfind" class="">아이디/비밀번호 찾기</a>
                 </div>
                 </form>
               </div>
