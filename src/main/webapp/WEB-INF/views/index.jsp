@@ -13,5 +13,6 @@
 sss
 <P> index 페이지 정상 접속 </P>
 <p> test</p>
+<p>test2</p>
 </body>
 </html>
