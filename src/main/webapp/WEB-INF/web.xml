@@ -31,6 +31,11 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
+	<!-- resource안의 js,css,img 요청이 들어오면 이 경로로 읽겠다는 뜻 -->
+	<mvc:resources mapping="/static/js/**" location="/WEB-INF/resources/js/" />
+	<mvc:resources mapping="/static/css/**" location="/WEB-INF/resources/css/" />
+	<mvc:resources mapping="/static/img/**" location="/WEB-INF/resources/img/" />
+	
 
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
