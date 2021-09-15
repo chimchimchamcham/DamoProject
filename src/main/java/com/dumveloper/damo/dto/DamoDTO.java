@@ -2,6 +2,9 @@ package com.dumveloper.damo.dto;
 
 import java.sql.Date;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("damo")
 public class DamoDTO {
 	//회원정보
 	private String u_id;
