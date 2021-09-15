@@ -19,4 +19,11 @@ public class FitController {
 		return "index";
 	}
 	
+	@RequestMapping(value = "/fitMain", method = RequestMethod.GET)
+	public String fitMain(Model model) {
+		
+		logger.info("지식핏 페이지 접속");
+		return "fit/fitMain";
+	}
+	
 }
