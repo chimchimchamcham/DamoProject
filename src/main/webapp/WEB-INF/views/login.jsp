@@ -7,33 +7,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>helowBS</title>
-    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <style>
     a:link {text-decoration: none; color: black;}
-a:visited {text-decoration: none; color: black;}
-a:active {text-decoration: none; color: black;}
-a:hover {text-decoration: underline; color: black;}
-    body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
-}
-
-.btn-login {
-  font-size: 0.9rem;
-  letter-spacing: 0.05rem;
-  padding: 0.75rem 1rem;
-}
-
-.btn-google {
-  color: white !important;
-  background-color: #ea4335;
-}
-
-.btn-facebook {
-  color: white !important;
-  background-color: #3b5998;
-}
+	a:visited {text-decoration: none; color: black;}
+	a:active {text-decoration: none; color: black;}
+	a:hover {text-decoration: underline; color: black;}
+   	body {
+  		background: #007bff;
+  		background: linear-gradient(to right, #0062E6, #33AEFF);
+	}
+	.btn-login {
+		  font-size: 0.9rem;
+		  letter-spacing: 0.05rem;
+		  padding: 0.75rem 1rem;
+	}
+	.btn-google {
+		  color: white !important;
+		  background-color: #ea4335;
+	}
+	.btn-facebook {
+		  color: white !important;
+		  background-color: #3b5998;
+	}
 </style>
 <body>
     <div class="container">
