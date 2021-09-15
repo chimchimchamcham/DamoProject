@@ -37,7 +37,7 @@ public class UserController {
 		return "terms_of_use";
 	}
 	
-	@RequestMapping(value = "/gojoin", method = RequestMethod.GET)
+	@RequestMapping(value = "/gojoin")
 	public ModelAndView CheckAndGoJoinForm(Model model,@RequestParam HashMap<String, String> params) {
 		logger.info("CheckAndGoJoinForm");
 		logger.info("1:{}",params.get("checkone"));
@@ -45,4 +45,23 @@ public class UserController {
 		
 		return service.check_terms(params);
 	}
+	
+	@RequestMapping(value = "/join")
+	public void join(Model model,@RequestParam HashMap<String, String> params) {
+		logger.info("CheckAndGoJoinForm");
+		logger.info("id:{}",params.get("id"));
+		logger.info("name:{}",params.get("name"));
+		logger.info("nick:{}",params.get("nick"));
+		logger.info("pass:{}",params.get("pass"));
+		logger.info("passcheck:{}",params.get("passcheck"));
+		logger.info("email:{}",params.get("email"));
+		logger.info("emailand:{}",params.get("emailand"));
+		logger.info("sex:{}",params.get("sex"));
+		logger.info("age:{}",params.get("age"));
+		logger.info("weight:{}",params.get("weight"));
+		logger.info("tarweight:{}",params.get("tarweight"));
+		logger.info("stature:{}",params.get("stature"));
+	}
+	
+	
 }

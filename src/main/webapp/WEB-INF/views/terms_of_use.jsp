@@ -44,7 +44,7 @@ a:hover {text-decoration: underline; color: black;}
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <h5 class="card-title text-center fw-light fs-5">비밀번호 찾기</h5>
-              <form method="get" action="gojoin" class="row d-flex justify-content-center align-items-center my-3">
+              <form method="post" action="gojoin" class="row d-flex justify-content-center align-items-center my-3">
                 <div class="row">
                   <img src="resources/img/logo3.png" class="col-10 mx-auto mb-2">
                 </div>
