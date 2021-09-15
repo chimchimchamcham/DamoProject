@@ -16,7 +16,7 @@ public class FitController {
 	public String home(Model model) {
 		
 		logger.info("index 페이지 접속");
-		return "index";
+		return "fit/index";
 	}
 	
 }
