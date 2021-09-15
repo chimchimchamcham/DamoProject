@@ -9,32 +9,31 @@
     <title>helowBS</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <style>
-a:link {text-decoration: none; color: black;}
-a:visited {text-decoration: none; color: black;}
-a:active {text-decoration: none; color: black;}
-a:hover {text-decoration: underline; color: black;}
-    body {
-  background: #007bff;
-  background: linear-gradient(to right, #0062E6, #33AEFF);
-}
-
-.btn-login {
-  font-size: 0.9rem;
-  letter-spacing: 0.05rem;
-  padding: 0.75rem 1rem;
-}
-
-.btn-google {
-  color: white !important;
-  background-color: #ea4335;
-}
-
-.btn-facebook {
-  color: white !important;
-  background-color: #3b5998;
-}
+	a:link {text-decoration: none; color: black;}
+	a:visited {text-decoration: none; color: black;}
+	a:active {text-decoration: none; color: black;}
+	a:hover {text-decoration: underline; color: black;}
+	    body {
+	  background: #007bff;
+	  background: linear-gradient(to right, #0062E6, #33AEFF);
+	}
+	.btn-login {
+	  font-size: 0.9rem;
+	  letter-spacing: 0.05rem;
+	  padding: 0.75rem 1rem;
+	}
+	.btn-google {
+	  color: white !important;
+	  background-color: #ea4335;
+	}
+	.btn-facebook {
+	  color: white !important;
+	  background-color: #3b5998;
+	}
 </style>
 <body>
     <div class="container">
@@ -91,15 +90,10 @@ a:hover {text-decoration: underline; color: black;}
                   <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">비밀번호 찾기</button>
                 </div>
               </form> -->
-              	
-              	
-              	
                </div>
             </div>
           </div>
         </div>
       </div>
   </body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </html>
