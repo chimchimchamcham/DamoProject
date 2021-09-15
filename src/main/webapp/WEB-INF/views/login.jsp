@@ -42,7 +42,7 @@
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <div class="row">
-                    <img src="photo/logo3.png" class="col-11 mx-auto my-5">
+                    <img src="resources/img/logo3.png" class="col-11 mx-auto my-5">
               </div>
               <form> 
                 <div class="form-floating mb-3">
@@ -58,7 +58,7 @@
                 </div>
                 
                 <div class="row d-flex justify-content-around align-items-center text-center text-nowrap mt-2">
-                    <a href="" class="">회원가입</a>
+                    <a href="gojointerms" class="">회원가입</a>
                     <a href="Goidandpassfind" class="">아이디/비밀번호 찾기</a>
                 </div>
                 </form>
