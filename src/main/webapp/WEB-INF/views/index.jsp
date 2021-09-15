@@ -12,5 +12,6 @@
 </h1>
 
 <P> index 페이지 정상 접속 </P>
+<p> test</p>
 </body>
 </html>
