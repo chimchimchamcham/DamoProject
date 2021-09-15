@@ -14,5 +14,7 @@
 <P> index 페이지 정상 접속 </P>
 <p> test</p>
 <p>test2</p>
+<a href="idandpassfind.jsp">idandpassfind.jsp</a>
+<a href="login.jsp">login.jsp</a>
 </body>
 </html>

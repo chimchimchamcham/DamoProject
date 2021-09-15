@@ -49,7 +49,7 @@ a:hover {text-decoration: underline; color: black;}
               </div>
               <form>
                 <div class="form-floating mb-3">
-                  <input type="id" class="form-control" id="name" placeholder="이름">
+                  <input type="text" class="form-control" id="name" placeholder="이름">
                 </div>
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control" id="email" placeholder="이메일">
@@ -61,6 +61,39 @@ a:hover {text-decoration: underline; color: black;}
                     <a href="" class="mr-3">로그인 가기</a>
                 </div>
               	</form>
+              	
+              	
+              <!-- <h5 class="card-title text-center mb-5 fw-light fs-5">비밀번호 찾기</h5>
+              <div class="btn-group row d-flex justify-content-center align-items-center my-3">
+                <button class="col-5 btn btn-outline-primary active rounded-pill m-1 p-1">아이디</button>
+                <button class="col-5 btn btn-outline-primary rounded-pill m-1 p-1">비밀번호 찾기</button>
+              </div>
+              <form>
+                <div class="form-floating mb-3">
+                  <input type="id" class="form-control" id="id" placeholder="아이디">
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="name" placeholder="이름">
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="id" class="form-control" id="email" placeholder="이메일">
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="email" placeholder="이메일">
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="id" class="form-control" id="newpass" placeholder="새 비밀번호">
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="password" class="form-control" id="checkpass" placeholder="비밀번호 확인">
+                </div>
+                <div class="d-grid">
+                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">비밀번호 찾기</button>
+                </div>
+              </form> -->
+              	
+              	
+              	
                </div>
             </div>
           </div>
