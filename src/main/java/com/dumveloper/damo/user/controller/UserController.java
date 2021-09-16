@@ -58,9 +58,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/Goidandpassfind", method = RequestMethod.GET)
-	public String findid(Model model) {
+	public String Goidandpassfind(Model model) {
 		logger.info("find");
 		return "/user/idandpassfind";
+	}
+	
+	@RequestMapping(value = "/findid", method = RequestMethod.POST)
+	public ModelAndView findid(@RequestParam String name,@RequestParam String email) {
+		logger.info("findid");
+		return service.idfind(name,email);
+	}
+	
+	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
+	public ModelAndView findpw(@RequestParam String id,@RequestParam String name,@RequestParam String email,@RequestParam String pw) {
+		logger.info("findpw");
+		return service.pwfind(id,name,email,pw);
 	}
 	
 	@RequestMapping(value = "/gojointerms", method = RequestMethod.GET)

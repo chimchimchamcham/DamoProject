@@ -72,7 +72,7 @@ a:hover {text-decoration: underline; color: black;}
               <div class="col-5 text-nowrap text-left text-danger">
                	${msg}
               </div>
-              <div class="col-5 btn-group ml-4"><button type="button" class=" btn btn-secondary mr-1 rounded-lg">취소</button><button type="submit" class="btn btn-primary ml-1 rounded-lg">확인</button></div>
+              <div class="col-5 btn-group ml-4"><button type="button" onclick="location.href='./Gologin'" class=" btn btn-secondary mr-1 rounded-lg">취소</button><button type="submit" class="btn btn-primary ml-1 rounded-lg">확인</button></div>
             </div>
               </form>
             </div>
