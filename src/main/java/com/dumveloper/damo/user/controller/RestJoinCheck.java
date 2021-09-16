@@ -41,6 +41,24 @@ public class RestJoinCheck {
 		return alert;
 	}
 	
+	@RequestMapping(value = "/matchemail")
+	public int matchemail(@RequestParam String matchemail,@RequestParam String matcheback) {
+		logger.info("email 중복 체크");
+		logger.info("matchemail:{}",matchemail);
+		logger.info("matcheback:{}",matcheback);
+		
+		String email = matchemail+"@"+matcheback;
+		
+		int alert = 0;
+		  if (matchemail != null && matcheback!=null) { 
+			  alert = service.check_email(email); 
+			  }
+		  
+		  
+		  	logger.info("alert:{}",alert); 
+		 	return alert;
+		 
+	}
 	
 	
 }
