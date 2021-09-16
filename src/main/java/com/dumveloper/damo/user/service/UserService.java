@@ -80,20 +80,19 @@ public class UserService {
 		return mav;
 	}
 
-
+	//중복체크
 	public int check_id(String matchid) {
 		int ismatch = dao.checkdbId(matchid);
 		return ismatch;
 	}
-
-
 	public int check_nick(String matchnick) {
 		int ismatch = dao.checkdbnink(matchnick);
 		return ismatch;
 	}
-
-
-	
+	public int check_email(String email) {
+		int ismatch = dao.checkdbemail(email);
+		return ismatch;
+	}
 	
 	
 	
@@ -107,6 +106,9 @@ public class UserService {
 	public String manager(String id) {
 		return dao.dbmanager(id);
 	}
+
+
+
 
 
 	
