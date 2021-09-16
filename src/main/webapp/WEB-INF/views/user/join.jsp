@@ -17,7 +17,7 @@
 	    a:visited {text-decoration: none; color: black;}
 	    a:active {text-decoration: none; color: black;}
 	    a:hover {text-decoration: none; color: black;}
-	    .redtextid{
+	    .dont_use_english,.matchornot{
 	    	font-size: 5px;
 	    }
 </style>
@@ -35,8 +35,8 @@
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
         <input type="text" class="col-5 form-control m-1 " id="id" name="id">
-        <div class="redtextid col-3 display-5 text-danger text-center pt-3"></div>
-        <div class="redtextid col-3 display-5 text-danger text-center pt-3">${idcheck}</div>
+        <div class="dont_use_english col-3 display-5 text-danger text-center pt-3"></div>
+        <div class="matchornot col-3 display-5 text-danger text-center pt-3">${idcheck}</div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
@@ -101,22 +101,42 @@
     // 입력을 제한 할 특수문자의 정규식
     var checktext  = /[^A-Za-z]/ig;
     
-    $(document).on(function(){
+    $(document).ready(function(){
         
-        $("#id").on("focusout focuson keyup keydown", function() {
+        $("#id").on("focusout focuson keyup", function() {
+        	var x = $(this).val();
+        	var id = x;
+        	
+        	
+     	   $.ajax({
+ 		      url : './check/matchid',
+ 		      type : 'post',
+ 		      data : {matchid:id},
+ 		      dataType : 'json',
+ 		      success : function(data){
+ 		         console.log(data);
+ 		      },
+ 		      error : function(error){
+ 		         console.log(error);
+ 		      }
+ 		   });
+        	
+        	
             var x = $(this).val();
             if (x.length > 0) {
                 if (x.match(checktext)) {
-                   $(".redtextid").text('영어만 입력할수 있습니다');
+                   $(".dont_use_english").text('영어만 입력할수 있습니다');
                    $("#id").css("border-color","red");
                 }else{
-                	$(".redtextid").text('');
+                	$(".dont_use_english").text('');
                 	$("#id").css("border-color","#ced4da");
                 }
             }
         })
      
     });
+
+    
     
     
     

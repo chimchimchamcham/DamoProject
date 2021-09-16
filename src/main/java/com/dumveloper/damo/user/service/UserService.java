@@ -81,5 +81,13 @@ public class UserService {
 	}
 
 
+	public int check_terms(String matchid) {
+		
+		int ismatch = dao.checkId(matchid);
+
+		return ismatch;
+	}
+
+
 	
 }

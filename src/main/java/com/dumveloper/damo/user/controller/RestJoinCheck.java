@@ -1,0 +1,35 @@
+package com.dumveloper.damo.user.controller;
+
+import java.util.ArrayList;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.dumveloper.damo.user.service.UserService;
+
+@RestController
+@RequestMapping(value = "/check")// /rest로 요청이오면 이컨트롤러로 와라
+public class RestJoinCheck {
+	
+		Logger logger = LoggerFactory.getLogger(this.getClass());
+		@Autowired UserService service;
+
+	@RequestMapping(value = "/matchid")
+	public int mathIdcheck(@RequestParam String matchid) {
+		logger.info("id 중복 체크");
+		int alert = 0;
+		if (matchid != null) {
+			alert = service.check_terms(matchid);
+		}
+		logger.info("alert:{}",alert);
+		return alert;
+	}
+	
+	
+}
+
+
