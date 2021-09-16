@@ -6,4 +6,12 @@
 >
 
 <mapper namespace="com.dumveloper.damo.fit.dao.FitDAO">
+	<select id="bestFitList" resultType="damo">
+		SELECT rnum,k_no,k_title, u_id,u_nick, k_view, k_replycnt, k_solutionyn, k_code, c_name
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY k.k_replycnt DESC, k.k_view) AS rnum,
+			k.k_no,k.k_title, u.u_id, u.u_nick, k.k_view, k.k_replycnt, k.k_solutionyn, k.k_code, 
+			(SELECT c_name FROM code WHERE c_code = UPPER(k.k_code)) AS c_name
+			FROM knowfit k INNER JOIN userInfo u ON k.u_id = u.u_id)
+		WHERE rnum BETWEEN 1 AND 4
+	</select>
 </mapper>
