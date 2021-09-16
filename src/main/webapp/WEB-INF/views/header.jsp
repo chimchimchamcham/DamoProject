@@ -134,7 +134,7 @@ ${cursor}
       <li class="nav-item dropdown justify-content-center" >
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;">지식Fit</a>
     <div class="dropdown-menu" style="font-size:14px;" id="dropdown">
-      <a class="dropdown-item text-muted mt-1" href="#">지식Fit</a>
+      <a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
       <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
       <a class="dropdown-item text-muted mt-1" href="#">질문하기</a>
        <a class="dropdown-item text-muted mt-1 mb-1" href="#">내 지식사전</a>
@@ -154,10 +154,10 @@ ${cursor}
 </div>
 </body>
 <style>
-@import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
+/* @import url('https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css');
 *{
 	font-family:'Nanum-Square',sans-serif;
-}
+} */
 
 #dropdown a:hover{
 	color:black;
@@ -199,6 +199,11 @@ border-radius:0px;
 }
 
 </style>
+<script src="resources/js/jquery.min.js"></script>
+  <script src="resources/js/popper.js"></script>
+  <script src="resources/js/bootstrap.min.js"></script>
+  <script src="resources/js/main.js"></script>
 <script>
+
 </script>
 </html>

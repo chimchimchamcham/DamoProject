@@ -4,13 +4,20 @@ import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dumveloper.damo.dto.DamoDTO;
+import com.dumveloper.damo.user.dao.UserDAO;
 
 @Service
 public class UserService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-
+	
+	@Autowired UserDAO dao;
+	
+	//회원가입 약관동의
 	public ModelAndView check_terms(HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView();
 		
@@ -23,4 +30,10 @@ public class UserService {
 		
 		return mav;
 	}
+	
+	//로그인
+	public int login(String id, String pw) {
+		return dao.login(id,pw);
+	}
+	
 }
