@@ -102,26 +102,23 @@
 $(window).scroll(function(){
     //스크롤한 px
     var scrollTop = $(this).scrollTop();
-    console.log('scrollTop',scrollTop);
+    //console.log('scrollTop',scrollTop);
     //보여지는 세로 높이
     var innerHeight = $(this).innerHeight();
-    console.log('innerHeight',innerHeight);    
+    //console.log('innerHeight',innerHeight);    
     //페이지 자체의 높이
     var height = $(document).height();
-    console.log('height',height);
+    //console.log('height',height);
 
-    console.log('scrollTop+innerHeight',scrollTop+innerHeight);
+    //console.log('scrollTop+innerHeight',scrollTop+innerHeight);
 
     if(scrollTop+innerHeight>=height){
-        var content = "";
+        /* var content = "";
         content += '<div id="spinner" style="text-align: center;">';
         content += '<div class="spinner-border text-primary m-5"></div>';
         content += '</div>';    
-        $("#newFit").append(content);
-
-        setTimeout(() => {
-            $("#spinner").empty();
-        }, 2000);
+        $("#newFitList").append(content); */
+        newFitListCall(cnt, category);
     }
     
 });
@@ -136,7 +133,7 @@ console.log('category',category);
 //선택되어 있는 카테고리 버튼
 var selCategory = $("#category button").eq(0);
 bestFitListCall();
-//newFitListCall(cnt, category);
+newFitListCall(cnt, category);
 
 //카테고리를 클릭시 실행
 $("#category button").on("click",function(){
@@ -155,7 +152,8 @@ $("#category button").on("click",function(){
 	selCategory = $(this);
 	console.log('selCategory',selCategory);
 	
-	//newFitListCall(cnt, category);
+	$("#newFitList").empty();
+	newFitListCall(cnt, category);
 });
 //많이 본 지식핏 목록을 4개 불러오는 함수
 function bestFitListCall(cnt, category){
@@ -176,18 +174,22 @@ function bestFitListCall(cnt, category){
 }
 
 //최신 지식핏 목록을 불러오는 함수 (페이징처리를 위한 cnt, 카테고리)
-function newFitListCall(cnt, category){
+function newFitListCall(cnts, category){
 	$.ajax({
 		url:'newFitList',
 	    type:'post',
-	    data:{'cnt':cnt,
+	    data:{'cnt':cnts,
 	        'category':category
 	    },
 	    dataType:'json',
 	    success:function(data){
 	        console.log(data.success);
-	        //newFitListDraw(data.list);
-	        console.log('cnt',++cnt);
+	        newFitListDraw(data.list);
+	        if(data.success && data.listSize>0){
+	        	cnt++;
+	        	console.log('cnt',cnt);
+	        	$("#spinner").remove();
+	        }
 	    },
 	    error:function(e){
 			console.log(e);

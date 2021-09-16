@@ -9,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.dumveloper.damo.fit.service.FitService;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class FitController {
@@ -52,6 +53,15 @@ public class FitController {
 		logger.info("많이본 지식핏 목록 접속");
 		
 		return fitservice.bestFitList();
+	}
+	
+	@RequestMapping(value = "/newFitList", method = RequestMethod.POST)
+	public @ResponseBody HashMap<String, Object> newFitList(@RequestParam HashMap<String,String> params) {
+		logger.info("많이본 지식핏 목록 접속");
+		logger.info("cnt"+params.get("cnt"));
+		logger.info("category"+params.get("category"));
+		
+		return fitservice.newFitList(params);
 	}
 
 	@RequestMapping(value = "/fitWriteForm", method = RequestMethod.GET)

@@ -8,4 +8,6 @@ public interface FitDAO {
 
 	ArrayList<DamoDTO> bestFitList();
 
+	ArrayList<DamoDTO> newFitList(int start, int end, String category);
+
 }
