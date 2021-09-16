@@ -81,22 +81,21 @@ public class UserController {
 	@RequestMapping(value = "/join")
 	public ModelAndView join(Model model,@RequestParam HashMap<String, String> params) {
 		
+		ModelAndView mav = new ModelAndView();
+		
 		logger.info("joinnow");
-		logger.info("id:{}",params.get("id"));
-		logger.info("name:{}",params.get("name"));
-		logger.info("nick:{}",params.get("nick"));
-		logger.info("pass:{}",params.get("pw"));
-		logger.info("passcheck:{}",params.get("pwcheck"));
-		logger.info("email:{}",params.get("email"));
-		logger.info("emailand:{}",params.get("emailand"));
-		logger.info("gender:{}",params.get("gender"));
-		logger.info("age:{}",params.get("age"));
-		logger.info("weight:{}",params.get("weight"));
-		logger.info("tarweight:{}",params.get("tarweight"));
-		logger.info("height:{}",params.get("height"));
 		
-		
-		logger.info("join : {}",params);
+		for (String num : params.keySet()) {
+			if (params.get(num)==null||params.get(num)=="") {
+				String msg = "회원정보를 전부 입력해주세요";
+				mav.addObject("msg",msg);
+				mav.setViewName("/user/join");
+				
+				return mav;
+			}else{
+				logger.info("join : {}",params);
+			}
+		}
 		return service.join(params);
 	}
 	

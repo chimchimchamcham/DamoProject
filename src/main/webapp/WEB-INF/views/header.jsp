@@ -87,9 +87,15 @@ ${cursor}
                         <li class="nav-item dropdown no-arrow active">
                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">김체중 님</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.loginNick} 님</span>
+                                <c:if test="${loginFile eq 'default-profile.png'}">
                                 <img class="img-profile rounded-circle"
                                     src="resources/img/default-profile.png" width="23px;">
+                                    </c:if>
+                                    <c:if test="${loginFile ne 'default-profile.png'}">
+                                    <img class="img-profile rounded-circle"
+                                    src="/photo/${loginFile}" width="23px;">
+                                    </c:if>
                             </a>
                             
                             <!-- 회원 드롭메뉴 -->
@@ -101,7 +107,7 @@ ${cursor}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     로그아웃
                                 </a>
                             </div>
