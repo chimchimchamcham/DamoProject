@@ -5,10 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
@@ -24,32 +20,34 @@ ${cursor}
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-<c:if test="${loginId ne null}">
-                        <!-- Nav Item - Alerts -->
+				<!-- 로그인 되어있을 경우(알람 보여짐) -->
+				<c:if test="${loginId ne null}">
+				
+                        <!-- 알람 -->
                         <li class="nav-item dropdown no-arrow mx-1 active">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                                 <i class="fas fa-bell fa-fw mr-0"></i>
-                                <!-- Counter - Alerts -->
+                                
+                                <!-- 알람 갯수 -->
                                 <span class="badge badge-danger badge-counter" style="margin-left:-10px; font-size: 10px;">3</span>
                             </a>
-                            <!-- Dropdown - Alerts -->
+                            
+                            <!-- 알람 목록 -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
-                                
                                 <h6 class="dropdown-header"><b>알람</b> 3</h6>
-                                
-							  
        							 <div class="card-body p-1 mt-0" >
           						<div class="custom-scrollbar-css p-1" style="border:0px;height: 300px; width:450px;">
-          						<!-- 중요알람-->
+          						
+          						<!-- 중요알람 (운영자 알람)-->
                                 <div class="alert alert-danger alert-dismissible fade show ml-1 mr-1">
 								    <button type="button" class="close" data-dismiss="alert">&times;</button>
 								    <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
 							  </div>
 							  
                                 <!-- 일반알람-->
-                                <a class="dropdown-item d-flex align-items-center p-2" href="#">
+                                <a class="dropdown-item d-flex align-items-center p-2" href="fitMain">
                                     <div>
                                         <div class="small text-gray-500">December 12, 2019</div>
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
@@ -79,18 +77,14 @@ ${cursor}
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                     </div>
                                 </a>
-                                
-                                
                             </div>
                             </div>
                             </div>
                         </li>
-                   </c:if>     
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow active">
                         
-                        <c:if test="${loginId ne null}">
+                        
+                        <!-- 회원 정보 -->
+                        <li class="nav-item dropdown no-arrow active">
                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">김체중 님</span>
@@ -98,27 +92,29 @@ ${cursor}
                                     src="resources/img/default-profile.png" width="23px;">
                             </a>
                             
-                            <!-- Dropdown - User Information -->
+                            <!-- 회원 드롭메뉴 -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown"  style="font-size:14px;">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="logout">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     마이 페이지
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                <a class="dropdown-item" href="logout">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     로그아웃
                                 </a>
                             </div>
                             </c:if>
+                            
+                               <!-- 로그인 안 되어있을 경우(로그인 버튼) -->
                             <c:if test="${loginId eq null}">
+                            <li>
                             <a class="nav-link" href="Gologin" id="userDropdown" role="button">
                                 <span class="mr-2 d-none d-lg-inline text-white-600 small">로그인</span>
                             </a>
-                            </c:if>
-                        </li>
-
+								</li>
+								</c:if>
                     </ul>
 				</div>
                 </nav>
@@ -127,7 +123,7 @@ ${cursor}
                 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow" style="height:50px;">
               <div class="container">
-  <a class="navbar-brand" > <img src="resources/img/logo4.png" alt="Logo" style="width:80px;" onclick="location='/'"></a>
+  <a class="navbar-brand" href="./"><img src="resources/img/logo4.png" alt="Logo" style="width:80px;"  id="logo"></a>
 
   <div class="collapse navbar-collapse" id="navb" style="font-size:15px;">
     <ul class="navbar-nav ml-auto" >
@@ -144,7 +140,7 @@ ${cursor}
       <a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
       <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
       <a class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>
-       <a class="dropdown-item text-muted mt-1 mb-1" href="#">내 지식사전</a>
+       <a class="dropdown-item text-muted mt-1 mb-1" href="logout">내 지식사전</a>
 </div>
   </li>
     </ul>
@@ -166,8 +162,9 @@ ${cursor}
 	font-family:'Nanum-Square',sans-serif;
 } */
 
-#dropdown a:hover{
-	color:black;
+#logo:hover{
+	opacity:0.8;
+	cursor: pointer;
 }
 
 #search{
@@ -206,6 +203,5 @@ border-radius:0px;
 }
 
 </style>
-<script src="resources/js/main.js"></script>
 
 </html>
