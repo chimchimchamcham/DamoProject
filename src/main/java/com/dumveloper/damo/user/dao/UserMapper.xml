@@ -19,7 +19,7 @@
 		SELECT U_NICK FROM USERINFO WHERE U_ID = #{param1}
 	</select>
 	
-	<select id="dbninkname" resultType="string">
+	<select id="dbmanager" resultType="string">
 		SELECT U_ADMINYN FROM USERINFO WHERE U_ID = #{param1}
 	</select>
 
