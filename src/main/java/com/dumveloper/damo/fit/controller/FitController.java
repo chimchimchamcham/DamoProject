@@ -13,13 +13,26 @@ public class FitController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model,boolean pass, String msg) {
-
-		logger.info("메인 페이지 접속");
-
+	public String home(Model model) {
 		
+		logger.info("메인 페이지 접속");
 		return "main";
 	}
+	
+	/*
+	 * @RequestMapping(value = "/", method = RequestMethod.GET) public ModelAndView
+	 * home(Model model, boolean pass) {
+	 * 
+	 * logger.info("메인 페이지 접속"); String msg = "로그인이 필요한 서비스 입니다."; String page=
+	 * "main"; ModelAndView mav = new ModelAndView();
+	 * 
+	 * //로그인 안되었을 경우 if(pass == false) { logger.info("로그인 안됨"); page= "/user/login";
+	 * mav.addObject("msg",msg); }
+	 * 
+	 * mav.setViewName(page);
+	 * 
+	 * return mav; }
+	 */
 	
 	@RequestMapping(value = "/fitMain", method = RequestMethod.GET)
 	public String fitMain(Model model) {
