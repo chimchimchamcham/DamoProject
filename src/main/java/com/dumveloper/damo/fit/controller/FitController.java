@@ -13,9 +13,14 @@ public class FitController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
-		
+	public String home(Model model,boolean pass, String msg) {
+
 		logger.info("메인 페이지 접속");
+		
+		if(pass == false) {
+			
+		}
+		
 		return "main";
 	}
 	

@@ -101,7 +101,7 @@ ${cursor}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     로그아웃
                                 </a>
                             </div>

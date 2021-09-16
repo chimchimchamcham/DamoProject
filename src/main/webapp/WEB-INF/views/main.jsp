@@ -17,5 +17,9 @@
 <h1>메인페이지</h1>
 </body>
 <script>
+var msg="${msg}";
+if(msg!=""){
+	alert(msg);
+}
 </script>
 </html>
