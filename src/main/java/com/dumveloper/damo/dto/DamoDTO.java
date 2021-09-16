@@ -16,7 +16,7 @@ public class DamoDTO {
 	private int u_weight; //몸무게
 	private int u_tarWeight; //목표 몸무게
 	private int u_height; //키
-	private boolean u_gender; //성별
+	private String u_gender; //성별
 	private boolean u_alarmYN; //알람여부
 	private String u_intro; //자기소개
 	private boolean u_adminYN; //관리자 여부
@@ -87,10 +87,10 @@ public class DamoDTO {
 	public void setU_height(int u_height) {
 		this.u_height = u_height;
 	}
-	public boolean isU_gender() {
+	public String isU_gender() {
 		return u_gender;
 	}
-	public void setU_gender(boolean u_gender) {
+	public void setU_gender(String u_gender) {
 		this.u_gender = u_gender;
 	}
 	public boolean isU_alarmYN() {
