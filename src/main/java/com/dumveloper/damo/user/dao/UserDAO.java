@@ -6,6 +6,9 @@ public interface UserDAO {
 
 	int login(String id, String pw);
 
+	String iddbfind(String name, String email);
+	int pwdbfind(String id, String name, String email, String pw);
+	
 	int join(DamoDTO dto);
 	//중복체크
 	int checkdbId(String matchid);
@@ -15,6 +18,10 @@ public interface UserDAO {
 	String dbfilename(String id);
 	String dbninkname(String id);
 	String dbmanager(String id);
+
+	
+
+
 
 	
 

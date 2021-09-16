@@ -80,6 +80,47 @@ public class UserService {
 		return mav;
 	}
 
+	public ModelAndView idfind(String name, String email) {
+		ModelAndView mav = new ModelAndView();
+		
+		String id = dao.iddbfind(name,email);
+		
+		String msg = "일치한 아이디가 존재하지 않습니다";
+		String page = "/user/idandpassfind";
+		if(id!=null) {
+			msg = "아이디는"+id+"입니다";
+			page = "/user/idandpassfind";
+		}
+		
+		mav.addObject("msg",msg);
+		mav.setViewName(page);
+		
+		logger.info("find id success : {}",id); 
+		
+		return mav;
+	}
+	
+	public ModelAndView pwfind(String id, String name, String email, String pw) {
+		ModelAndView mav = new ModelAndView();
+		
+		logger.info("hellowservice:{},",id);
+		logger.info("hellowservice:{},",pw);
+		logger.info("hellowservice:{},",name);
+		logger.info("hellowservice:{},",email);
+		
+		int success = dao.pwdbfind(id,name,email,pw);
+		String msg = "입력한 정보에 일치하는 회원이 없습니다";
+		String page = "/user/idandpassfind";
+		if(success>0) {
+			msg = "비밀번호 변경에 성공했습니다";
+		}
+		mav.addObject("msg",msg);
+		mav.setViewName(page);
+		logger.info("find id success : {}",success); 
+		
+		return mav;
+	}
+	
 	//중복체크
 	public int check_id(String matchid) {
 		int ismatch = dao.checkdbId(matchid);
@@ -106,6 +147,12 @@ public class UserService {
 	public String manager(String id) {
 		return dao.dbmanager(id);
 	}
+
+
+
+
+
+
 
 
 

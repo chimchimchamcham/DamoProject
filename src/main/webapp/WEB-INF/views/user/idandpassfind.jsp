@@ -52,12 +52,12 @@
               
               <!-- 아이디 찾기 찾기 -->	
               <div class="id">
-		              	<form>
+		              	<form action="findid" method="post">
 		                <div class="form-floating mb-3">
-		                  <input type="text" class="form-control" id="name" placeholder="이름">
+		                  <input type="text" class="form-control" name="name" id="name" placeholder="이름">
 		                </div>
 		                <div class="form-floating mb-3">
-		                  <input type="password" class="form-control" id="email" placeholder="이메일">
+		                  <input type="password" class="form-control" name="email" id="email" placeholder="이메일">
 		                </div>
 		                <div class="d-grid">
 		                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">아이디 찾기</button>
@@ -70,25 +70,23 @@
               
               <!-- 비밀번호 찾기 -->	
               <div class="pass">
-	              <form>
+	              <form action="findpw" method="post">
 	                <div class="form-floating mb-3">
-	                  <input type="id" class="form-control" id="id" placeholder="아이디">
+	                  <input type="text" class="form-control"  name="id" id="id" placeholder="아이디">
 	                </div>
 	                <div class="form-floating mb-3">
-	                  <input type="password" class="form-control" id="name" placeholder="이름">
+	                  <input type="text" class="form-control" name="name" id="name" placeholder="이름">
 	                </div>
 	                <div class="form-floating mb-3">
-	                  <input type="id" class="form-control" id="email" placeholder="이메일">
+	                  <input type="text" class="form-control" name="email" id="email" placeholder="이메일">
 	                </div>
 	                <div class="form-floating mb-3">
-	                  <input type="password" class="form-control" id="email" placeholder="이메일">
+	                  <input type="password" class="form-control" name="pw" id="pw" placeholder="새 비밀번호">
 	                </div>
-	                <div class="form-floating mb-3">
-	                  <input type="id" class="form-control" id="newpass" placeholder="새 비밀번호">
-	                </div>
-	                <div class="form-floating mb-3">
+	                <div class="form-floating mb-1">
 	                  <input type="password" class="form-control" id="checkpass" placeholder="비밀번호 확인">
 	                </div>
+	                <div class="matchornotpw col-12 display-5 text-center p-1 m-1"></div>
 	                <div class="d-grid">
 	                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">비밀번호 찾기</button>
 	                </div>
@@ -118,6 +116,61 @@
 		$('.pass').show();
       });
     });
+  
+  var msg="${msg}";
+  if(msg!=""){
+  	alert(msg);
+  }
+  
+  
+  
+  $(document).on("focusout focuson keyup","#pw", function() {
+
+ 	 var pw1 = $("#pw").val();
+ 	 var pw2 = $("#checkpass").val();
+ 	 
+			if (pw1==pw2) {
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치합니다');
+		        $(".matchornotpw").css('color','green');
+		        $("#pw").css("border-color","#ced4da");
+		        $("#checkpass").css("border-color","#ced4da");
+			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+				$(".matchornotpw").text('');
+			}else{
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+		        $(".matchornotpw").css('color','red');
+		        $("#pw").css("border-color","red");
+		        $("#checkpass").css("border-color","red");
+			}
+    
+     });
+     
+     $(document).on("focusout focuson keyup","#pwch", function() {
+
+    	 var pw1 = $("#pw").val();
+    	 var pw2 = $("#pwch").val();
+    	 
+			if (pw1==pw2) {
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치합니다');
+		        $(".matchornotpw").css('color','green');
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
+			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+				$(".matchornotpw").text('');
+			}else{
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+		        $(".matchornotpw").css('color','red');
+		        $("#pw").css("border-color","red");
+		        $("#pwch").css("border-color","red");
+			}
+       
+        });
+  
+  
   
   </script>
   
