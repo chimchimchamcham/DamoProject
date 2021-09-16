@@ -4,17 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href='resources/fullcalendar-5.9.0/lib/main.css' rel='stylesheet' />
+<script src='resources/fullcalendar-5.9.0/lib/main.js'></script>
 <title>Insert title here</title>
-<style>
-</style>
-<script>
-  var title ='제목';
-  var icon = '';
-  
+<script>  
   document.addEventListener('DOMContentLoaded', function() {
 	
     var calendarEl = document.getElementById('calendar');
@@ -59,52 +52,7 @@
           title: 'Long Event',
           start: '2021-09-07'
         }
-        /*
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2021-09-09T16:00:00'
-        },
-        {
-          groupId: 999,
-          title: 'Repeating Event',
-          start: '2020-09-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2020-09-11',
-          end: '2020-09-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T10:30:00',
-          end: '2020-09-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2020-09-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2020-09-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2020-09-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2020-09-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2020-09-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2020-09-28'
-        } */
+      
       ]
       
       
@@ -150,14 +98,11 @@ body {
 </style>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
-	<jsp:include page="diary/calendar.jsp"></jsp:include>
-
+<div class='shadow p-3 mb-5 bg-white rounded'>
+	<div class='container '>
+		<div id='calendar' class=''>
+	</div>
+</div>
+</div>
 </body>
-<script>
-var msg="${msg}";
-if(msg!=""){
-	alert(msg);
-}
-</script>
 </html>
