@@ -34,9 +34,9 @@
     
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
-        <input type="text" class="col-5 form-control m-1 " id="id" name="id">
+        <input type="text" class="col-3 form-control m-1 " id="id" name="id"/>
         <div class="dont_use_english col-3 display-5 text-danger text-center pt-3"></div>
-        <div class="matchornot col-3 display-5 text-danger text-center pt-3">${idcheck}</div>
+        <div class="matchornot col-3 display-5 text-center pt-3"></div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
@@ -114,7 +114,14 @@
  		      data : {matchid:id},
  		      dataType : 'json',
  		      success : function(data){
- 		         console.log(data);
+ 		         if (data == 0) {
+ 		        	$(".matchornot").text('');
+ 		        	$(".matchornot").text('사용가능한 아이디 입니다');
+				}else{
+					$(".matchornot").text('');
+ 		        	$(".matchornot").text('중복된 아이디 입니다');
+				}
+ 		         
  		      },
  		      error : function(error){
  		         console.log(error);
