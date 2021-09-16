@@ -26,7 +26,7 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 			System.out.println(info.getU_id() + "로그인 했음");
 		} else {
 			System.out.println("로그인 안됨");
-			response.sendRedirect("redirect:/");
+			
 		}
 
 		return pass;
