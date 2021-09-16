@@ -37,9 +37,12 @@ public class UserController {
 		logger.info(id+"의 갯수:"+cnt);			
 
 		if (cnt>0) {
-			mav.setViewName("/index");
+			mav.setViewName("main");
 			mav.addObject("msg", "로그인에 성공했습니다");
 			session.setAttribute("loginId",id);
+			//session.setAttribute("loginId",id);//닉네임
+			//session.setAttribute("loginId",id);//사진경로
+			
 		}else {
 			mav.setViewName("login");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");

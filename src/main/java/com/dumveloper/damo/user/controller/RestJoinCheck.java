@@ -23,11 +23,24 @@ public class RestJoinCheck {
 		logger.info("id 중복 체크");
 		int alert = 0;
 		if (matchid != null) {
-			alert = service.check_terms(matchid);
+			alert = service.check_id(matchid);
 		}
 		logger.info("alert:{}",alert);
 		return alert;
 	}
+	
+	
+	@RequestMapping(value = "/matchnick")
+	public int matchnick(@RequestParam String matchnick) {
+		logger.info("nick 중복 체크");
+		int alert = 0;
+		if (matchnick != null) {
+			alert = service.check_nick(matchnick);
+		}
+		logger.info("alert:{}",alert);
+		return alert;
+	}
+	
 	
 	
 }

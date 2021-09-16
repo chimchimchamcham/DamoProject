@@ -19,6 +19,7 @@
 	    a:hover {text-decoration: none; color: black;}
 	    .dont_use_english,.matchornot{
 	    	font-size: 5px;
+	    	white-space: nowrap;
 	    }
 </style>
 <body class="bg-primary">
@@ -34,9 +35,9 @@
     
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
-        <input type="text" class="col-3 form-control m-1 " id="id" name="id"/>
+        <input type="text" class="col-5 form-control m-1 " id="id" name="id"/>
         <div class="dont_use_english col-3 display-5 text-danger text-center pt-3"></div>
-        <div class="matchornot col-3 display-5 text-center pt-3"></div>
+        <div class="matchornot col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
@@ -44,7 +45,7 @@
     </div>
     <div class="form-group row col-12">   
         <label for="nick" class="text-left col-2 m-1">닉네임:</label>
-        <input type="text" class="col-7 form-control m-1" name="nick">
+        <input type="text" class="col-7 form-control m-1" id="nick" name="nick">
     </div>
     <div class="form-group row col-12">  
         <label for="pass" class="text-left col-2 m-1">비밀번호:</label>
@@ -117,9 +118,11 @@
  		         if (data == 0) {
  		        	$(".matchornot").text('');
  		        	$(".matchornot").text('사용가능한 아이디 입니다');
+ 		        	$(".matchornot").css('color','green');
 				}else{
 					$(".matchornot").text('');
  		        	$(".matchornot").text('중복된 아이디 입니다');
+ 		        	$(".matchornot").css('color','red');
 				}
  		         
  		      },
@@ -140,13 +143,44 @@
                 }
             }
         })
-     
+     	
+        
+        
+        
+        $("#nick").on("focusout focuson keyup", function() {
+        	var x = $(this).val();
+        	var nick = x;
+        	
+        	
+     	   $.ajax({
+ 		      url : './check/matchnick',
+ 		      type : 'post',
+ 		      data : {matchnick:nick},
+ 		      dataType : 'json',
+ 		      success : function(data){
+ 		         if (data == 0) {
+ 		        	$(".matchornot").text('');
+ 		        	$(".matchornot").text('사용가능한 닉네임 입니다');
+ 		        	$(".matchornot").css('color','green');
+				}else{
+					$(".matchornot").text('');
+ 		        	$(".matchornot").text('중복된 닉네임 입니다');
+ 		        	$(".matchornot").css('color','red');
+				}
+ 		         
+ 		      },
+ 		      error : function(error){
+ 		         console.log(error);
+ 		      }
+ 		   });
+     	   
+        })
+        
+        
+        
+        
+        
     });
-
-    
-    
-    
-    
  </script>
 
 

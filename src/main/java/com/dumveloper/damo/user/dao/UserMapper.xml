@@ -15,6 +15,10 @@
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1}
 	</select>
 
+	<select id="matchnick" resultType="int">
+		SELECT COUNT(U_NICK) FROM USERINFO WHERE U_NICK = #{param1}
+	</select>
+
 
 	<insert id="join" parameterType="damo">
 		INSERT INTO USERINFO(U_ID,U_PW,U_NAME,U_EMAIL,U_NICK,U_AGE,U_WEIGHT,U_TARWEIGHT,U_HEIGHT,U_GENDER,U_ADMINYN,U_CHOOSECNT,U_ALARMYN)

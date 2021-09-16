@@ -81,10 +81,14 @@ public class UserService {
 	}
 
 
-	public int check_terms(String matchid) {
-		
-		int ismatch = dao.checkId(matchid);
+	public int check_id(String matchid) {
+		int ismatch = dao.checkdbId(matchid);
+		return ismatch;
+	}
 
+
+	public int check_nick(String matchnick) {
+		int ismatch = dao.checkdbnink(matchnick);
 		return ismatch;
 	}
 
