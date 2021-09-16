@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +24,7 @@ ${cursor}
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+<c:if test="${loginId ne null}">
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1 active">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -84,19 +85,18 @@ ${cursor}
                             </div>
                             </div>
                         </li>
-                        
-
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                   </c:if>     
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow active">
+                        
+                        <c:if test="${loginId ne null}">
                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">김체중 님</span>
                                 <img class="img-profile rounded-circle"
                                     src="resources/img/default-profile.png" width="23px;">
                             </a>
-                            
                             
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -111,6 +111,12 @@ ${cursor}
                                     로그아웃
                                 </a>
                             </div>
+                            </c:if>
+                            <c:if test="${loginId eq null}">
+                            <a class="nav-link" href="Gologin" id="userDropdown" role="button">
+                                <span class="mr-2 d-none d-lg-inline text-white-600 small">로그인</span>
+                            </a>
+                            </c:if>
                         </li>
 
                     </ul>
@@ -133,7 +139,7 @@ ${cursor}
       </li>
       <li class="nav-item dropdown justify-content-center" >
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;">지식Fit</a>
-    <div class="dropdown-menu" style="font-size:14px;" id="dropdown">
+    <div class="dropdown-menu" style="font-size:14px;">
       <a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
       <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
       <a class="dropdown-item text-muted mt-1" href="#">질문하기</a>
@@ -199,11 +205,6 @@ border-radius:0px;
 }
 
 </style>
-<script src="resources/js/jquery.min.js"></script>
-  <script src="resources/js/popper.js"></script>
-  <script src="resources/js/bootstrap.min.js"></script>
-  <script src="resources/js/main.js"></script>
 <script>
-
 </script>
 </html>
