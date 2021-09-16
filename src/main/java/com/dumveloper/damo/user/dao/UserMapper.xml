@@ -11,8 +11,20 @@
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1} AND U_PW = #{param2}
 	</select>
 
+	<select id="dbfilename" resultType="string">
+		SELECT U_FILENAME FROM USERINFO WHERE U_ID = #{param1}
+	</select>
+	
+	<select id="dbninkname" resultType="string">
+		SELECT U_NICK FROM USERINFO WHERE U_ID = #{param1}
+	</select>
+
 	<select id="checkId" resultType="int">
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1}
+	</select>
+
+	<select id="matchnick" resultType="int">
+		SELECT COUNT(U_NICK) FROM USERINFO WHERE U_NICK = #{param1}
 	</select>
 
 

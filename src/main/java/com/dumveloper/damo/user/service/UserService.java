@@ -81,11 +81,31 @@ public class UserService {
 	}
 
 
-	public int check_terms(String matchid) {
-		
-		int ismatch = dao.checkId(matchid);
-
+	public int check_id(String matchid) {
+		int ismatch = dao.checkdbId(matchid);
 		return ismatch;
+	}
+
+
+	public int check_nick(String matchnick) {
+		int ismatch = dao.checkdbnink(matchnick);
+		return ismatch;
+	}
+
+
+	
+	
+	
+	
+	//세션 만들때 데이터 가져오는 메소드
+	public String photofile(String id) {
+		return dao.dbfilename(id);
+	}
+
+
+	public String nickname(String id) {
+		// TODO Auto-generated method stub
+		return dao.dbninkname(id);
 	}
 
 
