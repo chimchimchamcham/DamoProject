@@ -21,12 +21,12 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		DamoDTO info = (DamoDTO) session.getAttribute("loginId");
 		
-		if (info != null) {
+		if (info != null) { //로그인 됨
 			pass = true;
 			System.out.println(info.getU_id() + "로그인 했음");
-		} else {
+		} else { ////로그인 안됨
 			System.out.println("로그인 안됨");
-			
+			response.sendRedirect("./loginCheck");
 		}
 
 		return pass;

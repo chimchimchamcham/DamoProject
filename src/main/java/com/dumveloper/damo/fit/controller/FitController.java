@@ -23,22 +23,11 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.GET)
-	public ModelAndView loginCheck(Model model, boolean pass) {
+	public String loginCheck(Model model) {
 
-		logger.info("로그인 체크"+pass);
-		String msg = "로그인이 필요한 서비스 입니다.";
-		ModelAndView mav = new ModelAndView();
-
-		// 로그인 안되었을 경우
-		if (pass == false) {
-			logger.info("로그인 안됨"+pass);
-			mav.addObject("msg", "로그인이 필요한 서비스 입니다.");
-			mav.setViewName("/user/login");
-		}
-
-		
-
-		return mav;
+		logger.info("로그인 안됨!!!");
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다.");
+		return "/user/login";
 
 	}
 
