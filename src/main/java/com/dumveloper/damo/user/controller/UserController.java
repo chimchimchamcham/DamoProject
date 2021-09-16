@@ -44,7 +44,7 @@ public class UserController {
 			//session.setAttribute("loginId",id);//사진경로
 			
 		}else {
-			mav.setViewName("login");
+			mav.setViewName("/user/login");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
 		}
 		return mav;
