@@ -23,12 +23,14 @@
 		SELECT U_ADMINYN FROM USERINFO WHERE U_ID = #{param1}
 	</select>
 
-	<select id="checkId" resultType="int">
+	<select id="checkdbId" resultType="int">
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1}
 	</select>
-
-	<select id="matchnick" resultType="int">
+	<select id="checkdbnink" resultType="int">
 		SELECT COUNT(U_NICK) FROM USERINFO WHERE U_NICK = #{param1}
+	</select>
+		<select id="checkdbemail" resultType="int">
+		SELECT COUNT(U_EMAIL) FROM USERINFO WHERE U_EMAIL = #{param1}
 	</select>
 
 

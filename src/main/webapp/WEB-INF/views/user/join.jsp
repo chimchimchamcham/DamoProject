@@ -17,8 +17,8 @@
 	    a:visited {text-decoration: none; color: black;}
 	    a:active {text-decoration: none; color: black;}
 	    a:hover {text-decoration: none; color: black;}
-	    .dont_use_english,.matchornot{
-	    	font-size: 5px;
+	    .dont_use_english,.matchornotid,.matchornotnink,.matchornotemail,.matchornotpw{
+	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
 </style>
@@ -36,8 +36,8 @@
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
         <input type="text" class="col-5 form-control m-1 " id="id" name="id"/>
-        <div class="dont_use_english col-3 display-5 text-danger text-center pt-3"></div>
-        <div class="matchornot col-1 display-5 text-right pt-3"></div>
+        <div class="dont_use_english col-2 display-5 text-danger text-center pt-3"></div>
+        <div class="matchornotid col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
@@ -46,25 +46,26 @@
     <div class="form-group row col-12">   
         <label for="nick" class="text-left col-2 m-1">닉네임:</label>
         <input type="text" class="col-7 form-control m-1" id="nick" name="nick">
+        <div class="matchornotnink col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">  
         <label for="pass" class="text-left col-2 m-1">비밀번호:</label>
-        <input type="password" class="col-4 form-control m-1 " name="pw">
-        
-        <input type="password" class="col-4 form-control m-1 " name="pwcheck">
+        <input type="password" class="col-4 form-control m-1 " id="pw" name="pw">
+        <input type="password" class="col-3 form-control m-1 " id="pwch" name="pwcheck">
+        <div class="matchornotpw col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12"> 
         <label for="email" class="text-left col-2 m-1">이메일:</label>
-        <input type="text" class="col-4 form-control m-1" name="email">
+        <input type="text" class="col-4 form-control m-1" id="email" name="email">
         <div class="input-group-append">
             <span>@</span>
         </div>
-        <select class="col-4 form-control m-1" name="emailand">
-                <option>집접입력</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+        <select class="col-3 form-control m-1" id="emailand" name="emailand">
+                <option>google.com</option>
+                <option>daum.com</option>
+                <option>naver.com</option>
         </select>
+        <div class="matchornotemail col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="row col-12 justify-content-start align-items-center">
         <div class="text-left text-nowrap col-1 m-1">성별:</div>
@@ -104,10 +105,11 @@
     
     $(document).ready(function(){
         
-        $("#id").on("focusout focuson keyup", function() {
-        	var x = $(this).val();
+        $(document).on("focusout focuson keyup",'#id', function() {
+        	var x = $("#id").val();
         	var id = x;
         	
+        	console.log(id);
         	
      	   $.ajax({
  		      url : './check/matchid',
@@ -116,13 +118,22 @@
  		      dataType : 'json',
  		      success : function(data){
  		         if (data == 0) {
- 		        	$(".matchornot").text('');
- 		        	$(".matchornot").text('사용가능한 아이디 입니다');
- 		        	$(".matchornot").css('color','green');
+ 		        	 
+ 		        	$(".matchornotid").text('');
+ 		        	$(".matchornotid").text('사용가능한 아이디 입니다');
+ 		        	$(".matchornotid").css('color','green');
+				
+ 		        	if(id==''){
+ 						console.log('hewllow');
+ 						$(".matchornotid").text('');
+ 		        	}
+ 		        	
 				}else{
-					$(".matchornot").text('');
- 		        	$(".matchornot").text('중복된 아이디 입니다');
- 		        	$(".matchornot").css('color','red');
+					
+					$(".matchornotid").text('');
+ 		        	$(".matchornotid").text('중복된 아이디 입니다');
+ 		        	$(".matchornotid").css('color','red');
+ 		        	
 				}
  		         
  		      },
@@ -142,15 +153,17 @@
                 	$("#id").css("border-color","#ced4da");
                 }
             }
+            
         })
      	
         
         
         
-        $("#nick").on("focusout focuson keyup", function() {
-        	var x = $(this).val();
+        $(document).on("focusout focuson keyup","#nick", function() {
+        	var x = $("#nick").val();
         	var nick = x;
         	
+        	console.log(nick);
         	
      	   $.ajax({
  		      url : './check/matchnick',
@@ -159,13 +172,21 @@
  		      dataType : 'json',
  		      success : function(data){
  		         if (data == 0) {
- 		        	$(".matchornot").text('');
- 		        	$(".matchornot").text('사용가능한 닉네임 입니다');
- 		        	$(".matchornot").css('color','green');
+ 		        	$(".matchornotnink").text('');
+ 		        	$(".matchornotnink").text('사용가능한 닉네임 입니다');
+ 		        	$(".matchornotnink").css('color','green');
+ 		        	$("#nick").css("border-color","#ced4da");
+				
+ 		        	if (nick=='') {
+ 		       			console.log('nick');
+						$(".matchornotnink").text('');										
+					}
+ 		        	
 				}else{
-					$(".matchornot").text('');
- 		        	$(".matchornot").text('중복된 닉네임 입니다');
- 		        	$(".matchornot").css('color','red');
+					$(".matchornotnink").text('');
+ 		        	$(".matchornotnink").text('중복된 닉네임 입니다');
+ 		        	$(".matchornotnink").css('color','red');
+ 		        	$("#nick").css("border-color","red");
 				}
  		         
  		      },
@@ -176,8 +197,91 @@
      	   
         })
         
+       $(document).on("focusout focuson keyup","#email", function() {
+        	var x = $("#email").val();
+        	var email = x;
+        	
+       if ($("#emailand").val()!=null) {
+    	   
+    	   var emailback = $("#emailand").val();
+     	   $.ajax({
+ 		      url : './check/matchemail',
+ 		      type : 'post',
+ 		      data : {matchemail:email,matcheback:emailback},
+ 		      dataType : 'json',
+ 		      success : function(data){
+ 		         if (data == 0) {
+ 		        	$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('사용가능한 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','green');
+ 		        	$("#emailand").css("border-color","#ced4da");
+					
+ 		        	if (email=='') {
+ 						console.log('email');
+ 						$(".matchornotemail").text('');
+					}
+ 		        	
+				}else{
+					$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('중복된 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','red');
+ 		        	$("#emailand").css("border-color","red");
+				}
+ 		         
+ 		      },
+ 		      error : function(error){
+ 		         console.log(error);
+ 		      }
+ 		   });				
+			}	
+        })
         
         
+     $(document).on("focusout focuson keyup","#pw", function() {
+
+    	 var pw1 = $("#pw").val();
+    	 var pw2 = $("#pwch").val();
+    	 
+			if (pw1==pw2) {
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치합니다');
+		        $(".matchornotpw").css('color','green');
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
+			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+				$(".matchornotpw").text('');
+			}else{
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+		        $(".matchornotpw").css('color','red');
+		        $("#pw").css("border-color","red");
+		        $("#pwch").css("border-color","red");
+			}
+       
+        });
+        
+        $(document).on("focusout focuson keyup","#pwch", function() {
+
+       	 var pw1 = $("#pw").val();
+       	 var pw2 = $("#pwch").val();
+       	 
+   			if (pw1==pw2) {
+   				$(".matchornotpw").text('');
+   		        $(".matchornotpw").text('비밀번호가 일치합니다');
+   		        $(".matchornotpw").css('color','green');
+   		        $("#pw").css("border-color","#ced4da");
+   		        $("#pwch").css("border-color","#ced4da");
+   			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+   				$(".matchornotpw").text('');
+   			}else{
+   				$(".matchornotpw").text('');
+   		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+   		        $(".matchornotpw").css('color','red');
+   		        $("#pw").css("border-color","red");
+   		        $("#pwch").css("border-color","red");
+   			}
+          
+           });
         
         
     });
