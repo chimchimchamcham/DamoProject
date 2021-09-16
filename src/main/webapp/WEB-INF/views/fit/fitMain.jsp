@@ -144,6 +144,7 @@ function bestFitListCall(cnt, category){
 	    dataType:'json',
 	    success:function(data){
 	        console.log(data.success);
+	        console.log(data.list);
 	        //bestFitListDraw(data.list);
 	    },
 	    error:function(e){
@@ -172,6 +173,29 @@ function newFitListCall(cnt, category){
 	});
 }
 
+//많이본 지식핏 목록을 그려주는 함수
+function bestFitListDraw(list){
+	var content = "";
+	list.forEach(function(item, index){
+        content += '<div class="card m-2 " style="width:250px;height:250px">';
+        content += 		'<div class="card-body">';
+        content += 			'<h4 class="card-title mt-3"><span class="text-primary">Q. </span>'+item.k_title+'</h4>';
+        content += 			'<div class="d-flex mt-3">';
+        content += 				'<div class="p-2 flex-fill">'+item.k_name+'</div>';
+        content += 				'<div class="p-2 flex-fill">'+item.u_nick+'</div>';   
+        content += 			'</div>';
+        content += 			'<div class="d-flex">';
+        content += 				'<div class="p-2 flex-fill">조회수'+item.k_view+'</div>';
+        content += 				'<div class="p-2 flex-fill">답변수'+item.k_replyCnt+'</div>';
+        content += 			'</div>';
+        content += 			'<a href="#" class="btn btn-white stretched-link"></a>';
+        content += 		'</div>';
+        content += '</div>';
+	});
+	
+	$("#bestFitList").append(content);
+}
+
 //최신 지식핏 목록을 그려주는 함수
 function newFitListDraw(list){
 	var content = "";
@@ -193,29 +217,6 @@ function newFitListDraw(list){
 	});
 	
 	$("#newFitList").append(content);
-}
-
-//많이본 지식핏 목록을 그려주는 함수
-function bestFitListDraw(list){
-	var content = "";
-	list.forEach(function(item, index){
-        content += '<div class="card m-2 " style="width:250px;height:250px">';
-        content += 		'<div class="card-body">';
-        content += 			'<h4 class="card-title mt-3"><span class="text-primary">Q. </span>다이어트를 시작하려면 어떻게 해야 할까요?</h4>';
-        content += 			'<div class="d-flex mt-3">';
-        content += 				'<div class="p-2 flex-fill">운동</div>';
-        content += 				'<div class="p-2 flex-fill">닉네임</div>';   
-        content += 			'</div>';
-        content += 			'<div class="d-flex">';
-        content += 				'<div class="p-2 flex-fill">조회수10</div>';
-        content += 				'<div class="p-2 flex-fill">답변수2</div>';
-        content += 			'</div>';
-        content += 			'<a href="#" class="btn btn-white stretched-link"></a>';
-        content += 		'</div>';
-        content += '</div>';
-	});
-	
-	$("#bestFitList").append(content);
 }
 </script>
 </html>

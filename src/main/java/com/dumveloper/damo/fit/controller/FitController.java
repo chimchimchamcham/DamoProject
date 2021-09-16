@@ -34,7 +34,7 @@ public class FitController {
 		return "fit/fitMain";
 	}
 	
-	@RequestMapping(value = "/bestFitList", method = RequestMethod.GET)
+	@RequestMapping(value = "/bestFitList", method = RequestMethod.POST)
 	public @ResponseBody HashMap<String, Object> bestFitList(Model model) {
 		logger.info("많이본 지식핏 목록 접속");
 		
