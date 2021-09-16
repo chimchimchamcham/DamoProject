@@ -18,6 +18,10 @@
 	<select id="dbninkname" resultType="string">
 		SELECT U_NICK FROM USERINFO WHERE U_ID = #{param1}
 	</select>
+	
+	<select id="dbninkname" resultType="string">
+		SELECT U_ADMINYN FROM USERINFO WHERE U_ID = #{param1}
+	</select>
 
 	<select id="checkId" resultType="int">
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1}

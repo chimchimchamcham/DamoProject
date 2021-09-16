@@ -101,11 +101,11 @@ public class UserService {
 	public String photofile(String id) {
 		return dao.dbfilename(id);
 	}
-
-
 	public String nickname(String id) {
-		// TODO Auto-generated method stub
 		return dao.dbninkname(id);
+	}
+	public String manager(String id) {
+		return dao.dbmanager(id);
 	}
 
 

@@ -36,6 +36,8 @@ public class UserController {
 		int cnt = service.login(id,pw);
 		String file = service.photofile(id);
 		String nick = service.nickname(id);
+		String manager = service.manager(id);
+		
 		logger.info("photofile:{}",file);
 		logger.info("photofile:{}",nick);
 		
@@ -47,6 +49,7 @@ public class UserController {
 			session.setAttribute("loginId",id);//아이디
 			session.setAttribute("loginFile",file);//사진경로
 			session.setAttribute("loginNick",nick);//닉네임
+			session.setAttribute("loginManager",manager);//관리자여부Y/N
 		}else {
 			mav.setViewName("/user/login");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
