@@ -106,7 +106,7 @@ ${cursor}
                                     마이 페이지
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="logout" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     로그아웃
                                 </a>
@@ -127,7 +127,7 @@ ${cursor}
                 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow" style="height:50px;">
               <div class="container">
-  <a class="navbar-brand" href="javascript:void(0)"> <img src="resources/img/logo4.png" alt="Logo" style="width:80px;"></a>
+  <a class="navbar-brand" > <img src="resources/img/logo4.png" alt="Logo" style="width:80px;" onclick="location='/'"></a>
 
   <div class="collapse navbar-collapse" id="navb" style="font-size:15px;">
     <ul class="navbar-nav ml-auto" >
@@ -137,24 +137,15 @@ ${cursor}
       <li class="nav-item" style="margin-left: 40px;">
         <a class="nav-link" href="javascript:void(0)">통계 그래프</a>
       </li>
-<<<<<<< HEAD
+
       <li class="nav-item dropdown justify-content-center" >
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;">지식Fit</a>
-    <div class="dropdown-menu" style="font-size:14px;">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;" id="dropdown">지식Fit</a>
+    <div class="dropdown-menu" style="font-size:14px;"  id="dropdown-menu">
       <a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
       <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
-      <a class="dropdown-item text-muted mt-1" href="#">질문하기</a>
+      <a class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>
        <a class="dropdown-item text-muted mt-1 mb-1" href="#">내 지식사전</a>
-=======
-      <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">지식Fit</a>
-    <div class="dropdown-menu" style="font-size:14px;" id="dropdown">
-      <a class="dropdown-item text-muted" href="#" >지식Fit</a>
-      <a class="dropdown-item text-muted" href="#">명예의 전당</a>
-      <a class="dropdown-item text-muted" href="fitWriteForm">질문하기</a>
-       <a class="dropdown-item text-muted" href="#">내 지식사전</a>
->>>>>>> 8ba9fea3badc555b116cfe13e7a6c8d038ec30d8
-    </div>
+</div>
   </li>
     </ul>
     
@@ -215,6 +206,6 @@ border-radius:0px;
 }
 
 </style>
-<script>
-</script>
+<script src="resources/js/main.js"></script>
+
 </html>

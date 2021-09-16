@@ -2,7 +2,7 @@
 
 	"use strict";
 
-	$('nav .dropdown').click(function(){
+	$('nav .dropdown').hover(function(){
 		var $this = $(this);
 		$this.addClass('show');
 		$this.find('> a').attr('aria-expanded', true);
