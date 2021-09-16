@@ -16,4 +16,6 @@ public interface UserDAO {
 
 	String dbninkname(String id);
 
+	String dbmanager(String id);
+
 }
