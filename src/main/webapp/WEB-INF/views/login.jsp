@@ -44,13 +44,13 @@
               <div class="row">
                     <img src="resources/img/logo3.png" class="col-11 mx-auto my-5">
               </div>
-              <form> 
+              <form method="post" action="login"> 
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control" id="id" placeholder="id">
+                  <input type="text" class="form-control" name="id" placeholder="id">
                 </div>
                 
                 <div class="form-floating mb-3">
-                  <input type="password" class="form-control" id="pass" placeholder="Password">
+                  <input type="password" class="form-control" name="pw" placeholder="Password">
                 </div>
                 
                 <div class="d-grid">
@@ -68,4 +68,10 @@
         </div>
       </div>
   </body>
+  <script type="text/javascript">
+  var msg="${msg}";
+  if(msg!=""){
+  	alert(msg);
+  }
+  </script>
 </html>

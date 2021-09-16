@@ -2,6 +2,8 @@ package com.dumveloper.damo.user.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.dumveloper.damo.user.service.UserService;
 
 @Controller
@@ -21,10 +22,31 @@ public class UserController {
 	@Autowired UserService service;
 	
 	@RequestMapping(value = "/Gologin", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String Gologin(Model model) {
 		logger.info("login");
 		return "login";
 	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam String id,@RequestParam String pw,HttpSession session) {	
+		
+		ModelAndView mav = new ModelAndView();
+		
+		logger.info("id:{}/pw:{}",id,pw);
+		int cnt = service.login(id,pw);
+		logger.info(id+"의 갯수:"+cnt);			
+
+		if (cnt>0) {
+			mav.setViewName("/index");
+			mav.addObject("msg", "로그인에 성공했습니다");
+			session.setAttribute("loginId",id);
+		}else {
+			mav.setViewName("login");
+			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
+		}
+		return mav;
+	}
+	
 	@RequestMapping(value = "/Goidandpassfind", method = RequestMethod.GET)
 	public String findid(Model model) {
 		logger.info("find");

@@ -6,4 +6,9 @@
 >
 
 <mapper namespace="com.dumveloper.damo.user.dao.UserDAO">
+
+	<select id="login" resultType="int">
+		SELECT COUNT(u_id) FROM USERINFO where u_id = #{param1} AND u_pw = #{param2}
+	</select>
+
 </mapper>
