@@ -17,8 +17,8 @@
 	    a:visited {text-decoration: none; color: black;}
 	    a:active {text-decoration: none; color: black;}
 	    a:hover {text-decoration: none; color: black;}
-	    .dont_use_english,.matchornotid,.matchornotnink,.matchornotemail{
-	    	font-size: 5px;
+	    .dont_use_english,.matchornotid,.matchornotnink,.matchornotemail,.matchornotpw{
+	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
 </style>
@@ -50,9 +50,9 @@
     </div>
     <div class="form-group row col-12">  
         <label for="pass" class="text-left col-2 m-1">비밀번호:</label>
-        <input type="password" class="col-4 form-control m-1 " name="pw">
-        
-        <input type="password" class="col-4 form-control m-1 " name="pwcheck">
+        <input type="password" class="col-4 form-control m-1 " id="pw" name="pw">
+        <input type="password" class="col-3 form-control m-1 " id="pwch" name="pwcheck">
+        <div class="matchornotpw col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12"> 
         <label for="email" class="text-left col-2 m-1">이메일:</label>
@@ -105,10 +105,11 @@
     
     $(document).ready(function(){
         
-        $("#id").on("focusout focuson keyup", function() {
-        	var x = $(this).val();
+        $(document).on("focusout focuson keyup",'#id', function() {
+        	var x = $("#id").val();
         	var id = x;
         	
+        	console.log(id);
         	
      	   $.ajax({
  		      url : './check/matchid',
@@ -117,13 +118,22 @@
  		      dataType : 'json',
  		      success : function(data){
  		         if (data == 0) {
+ 		        	 
  		        	$(".matchornotid").text('');
  		        	$(".matchornotid").text('사용가능한 아이디 입니다');
  		        	$(".matchornotid").css('color','green');
+				
+ 		        	if(id==''){
+ 						console.log('hewllow');
+ 						$(".matchornotid").text('');
+ 		        	}
+ 		        	
 				}else{
+					
 					$(".matchornotid").text('');
  		        	$(".matchornotid").text('중복된 아이디 입니다');
  		        	$(".matchornotid").css('color','red');
+ 		        	
 				}
  		         
  		      },
@@ -143,15 +153,17 @@
                 	$("#id").css("border-color","#ced4da");
                 }
             }
+            
         })
      	
         
         
         
-        $("#nick").on("focusout focuson keyup", function() {
-        	var x = $(this).val();
+        $(document).on("focusout focuson keyup","#nick", function() {
+        	var x = $("#nick").val();
         	var nick = x;
         	
+        	console.log(nick);
         	
      	   $.ajax({
  		      url : './check/matchnick',
@@ -163,10 +175,18 @@
  		        	$(".matchornotnink").text('');
  		        	$(".matchornotnink").text('사용가능한 닉네임 입니다');
  		        	$(".matchornotnink").css('color','green');
+ 		        	$("#nick").css("border-color","#ced4da");
+				
+ 		        	if (nick=='') {
+ 		       			console.log('nick');
+						$(".matchornotnink").text('');										
+					}
+ 		        	
 				}else{
 					$(".matchornotnink").text('');
  		        	$(".matchornotnink").text('중복된 닉네임 입니다');
  		        	$(".matchornotnink").css('color','red');
+ 		        	$("#nick").css("border-color","red");
 				}
  		         
  		      },
@@ -177,10 +197,12 @@
      	   
         })
         
-        $("#email").on("focusout focuson keyup", function() {
-        	var x = $(this).val();
+       $(document).on("focusout focuson keyup","#email", function() {
+        	var x = $("#email").val();
         	var email = x;
+        	
        if ($("#emailand").val()!=null) {
+    	   
     	   var emailback = $("#emailand").val();
      	   $.ajax({
  		      url : './check/matchemail',
@@ -192,10 +214,18 @@
  		        	$(".matchornotemail").text('');
  		        	$(".matchornotemail").text('사용가능한 이메일 입니다');
  		        	$(".matchornotemail").css('color','green');
+ 		        	$("#emailand").css("border-color","#ced4da");
+					
+ 		        	if (email=='') {
+ 						console.log('email');
+ 						$(".matchornotemail").text('');
+					}
+ 		        	
 				}else{
 					$(".matchornotemail").text('');
  		        	$(".matchornotemail").text('중복된 이메일 입니다');
  		        	$(".matchornotemail").css('color','red');
+ 		        	$("#emailand").css("border-color","red");
 				}
  		         
  		      },
@@ -206,6 +236,52 @@
 			}	
         })
         
+        
+     $(document).on("focusout focuson keyup","#pw", function() {
+
+    	 var pw1 = $("#pw").val();
+    	 var pw2 = $("#pwch").val();
+    	 
+			if (pw1==pw2) {
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치합니다');
+		        $(".matchornotpw").css('color','green');
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
+			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+				$(".matchornotpw").text('');
+			}else{
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+		        $(".matchornotpw").css('color','red');
+		        $("#pw").css("border-color","red");
+		        $("#pwch").css("border-color","red");
+			}
+       
+        });
+        
+        $(document).on("focusout focuson keyup","#pwch", function() {
+
+       	 var pw1 = $("#pw").val();
+       	 var pw2 = $("#pwch").val();
+       	 
+   			if (pw1==pw2) {
+   				$(".matchornotpw").text('');
+   		        $(".matchornotpw").text('비밀번호가 일치합니다');
+   		        $(".matchornotpw").css('color','green');
+   		        $("#pw").css("border-color","#ced4da");
+   		        $("#pwch").css("border-color","#ced4da");
+   			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+   				$(".matchornotpw").text('');
+   			}else{
+   				$(".matchornotpw").text('');
+   		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+   		        $(".matchornotpw").css('color','red');
+   		        $("#pw").css("border-color","red");
+   		        $("#pwch").css("border-color","red");
+   			}
+          
+           });
         
         
     });
