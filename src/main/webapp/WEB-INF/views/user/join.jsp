@@ -94,7 +94,7 @@
         <input type="text" class="col-4 form-control m-1 " id="height" name="height">
     </div>
     
-    <button type="submit" class=" btn btn-primary align-self-end">회원가입</button>
+    <button type="submit" id="jointocheck" class=" btn btn-primary align-self-end">회원가입</button>
     </form>
 </div>
 </div>
@@ -103,8 +103,11 @@
     // 입력을 제한 할 특수문자의 정규식
     var checktext  = /[^A-Za-z]/ig;
     
+    
+    
+    
     $(document).ready(function(){
-        
+    	
         $(document).on("focusout focuson keyup",'#id', function() {
         	var x = $("#id").val();
         	var id = x;
@@ -148,6 +151,10 @@
                 if (x.match(checktext)) {
                    $(".dont_use_english").text('영어만 입력할수 있습니다');
                    $("#id").css("border-color","red");
+                   
+		        	if(id==''){
+ 						$(".dont_use_english").text('');
+ 		        	}
                 }else{
                 	$(".dont_use_english").text('');
                 	$("#id").css("border-color","#ced4da");
@@ -285,6 +292,13 @@
         
         
     });
+    
+    
+    var msg="${msg}";
+    if(msg!=""){
+    	alert(msg);
+    }
+    
  </script>
 
 
