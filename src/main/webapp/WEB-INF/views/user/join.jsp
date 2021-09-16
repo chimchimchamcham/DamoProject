@@ -17,7 +17,7 @@
 	    a:visited {text-decoration: none; color: black;}
 	    a:active {text-decoration: none; color: black;}
 	    a:hover {text-decoration: none; color: black;}
-	    .dont_use_english,.matchornot{
+	    .dont_use_english,.matchornotid,.matchornotnink,.matchornotemail{
 	    	font-size: 5px;
 	    	white-space: nowrap;
 	    }
@@ -36,8 +36,8 @@
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
         <input type="text" class="col-5 form-control m-1 " id="id" name="id"/>
-        <div class="dont_use_english col-3 display-5 text-danger text-center pt-3"></div>
-        <div class="matchornot col-1 display-5 text-right pt-3"></div>
+        <div class="dont_use_english col-2 display-5 text-danger text-center pt-3"></div>
+        <div class="matchornotid col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
@@ -46,6 +46,7 @@
     <div class="form-group row col-12">   
         <label for="nick" class="text-left col-2 m-1">닉네임:</label>
         <input type="text" class="col-7 form-control m-1" id="nick" name="nick">
+        <div class="matchornotnink col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">  
         <label for="pass" class="text-left col-2 m-1">비밀번호:</label>
@@ -55,16 +56,16 @@
     </div>
     <div class="form-group row col-12"> 
         <label for="email" class="text-left col-2 m-1">이메일:</label>
-        <input type="text" class="col-4 form-control m-1" name="email">
+        <input type="text" class="col-4 form-control m-1" id="email" name="email">
         <div class="input-group-append">
             <span>@</span>
         </div>
-        <select class="col-4 form-control m-1" name="emailand">
-                <option>집접입력</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+        <select class="col-3 form-control m-1" id="emailand" name="emailand">
+                <option>google.com</option>
+                <option>daum.com</option>
+                <option>naver.com</option>
         </select>
+        <div class="matchornotemail col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="row col-12 justify-content-start align-items-center">
         <div class="text-left text-nowrap col-1 m-1">성별:</div>
@@ -116,13 +117,13 @@
  		      dataType : 'json',
  		      success : function(data){
  		         if (data == 0) {
- 		        	$(".matchornot").text('');
- 		        	$(".matchornot").text('사용가능한 아이디 입니다');
- 		        	$(".matchornot").css('color','green');
+ 		        	$(".matchornotid").text('');
+ 		        	$(".matchornotid").text('사용가능한 아이디 입니다');
+ 		        	$(".matchornotid").css('color','green');
 				}else{
-					$(".matchornot").text('');
- 		        	$(".matchornot").text('중복된 아이디 입니다');
- 		        	$(".matchornot").css('color','red');
+					$(".matchornotid").text('');
+ 		        	$(".matchornotid").text('중복된 아이디 입니다');
+ 		        	$(".matchornotid").css('color','red');
 				}
  		         
  		      },
@@ -159,13 +160,13 @@
  		      dataType : 'json',
  		      success : function(data){
  		         if (data == 0) {
- 		        	$(".matchornot").text('');
- 		        	$(".matchornot").text('사용가능한 닉네임 입니다');
- 		        	$(".matchornot").css('color','green');
+ 		        	$(".matchornotnink").text('');
+ 		        	$(".matchornotnink").text('사용가능한 닉네임 입니다');
+ 		        	$(".matchornotnink").css('color','green');
 				}else{
-					$(".matchornot").text('');
- 		        	$(".matchornot").text('중복된 닉네임 입니다');
- 		        	$(".matchornot").css('color','red');
+					$(".matchornotnink").text('');
+ 		        	$(".matchornotnink").text('중복된 닉네임 입니다');
+ 		        	$(".matchornotnink").css('color','red');
 				}
  		         
  		      },
@@ -176,7 +177,34 @@
      	   
         })
         
-        
+        $("#email").on("focusout focuson keyup", function() {
+        	var x = $(this).val();
+        	var email = x;
+       if ($("#emailand").val()!=null) {
+    	   var emailback = $("#emailand").val();
+     	   $.ajax({
+ 		      url : './check/matchemail',
+ 		      type : 'post',
+ 		      data : {matchemail:email,matcheback:emailback},
+ 		      dataType : 'json',
+ 		      success : function(data){
+ 		         if (data == 0) {
+ 		        	$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('사용가능한 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','green');
+				}else{
+					$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('중복된 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','red');
+				}
+ 		         
+ 		      },
+ 		      error : function(error){
+ 		         console.log(error);
+ 		      }
+ 		   });				
+			}	
+        })
         
         
         
