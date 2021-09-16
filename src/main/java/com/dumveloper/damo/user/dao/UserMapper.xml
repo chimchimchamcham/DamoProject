@@ -8,7 +8,7 @@
 <mapper namespace="com.dumveloper.damo.user.dao.UserDAO">
 
 	<select id="login" resultType="int">
-		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1} AND U_PW = #{param2}
+		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1} AND U_PW = #{param2}  AND U_BLINDYN = 'N' AND (SELECT U_ID FROM BLACKLIST WHERE U_ID = #{param1})IS NULL
 	</select>
 
 	<select id="dbfilename" resultType="string">
