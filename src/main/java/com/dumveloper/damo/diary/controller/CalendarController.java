@@ -11,10 +11,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class CalendarController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value="/")
-	public ModelAndView list() {
-		logger.info("리스트 요청");
-		return service.list();
-	}
+	/*
+	 * @RequestMapping(value="/") public ModelAndView list() {
+	 * logger.info("캘린더 요청"); //return service.list(); }
+	 */
 	
 }
