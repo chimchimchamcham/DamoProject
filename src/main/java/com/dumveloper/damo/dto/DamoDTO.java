@@ -33,6 +33,18 @@ public class DamoDTO {
 	private int c_tarKcal; //목표 섭취 칼로리
 	private int c_tarExe; //목표 운동 칼로리
 	
+	//지식fit
+	private int k_no; //글번호
+	//private String u_id; //작성 아이디
+	private String k_code; //분류코드
+	private String k_name; //분류코드명
+	private String k_title; //글제목
+	private String k_content; //글내묭
+	private Date k_date; //작성일
+	private int k_view; //조회수
+	private int k_replyCnt; //답변수
+	private String k_solutionYN; //해결여부
+	private String k_blindYN; //블라인드 여부
 	public String getU_id() {
 		return u_id;
 	}
@@ -87,7 +99,7 @@ public class DamoDTO {
 	public void setU_height(int u_height) {
 		this.u_height = u_height;
 	}
-	public String isU_gender() {
+	public String getU_gender() {
 		return u_gender;
 	}
 	public void setU_gender(String u_gender) {
@@ -171,13 +183,65 @@ public class DamoDTO {
 	public void setC_tarExe(int c_tarExe) {
 		this.c_tarExe = c_tarExe;
 	}
-
-
-	
-	
-	
-	
-	
-	
+	public int getK_no() {
+		return k_no;
+	}
+	public void setK_no(int k_no) {
+		this.k_no = k_no;
+	}
+	public String getK_code() {
+		return k_code;
+	}
+	public void setK_code(String k_code) {
+		this.k_code = k_code;
+	}
+	public String getK_name() {
+		return k_name;
+	}
+	public void setK_name(String k_name) {
+		this.k_name = k_name;
+	}
+	public String getK_title() {
+		return k_title;
+	}
+	public void setK_title(String k_title) {
+		this.k_title = k_title;
+	}
+	public String getK_content() {
+		return k_content;
+	}
+	public void setK_content(String k_content) {
+		this.k_content = k_content;
+	}
+	public Date getK_date() {
+		return k_date;
+	}
+	public void setK_date(Date k_date) {
+		this.k_date = k_date;
+	}
+	public int getK_view() {
+		return k_view;
+	}
+	public void setK_view(int k_view) {
+		this.k_view = k_view;
+	}
+	public int getK_replyCnt() {
+		return k_replyCnt;
+	}
+	public void setK_replyCnt(int k_replyCnt) {
+		this.k_replyCnt = k_replyCnt;
+	}
+	public String getK_solutionYN() {
+		return k_solutionYN;
+	}
+	public void setK_solutionYN(String k_solutionYN) {
+		this.k_solutionYN = k_solutionYN;
+	}
+	public String getK_blindYN() {
+		return k_blindYN;
+	}
+	public void setK_blindYN(String k_blindYN) {
+		this.k_blindYN = k_blindYN;
+	}
 	
 }

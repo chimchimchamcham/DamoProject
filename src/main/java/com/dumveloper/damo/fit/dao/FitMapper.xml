@@ -6,4 +6,31 @@
 >
 
 <mapper namespace="com.dumveloper.damo.fit.dao.FitDAO">
+	<select id="bestFitList" resultType="damo">
+		SELECT k_no,k_title, u_id,u_nick, k_view, k_replycnt, k_solutionyn, k_code, k_name
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY k.k_replycnt DESC, k.k_view) AS rnum,
+			k.k_no,k.k_title, u.u_id, u.u_nick, k.k_view, k.k_replycnt, k.k_solutionyn, k.k_code, 
+			(SELECT c_name FROM code WHERE c_code = UPPER(k.k_code)) AS k_name
+			FROM knowfit k INNER JOIN userInfo u ON k.u_id = u.u_id)
+		WHERE rnum BETWEEN 1 AND 4
+	</select>
+	
+	<select id="newFitList" resultType="damo">
+		SELECT rnum, k_no, k_title, k_view, k_replycnt, k_solutionyn, u_id, u_nick, k_name
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY k.k_no DESC) AS rnum,
+		        k.k_no,k.k_title, k.k_view, k.k_replycnt, k.k_solutionyn, 
+		        u.u_id, u.u_nick,
+		        (SELECT c_name FROM code WHERE c_code = UPPER(k.k_code)) AS k_name 
+		        FROM knowfit k INNER JOIN userInfo u ON k.u_id = u.u_id 
+		        <where>
+		        	<if test="param3.equals('전체')"></if>
+		        	<if test="param3.equals('자세교정')">k_code = (SELECT c_code FROM CODE WHERE c_name = '자세교정')</if>
+		        	<if test="param3.equals('식단')">k_code = (SELECT c_code FROM CODE WHERE c_name = '식단')</if>
+		        	<if test="param3.equals('운동')">k_code = (SELECT c_code FROM CODE WHERE c_name = '운동')</if>
+		        	<if test="param3.equals('고민')">k_code = (SELECT c_code FROM CODE WHERE c_name = '고민')</if>
+		        	<if test="param3.equals('기타')">k_code = (SELECT c_code FROM CODE WHERE c_name = '기타')</if>
+		        </where>
+		     )
+		WHERE rnum BETWEEN ${param1} AND ${param2}
+	</select>
 </mapper>
