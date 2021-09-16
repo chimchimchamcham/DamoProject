@@ -26,4 +26,10 @@ public class FitController {
 		return "fit/fitMain";
 	}
 	
+	@RequestMapping(value = "/fitWriteForm", method = RequestMethod.GET)
+	public String fitWriteForm(Model model) {
+		
+		logger.info("지식핏 글쓰기 접속");
+		return "fit/fitWriteForm";
+	}
 }
