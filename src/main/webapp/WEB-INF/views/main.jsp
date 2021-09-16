@@ -13,7 +13,8 @@
 </style>
 </head>
 <body>
-
+<jsp:include page="header.jsp"></jsp:include>
+<h1>메인페이지</h1>
 </body>
 <script>
 </script>

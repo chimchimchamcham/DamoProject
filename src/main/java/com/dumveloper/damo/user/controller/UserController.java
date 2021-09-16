@@ -37,7 +37,7 @@ public class UserController {
 		logger.info(id+"의 갯수:"+cnt);			
 
 		if (cnt>0) {
-			mav.setViewName("main");
+			mav.setViewName("redirect:/");
 			mav.addObject("msg", "로그인에 성공했습니다");
 			session.setAttribute("loginId",id);
 			//session.setAttribute("loginId",id);//닉네임
@@ -93,5 +93,10 @@ public class UserController {
 		return service.join(params);
 	}
 	
-	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		logger.info("로그아웃 요청");
+		return "redirect:/";
+	}
 }
