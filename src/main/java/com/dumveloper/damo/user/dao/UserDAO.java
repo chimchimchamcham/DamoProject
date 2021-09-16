@@ -12,4 +12,8 @@ public interface UserDAO {
 
 	int checkdbnink(String matchnick);
 
+	String dbfilename(String id);
+
+	String dbninkname(String id);
+
 }

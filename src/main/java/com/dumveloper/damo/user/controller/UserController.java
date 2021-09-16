@@ -34,15 +34,19 @@ public class UserController {
 		
 		logger.info("id:{}/pw:{}",id,pw);
 		int cnt = service.login(id,pw);
+		String file = service.photofile(id);
+		String nick = service.nickname(id);
+		logger.info("photofile:{}",file);
+		logger.info("photofile:{}",nick);
+		
 		logger.info(id+"의 갯수:"+cnt);			
 
 		if (cnt>0) {
 			mav.setViewName("redirect:/");
 			mav.addObject("msg", "로그인에 성공했습니다");
-			session.setAttribute("loginId",id);
-			//session.setAttribute("loginId",id);//닉네임
-			//session.setAttribute("loginId",id);//사진경로
-			
+			session.setAttribute("loginId",id);//아이디
+			session.setAttribute("loginFile",file);//사진경로
+			session.setAttribute("loginNick",nick);//닉네임
 		}else {
 			mav.setViewName("/user/login");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");

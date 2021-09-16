@@ -94,4 +94,20 @@ public class UserService {
 
 
 	
+	
+	
+	
+	//세션 만들때 데이터 가져오는 메소드
+	public String photofile(String id) {
+		return dao.dbfilename(id);
+	}
+
+
+	public String nickname(String id) {
+		// TODO Auto-generated method stub
+		return dao.dbninkname(id);
+	}
+
+
+	
 }
