@@ -8,4 +8,14 @@ public interface UserDAO {
 
 	int join(DamoDTO dto);
 
+	int checkdbId(String matchid);
+
+	int checkdbnink(String matchnick);
+
+	String dbfilename(String id);
+
+	String dbninkname(String id);
+
+	String dbmanager(String id);
+
 }

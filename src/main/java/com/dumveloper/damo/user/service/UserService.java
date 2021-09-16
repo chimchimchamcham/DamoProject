@@ -81,5 +81,33 @@ public class UserService {
 	}
 
 
+	public int check_id(String matchid) {
+		int ismatch = dao.checkdbId(matchid);
+		return ismatch;
+	}
+
+
+	public int check_nick(String matchnick) {
+		int ismatch = dao.checkdbnink(matchnick);
+		return ismatch;
+	}
+
+
+	
+	
+	
+	
+	//세션 만들때 데이터 가져오는 메소드
+	public String photofile(String id) {
+		return dao.dbfilename(id);
+	}
+	public String nickname(String id) {
+		return dao.dbninkname(id);
+	}
+	public String manager(String id) {
+		return dao.dbmanager(id);
+	}
+
+
 	
 }

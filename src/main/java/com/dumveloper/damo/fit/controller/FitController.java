@@ -21,8 +21,8 @@ public class FitController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		
-		logger.info("index 페이지 접속");
-		return "index";
+		logger.info("메인 페이지 접속");
+		return "main";
 	}
 	
 	@RequestMapping(value = "/fitMain", method = RequestMethod.GET)
