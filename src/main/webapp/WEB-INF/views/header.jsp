@@ -137,6 +137,7 @@ ${cursor}
       <li class="nav-item" style="margin-left: 40px;">
         <a class="nav-link" href="javascript:void(0)">통계 그래프</a>
       </li>
+<<<<<<< HEAD
       <li class="nav-item dropdown justify-content-center" >
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;">지식Fit</a>
     <div class="dropdown-menu" style="font-size:14px;">
@@ -144,6 +145,15 @@ ${cursor}
       <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
       <a class="dropdown-item text-muted mt-1" href="#">질문하기</a>
        <a class="dropdown-item text-muted mt-1 mb-1" href="#">내 지식사전</a>
+=======
+      <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">지식Fit</a>
+    <div class="dropdown-menu" style="font-size:14px;" id="dropdown">
+      <a class="dropdown-item text-muted" href="#" >지식Fit</a>
+      <a class="dropdown-item text-muted" href="#">명예의 전당</a>
+      <a class="dropdown-item text-muted" href="fitWriteForm">질문하기</a>
+       <a class="dropdown-item text-muted" href="#">내 지식사전</a>
+>>>>>>> 8ba9fea3badc555b116cfe13e7a6c8d038ec30d8
     </div>
   </li>
     </ul>

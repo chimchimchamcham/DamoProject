@@ -8,7 +8,13 @@
 <mapper namespace="com.dumveloper.damo.user.dao.UserDAO">
 
 	<select id="login" resultType="int">
-		SELECT COUNT(u_id) FROM USERINFO where u_id = #{param1} AND u_pw = #{param2}
+		SELECT COUNT(U_ID) FROM USERINFO WHERE U_DI = #{param1} AND U_PW = #{param2}
 	</select>
+
+
+	<insert id="join" parameterType="damo">
+		INSERT INTO USERINFO(U_ID,U_PW,U_NAME,U_EMAIL,U_NICK,U_AGE,U_WEIGHT,U_TARWEIGHT,U_HEIGHT,U_GENDER,U_ADMINYN,U_CHOOSECNT,U_ALARMYN)
+		VALUES(#{u_id},#{u_pw},#{u_name},#{u_email},#{u_nick},#{u_age},#{u_weight},#{u_tarWeight},#{u_height},#{u_gender},'N',0,'Y')
+	</insert>
 
 </mapper>

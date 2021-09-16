@@ -24,7 +24,7 @@ public class UserController {
 	@RequestMapping(value = "/Gologin", method = RequestMethod.GET)
 	public String Gologin(Model model) {
 		logger.info("login");
-		return "login";
+		return "/user/login";
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -50,13 +50,13 @@ public class UserController {
 	@RequestMapping(value = "/Goidandpassfind", method = RequestMethod.GET)
 	public String findid(Model model) {
 		logger.info("find");
-		return "idandpassfind";
+		return "/user/idandpassfind";
 	}
 	
 	@RequestMapping(value = "/gojointerms", method = RequestMethod.GET)
 	public String jointerms(Model model) {
 		logger.info("jointerms");
-		return "terms_of_use";
+		return "/user/terms_of_use";
 	}
 	
 	@RequestMapping(value = "/gojoin")
@@ -69,20 +69,25 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/join")
-	public void join(Model model,@RequestParam HashMap<String, String> params) {
-		logger.info("CheckAndGoJoinForm");
+	public ModelAndView join(Model model,@RequestParam HashMap<String, String> params) {
+		
+		logger.info("joinnow");
 		logger.info("id:{}",params.get("id"));
 		logger.info("name:{}",params.get("name"));
 		logger.info("nick:{}",params.get("nick"));
-		logger.info("pass:{}",params.get("pass"));
-		logger.info("passcheck:{}",params.get("passcheck"));
+		logger.info("pass:{}",params.get("pw"));
+		logger.info("passcheck:{}",params.get("pwcheck"));
 		logger.info("email:{}",params.get("email"));
 		logger.info("emailand:{}",params.get("emailand"));
-		logger.info("sex:{}",params.get("sex"));
+		logger.info("gender:{}",params.get("gender"));
 		logger.info("age:{}",params.get("age"));
 		logger.info("weight:{}",params.get("weight"));
 		logger.info("tarweight:{}",params.get("tarweight"));
-		logger.info("stature:{}",params.get("stature"));
+		logger.info("height:{}",params.get("height"));
+		
+		
+		logger.info("join : {}",params);
+		return service.join(params);
 	}
 	
 	

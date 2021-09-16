@@ -42,9 +42,9 @@
             </div>
         </div>
         <div class="d-inline-flex float-right">
-            <label for="photo" class="mr-3"><img src="image.png" alt="사진등록" width="30px" height="30px"></label>
+            <label for="photo" class="mr-3"><img src="resources/img/image.png" alt="사진등록" width="30px" height="30px"></label>
             <input type="file" name="photo" id="photo">
-            <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="link_green.png" alt="사진등록" width="30px" height="30px"></a> 
+            <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="resources/img/link_green.png" alt="사진등록" width="30px" height="30px"></a> 
 
             <!-- 링크를 입력하는 모달 -->
             <!-- The Modal -->
@@ -63,7 +63,7 @@
                             <button type="button" class="btn btn-outline-secondary mt-4" data-dismiss="modal" id="checkBtn">확인</button>
                         </div>
                     
-                        <img src="search.png" alt="링크" width="20px" height="20px" id="search">
+                        <img src="resources/img/search.png" alt="링크" width="20px" height="20px" id="search">
                     </div>    
                 </div>
             </div>
@@ -74,12 +74,28 @@
 
         <!-- 글이 들어간다 -->
         <div id="contentWrap">궁금한 사항을 입력해 보세요.</div>
+
+        <hr/>
         <!-- 이미지가 들어간다 -->
-        <div id="imageWrap"></div>
+        <div id="imageWrap">
+            <div class="imgWrap">
+                <img src="resources/img/fitimg.jpg" width="400px" height="300px">
+                <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
+            </div>
+        </div>
         <!-- 동영상이 들어간다 -->
-        <div id="movieWrap"></div>
+        <div id="movieWrap">
+            <div class="iframeWrap">
+                <iframe width="400" height="300" src="https://www.youtube.com/embed/gMaB-fG4u4g" title="YouTube video player" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+                <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
+            </div>
+        </div>
+
+        <!-- 빈칸-->
+        <div id="emptyWrap"></div>
     </div>
-    
   </div>
 </body>
 <style>
@@ -89,7 +105,6 @@
     }
     #fitContent{
         border : 1px solid #D8D8D8;
-        height : 500px;
     }
     #fitTitle .row{
         vertical-align: middle;
@@ -136,8 +151,31 @@
     #modalContent{
         position:relative;
     }
+    .imgWrap{
+        width : 440px;
+        height : 300px;
+        margin : 5px;
+        position : relative;
+    }
+    .closeWrap{
+        position : absolute;
+        top : 10px;
+        left : 410px;
+    }
+    .iframeWrap{
+        width : 440px;
+        height : 300px;
+        margin : 5px;
+        position : relative;
+    }
+    #emptyWrap{
+        height : 200px;
+    }
+
 </style>
 <script>
-
+    $(document).on("click",".closeWrap",function(){
+        $(this).parent().remove();
+    });
 </script>
 </html>
