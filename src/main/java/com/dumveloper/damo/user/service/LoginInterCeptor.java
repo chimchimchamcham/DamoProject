@@ -18,7 +18,6 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 		System.out.println("로그인 체크 인터셉터");
 
 		boolean pass = false;
-		ModelAndView mav = new ModelAndView();
 		
 		HttpSession session = request.getSession();
 		DamoDTO info = (DamoDTO) session.getAttribute("loginId");
@@ -28,8 +27,7 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 			System.out.println(info.getU_id()+"로그인 했음");
 		}else {
 			System.out.println("로그인 안됨");
-			response.sendRedirect("/");
-			
+			response.sendRedirect("redirect:/");
 		}
 
 		return pass;
@@ -38,11 +36,11 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView mav) throws Exception {
-		
-		String msg = "로그인이 필요한 서비스 입니다.";
-		HttpSession session = request.getSession();
-		
-		mav.addObject("msg", msg);
+		/*
+		 * String msg = "로그인이 필요한 서비스 입니다."; HttpSession session = request.getSession();
+		 * 
+		 * mav.addObject("msg", msg);
+		 */
 	}
 
 }
