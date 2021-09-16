@@ -126,7 +126,7 @@ ${cursor}
     <div class="dropdown-menu" style="font-size:14px;" id="dropdown">
       <a class="dropdown-item text-muted" href="#" >지식Fit</a>
       <a class="dropdown-item text-muted" href="#">명예의 전당</a>
-      <a class="dropdown-item text-muted" href="#">질문하기</a>
+      <a class="dropdown-item text-muted" href="fitWriteForm">질문하기</a>
        <a class="dropdown-item text-muted" href="#">내 지식사전</a>
     </div>
   </li>
