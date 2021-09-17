@@ -85,7 +85,8 @@
 </script>
 <style>
 body {
-	margin: 40px 10px;
+	/* margin: 40px 10px; */
+	margin: 0px;
 	padding: 0;
 	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 	font-size: 14px;
@@ -98,7 +99,7 @@ body {
 </style>
 </head>
 <body>
-<div class='shadow p-3 mb-5 bg-white rounded'>
+<div class='p-3 mb-5 bg-white rounded'>
 	<div class='container '>
 		<div id='calendar' class=''>
 	</div>
