@@ -252,8 +252,8 @@
     
     
     //파일 등록시 이벤트
-    console.log($("#photo").val());
-    $("#photo").on("change",function(e){
+
+/*     $("#photo").on("change",function(e){
     	console.log('썸네일 등록');
     	//썸네일 등록
         	var reader = new FileReader();
@@ -265,46 +265,55 @@
         		content += '</div>';
         		
         		$("#imageWrap").empty().html(content);
-        		console.log($("#photo").val());
-        		console.log(e.target.files);
-        		console.log(e.target.result);
-        		console.log(e.target.files[0]);
+        		console.log('value',$("#photo").val());
+        		console.log('e.target.files',e.target.files);
+        		console.log('e.target.result',e.target.result);
         		
         	}; 
-        	reader.readAsDataURL(event.target.files[0]); 
+        	console.log('e.target.files[0]',e.target.files[0]);
+    		
+        	reader.readAsDataURL(e.target.files[0]); 
         
-    });
+    }); */
     
-/*     var sel_files = [];
     $("#photo").on("change",function(e){
     	console.log('썸네일 등록');
+    	
     	//썸네일 등록
     	var files = e.target.files;
+    	console.log(e.target.files);
+    	console.log(e.target.files.length);
+    	//유사배열을 배열로 변환
     	var filesArr = Array.prototype.slice.call(files);
     	
-    	var content = "";
-    	filesArr.forEach(function(f){
-    		sel_files.push(f);
+    	filesArr.forEach(function(file, index){
     		
         	var reader = new FileReader();
+        	
+        	//파일이름
+        	console.log('file.name',file.name);
+        	
+			var result = '';
         	reader.onload = function(e){
         		
+        		console.log('e.target.result',e.target.result);
+        		
+        		var content = '';
         		content += '<div class="imgWrap">';
         		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
         		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
         		content += '</div>';
-        		
-        		console.log('f',f);				
-        		console.log('e.target.result',e.target.result);
-        		
-        		reader.readAsDataURL(e.target.files[0]);
-        	};
         	
+        		$("#imageWrap").append(content);
+        	};
+        	        	
+        	console.log('file',file);
+        	reader.readAsDataURL(file);
+    		
     	});
-    	$("#imageWrap").empty().html(content);
-        	 
-        
-    }); */
+    	//$("#imageWrap").empty().html(content);
+       
+    });
 
     
     
