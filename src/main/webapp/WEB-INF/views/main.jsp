@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a href="#about" class="btn-get-started scrollto">다모 시작하기</a>
       </div>
 
       <div class="row icon-boxes">
