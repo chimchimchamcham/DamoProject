@@ -21,10 +21,10 @@
       headerToolbar: {
         left: 'prevYear,prev,next,nextYear today',
         center: 'title', 
-        right: 'dayGridMonth,dayGridDay' //일기가 뜨도록
+        right: 'dayGridMonth' //일기가 뜨도록
       },
       //initialDate: '2020-09-15', //초기에 어떤 날짜를 보여줄지 설정 설정안하면 현재 날짜로
-      navLinks: true, //can click day/week names to navigate views
+      navLinks: false, //can click day/week names to navigate views
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [
@@ -53,16 +53,15 @@
     	</c:if>
     	  
     	  	]
+      ,dateClick:function(date){
+    	  console.log('Date:',date.dateStr);
+    	  console.log('Resource ID:',date.dateStr);
+    	  location.href='goDiary';
+      }
 
  	 });
     calendar.render();
   });	
-
-  <c:if test="${list ne ''}">
-  <c:forEach items="${list}" var="dto">
-  console.log(${dto.d_success})
-  </c:forEach> 
-	</c:if>
 </script>
 <style>
 body {
@@ -97,6 +96,10 @@ body {
 </div>
 </body>
 <script>
-
+	$(".fc-daygrid-day-number").click(function(){
+		console.log("click");
+	});
+		
+	
 </script>
 </html>
