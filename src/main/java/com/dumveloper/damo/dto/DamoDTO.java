@@ -33,6 +33,26 @@ public class DamoDTO {
 	private int c_tarKcal; //목표 섭취 칼로리
 	private int c_tarExe; //목표 운동 칼로리
 	
+	//일기
+	private int d_no; //일기 번호
+	private String d_id; //일기 작성 아이디
+	private Date d_date; //일기 작성 날짜
+	private String d_memo; //일기 메모
+	private int d_weight; //몸무게
+	private int d_carbo; //권장 탄수화물량
+	private int d_protein; //권장 단백질량
+	private int d_fat; //권장 지방량
+	private int d_resultEat; //섭취칼로리 합계
+	private int d_resultExe; //운동칼로리 합계
+	private int d_resultCarbo; //섭취 탄수화물 합계
+	private int d_resultProtein; //섭취 답백질 합계
+	private int d_resultFat; //섭취 지방 합계
+	private int d_tarKcal; //목표섭취 칼로리
+	private int d_tarExe; //목표 운동 칼로리
+	private boolean d_success; //성공 여부
+	private String d_code; //분류 코드
+	
+	
 	//지식fit
 	private int k_no; //글번호
 	//private String u_id; //작성 아이디
@@ -242,6 +262,108 @@ public class DamoDTO {
 	}
 	public void setK_blindYN(String k_blindYN) {
 		this.k_blindYN = k_blindYN;
+	}
+	public int getD_no() {
+		return d_no;
+	}
+	public void setD_no(int d_no) {
+		this.d_no = d_no;
+	}
+	public String getD_id() {
+		return d_id;
+	}
+	public void setD_id(String d_id) {
+		this.d_id = d_id;
+	}
+	public Date getD_date() {
+		return d_date;
+	}
+	public void setD_date(Date d_date) {
+		this.d_date = d_date;
+	}
+	public String getD_memo() {
+		return d_memo;
+	}
+	public void setD_memo(String d_memo) {
+		this.d_memo = d_memo;
+	}
+	public int getD_weight() {
+		return d_weight;
+	}
+	public void setD_weight(int d_weight) {
+		this.d_weight = d_weight;
+	}
+	public int getD_carbo() {
+		return d_carbo;
+	}
+	public void setD_carbo(int d_carbo) {
+		this.d_carbo = d_carbo;
+	}
+	public int getD_protein() {
+		return d_protein;
+	}
+	public void setD_protein(int d_protein) {
+		this.d_protein = d_protein;
+	}
+	public int getD_fat() {
+		return d_fat;
+	}
+	public void setD_fat(int d_fat) {
+		this.d_fat = d_fat;
+	}
+	public int getD_resultEat() {
+		return d_resultEat;
+	}
+	public void setD_resultEat(int d_resultEat) {
+		this.d_resultEat = d_resultEat;
+	}
+	public int getD_resultExe() {
+		return d_resultExe;
+	}
+	public void setD_resultExe(int d_resultExe) {
+		this.d_resultExe = d_resultExe;
+	}
+	public int getD_resultCarbo() {
+		return d_resultCarbo;
+	}
+	public void setD_resultCarbo(int d_resultCarbo) {
+		this.d_resultCarbo = d_resultCarbo;
+	}
+	public int getD_resultProtein() {
+		return d_resultProtein;
+	}
+	public void setD_resultProtein(int d_resultProtein) {
+		this.d_resultProtein = d_resultProtein;
+	}
+	public int getD_resultFat() {
+		return d_resultFat;
+	}
+	public void setD_resultFat(int d_resultFat) {
+		this.d_resultFat = d_resultFat;
+	}
+	public int getD_tarKcal() {
+		return d_tarKcal;
+	}
+	public void setD_tarKcal(int d_tarKcal) {
+		this.d_tarKcal = d_tarKcal;
+	}
+	public int getD_tarExe() {
+		return d_tarExe;
+	}
+	public void setD_tarExe(int d_tarExe) {
+		this.d_tarExe = d_tarExe;
+	}
+	public boolean isD_success() {
+		return d_success;
+	}
+	public void setD_success(boolean d_success) {
+		this.d_success = d_success;
+	}
+	public String getD_code() {
+		return d_code;
+	}
+	public void setD_code(String d_code) {
+		this.d_code = d_code;
 	}
 	
 }
