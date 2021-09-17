@@ -34,6 +34,7 @@ public class UserController {
 		
 		logger.info("id:{}/pw:{}",id,pw);
 		int cnt = service.login(id,pw);
+		
 		String file = service.photofile(id);
 		String nick = service.nickname(id);
 		String manager = service.manager(id);
@@ -46,10 +47,12 @@ public class UserController {
 		if (cnt>0) {
 			mav.setViewName("redirect:/");
 			mav.addObject("msg", "로그인에 성공했습니다");
+			
 			session.setAttribute("loginId",id);//아이디
 			session.setAttribute("loginFile",file);//사진경로
 			session.setAttribute("loginNick",nick);//닉네임
 			session.setAttribute("loginManager",manager);//관리자여부Y/N
+			
 		}else {
 			mav.setViewName("/user/login");
 			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
@@ -70,9 +73,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/findpw", method = RequestMethod.POST)
-	public ModelAndView findpw(@RequestParam String id,@RequestParam String name,@RequestParam String email,@RequestParam String pw) {
+	public ModelAndView findpw(@RequestParam String id,@RequestParam String name,@RequestParam String email,@RequestParam String pw,@RequestParam String checkpass) {
+		
 		logger.info("findpw");
-		return service.pwfind(id,name,email,pw);
+		return service.pwfind(id,name,email,pw,checkpass);
+	
 	}
 	
 	@RequestMapping(value = "/gojointerms", method = RequestMethod.GET)
