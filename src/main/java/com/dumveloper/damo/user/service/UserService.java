@@ -3,6 +3,8 @@ package com.dumveloper.damo.user.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +163,15 @@ public class UserService {
 	}
 	public String manager(String id) {
 		return dao.dbmanager(id);
+	}
+
+
+
+	//세션
+	public DamoDTO updateuserinfo(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		String id = (String) session.getAttribute("loginId");
+		return dao.userinfo(id);
 	}
 
 

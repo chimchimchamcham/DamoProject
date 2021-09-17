@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.user.service.UserService;
 
 @Controller
@@ -38,7 +40,7 @@ public class UserController {
 		
 		//블랙리스트 여부
 		HashMap<Object, String> blacklistcheck = service.check(id);
-		
+		//블랙리스트랑 일치하는 아이디가 있으면
 	if (blacklistcheck!=null) {
 		
 		logger.info("blacklistcheck:{}",blacklistcheck);
@@ -102,6 +104,7 @@ public class UserController {
 		}
 		
 		return mav;
+		//블랙리스트랑 일치하는 아이디가 없으면
 	}else {
 		
 		String file = service.photofile(id);
@@ -195,8 +198,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/goupdate", method = RequestMethod.GET)
-	public String goupdate(Model model) {
+	public String goupdate(Model model,HttpSession session) {
 		logger.info("updateinfo");
+		DamoDTO dto = service.updateuserinfo(session);
+		model.addAttribute("info", dto);
+		
 		return "/user/update_myinfo";
 	}
 	
