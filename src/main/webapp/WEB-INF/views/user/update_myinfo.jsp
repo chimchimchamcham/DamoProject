@@ -10,10 +10,24 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style>
+    body{
+      background: #eaeaed;
+    }
+    .fixed, .fluid {
+      background: white;
+
+    }
 </style>
 </head>
 <body>
-success
+
+  <div class="container">
+  	<h1>회원 정보 수정</h1>
+    <div class="fixed w-100 h-100">
+    
+    </div>
+  </div>
+
 </body>
 <script>
 </script>

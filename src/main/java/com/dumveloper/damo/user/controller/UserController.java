@@ -38,6 +38,9 @@ public class UserController {
 		
 		//블랙리스트 여부
 		HashMap<Object, String> blacklistcheck = service.check(id);
+		
+	if (blacklistcheck!=null) {
+		
 		logger.info("blacklistcheck:{}",blacklistcheck);
 		
 		String b_id = blacklistcheck.get("U_ID");
@@ -99,6 +102,38 @@ public class UserController {
 		}
 		
 		return mav;
+	}else {
+		
+		String file = service.photofile(id);
+		String nick = service.nickname(id);
+		String manager = service.manager(id);
+		
+		logger.info("photofile:{}",file);
+		logger.info("photofile:{}",nick);
+		
+		logger.info(id+"의 갯수:"+cnt);			
+		
+		if (cnt>0) {
+			mav.setViewName("redirect:/");
+			mav.addObject("msg", "로그인에 성공했습니다");
+			
+			session.setAttribute("loginId",id);//아이디
+			session.setAttribute("loginFile",file);//사진경로
+			session.setAttribute("loginNick",nick);//닉네임
+			session.setAttribute("loginManager",manager);//관리자여부Y/N
+			
+		}else {
+			mav.setViewName("/user/login");
+			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
+		}
+		
+		
+		
+		
+		
+	}
+	return mav;
+	
 	}
 	
 	@RequestMapping(value = "/Goidandpassfind", method = RequestMethod.GET)
