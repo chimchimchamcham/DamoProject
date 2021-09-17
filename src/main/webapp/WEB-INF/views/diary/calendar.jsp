@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <link href='resources/fullcalendar-5.9.0/lib/main.css' rel='stylesheet' />
 <script src='resources/fullcalendar-5.9.0/lib/main.js'></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <script>  
   document.addEventListener('DOMContentLoaded', function() {
@@ -49,7 +53,7 @@ body {
 </head>
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
-<a href="goDiaray">일기 쓰기</a>
+<a href="goDiary">일기 쓰기</a>
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container '>
