@@ -32,9 +32,9 @@
     calendar.render();
   });	
 
-  <c:forEach items="${list}" var="dto">
+/*   <c:forEach items="${list}" var="dto">
   	console.log("in");
-  </c:forEach>
+  </c:forEach> */
   
 </script>
 <style>
@@ -53,6 +53,7 @@ body {
 </style>
 </head>
 <body>
+
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container '>
