@@ -1,9 +1,11 @@
 package com.dumveloper.damo.user.controller;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,35 +30,75 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam String id,@RequestParam String pw,HttpSession session) {	
+	public ModelAndView login(@RequestParam String id,@RequestParam String pw,HttpSession session) throws Exception{	
 		
 		ModelAndView mav = new ModelAndView();
 		
 		logger.info("id:{}/pw:{}",id,pw);
 		int cnt = service.login(id,pw);
 		
-		String file = service.photofile(id);
-		String nick = service.nickname(id);
-		String manager = service.manager(id);
+		//블랙리스트 여부
+		HashMap<Object, String> blacklistcheck = service.check(id);
+		logger.info("blacklistcheck:{}",blacklistcheck);
 		
-		logger.info("photofile:{}",file);
-		logger.info("photofile:{}",nick);
+		String b_id = blacklistcheck.get("U_ID");
+		String b_content = blacklistcheck.get("B_CONTENT");
+		String b_endtime = blacklistcheck.get("ENDTIME");
+		//블랙리스트 끝나는 시간
+		Date endtime = new SimpleDateFormat("yyyy-MM-dd").parse(b_endtime);
+		SimpleDateFormat newdateformat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		logger.info(id+"의 갯수:"+cnt);			
+		String endFormat = newdateformat.format(endtime);
 
-		if (cnt>0) {
-			mav.setViewName("redirect:/");
-			mav.addObject("msg", "로그인에 성공했습니다");
+		
+		//현제날짜
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date now = new Date();
+		String now_dt = format.format(now);
+		logger.info("now_dt:{}",now_dt);
+
+		
+		logger.info("blacklistcheck_id:{}",b_id);
+		logger.info("blacklistcheck_content:{}",b_content);
+		logger.info("blacklistcheck_ENDTIME:"+endFormat);
+		
+
+		int compare = endFormat.compareTo(now_dt);
+		
+		logger.info("blacklistcheck_compare:"+compare);
+		
+		if (compare<=0) {
 			
-			session.setAttribute("loginId",id);//아이디
-			session.setAttribute("loginFile",file);//사진경로
-			session.setAttribute("loginNick",nick);//닉네임
-			session.setAttribute("loginManager",manager);//관리자여부Y/N
+			String file = service.photofile(id);
+			String nick = service.nickname(id);
+			String manager = service.manager(id);
 			
+			logger.info("photofile:{}",file);
+			logger.info("photofile:{}",nick);
+			
+			logger.info(id+"의 갯수:"+cnt);			
+			
+			if (cnt>0) {
+				mav.setViewName("redirect:/");
+				mav.addObject("msg", "로그인에 성공했습니다");
+				
+				session.setAttribute("loginId",id);//아이디
+				session.setAttribute("loginFile",file);//사진경로
+				session.setAttribute("loginNick",nick);//닉네임
+				session.setAttribute("loginManager",manager);//관리자여부Y/N
+				
+			}else {
+				mav.setViewName("/user/login");
+				mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
+			}
+			
+			
+			return mav;
 		}else {
 			mav.setViewName("/user/login");
-			mav.addObject("msg", "아이디 또는 비밀번호를 확인하세요");
+			mav.addObject("msg", "당신은"+b_content+"때문에"+endFormat+"까지"+" 블랙리스트에 등록되어 로그인이 불가합니다");
 		}
+		
 		return mav;
 	}
 	
