@@ -17,7 +17,7 @@
             <div id="title"class="col-md-8">
                 <div class="d-flex">
                     <span id="q">Q.</span>
-                    <input type="text" class="form-control" id="inputTitle"> <!-- 제목 --> 
+                    <input type="text" name="k_title" class="form-control" id="k_title"> <!-- 제목 --> 
                 </div>
             </div>
             <div id="titleBtn" class="col-md-4">
@@ -29,21 +29,21 @@
 
     <div id="fitContent" class="container pt-4 pl-5">
         <div class="d-inline-flex">  
-            <div id="c" class="mr-3 pt-2 text-secondary font-weight-bold">카테고리</div> <!-- 카테고리 -->
-            <div id="category" class="form-group">
+            <div id="c" class="mr-3 pt-2 text-secondary font-weight-bold">카테고리</div>
+            <div id="k_code" class="form-group" name="k_code"> <!-- 카테고리 -->
                 <select class="form-control">
-                  <option>--선택--</option>
-                  <option>자세교정</option>
-                  <option>식단</option>
-                  <option>운동</option>
-                  <option>고민</option>
-                  <option>기타</option>
+                  <option value="">--선택--</option>
+                  <option value="K001">자세교정</option>
+                  <option value="K002">식단</option>
+                  <option value="K003">운동</option>
+                  <option value="K004">고민</option>
+                  <option value="K005">기타</option>
                 </select>
             </div>
         </div>
         <div class="d-inline-flex float-right">
-            <label for="photo" class="mr-3"><img src="resources/img/image.png" alt="사진등록" width="30px" height="30px"></label>
-            <input type="file" name="photo" multiple id="photo" accept="image/gif,image/jpeg,image/png,image/jpg" >
+            <label for="photo" class="mr-3"><img src="resources/img/image.png" alt="사진등록" width="30px" height="30px" id="photoRegister"></label>
+            <input type="file" name="photo" multiple id="photo" accept="image/gif,image/jpeg,image/png,image/jpg" > <!-- 사진 -->
             <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="resources/img/link.png" alt="링크등록" width="30px" height="30px" id="linkRegister"></a> 
 
             <!-- 링크를 입력하는 모달 -->
@@ -74,7 +74,7 @@
 
 		<div id="contentWrap">
 	        <!-- 글이 들어간다 -->
-	        <textarea id="content" name="content" placeholder="궁금한 사항을 입력해 보세요."></textarea> <!-- content -->
+	        <textarea id="k_content" name="k_content" placeholder="궁금한 사항을 입력해 보세요."></textarea> <!-- 내용 -->
 			<!-- 글자수 카운트 -->
 			<div id="textCountWrap"><span id="textCount">0</span><span>/1000</span></div>
 		</div>
@@ -88,16 +88,19 @@
         </div>
         <!-- 동영상이 들어간다 -->
         <div id="movieWrap">
-            <div class="iframeWrap"> <!-- 동영상 1개만 -->
+            <!-- <div class="iframeWrap"> 동영상 1개만
                 <iframe width="400" height="300" src="https://www.youtube.com/embed/myNjmnvI6x0" title="YouTube video player" 
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                 </iframe>
                 <a href="#" class="closeIframeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
-            </div>
+            </div> -->
         </div>
         
+        <!-- 이미지 순서 저장 ??? 추후 논의 -->
+        
+        
         <!-- 동영상 url추출 저장 -->
-        <input type="text" name="url" id="inputUrl">
+        <input type="text" name="url" id="iframeUrl">
 
         <!-- 빈칸-->
         <div id="emptyWrap"></div>
@@ -120,7 +123,7 @@
         color : #0275d8;
         margin-right : 20px;
     }
-    #inputTitle{
+    #k_title{
         border : none;
         border-bottom : 2px solid #0275d8;
         border-radius : 0px;
@@ -129,7 +132,7 @@
     #titleBtn button{
         border-radius : 0px;
     }
-    #category{
+    #k_code{
         width : 120px;
     }
     #photo{
@@ -184,13 +187,13 @@
     #contentWrap{
     	position : relative;
     }
-    #content{
+    #k_content{
     	resize : none;
     	padding : 20px;
     	width : 98%;
     	height : 300px;
     }
-    #content:focus{
+    #k_content:focus{
     	outline : none;
     }
     #textCountWrap{
@@ -217,8 +220,8 @@
     });
     
     //키보드 입력시 문자수를 카운트
-    $("#content").on("keyup keypress keydown",function(){
-    	textCount = $("#content").val().length;
+    $("#k_content").on("keyup keypress keydown",function(){
+    	textCount = $("#k_content").val().length;
         $("#textCount").html(textCount);
         if(textCount>1000){
         	$("#textCountWrap").css({"color":"red"});
@@ -234,20 +237,29 @@
     
     //모달 닫기 버튼 클릭시 링크에 있는 주소 일부를 추출해서 iframe으로 만들어 주기
     $("#checkBtn").on("click",function(){
-    	var url = $("#link").val().split('=')[1].split('&')[0];
+    	var url = $("#link").val();
     	console.log(url);
     	
-    	var content = "";
-    	content += '<div class="iframeWrap">';
-    	content += '<iframe width="400" height="300" src="https://www.youtube.com/embed/'+url+'" title="YouTube video player" ';
-    	content += 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>';
-    	content += '</iframe>';
-    	content += '<a href="#" class="closeIframeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
-    	content += '</div>';
+    	if(url == ''){
+    		$("#movieWrap").empty();
+    		$("#iframeUrl").val('');
+    	}else{
+    		url = url.split('=')[1].split('&')[0]
+    		
+    		var content = "";
+        	content += '<div class="iframeWrap">';
+        	content += '<iframe width="400" height="300" src="https://www.youtube.com/embed/'+url+'" title="YouTube video player" ';
+        	content += 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>';
+        	content += '</iframe>';
+        	content += '<a href="#" class="closeIframeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+        	content += '</div>';
+        	
+        	$("#iframeUrl").val(url);
+        	$("#movieWrap").empty().html(content);
+        	$("#linkRegister").attr("src","resources/img/link_green.png");
+        	$("#link").val('');
+    	}
     	
-    	$("#inputUrl").val(url);
-    	$("#movieWrap").empty().html(content);
-    	$("#linkRegister").attr("src","resources/img/link_green.png");
     });
     
     
@@ -276,42 +288,55 @@
         
     }); */
     
+	//파일 등록시 이벤트 (최대 4장)
     $("#photo").on("change",function(e){
     	console.log('썸네일 등록');
+    	
+    	//기존의 썸네일을 삭제
+    	$("#imageWrap").empty();
     	
     	//썸네일 등록
     	var files = e.target.files;
     	console.log(e.target.files);
     	console.log(e.target.files.length);
-    	//유사배열을 배열로 변환
-    	var filesArr = Array.prototype.slice.call(files);
     	
-    	filesArr.forEach(function(file, index){
-    		
-        	var reader = new FileReader();
+    	if(e.target.files.length>=5){
+    		alert("최대 4장까지만 업로드 가능합니다.");
+    	}else{
+    		//유사배열을 배열로 변환
+        	var filesArr = Array.prototype.slice.call(files);
         	
-        	//파일이름
-        	console.log('file.name',file.name);
-        	
-			var result = '';
-        	reader.onload = function(e){
+        	filesArr.forEach(function(file, index){
         		
-        		console.log('e.target.result',e.target.result);
+            	var reader = new FileReader();
+            	
+            	//파일이름
+            	console.log('file.name',file.name);
+            	
+    			var result = '';
+            	reader.onload = function(e){
+            		
+            		console.log('e.target.result',e.target.result);
+            		
+            		var content = '';
+            		content += '<div class="imgWrap">';
+            		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
+            		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+            		content += '<input type="hidden" name="imgNo" value="'+index+'">';
+            		content += '</div>';
+            	
+            		$("#imageWrap").append(content);
+            	};
+            	        	
+            	console.log('file',file);
+            	reader.readAsDataURL(file);
         		
-        		var content = '';
-        		content += '<div class="imgWrap">';
-        		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
-        		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
-        		content += '</div>';
+        	});
         	
-        		$("#imageWrap").append(content);
-        	};
-        	        	
-        	console.log('file',file);
-        	reader.readAsDataURL(file);
-    		
-    	});
-    	//$("#imageWrap").empty().html(content);
+        	//아이콘을 초록색으로 변경
+        	$("#photoRegister").attr("src","resources/img/image_green.png");
+    	}//end else
+    	
        
     });
 
