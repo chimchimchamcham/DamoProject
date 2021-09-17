@@ -1,10 +1,29 @@
 package com.dumveloper.damo.diary.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.dumveloper.damo.diary.dao.CalendarDAO;
+import com.dumveloper.damo.dto.DamoDTO;
 
 @Service
 public class CalendarService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired CalendarDAO dao;
+	public void listKcal(String id) {
+		//dao.listKcal(id);
+		LocalDate now = LocalDate.now();
+		
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/mm");
+		String formatedNow = now.format(format);
+		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
+		
+	}
+	
+	
 }

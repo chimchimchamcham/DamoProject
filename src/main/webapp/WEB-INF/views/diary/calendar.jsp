@@ -23,7 +23,7 @@
       editable: false, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      // dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [//이벤트 설정 
-        {
+     /*    {
           title: '2000kcal',
           start: '2021-09-15',
           backgroundColor:'green',
@@ -52,7 +52,7 @@
           title: 'Long Event',
           start: '2021-09-07'
         }
-      
+       */
       ]
       
       
@@ -100,7 +100,7 @@ body {
 <body>
 <div class='shadow p-3 mb-5 bg-white rounded'>
 	<div class='container '>
-		<div id='calendar' class=''>
+	<div id='calendar' class=''>
 	</div>
 </div>
 </div>
