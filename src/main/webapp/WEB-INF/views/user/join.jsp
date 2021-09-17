@@ -258,8 +258,12 @@
 		        $(".matchornotpw").css('color','green');
 		        $("#pw").css("border-color","#ced4da");
 		        $("#pwch").css("border-color","#ced4da");
-			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-				$(".matchornotpw").text('');
+		        
+		        
+		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+		        	$(".matchornotpw").text('');
+				}
+		        
 			}else{
 				$(".matchornotpw").text('');
 		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
@@ -281,8 +285,10 @@
    		        $(".matchornotpw").css('color','green');
    		        $("#pw").css("border-color","#ced4da");
    		        $("#pwch").css("border-color","#ced4da");
-   			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-   				$(".matchornotpw").text('');
+
+		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+		        	$(".matchornotpw").text('');
+				}
    			}else{
    				$(".matchornotpw").text('');
    		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');

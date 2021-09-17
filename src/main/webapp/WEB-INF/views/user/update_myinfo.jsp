@@ -51,7 +51,7 @@ img {
     align-items: center;
     place-self: flex-end;}
 #input-file{
-	display:none;
+    display:none;
 }
 </style>
 </head>
@@ -64,19 +64,15 @@ img {
         <!--회원 수정(이미지,알림) 정보-->
         <div class="m-3 mr-5">
             <div class="row col-4 d-flex flex-column justify-content-center align-items-center">
-            <!-- <form class="myphoto" action="upload" method="post" enctype="multipart/form-data"> -->
-                <img src="resources/img/${info.u_fileName}" class="rounded-circle d-block mb-3 img-responsive center-block">
-                
-                <button class="btn btn-light btn-outline-dark mb-5 mx-5" onclick="fileUp()">
-	  				사진수정
-				</button>
-                
-                
-                <!-- <label for="input-file" class="btn btn-light btn-outline-dark mb-5 mx-5" onclick="fileUp()">
-	  				사진수정
-				</label> -->
-			<!--	<input type="file" id="input-file"/> -->
-            <!-- </form>-->
+             <img src="./upload/${info.u_fileName}" class="rounded-circle d-block mb-3 img-responsive center-block">
+             <!-- 경로 문제있음 -->
+             <form class="help" action="upload" method="post" enctype="multipart/form-data">
+             
+                <label for="input-file" class="btn btn-light btn-outline-dark mb-5 mx-5"">
+                      	사진수정
+                </label>
+				<input type="file" name="file" id="input-file" onchange="fileUpload()"/>
+             </form>
                 <form class="mb-3 d-flex">
                     <div class="alarm text-center mr-4">알림설정</div>
                     <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-width="100" data-height="25">
@@ -104,8 +100,8 @@ img {
 
                     <div class="form-group row col-12">
                         <label for="id" class="text-left col-3 m-1">닉네임</label>
-                        <input type="text" class="col-5 m-1" name="nick" value="${info.u_nick}">
-                        <div class="text-left col-4 m-1"></div>
+                        <input type="text" class="col-5 m-1" name="nick" id="nick" value="${info.u_nick}">
+                        <div class="text-left col-2 m-1 matchornotnink"></div>
                     </div>
 
 
@@ -114,7 +110,10 @@ img {
                         <label for="pass" class="text-left col-3 m-1">비밀번호</label>
                         <input type="password" class="col-4 form-control m-1 " id="pw" name="pw" value="${info.u_pw}">
                         <input type="password" class="col-3 form-control m-1 " id="pwch" name="pwcheck">
-                        <div class="matchornotpw col-10 text-right ml-3"></div>
+                        <div class="row col-12  justify-content-end pr-5">
+                        	<div style="visibility: hidden">비밀번호 확읜ㄴㄴㄴㄴㄴㄴㅁㅁㅁ</div>
+                        	<div class="matchornotpw text-right pr-5"></div>
+                        </div>
                     </div>
 
                     <div class="form-group row col-12 mb-2 pl-4">
@@ -170,6 +169,10 @@ img {
 </body>
 <script>
 
+//내일 할거 root 안먹힘 
+
+$("#img_form_url").attr("src","C:/upload/"+"${info.u_fileName}");
+
 console.log("info:","${info.u_gender}");
 gender = "${info.u_gender}"
 console.log("gender:",gender);
@@ -186,9 +189,112 @@ if(msg!=""){
 	alert(msg);
 }
 
-function fileUp(){
-	window.open('uploadForm','file upload','width=400','height=100');
+function fileUpload(){
+	$('.help').submit();
 }
+
+
+$(document).ready(function(){
+	
+    
+    $(document).on("focusout focuson keyup","#nick", function() {
+    	var x = $("#nick").val();
+    	var nick = x;
+    	
+    	console.log(nick);
+    	
+ 	   $.ajax({
+		      url : './check/matchnick',
+		      type : 'post',
+		      data : {matchnick:nick},
+		      dataType : 'json',
+		      success : function(data){
+		         if (data == 0) {
+		        	$(".matchornotnink").text('');
+		        	$(".matchornotnink").text('사용가능한 닉네임 입니다');
+		        	$(".matchornotnink").css('color','green');
+		        	$("#nick").css("border-color","#ced4da");
+			
+		        	if (nick=='') {
+		       			console.log('nick');
+					$(".matchornotnink").text('');										
+				}
+		        	
+			}else{
+				$(".matchornotnink").text('');
+		        	$(".matchornotnink").text('중복된 닉네임 입니다');
+		        	$(".matchornotnink").css('color','red');
+		        	$("#nick").css("border-color","red");
+			}
+		         
+		      },
+		      error : function(error){
+		         console.log(error);
+		      }
+		   });
+ 	   
+    })
+    
+ $(document).on("focusout focuson keyup","#pw", function() {
+
+	 var pw1 = $("#pw").val();
+	 var pw2 = $("#pwch").val();
+	 
+		if (pw1==pw2) {
+			$(".matchornotpw").text('');
+	        $(".matchornotpw").text('비밀번호가 일치합니다');
+	        $(".matchornotpw").css('color','green');
+	        $("#pw").css("border-color","#ced4da");
+	        $("#pwch").css("border-color","#ced4da");
+	        
+	        
+	        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+	        	$(".matchornotpw").text('');
+			}
+	        
+		}else{
+			$(".matchornotpw").text('');
+	        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+	        $(".matchornotpw").css('color','red');
+	        $("#pw").css("border-color","red");
+	        $("#pwch").css("border-color","red");
+		}
+   
+    });
+    
+    $(document).on("focusout focuson keyup","#pwch", function() {
+
+   	 var pw1 = $("#pw").val();
+   	 var pw2 = $("#pwch").val();
+   	 
+			if (pw1==pw2) {
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치합니다');
+		        $(".matchornotpw").css('color','green');
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
+		        
+		        
+		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+		        	$(".matchornotpw").text('');
+				}
+			}else{
+				$(".matchornotpw").text('');
+		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
+		        $(".matchornotpw").css('color','red');
+		        $("#pw").css("border-color","red");
+		        $("#pwch").css("border-color","red");
+			}
+      
+       });
+    
+    
+});
+
+
+
+
+
 
 </script>
 </html>

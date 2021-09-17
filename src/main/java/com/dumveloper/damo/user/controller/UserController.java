@@ -230,14 +230,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/upload",method = RequestMethod.POST)
 	public ModelAndView upload(MultipartFile file,HttpSession session) {
-		logger.info("업로드 요청");
-		
+		logger.info("업로드 요청:{}",file);
 		return service.fileupload(file,session);
-	}
-	
-	@RequestMapping(value = "/uploadForm")
-	public String uploadForm() {
-		return "user/uploadForm";
 	}
 	
 	
