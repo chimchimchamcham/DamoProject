@@ -52,6 +52,7 @@ body {
 
 	<div class='container '>
 	<h2>목표</h2>
+	<a href="./goupdate">회원정보 수정</a>
 	<div id='calendar' class=''>
 	</div>
 </div>

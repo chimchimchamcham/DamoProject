@@ -1,7 +1,6 @@
 package com.dumveloper.damo.user.controller;
 
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -136,6 +135,8 @@ public class UserController {
 		
 		return service.check_terms(params);
 	}
+
+	
 	
 	@RequestMapping(value = "/join")
 	public ModelAndView join(Model model,@RequestParam HashMap<String, String> params) {
@@ -157,6 +158,13 @@ public class UserController {
 		}
 		return service.join(params);
 	}
+	
+	@RequestMapping(value = "/goupdate", method = RequestMethod.GET)
+	public String goupdate(Model model) {
+		logger.info("updateinfo");
+		return "/user/update_myinfo";
+	}
+	
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
