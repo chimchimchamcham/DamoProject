@@ -19,7 +19,9 @@ public class CalendarController {
 	
 	 @RequestMapping(value="/calendar") 
 	 public ModelAndView list(HttpSession session) {
+
 		 String id = (String) session.getAttribute("loginId");
+		 
 		 logger.info("로그인 아이디:{}",id);
 		 logger.info("캘린더 요청"); 
 		 
