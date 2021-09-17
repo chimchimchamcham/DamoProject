@@ -38,7 +38,7 @@ public class UserController {
 		
 		//블랙리스트 여부
 		HashMap<Object, String> blacklistcheck = service.check(id);
-		
+		//블랙리스트랑 일치하는 아이디가 있으면
 	if (blacklistcheck!=null) {
 		
 		logger.info("blacklistcheck:{}",blacklistcheck);
@@ -102,6 +102,7 @@ public class UserController {
 		}
 		
 		return mav;
+		//블랙리스트랑 일치하는 아이디가 없으면
 	}else {
 		
 		String file = service.photofile(id);
