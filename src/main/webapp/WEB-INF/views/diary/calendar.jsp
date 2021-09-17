@@ -94,7 +94,8 @@ body {
 </style>
 </head>
 <body>
-<a href=""></a>
+<jsp:include page="../header.jsp"></jsp:include>
+<a href="goDiaray">일기 쓰기</a>
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container '>

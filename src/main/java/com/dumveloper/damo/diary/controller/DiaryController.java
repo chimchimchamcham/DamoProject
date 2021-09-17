@@ -14,7 +14,7 @@ public class DiaryController {
 	
 	@Autowired CalendarService service;
 	
-	 @RequestMapping(value="/GoDiary") 
+	 @RequestMapping(value="/goDiary") 
 	 public String GoDiary() {
 		 logger.info("일기 페이지 요청");
 		 return "diary/diary";

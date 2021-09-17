@@ -16,7 +16,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/fitWriteForm" />
-			<mvc:mapping path="/GoDiary" />
+			<mvc:mapping path="/goDiary" />
 			<bean class="com.dumveloper.damo.user.service.LoginInterCeptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
