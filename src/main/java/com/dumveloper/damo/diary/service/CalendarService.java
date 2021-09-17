@@ -21,16 +21,23 @@ public class CalendarService {
 	@Autowired CalendarDAO dao;
 	
 	public ModelAndView list(String id) {
+
 		LocalDate now = LocalDate.now();
 		logger.info("오늘 날짜 출력:{}",now);
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM");
 		String formatedNow = now.format(format);
 		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
 		
+		
 		ModelAndView mav = new ModelAndView();
-		ArrayList<DamoDTO>list = dao.list(id,formatedNow);
-		logger.info("작성 일기 갯수 : {}",list.size());
-		mav.addObject("list",list);
+		
+		
+		if(id != null) {
+			ArrayList<DamoDTO>list = dao.list(id,formatedNow);
+			logger.info("작성 일기 갯수 : {}",list.size());
+			mav.addObject("list",list);
+		}
+		
 		mav.setViewName("diary/calendar");
 		return mav;
 	}

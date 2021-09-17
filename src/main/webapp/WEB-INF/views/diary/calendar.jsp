@@ -28,12 +28,11 @@
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [
-    	 	
     	  	]
 
  	 });
     calendar.render();
-  });
+  });	
 
 </script>
 <style>
@@ -52,8 +51,11 @@ body {
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 <jsp:include page="../header.jsp"></jsp:include>
 <a href="goDiary">일기 쓰기</a>
+=======
+>>>>>>> 56610f59204eab51d31c42d4ebf856a61fd5b613
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container '>
@@ -63,7 +65,6 @@ body {
 	</div>
 </div>
 </div>
-
 </body>
 <script>
 
