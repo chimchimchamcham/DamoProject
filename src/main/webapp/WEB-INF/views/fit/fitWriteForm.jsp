@@ -72,9 +72,12 @@
 
         <hr/>
 
-        <!-- 글이 들어간다 -->
-        <textarea id="content" name="content" style="resize: none;" cols="146" rows="15">궁금한 사항을 입력해 보세요.</textarea>
-
+		<div id="contentWrap">
+	        <!-- 글이 들어간다 -->
+	        <textarea id="content" name="content" cols="141" rows="13" placeholder="궁금한 사항을 입력해 보세요."></textarea>
+			<!-- 글자수 카운트 -->
+			<span id="textCount">0</span>
+		</div>
         <hr/>
         <!-- 이미지가 들어간다 -->
         <div id="imageWrap">
@@ -170,11 +173,34 @@
     #emptyWrap{
         height : 200px;
     }
+    #contentWrap{
+    	position : relative;
+    }
+    #content{
+    	resize : none;
+    	padding : 20px;
+    }
+    #content:focus{
+    	outline : none;
+    }
+    #textCount{
+    	position : absolute;
+    	top : 200px;
+    	left : 200px;
+    }
 
 </style>
 <script>
+    //x를 클릭 했을 때 이미지 삭제하기
     $(document).on("click",".closeWrap",function(){
         $(this).parent().remove();
     });
+    
+    //키보드 입력시 문자수를 카운트
+    $("#content").on("keyup keypress keydown",function(){
+    	var textCount = $("#content").val().length;
+        $("#textCount").html(textCount);
+    });
+    
 </script>
 </html>
