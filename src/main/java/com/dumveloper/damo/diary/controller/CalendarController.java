@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.diary.service.CalendarService;
 
@@ -17,12 +18,12 @@ public class CalendarController {
 	@Autowired CalendarService service;
 	
 	 @RequestMapping(value="/calendar") 
-	 public/* HashMap<String, String>*/String list(HttpSession session) {
+	 public ModelAndView list(HttpSession session) {
 		 String id = (String) session.getAttribute("loginId");
 		 logger.info("로그인 아이디:{}",id);
-		 service.list(id);
 		 logger.info("캘린더 요청"); 
-		 return "diary/calendar";
+		 
+		 return  service.list(id);
 	 }
 	 
 	
