@@ -81,9 +81,13 @@
         <hr/>
         <!-- 이미지가 들어간다 -->
         <div id="imageWrap">
-            <div class="imgWrap">
-                <img src="resources/img/fitimg.jpg" width="400px" height="300px"> <!-- 이미지 4장까지 -->
+            <!-- <div class="imgWrap">
+                <img src="resources/img/fitimg.jpg" width="400px" height="300px"> 이미지 4장까지
                 <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
+            </div> -->
+            <div class="imgWrap">
+                <img src="" width="400px" height="300px"> <!-- 이미지 4장까지 -->
+                <a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
             </div>
         </div>
         <!-- 동영상이 들어간다 -->
@@ -92,7 +96,7 @@
                 <iframe width="400" height="300" src="https://www.youtube.com/embed/myNjmnvI6x0" title="YouTube video player" 
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                 </iframe>
-                <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
+                <a href="#" class="closeIframeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
             </div>
         </div>
         
@@ -162,7 +166,12 @@
         margin : 5px;
         position : relative;
     }
-    .closeWrap{
+    .closeImgWrap{
+        position : absolute;
+        top : 10px;
+        left : 410px;
+    }
+    .closeIframeWrap{
         position : absolute;
         top : 10px;
         left : 410px;
@@ -200,8 +209,13 @@
 	//내용 글자수 카운트
 	var textCount = 0;
 	
-    //x를 클릭 했을 때 이미지 삭제하기
-    $(document).on("click",".closeWrap",function(){
+	//x를 클릭 했을 때 동영상 삭제하기
+    $(document).on("click",".closeImgWrap",function(){
+        $(this).parent().remove();
+    });
+	
+    //x를 클릭 했을 때 동영상 삭제하기
+    $(document).on("click",".closeIframeWrap",function(){
         $(this).parent().remove();
         $("#linkRegister").attr("src","resources/img/link.png");
     });
@@ -232,13 +246,29 @@
     	content += '<iframe width="400" height="300" src="https://www.youtube.com/embed/'+url+'" title="YouTube video player" ';
     	content += 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>';
     	content += '</iframe>';
-    	content += '<a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+    	content += '<a href="#" class="closeIframeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
     	content += '</div>';
     	
     	$("#inputUrl").val(url);
     	$("#movieWrap").empty().html(content);
     	$("#linkRegister").attr("src","resources/img/link_green.png");
     });
+    
+    
+    //파일 등록시 이벤트
+    $("#photo").on("change",function(){
+    	setThumbnail(e);
+    });
+    //썸네일 등록
+    function setThumbnail(e){
+    	var reader = new FileReader();
+    	reader.onload = function(e){
+    		$(".imgWrap img").attr("src",e.target.result);
+    	}; 
+    	reader.readAsDataURL(event.target.files[0]); 
+    }
+
+
     
     
 </script>
