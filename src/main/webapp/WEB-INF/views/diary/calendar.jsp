@@ -29,7 +29,7 @@
 
  	 });
     calendar.render();
-  });
+  });	
 
 </script>
 <style>
