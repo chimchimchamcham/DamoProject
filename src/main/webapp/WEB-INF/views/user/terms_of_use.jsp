@@ -35,7 +35,9 @@ a:hover {text-decoration: underline; color: black;}
   color: white !important;
   background-color: #3b5998;
 }
-
+	img:hover{
+		cursor: pointer;
+	}
 </style>
 <body>
     <div class="container-fluid">
@@ -46,7 +48,7 @@ a:hover {text-decoration: underline; color: black;}
               <h5 class="card-title text-center fw-light fs-5">비밀번호 찾기</h5>
               <form method="post" action="gojoin" class="row d-flex justify-content-center align-items-center my-3">
                 <div class="row">
-                  <img src="resources/img/logo3.png" class="col-10 mx-auto mb-2">
+                  <img src="resources/img/logo3.png" class="col-10 mx-auto mb-2" onclick="location.href='./'">
                 </div>
 
                 <div class="form-check-inline d-flex flex-column w-100">

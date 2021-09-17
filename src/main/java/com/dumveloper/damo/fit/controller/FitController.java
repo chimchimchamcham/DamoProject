@@ -2,6 +2,8 @@ package com.dumveloper.damo.fit.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +24,16 @@ public class FitController {
 	@Autowired FitService fitservice;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) {
+	public String home(Model model ,HttpSession session) {
 
-		logger.info("메인 페이지 접속");
-
-		return "main";
+		logger.info("메인 페이지 접속 요청");
+		String page= "main";
+		
+		if(session.getAttribute("loginId") != null) {
+			logger.info("캘린더 페이지 접속 요청");
+			page= "redirect:/calendar";
+		}
+		return page;
 
 	}
 	

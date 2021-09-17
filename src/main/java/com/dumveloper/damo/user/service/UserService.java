@@ -1,5 +1,6 @@
 package com.dumveloper.damo.user.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -39,6 +40,11 @@ public class UserService {
 		return dao.login(id,pw);
 	}
 
+	//로그인할때 블랙리스트 체크
+	public HashMap<Object, String> check(String id) {
+		return dao.dbblacklist(id);
+	}
+	
 	//회원 가입
 	@Transactional
 	public ModelAndView join(HashMap<String, String> param) {
@@ -156,6 +162,12 @@ public class UserService {
 	public String manager(String id) {
 		return dao.dbmanager(id);
 	}
+
+
+
+
+
+
 
 
 
