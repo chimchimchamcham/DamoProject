@@ -19,7 +19,7 @@
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
       headerToolbar: {
-        left: 'prevYear,prev,next,nextYear today',
+        left: 'prev,today,next',
         center: 'title', 
         right: 'dayGridMonth' //일기가 뜨도록
       },
@@ -56,7 +56,7 @@
       ,dateClick:function(date){
     	  console.log('Date:',date.dateStr); //일자 가져가기
     	  console.log('Resource ID:',date.dateStr);
-    	  location.href='goDiary';
+    	  //location.href='goDiary';
       }
 
  	 });
@@ -87,13 +87,21 @@ body {
 
 <div class='p-3 mb-5 bg-white rounded'>
 
-	<div class='container '>
-	<h2>목표</h2>
+	<div class='container'>
 	<a href="./goupdate">회원정보 수정</a>
+	<div class="row">
+		<div class="col-2"></div>
+		<div class="col-8">
+			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" id="goal" style="text-align:center">
+		</div>
+		<div class="col-2"></div>
+	</div>
 	<div id='calendar' class=''>
 	</div>
 </div>
 </div>
 </body>
+<script>
 
+</script>
 </html>
