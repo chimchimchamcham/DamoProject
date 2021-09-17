@@ -7,7 +7,7 @@
 
 <mapper namespace="com.dumveloper.damo.diary.dao.CalendarDAO">
 <select id="list" resultType="damo" >
-	SELECT U_ID,TO_CHAR(D_DATE,'YYYY-MM-DD') AS D_DATE,D_RESULTEAT, D_RESULTEXE,D_SUCCESS FROM DIARY 
+	SELECT U_ID,TO_CHAR(D_DATE,'YYYY-MM-DD') AS D_DATE,D_WEIGHT,D_RESULTEAT, D_RESULTEXE,D_SUCCESS FROM DIARY 
 	WHERE U_ID = #{param1} AND TO_CHAR(D_DATE,'YYYY-MM') = #{param2}
 </select>
 
