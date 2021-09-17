@@ -21,6 +21,9 @@
 	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
+	   img:hover{
+		cursor: pointer;
+	}
 </style>
 <body class="bg-primary">
 <div class="container mx-auto bg-white py-3 w-50 h-50" style="border-radius:3vh;margin-top: 5%;">
@@ -28,7 +31,7 @@
    <div class="justify-content-center align-items-center my-2 p-2">
     <div class="row">
      	<a href="gojointerms" class="text-primary display-4">←</a>
-        <img src="resources/img/logo3.png" class="col-5 mx-auto">
+        <img src="resources/img/logo3.png" class="col-5 mx-auto" onclick="location.href='./'">
     </div>
 
     <form action="join" method="post" class="row flex-column align-items-center justify-content-center my-5">

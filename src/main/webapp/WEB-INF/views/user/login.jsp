@@ -34,6 +34,9 @@
 		  color: white !important;
 		  background-color: #3b5998;
 	}
+	img:hover{
+		cursor: pointer;
+	}
 </style>
 <body>
     <div class="container">
@@ -42,7 +45,7 @@
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
               <div class="row">
-                    <img src="resources/img/logo3.png" class="col-11 mx-auto my-5">
+                    <img src="resources/img/logo3.png" class="col-11 mx-auto my-5" onclick="location.href='./'">
               </div>
               <form method="post" action="login"> 
                 <div class="form-floating mb-3">
