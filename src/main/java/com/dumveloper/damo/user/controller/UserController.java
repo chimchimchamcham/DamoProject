@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.user.service.UserService;
 
 @Controller
@@ -196,8 +198,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/goupdate", method = RequestMethod.GET)
-	public String goupdate(Model model) {
+	public String goupdate(Model model,HttpSession session) {
 		logger.info("updateinfo");
+		DamoDTO dto = service.updateuserinfo(session);
+		model.addAttribute("info", dto);
+		
 		return "/user/update_myinfo";
 	}
 	

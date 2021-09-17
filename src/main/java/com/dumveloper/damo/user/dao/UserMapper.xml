@@ -11,6 +11,10 @@
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1} AND U_PW = #{param2}  AND U_BLINDYN = 'N'
 	</select>
 
+	<select id="userinfo" resultType="damo">
+		SELECT * FROM USERINFO WHERE U_ID = #{param1}  AND U_BLINDYN = 'N'
+	</select>
+
 	<select id="dbblacklist" resultType="hashmap">
 		SELECT U_ID,TO_CHAR(B_ENDDT,'YYYY-MM-DD')AS ENDTIME,B_CONTENT FROM BLACKLIST WHERE U_ID = #{param1}
 	</select>
