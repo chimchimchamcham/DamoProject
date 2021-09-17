@@ -118,7 +118,10 @@ public class UserController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginId");
+		session.removeAttribute("loginId"); //아이디
+		session.removeAttribute("loginFile"); //파일이름
+		session.removeAttribute("loginNick");//닉네임
+		session.removeAttribute("loginManager");//관리자 여부
 		logger.info("로그아웃 요청");
 		return "redirect:/";
 	}
