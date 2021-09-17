@@ -32,9 +32,6 @@
     calendar.render();
   });	
 
-/*   <c:forEach items="${list}" var="dto">
-  	console.log("in");
-  </c:forEach> */
   
 </script>
 <style>
