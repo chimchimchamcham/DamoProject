@@ -24,12 +24,18 @@
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [
+    	  
+    	  
     	  	]
 
  	 });
     calendar.render();
   });	
 
+  <c:forEach items="${list}" var="dto">
+  	console.log("in");
+  </c:forEach>
+  
 </script>
 <style>
 body {
