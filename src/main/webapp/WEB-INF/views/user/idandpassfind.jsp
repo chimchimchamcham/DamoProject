@@ -84,7 +84,7 @@
 	                  <input type="password" class="form-control" name="pw" id="pw" placeholder="새 비밀번호">
 	                </div>
 	                <div class="form-floating mb-1">
-	                  <input type="password" class="form-control" id="checkpass" placeholder="비밀번호 확인">
+	                  <input type="password" class="form-control" name="checkpass" id="checkpass" placeholder="비밀번호 확인">
 	                </div>
 	                <div class="matchornotpw col-12 display-5 text-center p-1 m-1"></div>
 	                <div class="d-grid">
@@ -135,39 +135,51 @@
 		        $(".matchornotpw").css('color','green');
 		        $("#pw").css("border-color","#ced4da");
 		        $("#checkpass").css("border-color","#ced4da");
-			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-				$(".matchornotpw").text('');
+		        
+
 			}else{
 				$(".matchornotpw").text('');
 		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
 		        $(".matchornotpw").css('color','red');
 		        $("#pw").css("border-color","red");
 		        $("#checkpass").css("border-color","red");
+		        
+	        	if ((pw1==''||pw2=='')||pw1==''&&pw2=='') {
+					$(".matchornotpw").text('');		
+			        $("#pw").css("border-color","#ced4da");
+			        $("#checkpass").css("border-color","#ced4da");
+				}
 			}
     
      });
      
-     $(document).on("focusout focuson keyup","#pwch", function() {
+     $(document).on("focusout focuson keyup","#checkpass", function() {
 
     	 var pw1 = $("#pw").val();
-    	 var pw2 = $("#pwch").val();
+    	 var pw2 = $("#checkpass").val();
     	 
 			if (pw1==pw2) {
 				$(".matchornotpw").text('');
 		        $(".matchornotpw").text('비밀번호가 일치합니다');
 		        $(".matchornotpw").css('color','green');
 		        $("#pw").css("border-color","#ced4da");
-		        $("#pwch").css("border-color","#ced4da");
-			}else if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-				$(".matchornotpw").text('');
+		        $("#checkpass").css("border-color","#ced4da");
+
+	        	
+		        	
 			}else{
 				$(".matchornotpw").text('');
 		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
 		        $(".matchornotpw").css('color','red');
 		        $("#pw").css("border-color","red");
-		        $("#pwch").css("border-color","red");
+		        $("#checkpass").css("border-color","red");
+		        
+		        if ((pw1==''||pw2=='')||pw1==''&&pw2=='') {
+					$(".matchornotpw").text('');			
+			        $("#pw").css("border-color","#ced4da");
+			        $("#checkpass").css("border-color","#ced4da");
+				}
 			}
-       
         });
   
   
