@@ -24,54 +24,8 @@
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [
-    	 /*  if(${list} != null){
-    		  console.log("in");
-    	  } */
-    	  		/* {
-    	  			title:${dto.d_resultEat},
-    	  			start:${dto.d_date},
-    	  			backgroundColor:'green',
-    	  			borderColor:'green'
-    	  		}
-    	  		,{
-    	  			title:${dto.d_resultExe},
-    	  			start:${dto.d_date},
-    	  			backgroundColor:'#E7C6B4',
-    	  			borderColor:'#E7C6B4'
-    	  		}
-    	  		,{
-    	  			title:${dto.d_weight},
-    	  			start:${dto.d_date},
-    	  			color:'yellow',
-    	  			display:'background'
-    	  		} */
+    	 	
     	  	]
-      
-      
-      
-      
-      
-	 /*  ,eventContent : function(eventEl){
-     
-    	  console.log(calendarEl);
-    	  
-    	  title = eventEl.event._def.title;
-    	  icon = eventEl.event._def.extendedProps.icon;
-    	  
-    	  console.log(eventEl.event._def.extendedProps.icon);
-		  
-    	  //title = "<i class="+icon+"></i>"+title;
-    	  //console.log(title);		
-    	  
-    	  if(eventEl.event._def.extendedProps.icon){
-    		  title = "<i class="+icon+"></i>"+title;
-    	  }
-    	  return {
-    		  html:
-    			  
-    	  }
-    	  
-    	 } */
 
  	 });
     calendar.render();
