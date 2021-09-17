@@ -17,19 +17,19 @@
             <div id="title"class="col-md-8">
                 <div class="d-flex">
                     <span id="q">Q.</span>
-                    <input type="text" class="form-control" id="inputTitle"> 
+                    <input type="text" class="form-control" id="inputTitle"> <!-- 제목 --> 
                 </div>
             </div>
             <div id="titleBtn" class="col-md-4">
-                <button type="button" class="btn btn-primary float-right ml-3 mt-1">질문등록</button>
-                <button type="button" class="btn btn-outline-primary float-right ml-3 mt-1">등록취소</button>
+                <button id="submit" type="button" class="btn btn-primary float-right ml-3 mt-1">질문등록</button>
+                <button id="cancel" type="button" class="btn btn-outline-primary float-right ml-3 mt-1">등록취소</button>
             </div>
         </div>
     </div>
 
     <div id="fitContent" class="container pt-4 pl-5">
         <div class="d-inline-flex">  
-            <div id="c" class="mr-3 pt-2 text-secondary font-weight-bold">카테고리</div>
+            <div id="c" class="mr-3 pt-2 text-secondary font-weight-bold">카테고리</div> <!-- 카테고리 -->
             <div id="category" class="form-group">
                 <select class="form-control">
                   <option>--선택--</option>
@@ -44,7 +44,7 @@
         <div class="d-inline-flex float-right">
             <label for="photo" class="mr-3"><img src="resources/img/image.png" alt="사진등록" width="30px" height="30px"></label>
             <input type="file" name="photo" id="photo">
-            <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="resources/img/link_green.png" alt="사진등록" width="30px" height="30px"></a> 
+            <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="resources/img/link.png" alt="링크등록" width="30px" height="30px" id="linkRegister"></a> 
 
             <!-- 링크를 입력하는 모달 -->
             <!-- The Modal -->
@@ -63,7 +63,7 @@
                             <button type="button" class="btn btn-outline-secondary mt-4" data-dismiss="modal" id="checkBtn">확인</button>
                         </div>
                     
-                        <img src="resources/img/search.png" alt="링크" width="20px" height="20px" id="search">
+                        <img src="resources/img/search.png" alt="링크" width="20px" height="20px" id="linkSearch">
                     </div>    
                 </div>
             </div>
@@ -74,27 +74,30 @@
 
 		<div id="contentWrap">
 	        <!-- 글이 들어간다 -->
-	        <textarea id="content" name="content" cols="141" rows="13" placeholder="궁금한 사항을 입력해 보세요."></textarea>
+	        <textarea id="content" name="content" placeholder="궁금한 사항을 입력해 보세요."></textarea> <!-- content -->
 			<!-- 글자수 카운트 -->
-			<span id="textCount">0</span>
+			<div id="textCountWrap"><span id="textCount">0</span><span>/1000</span></div>
 		</div>
         <hr/>
         <!-- 이미지가 들어간다 -->
         <div id="imageWrap">
             <div class="imgWrap">
-                <img src="resources/img/fitimg.jpg" width="400px" height="300px">
+                <img src="resources/img/fitimg.jpg" width="400px" height="300px"> <!-- 이미지 4장까지 -->
                 <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
             </div>
         </div>
         <!-- 동영상이 들어간다 -->
         <div id="movieWrap">
-            <div class="iframeWrap">
-                <iframe width="400" height="300" src="https://www.youtube.com/embed/gMaB-fG4u4g" title="YouTube video player" 
+            <div class="iframeWrap"> <!-- 동영상 1개만 -->
+                <iframe width="400" height="300" src="https://www.youtube.com/embed/myNjmnvI6x0" title="YouTube video player" 
                     frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                 </iframe>
                 <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
             </div>
         </div>
+        
+        <!-- 동영상 url추출 저장 -->
+        <input type="text" name="url" id="inputUrl">
 
         <!-- 빈칸-->
         <div id="emptyWrap"></div>
@@ -132,7 +135,7 @@
     #photo{
         display : none;
     }
-    #search{
+    #linkSearch{
         position:absolute;
         top:88px;
         left:455px
@@ -179,28 +182,64 @@
     #content{
     	resize : none;
     	padding : 20px;
+    	width : 98%;
+    	height : 300px;
     }
     #content:focus{
     	outline : none;
     }
-    #textCount{
+    #textCountWrap{
     	position : absolute;
-    	top : 200px;
-    	left : 200px;
+    	top : 280px;
+    	left : 30px;
+    	color : gray;
     }
 
 </style>
 <script>
+	//내용 글자수 카운트
+	var textCount = 0;
+	
     //x를 클릭 했을 때 이미지 삭제하기
     $(document).on("click",".closeWrap",function(){
         $(this).parent().remove();
+        $("#linkRegister").attr("src","resources/img/link.png");
     });
     
     //키보드 입력시 문자수를 카운트
     $("#content").on("keyup keypress keydown",function(){
-    	var textCount = $("#content").val().length;
+    	textCount = $("#content").val().length;
         $("#textCount").html(textCount);
+        if(textCount>1000){
+        	$("#textCountWrap").css({"color":"red"});
+        }else{
+        	$("#textCountWrap").css({"color":"gray"});
+        }
     });
+    
+    //등록취소를 눌렀을 때 지식핏 목록으로 이동
+    $("#cancel").on("click",function(){
+    	location.href = "fitMain";
+    });
+    
+    //모달 닫기 버튼 클릭시 링크에 있는 주소 일부를 추출해서 iframe으로 만들어 주기
+    $("#checkBtn").on("click",function(){
+    	var url = $("#link").val().split('=')[1].split('&')[0];
+    	console.log(url);
+    	
+    	var content = "";
+    	content += '<div class="iframeWrap">';
+    	content += '<iframe width="400" height="300" src="https://www.youtube.com/embed/'+url+'" title="YouTube video player" ';
+    	content += 'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>';
+    	content += '</iframe>';
+    	content += '<a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+    	content += '</div>';
+    	
+    	$("#inputUrl").val(url);
+    	$("#movieWrap").empty().html(content);
+    	$("#linkRegister").attr("src","resources/img/link_green.png");
+    });
+    
     
 </script>
 </html>
