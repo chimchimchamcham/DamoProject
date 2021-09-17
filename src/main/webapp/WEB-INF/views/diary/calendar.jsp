@@ -54,7 +54,7 @@
     	  
     	  	]
       ,dateClick:function(date){
-    	  console.log('Date:',date.dateStr);
+    	  console.log('Date:',date.dateStr); //일자 가져가기
     	  console.log('Resource ID:',date.dateStr);
     	  location.href='goDiary';
       }
@@ -95,11 +95,5 @@ body {
 </div>
 </div>
 </body>
-<script>
-	$(".fc-daygrid-day-number").click(function(){
-		console.log("click");
-	});
-		
-	
-</script>
+
 </html>
