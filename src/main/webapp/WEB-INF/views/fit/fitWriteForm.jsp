@@ -43,7 +43,7 @@
         </div>
         <div class="d-inline-flex float-right">
             <label for="photo" class="mr-3"><img src="resources/img/image.png" alt="사진등록" width="30px" height="30px"></label>
-            <input type="file" name="photo" id="photo">
+            <input type="file" name="photo" multiple id="photo" accept="image/gif,image/jpeg,image/png,image/jpg" >
             <a class="mr-3" data-toggle="modal" data-target="#myModal"><img src="resources/img/link.png" alt="링크등록" width="30px" height="30px" id="linkRegister"></a> 
 
             <!-- 링크를 입력하는 모달 -->
@@ -85,10 +85,6 @@
                 <img src="resources/img/fitimg.jpg" width="400px" height="300px"> 이미지 4장까지
                 <a href="#" class="closeWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
             </div> -->
-            <div class="imgWrap">
-                <img src="" width="400px" height="300px"> <!-- 이미지 4장까지 -->
-                <a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>
-            </div>
         </div>
         <!-- 동영상이 들어간다 -->
         <div id="movieWrap">
@@ -256,18 +252,59 @@
     
     
     //파일 등록시 이벤트
-    $("#photo").on("change",function(){
-    	setThumbnail(e);
+    console.log($("#photo").val());
+    $("#photo").on("change",function(e){
+    	console.log('썸네일 등록');
+    	//썸네일 등록
+        	var reader = new FileReader();
+        	reader.onload = function(e){
+        		var content = "";
+        		content += '<div class="imgWrap">';
+        		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
+        		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+        		content += '</div>';
+        		
+        		$("#imageWrap").empty().html(content);
+        		console.log($("#photo").val());
+        		console.log(e.target.files);
+        		console.log(e.target.result);
+        		console.log(e.target.files[0]);
+        		
+        	}; 
+        	reader.readAsDataURL(event.target.files[0]); 
+        
     });
-    //썸네일 등록
-    function setThumbnail(e){
-    	var reader = new FileReader();
-    	reader.onload = function(e){
-    		$(".imgWrap img").attr("src",e.target.result);
-    	}; 
-    	reader.readAsDataURL(event.target.files[0]); 
-    }
-
+    
+/*     var sel_files = [];
+    $("#photo").on("change",function(e){
+    	console.log('썸네일 등록');
+    	//썸네일 등록
+    	var files = e.target.files;
+    	var filesArr = Array.prototype.slice.call(files);
+    	
+    	var content = "";
+    	filesArr.forEach(function(f){
+    		sel_files.push(f);
+    		
+        	var reader = new FileReader();
+        	reader.onload = function(e){
+        		
+        		content += '<div class="imgWrap">';
+        		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
+        		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+        		content += '</div>';
+        		
+        		console.log('f',f);				
+        		console.log('e.target.result',e.target.result);
+        		
+        		reader.readAsDataURL(e.target.files[0]);
+        	};
+        	
+    	});
+    	$("#imageWrap").empty().html(content);
+        	 
+        
+    }); */
 
     
     
