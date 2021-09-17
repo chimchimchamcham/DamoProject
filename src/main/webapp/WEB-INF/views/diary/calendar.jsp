@@ -100,12 +100,7 @@ body {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
 <div class='p-3 mb-5 bg-white rounded'>
-=======
-
-<div class='shadow p-3 mb-5 bg-white rounded'>
->>>>>>> 93e6b75439b6efd6bb02de5cdfca9a659fcd1733
 	<div class='container '>
 	<h2>목표</h2>
 	<div id='calendar' class=''>
