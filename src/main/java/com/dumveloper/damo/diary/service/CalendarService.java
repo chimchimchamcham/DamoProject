@@ -15,11 +15,11 @@ import com.dumveloper.damo.dto.DamoDTO;
 public class CalendarService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired CalendarDAO dao;
-	public void listKcal(String id) {
+	public void list(String id) {
 		//dao.listKcal(id);
 		LocalDate now = LocalDate.now();
-		
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/mm");
+		logger.info("오늘 날짜 출력:{}",now);
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM");
 		String formatedNow = now.format(format);
 		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
 		

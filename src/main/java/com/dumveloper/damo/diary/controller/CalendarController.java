@@ -21,12 +21,12 @@ public class CalendarController {
 	@Autowired CalendarService service;
 	
 	 @RequestMapping(value="/calendar") 
-	 public/* HashMap<String, String>*/String resultKcal(HttpSession session) {
+	 public/* HashMap<String, String>*/String list(HttpSession session) {
 		 String id = (String) session.getAttribute("loginId");
 		 logger.info("로그인 아이디:{}",id);
-		 service.listKcal(id);
+		 service.list(id);
 		 logger.info("캘린더 요청"); 
-		 return "calendar";
+		 return "diary/calendar";
 	 }
 	 
 	

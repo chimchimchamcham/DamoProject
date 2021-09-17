@@ -20,10 +20,11 @@
       },
       //initialDate: '2020-09-15', //초기에 어떤 날짜를 보여줄지 설정 설정안하면 현재 날짜로
       navLinks: true, // can click day/week names to navigate views
-      editable: false, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
-     // dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
+      editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
+     dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [//이벤트 설정 
-     /*    {
+    	  /*
+         {
           title: '2000kcal',
           start: '2021-09-15',
           backgroundColor:'green',
@@ -43,7 +44,7 @@
         },
         {
            title: '1500kcal',
-           start: '2021-09-16',
+           start: '2021-09-15',
            backgroundColor:'#E7C6B4',
            borderColor:'#E7C6B4'
            //icon : 'fas fa-utensils fa-xs'
@@ -98,8 +99,10 @@ body {
 </style>
 </head>
 <body>
+
 <div class='shadow p-3 mb-5 bg-white rounded'>
 	<div class='container '>
+	<h2>목표</h2>
 	<div id='calendar' class=''>
 	</div>
 </div>
