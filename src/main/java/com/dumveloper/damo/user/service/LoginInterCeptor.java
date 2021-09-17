@@ -19,11 +19,11 @@ public class LoginInterCeptor extends HandlerInterceptorAdapter {
 		boolean pass = false;
 
 		HttpSession session = request.getSession();
-		DamoDTO info = (DamoDTO) session.getAttribute("loginId");
+		Object loginId = session.getAttribute("loginId");
 		
-		if (info != null) { //로그인 됨
+		if (loginId != null) { //로그인 됨
 			pass = true;
-			System.out.println(info.getU_id() + "로그인 했음");
+			System.out.println("로그인 했음");
 		} else { ////로그인 안됨
 			System.out.println("로그인 안됨");
 			response.sendRedirect("./loginCheck");
