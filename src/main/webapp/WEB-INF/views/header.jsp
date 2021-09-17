@@ -190,9 +190,50 @@
 					</form>
 
 				</div>
+<<<<<<< HEAD
 			</div>
 		</nav>
 	</div>
+=======
+                </nav>
+                <!-- End of Topbar -->
+                
+                
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow" style="height:50px;">
+              <div class="container">
+  <a class="navbar-brand" href="./"><img src="resources/img/logo4.png" alt="Logo" style="width:80px;"  id="logo"></a>
+
+  <div class="collapse navbar-collapse" id="navb" style="font-size:15px;">
+    <ul class="navbar-nav ml-auto" >
+      <li class="nav-item" style="margin-left: 40px;">
+        <a class="nav-link" href="calendar">캘린더</a>
+      </li>
+      <li class="nav-item" style="margin-left: 40px;">
+        <a class="nav-link" href="javascript:void(0)">통계 그래프</a>
+      </li>
+
+      <li class="nav-item dropdown justify-content-center" >
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" style="margin-left: 40px; margin-right: 60px;" id="dropdown">지식Fit</a>
+    <div class="dropdown-menu" style="font-size:14px;"  id="dropdown-menu">
+      <a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
+      <a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
+      <a class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>
+       <a class="dropdown-item text-muted mt-1 mb-1" href="logout">내 지식사전</a>
+</div>
+  </li>
+    </ul>
+    
+    <!--searchBar-->
+ <form class="form-inline my-2 my-lg-0">
+      <input class="form-control" type="text" placeholder="지식Fit 제목/내용 검색..." id="search" style="font-size:12px; width:200px;">
+      <button class="btn btn-white" type="button"> <i class="fas fa-search" aria-hidden="true"></i></button>
+    </form>
+
+  </div>
+  </div>
+</nav>
+</div>
+>>>>>>> 93e6b75439b6efd6bb02de5cdfca9a659fcd1733
 </body>
 <style>
 /* 폰트 설정 (나눔 스퀘어) */
