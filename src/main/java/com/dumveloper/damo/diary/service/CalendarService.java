@@ -23,8 +23,7 @@ public class CalendarService {
 	public ModelAndView list(String id) {
 		LocalDate now = LocalDate.now();
 		logger.info("오늘 날짜 출력:{}",now);
-		
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM");
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM");
 		String formatedNow = now.format(format);
 		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
 		
@@ -32,7 +31,7 @@ public class CalendarService {
 		ArrayList<DamoDTO>list = dao.list(id,formatedNow);
 		logger.info("작성 일기 갯수 : {}",list.size());
 		mav.addObject("list",list);
-		mav.setViewName("calendar");
+		mav.setViewName("diary/calendar");
 		return mav;
 	}
 	
