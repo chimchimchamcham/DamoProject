@@ -73,7 +73,7 @@
         <hr/>
 
         <!-- 글이 들어간다 -->
-        <div id="contentWrap">궁금한 사항을 입력해 보세요.</div>
+        <textarea id="content" name="content" style="resize: none;" cols="146" rows="15">궁금한 사항을 입력해 보세요.</textarea>
 
         <hr/>
         <!-- 이미지가 들어간다 -->
@@ -96,7 +96,6 @@
         <!-- 빈칸-->
         <div id="emptyWrap"></div>
     </div>
-  </div>
 </body>
 <style>
     #fitTitle{
