@@ -146,10 +146,10 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-white shadow"
 			style="height: 50px;">
 			<div class="container">
-				<a class="navbar-brand" href="./"><img
-					src="resources/img/logo4.png" alt="Logo" style="width: 80px;"
-					id="logo"></a>
-
+				<a class="navbar-brand" href="./">
+				<img src="resources/img/logo4.png" alt="Logo" style="width: 80px;" id="logo">
+				</a>
+			
 				<div class="collapse navbar-collapse" id="navb"
 					style="font-size: 15px;">
 					<ul class="navbar-nav ml-auto">
