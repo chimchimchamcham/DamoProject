@@ -51,11 +51,10 @@ body {
 </style>
 </head>
 <body>
-<<<<<<< HEAD
+
 <jsp:include page="../header.jsp"></jsp:include>
 <a href="goDiary">일기 쓰기</a>
-=======
->>>>>>> 56610f59204eab51d31c42d4ebf856a61fd5b613
+
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container '>
