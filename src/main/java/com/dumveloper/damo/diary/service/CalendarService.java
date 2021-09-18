@@ -29,39 +29,23 @@ public class CalendarService {
 		String formatedNow = now.format(format);
 		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
 		
+		
 		ModelAndView mav = new ModelAndView();
+		
 		
 		if(id != null) {
 			ArrayList<DamoDTO>list = dao.list(id);
 			logger.info("작성 일기 갯수 : {}",list.size());
-			
-			ArrayList<String> monthData = getMonthData(id, formatedNow);
-			
 			mav.addObject("list",list);
-			mav.addObject("monthTarExe",monthData.get(0));
-			mav.addObject("monthTarKcal",monthData.get(1));
-			mav.addObject("monthContent",monthData.get(2));
 		}
 		
 		mav.setViewName("diary/calendar");
 		return mav;
 	}
 
-	public HashMap<String, String> getMonthDByAjax(String id,String formattedDate) {
+	public HashMap<String, String> getMonthData(String id,String formattedDate) {
 		logger.info("요청한 달:{}",formattedDate);
 		HashMap<String, String> map = new HashMap<String, String>();
-		ArrayList<String> list = getMonthData(id,formattedDate);
-		
-		map.put("monthTarExe",list.get(0));
-		map.put("monthTarKcal",list.get(1));
-		map.put("monthContent", list.get(2));
-		
-;		return map;
-	}
-	
-	//한달 목표 섭취, 운동 칼로리 와 목표 가져오는 메서드
-	public ArrayList<String> getMonthData(String id,String formattedDate) {
-		ArrayList<String> list = new ArrayList<String>();
 		DamoDTO dto = dao.getMonthData(id, formattedDate);
 		
 		//월 데이터가 없는 경우
@@ -79,11 +63,12 @@ public class CalendarService {
 		logger.info("섭취 칼로리:{}", tarKcal);
 		logger.info("한달 목표:{}",content);
 		
-		list.add(tarExe);
-		list.add(tarKcal);
-		list.add(content);
+		map.put("monthTarExe",tarExe);
+		map.put("monthTarKcal",tarKcal);
+		map.put("monthContent", content);
 		
-		return list;
+		return map;
 	}
+	
 	
 }

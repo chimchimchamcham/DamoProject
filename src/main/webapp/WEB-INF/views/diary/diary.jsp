@@ -102,6 +102,29 @@
 <script src="chartjs-plugin-doughnutlabel.js"></script>
 <script src="chartjs-plugin-doughnutlabel.min.js"></script>
 <script>
+var search = location.search    
+var params = new URLSearchParams(search); 
+var getType= params.get('Date');    
+console.log(getType);
+
+
+/*처음 디폴트 값 뿌려주고 DB에 저장*/
+$.ajax({
+				type : 'get',
+				url : 'diaryDetail',
+				data : {
+					'date' : getType,
+				},
+				dataType : 'JSON',
+				success : function(data) {
+					console.log(data);
+				},
+				error : function(e) {
+					console.log(e);
+				}
+
+			});
+
 
 /*섭취 칼로리 그래프*/
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
@@ -174,28 +197,29 @@
 
       
       /*클릭한 날짜 뿌려주기*/
-      var search = location.search    
-      var params = new URLSearchParams(search); 
-      var getType= params.get('Date');    
-      console.log(getType);
       document.getElementById("date").innerHTML=getType;
       
       var dt = new Date(document.getElementById("date").innerText);
      /*  var arrDayStr = ['일','월','화','수','목','금','토']; */
-      
+       
       /*전 날로 이동*/
       function preMonth(){
     	  console.log(dt);
     	  /* var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1)+'('+arrDayStr[dt.getDay()-1]+')'; */
-    	  var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1);
+    	  //var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1);
+    	  preDt=dt.setDate(dt.getDate()-30);
+    	  
+    	  
     	 console.log(preDt);
       }
+     
+      threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // 2014-02-26 => 3일전으로~
       
       /*다음날로 이동*/
       function nextMonth(){
     	  console.log(dt);
     	  /* var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+1)+'('+arrDayStr[dt.getDay()+1]+')'; */
-    	  var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+1);
+    	  var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+30);
     	 console.log(nextDt);
       }
 </script>
