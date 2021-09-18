@@ -198,7 +198,7 @@ $(document).ready(function(){
    
    
    if (imgname!="default-profile.png") {
-		$("#img_form_url").attr("src","/damo/upload/"+imgname);	
+		$("#img_form_url").attr("src","/photo/"+imgname);	
 	}else{
 		$("#img_form_url").attr("src","resources/img/"+imgname);	
 	}
