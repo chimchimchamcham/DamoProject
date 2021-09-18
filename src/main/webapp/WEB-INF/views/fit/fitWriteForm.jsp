@@ -315,6 +315,7 @@
             	
             	//파일이름
             	console.log('file.name',file.name);
+            	console.log('file',file);
             	
     			var result = '';
             	reader.onload = function(e){
