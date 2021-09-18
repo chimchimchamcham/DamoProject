@@ -10,4 +10,5 @@ public interface CalendarDAO {
 
 	DamoDTO getMonthData(String id, String formattedDate);
 
+	DamoDTO getWeight(String id);
 }
