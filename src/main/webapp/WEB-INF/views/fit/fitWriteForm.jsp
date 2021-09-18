@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	
-	<form id="fitWrite" action="fitWrite" method="post" enctype="multipart/form-data">
+	<form name="fitWrite" action="fitWrite" method="post" enctype="multipart/form-data">
     <div id="fitTitle" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
         <div class="row">
             <div id="title"class="col-md-8">
@@ -22,8 +22,7 @@
                 </div>
             </div>
             <div id="titleBtn" class="col-md-4">
-            	<input type="submit" value="제출">
-                <button id="submit" type="button" class="btn btn-primary float-right ml-3 mt-1">질문등록</button>
+                <button id="submit" type="submit" class="btn btn-primary float-right ml-3 mt-1">질문등록</button>
                 <button id="cancel" type="button" class="btn btn-outline-primary float-right ml-3 mt-1">등록취소</button>
             </div>
         </div>
@@ -99,7 +98,8 @@
         </div>
         
         <!-- 이미지 순서 저장 ??? 추후 논의 -->
-        
+        <!-- 에러처리를 위해 0을 기본으로 집어넣음 -->
+        <input type="hidden" name="imgNo" value="0">
         
         <!-- 동영상 url추출 저장 -->
         <input type="text" name="url" id="iframeUrl">
@@ -343,10 +343,20 @@
        
     });
 
-    //submit
+    //글등록 전 처리
     $("#submit").click(function(){
-    	alert('submit');
-		$("#fitWrite").submit();
+    	if($("#k_title").val()==""){
+    		alert("제목을 입력하세요");
+    		return false;
+    	}else if($("#k_code select").val()==""){
+    		alert("카테고리를 선택하세요");
+    		return false;
+    	}else if($("#k_content").val()==""){
+    		alert("내용을 입력하세요");
+    		return false;
+    	}
+    	
+    	//빈 칸이 없으면 글쓰기 등록
 	});
     
 </script>
