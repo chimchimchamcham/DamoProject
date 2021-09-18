@@ -156,7 +156,7 @@
 					
 						<c:if test="${loginManager eq 'Y'}"><!-- 관리자 일 경우 -->
 							<li class="nav-item" style="margin-left: 40px;"><a
-								class="nav-link" href="javascript:void(0)">관리 페이지</a></li>
+								class="nav-link" href="./gouserlist">관리 페이지</a></li>
 						</c:if>
 						<c:if test="${loginManager ne 'Y'}"> <!-- 일반회원 -->
 						<li class="nav-item" style="margin-left: 40px;"><a
