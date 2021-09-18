@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.fit.dao.FitDAO;
@@ -55,7 +56,9 @@ public class FitService {
 		return map;
 	}
 
-	public ModelAndView fitWrite(HashMap<String, String> params, MultipartHttpServletRequest mtfRequest, HttpSession session) {
+	public ModelAndView fitWrite(HashMap<String, String> params, MultipartHttpServletRequest mtfRequest, 
+			HttpSession session, List<String> imgNos, RedirectAttributes rAttr) {
+		
 		//(1) 아이디, 제목, 내용, 카테고리 저장
 		String u_id = (String) session.getAttribute("loginId");
 		String k_title = params.get("k_title");
@@ -78,34 +81,51 @@ public class FitService {
 		List<MultipartFile> fileList = mtfRequest.getFiles("photo");
 		String root = "C:/upload/"; //이미지를 저장할 경로
 		
-		for (MultipartFile mf : fileList) { //파일들을 하나씩 업로드 한다
-            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-            long fileSize = mf.getSize(); // 파일 사이즈
-
-            logger.info("originFileName : " + originFileName);
-            logger.info("fileSize : " + fileSize);
-
-            String newFileName = System.currentTimeMillis() + originFileName.substring(originFileName.lastIndexOf("."));;
-            try {
-                mf.transferTo(new File(root + newFileName)); //파일을 업로드!! 간단
-                int imgUploadSuccess = fitdao.upload(dto.getKi_no(),newFileName,"Y","Y");// 파일명을 DB에 저장
-                logger.info("imgUploadSuccess : {}",imgUploadSuccess);
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+		logger.info("fileList.size()",fileList.size());
 		
+		//imgNos 크기가 1보다 클 때 이미지 업로드 실행 (이미지가 없어도 이미 0이라는 값이 존재하기 때문에)
+		if(imgNos.size()>1) {
+			int i = 1; //사진 index와 비교하기 위한 변수
+			for (MultipartFile mf : fileList) { //파일들을 하나씩 업로드 한다
+				
+				//인덱스가 있어야만 사진 업로드 실행
+				if(imgNos.contains(""+i)) {
+					logger.info("인덱스 {} 사진 업로드",i);
+					
+		            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+		            long fileSize = mf.getSize(); // 파일 사이즈
+
+		            logger.info("originFileName : " + originFileName);
+		            logger.info("fileSize : " + fileSize);
+
+		            String newFileName = System.currentTimeMillis() + originFileName.substring(originFileName.lastIndexOf("."));;
+		            try {
+		                mf.transferTo(new File(root + newFileName)); //파일을 업로드!! 간단
+		                int imgUploadSuccess = fitdao.upload(dto.getKi_no(),newFileName,"Y","Y");// 파일명을 DB에 저장
+		                logger.info("imgUploadSuccess : {}",imgUploadSuccess);
+		            }catch (IOException e) {
+		                e.printStackTrace();
+		            }
+				}
+			
+	            i++;
+	        }
+		}
+
 		//(3) 동영상 저장
 		
 		String url = params.get("url");
 		logger.info("url : "+url);
-		int urlUploadSuccess = fitdao.upload(dto.getKi_no(),url,"N","Y");// 동영상url을 DB에 저장
-		logger.info("urlUploadSuccess : {}",urlUploadSuccess);
 		
+		if(url != null && !url.equals("")) {
+			int urlUploadSuccess = fitdao.upload(dto.getKi_no(),url,"N","Y");// 동영상url을 DB에 저장
+			logger.info("urlUploadSuccess : {}",urlUploadSuccess);
+		}
 		//ModelAndView
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:fitMain");
+		mav.setViewName("redirect:/fitMain");
+		rAttr.addFlashAttribute("msg", "작성이 완료되었습니다");
 		return mav;
 	}
 	
