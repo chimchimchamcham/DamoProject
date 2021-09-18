@@ -26,6 +26,8 @@ public class UserService {
 	
 	@Autowired UserDAO dao;
 	
+	//@Value("#{config['Globals.filePath']}")String root;
+	
 	//회원가입 약관동의
 	public ModelAndView check_terms(HashMap<String, String> params) {
 		ModelAndView mav = new ModelAndView();
@@ -215,9 +217,10 @@ public class UserService {
 
 
 public ModelAndView fileupload(MultipartFile file, HttpSession session) {
-		
+		String id = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/uploadForm");
+		logger.info("id 요청:{}",id);
+		mav.setViewName("redirect:/goupdate");
 		
 		logger.info("hellow_file");
 		
@@ -225,23 +228,16 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		String fileName = file.getOriginalFilename();
 		//2 신규 파일명== 겹치는 파일 없게 중복되지
 		String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));
-		//3 파일 다운로드
+		//3db에 저장
+		dao.dbphotoname(id,newFileName);
+		//4 파일 다운로드
 		try {
 			byte[] bytes = file.getBytes();
 			//이 저장방식은 java7부터 가능(java.nio)
-			Path filePath = Paths.get("resources/img/"+newFileName);//경로지정
+			Path filePath = Paths.get("C:/upload/"+newFileName);//경로지정
 			Files.write(filePath, bytes);//저장
+
 			
-			//4.저장된 파일 호출 경로 수출
-			String path ="/photo/"+newFileName;
-			//5. mav에 저장하여 전송
-			mav.addObject("path",path);
-			
-			HashMap<String, String>filelist = (HashMap<String, String>) session.getAttribute("filelist");
-			//업로드된 파일목골을 세션에 저장
-			filelist.put(newFileName, fileName);
-			logger.info("업로드된 파일 수:"+filelist.size());
-			session.setAttribute("filelist", filelist);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

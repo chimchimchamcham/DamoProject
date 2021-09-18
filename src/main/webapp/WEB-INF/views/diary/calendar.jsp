@@ -18,15 +18,11 @@
     var calendarEl = document.getElementById('calendar');
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
-        left: 'prevYear,prev,next,nextYear today',
-        center: 'title', 
-        right: 'dayGridMonth' //일기가 뜨도록
-      },
+     headerToolbar:false,
       //initialDate: '2020-09-15', //초기에 어떤 날짜를 보여줄지 설정 설정안하면 현재 날짜로
       navLinks: false, //can click day/week names to navigate views
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
-     dayMaxEvents: true, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
+     dayMaxEvents: false, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
       events: [
     	  <c:if test="${list ne ''}">
     	  <c:forEach items="${list}" var="dto">
@@ -56,11 +52,115 @@
       ,dateClick:function(date){
     	  console.log('Date:',date.dateStr);
     	  console.log('Resource ID:',date.dateStr);
-    	  location.href='goDiary';
+    	  location.href='goDiary?Date='+date.dateStr;
+
       }
 
  	 });
     calendar.render();
+    
+    
+    var date = calendar.getDate(); //현재 날짜 가져오기
+    
+    //현재 날짜기준 월 이동시 이동한 달 데이터 가져오기
+    var a = 0;
+    var b = 0;
+    var clickCnt = 0;
+    var formattedDate = '';
+    //-------------------------------------------//
+    
+    //이동한 달의 목표 섭취 칼로리, 운동 칼로리 가져오기
+    var tarExe = '';
+    var tarKcal = '';
+    var content = '';
+    //-------------------------------------------//
+    
+    //이전 달 이동 버튼 클릭시 
+    $("#prev").on('click',function(){
+		console.log("click prev");
+		clickCnt = clickCnt-1;
+		//console.log("clickCnt:",clickCnt);
+		console.log("prev :",date.yyyymm());
+		formattedDate = date.yyyymm(); //YYYY-MM 형태로 이동한 달 가져오기
+		calendar.prev(); //이전달 이동
+		
+		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
+		getMonthData(formattedDate);
+		
+	});
+	
+	$("#next").on('click',function(){
+		console.log("click next");
+		clickCnt = clickCnt+1;
+		//console.log("clickCnt:",clickCnt);
+		console.log("next :",date.yyyymm());
+		formattedDate = date.yyyymm(); //YYYY-MM 형태로 이동한 달 가져오기
+		//convertDate(date);
+		calendar.next(); //다음달 이동
+		
+		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
+		getMonthData(formattedDate);
+		
+	}); 	
+	  
+	    // 받은 날짜값을 YYYY-MM 형태로 출력하기위한 함수.
+	    Date.prototype.yyyymm = function() {
+	        var yyyy = this.getFullYear().toString();
+	        var mm = (this.getMonth()+1+clickCnt).toString();
+	      
+	        if(mm>12){ //12월을 넘어 갈경우
+	      		a = parseInt(mm /12);
+	      		b = mm % 12;
+	      		if(b ==0){ //나머지가 0인경우(=12월의 경우)
+	      			a=a-1;
+	      			b=12;
+	      		}
+	      		yyyy=(parseInt(yyyy)+a).toString();
+	      		mm=(b).toString();
+	      	}else if(mm<1){ //1월 이전일 경우
+	      		
+	      		a=(parseInt(Math.abs(mm)/12));
+	      		b=(Math.abs(mm)%12);
+	      		
+	      		yyyy=(parseInt(yyyy)-(1+a)).toString();
+	      		mm=(12-b).toString();
+	      		console.log(mm);
+	      		
+	      	} 
+	      	
+	      	//1월 ,12월 사이에는 그냥 아래 경우로 구해주면 됨 
+	      	return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]);
+	    }	
+	    //---------------------------------------------------------//
+	   
+	    //이동한 달의 목표 섭취, 운동 칼로리 가져오기
+	    function getMonthData(formattedDate){	
+			$.ajax({
+				type:'GET',
+				url:'getMonthData/'+formattedDate,
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.monthTarExe);
+					console.log(data.monthTarKcal);
+					console.log(data.monthContent);
+					
+					tarExe = data.monthTarExe;
+					tarKcal = data.monthTarKcal;
+					content = data.monthContent;
+					
+					if(tarExe)
+					
+					$("#tarKcal").val(tarKcal);
+					$("#tarExe").val(tarExe);
+					$("#goal").val(content); 	
+				     
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+	    }
+	    
   });	
 </script>
 <style>
@@ -83,23 +183,28 @@ body {
 
 
 <jsp:include page="../header.jsp"></jsp:include>
-<a href="goDiary">일기 쓰기</a>
 
 <div class='p-3 mb-5 bg-white rounded'>
 
-	<div class='container '>
-	<h2>목표</h2>
-	<a href="./goupdate">회원정보 수정</a>
+	<div class='container pb-3' >
+	<div class="row mb-3">
+		<div class="col-3"><a href="./goupdate">회원정보 수정</a></div>
+		<div class="col-6">
+			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="섭취 칼로리" id="tarKcal" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="운동 칼로리"  id="tarExe" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight" style="text-align:center">
+		</div>
+		<div class="col-3"><button type="button" class="btn btn-secondary" id="prev">prev</button><button type="button" class="btn btn-secondary" id="next">next</button></div>
+	</div>
+	<div class="container"></div>
 	<div id='calendar' class=''>
 	</div>
 </div>
 </div>
 </body>
 <script>
-	$(".fc-daygrid-day-number").click(function(){
-		console.log("click");
-	});
-		
+
 	
 </script>
 </html>
