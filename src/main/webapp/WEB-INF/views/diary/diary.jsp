@@ -47,7 +47,7 @@
 		<form class="form-inline mt-5" action="#">
 			<label for="weight">몸무게:</label> <input type="text"
 				class="form-control ml-3" id="weight" placeholder="몸무게 입력"
-				name="weight" style="width:80px;"> <label class="ml-1">Kg</label>
+				name="weight" style="width:80px;" value="${dto.u_weight}" /> <label class="ml-1">Kg</label>
 		</form>
 
 
@@ -62,7 +62,7 @@
 				<form class="form-inline" action="#" class="circle_strong form-inline">
 							<label for="weight">목표 섭취 칼로리:</label> <input type="text"
 								class="form-control ml-3" id="weight" placeholder=""
-								name="weight" style="width:110px;"><label class="ml-1">Kcal</label>
+								name="weight" style="width:110px;" value="${dto.c_tarKcal}" /><label class="ml-1">Kcal</label>
 						</form>
 			</div>
 
@@ -74,9 +74,9 @@
 						</strong>
 				</div>
 				<form class="form-inline" action="#" class="circle_strong form-inline">
-							<label for="weight">목표 섭취 칼로리 :</label> <input type="text"
+							<label for="weight">목표 운동 칼로리 :</label> <input type="text"
 								class="form-control ml-3" id="weight" placeholder=""
-								name="weight" style="width:110px;"> <label class="ml-1">Kcal</label>
+								name="weight" style="width:110px;" value="${dto.c_tarExe}" /> <label class="ml-1">Kcal</label>
 						</form>
 			</div>
 
@@ -99,8 +99,8 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="chartjs-plugin-doughnutlabel.js"></script>
-<script src="chartjs-plugin-doughnutlabel.min.js"></script>
+<!-- <script src="chartjs-plugin-doughnutlabel.js"></script>
+<script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
 var search = location.search    
 var params = new URLSearchParams(search); 
@@ -114,10 +114,11 @@ $.ajax({
 				url : 'diaryDetail',
 				data : {
 					'date' : getType,
+					'id' : '${sessionScope.loginId}'
 				},
 				dataType : 'JSON',
 				success : function(data) {
-					console.log(data);
+					console.log(data.dto);
 				},
 				error : function(e) {
 					console.log(e);

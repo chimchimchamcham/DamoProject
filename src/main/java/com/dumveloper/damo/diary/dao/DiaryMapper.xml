@@ -7,8 +7,15 @@
 
 <mapper namespace="com.dumveloper.damo.diary.dao.DiaryDAO">
 
-<select id="list" resultType="damo" >
+<select id="diaryDetail" resultType="damo"  parameterType="String">
+SELECT * FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') = #{param1} AND u_id=#{param2}
+</select>
 
+<select id="diaryStartData" resultType="damo" parameterType="String">
+SELECT C.C_TARKCAL,C.C_TAREXE,C.C_DATE, u.u_weight
+	FROM USERINFO U ,CALENDER C 
+	WHERE U.U_ID=C.U_ID AND U.U_ID =#{param2}
+	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param1}
 </select>
 
 </mapper>
