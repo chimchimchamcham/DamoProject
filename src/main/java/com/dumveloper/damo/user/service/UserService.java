@@ -3,20 +3,15 @@ package com.dumveloper.damo.user.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.user.dao.UserDAO;
 
@@ -176,7 +171,6 @@ public class UserService {
 
 	//세션
 	public DamoDTO updateuserinfo(HttpSession session) {
-		ModelAndView mav = new ModelAndView();
 		String id = (String) session.getAttribute("loginId");
 		return dao.userinfo(id);
 	}
@@ -246,6 +240,25 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		
 		return mav;
 	}
+
+		//알람체크
+		public String alarmupdate(String alarm, HttpSession session) {
+			String id = (String)session.getAttribute("loginId");
+			logger.info(id);
+			String yn="";
+			if (alarm.equals("off")) {
+				yn = "Y";
+				dao.dbalarmupdate(yn,id);
+				logger.info(yn);
+			}else if(alarm.equals("on")){
+				yn = "N";
+				dao.dbalarmupdate(yn,id);
+				logger.info(yn);
+			}
+			
+			
+			return yn;
+		}
 
 
 

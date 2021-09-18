@@ -11,6 +11,8 @@ public interface UserDAO {
 	DamoDTO userinfo(String id);
 	//프사 바꾸기
 	void dbphotoname(String id, String newFileName);
+	//알람여부 바꾸기
+	void dbalarmupdate(String yn, String id);
 	
 	int update(DamoDTO dto);
 	int join(DamoDTO dto);
@@ -23,6 +25,7 @@ public interface UserDAO {
 	String dbfilename(String id);
 	String dbninkname(String id);
 	String dbmanager(String id);
+	
 
 	
 	

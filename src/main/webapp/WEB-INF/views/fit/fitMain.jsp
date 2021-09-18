@@ -248,5 +248,11 @@ function newFitListDraw(list){
 $("#fitWriteForm").on("click",function(){
 	location.href="fitWriteForm";
 });
+
+//msg가 있으면 보여주기
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 </script>
 </html>

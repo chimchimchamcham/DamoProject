@@ -37,15 +37,46 @@ public class CalendarService {
 			ArrayList<DamoDTO>list = dao.list(id);
 			logger.info("작성 일기 갯수 : {}",list.size());
 			mav.addObject("list",list);
+<<<<<<< HEAD
+=======
+			mav.addObject("monthTarExe",monthData.get(0));
+			mav.addObject("monthTarKcal",monthData.get(1));
+			mav.addObject("monthContent",monthData.get(2));
+			
+			DamoDTO weightData = dao.getWeight(id);
+			
+			//weightData.getU_tarWeight() 
+>>>>>>> 6e4d212d2182b9e3610ce84bef989a623cd0b8a6
 		}
 		
 		mav.setViewName("diary/calendar");
 		return mav;
 	}
+<<<<<<< HEAD
 
 	public HashMap<String, String> getMonthData(String id,String formattedDate) {
 		logger.info("요청한 달:{}",formattedDate);
 		HashMap<String, String> map = new HashMap<String, String>();
+=======
+	
+	//달 변경시 Ajax로 한달 목표 섭취, 운동 칼로리 와 목표 던져주는 메서드
+	public HashMap<String, String> getMonthDByAjax(String id,String formattedDate) {
+		logger.info("요청한 달:{}",formattedDate);
+		HashMap<String, String> map = new HashMap<String, String>();
+		ArrayList<String> list = getMonthData(id,formattedDate);
+		
+		//map에 담아주기
+		map.put("monthTarExe",list.get(0));
+		map.put("monthTarKcal",list.get(1));
+		map.put("monthContent", list.get(2));
+		
+;		return map;
+	}
+	
+	//한달 목표 섭취, 운동 칼로리 와 목표 가져오는 메서드
+	public ArrayList<String> getMonthData(String id,String formattedDate) {
+		ArrayList<String> list = new ArrayList<String>();
+>>>>>>> 6e4d212d2182b9e3610ce84bef989a623cd0b8a6
 		DamoDTO dto = dao.getMonthData(id, formattedDate);
 		
 		//월 데이터가 없는 경우

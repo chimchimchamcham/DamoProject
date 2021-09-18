@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dumveloper.damo.fit.service.FitService;
 
@@ -84,14 +85,22 @@ public class FitController {
 	@RequestMapping(value = "/fitWrite", method = RequestMethod.POST)
 	public ModelAndView fitWrite(@RequestParam HashMap<String,String> params, 
 			MultipartHttpServletRequest mtfRequest, HttpSession session,
-			@RequestParam(value="imgNo",required=true) List<String> imgNos) {
+			@RequestParam(value="imgNo",required=true) List<String> imgNos,
+			RedirectAttributes rAttr) {
 
 		logger.info("지식핏 글쓰기 접속");
 		logger.info("params : {}",params);
 		logger.info("imgNos : {}",imgNos);
 		
-		return null;
-		//return fitservice.fitWrite(params,mtfRequest,session);
+		for(int i=1;i<=imgNos.size();i++) {
+			System.out.println("i = "+i+" "+imgNos.contains(""+i));
+			if(!imgNos.contains(""+i)) {
+				continue;
+			}
+			System.out.println("실행!!");
+		}
+		
+		return fitservice.fitWrite(params,mtfRequest,session,imgNos,rAttr);
 	}
 
 }
