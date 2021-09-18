@@ -33,10 +33,14 @@ public class CalendarService {
 		
 		if(id != null) {
 			ArrayList<DamoDTO>list = dao.list(id);
-			ArrayList<String> list = getMonthData(id, formatedNow);
 			logger.info("작성 일기 갯수 : {}",list.size());
-			mav.addObject("list",list);
 			
+			ArrayList<String> monthData = getMonthData(id, formatedNow);
+			
+			mav.addObject("list",list);
+			mav.addObject("monthTarExe",monthData.get(0));
+			mav.addObject("monthTarKcal",monthData.get(1));
+			mav.addObject("monthContent",monthData.get(2));
 		}
 		
 		mav.setViewName("diary/calendar");

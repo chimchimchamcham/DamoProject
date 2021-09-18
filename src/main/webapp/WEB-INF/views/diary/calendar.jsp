@@ -190,9 +190,9 @@ body {
 	<div class="row mb-3">
 		<div class="col-3"><a href="./goupdate">회원정보 수정</a></div>
 		<div class="col-6">
-			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="섭취 칼로리" id="tarKcal" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="운동 칼로리"  id="tarExe" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="섭취 칼로리" id="tarKcal" value="${monthTarKcal}" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="운동 칼로리"  id="tarExe" value="${monthTarExe}" style="text-align:center">
 			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight" style="text-align:center">
 		</div>
 		<div class="col-3"><button type="button" class="btn btn-secondary" id="prev">prev</button><button type="button" class="btn btn-secondary" id="next">next</button></div>
