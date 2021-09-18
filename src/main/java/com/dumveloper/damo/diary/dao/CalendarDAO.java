@@ -6,6 +6,8 @@ import com.dumveloper.damo.dto.DamoDTO;
 
 public interface CalendarDAO {
 
-	ArrayList<DamoDTO> list(String id,String formatedNow);
+	ArrayList<DamoDTO> list(String id);
+
+	DamoDTO getMonthData(String id, String formattedDate);
 
 }
