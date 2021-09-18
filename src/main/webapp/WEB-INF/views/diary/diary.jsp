@@ -180,16 +180,23 @@
       console.log(getType);
       document.getElementById("date").innerHTML=getType;
       
+      var dt = new Date(document.getElementById("date").innerText);
+     /*  var arrDayStr = ['일','월','화','수','목','금','토']; */
+      
+      /*전 날로 이동*/
       function preMonth(){
-    	  var dt = new Date(document.getElementById("date").innerText);
     	  console.log(dt);
-    	  /* var preDt = dt.getFullYear()+'-'+(dt.getMonth())+'-'+dt.getDate()-1; */
-    	  console.log(dt.getFullYear());
-    	  console.log(dt.getMonth());
-    	  console.log(dt.getDate()-1);
-    	  var arrDayStr = ['일','월','화','수','목','금','토'];
-    	  var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1)+'('+arrDayStr[dt.getDay()-1]+')';
+    	  /* var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1)+'('+arrDayStr[dt.getDay()-1]+')'; */
+    	  var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1);
     	 console.log(preDt);
+      }
+      
+      /*다음날로 이동*/
+      function nextMonth(){
+    	  console.log(dt);
+    	  /* var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+1)+'('+arrDayStr[dt.getDay()+1]+')'; */
+    	  var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+1);
+    	 console.log(nextDt);
       }
 </script>
 
