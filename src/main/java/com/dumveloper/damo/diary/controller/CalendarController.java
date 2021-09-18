@@ -42,7 +42,7 @@ public class CalendarController {
 		if(id==null) {
 			map = null;
 		}else {
-			map = service.getMonthData(id,formattedDate);
+			map = service.getMonthDByAjax(id,formattedDate);
 		}
 		 return map;
 		 
