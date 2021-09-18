@@ -56,7 +56,7 @@
       ,dateClick:function(date){
     	  console.log('Date:',date.dateStr);
     	  console.log('Resource ID:',date.dateStr);
-    	  location.href='goDiary';
+    	  location.href='goDiary?Date='+date.dateStr;
       }
 
  	 });
@@ -83,7 +83,6 @@ body {
 
 
 <jsp:include page="../header.jsp"></jsp:include>
-<a href="goDiary">일기 쓰기</a>
 
 <div class='p-3 mb-5 bg-white rounded'>
 
