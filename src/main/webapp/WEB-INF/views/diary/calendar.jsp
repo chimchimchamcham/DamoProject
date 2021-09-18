@@ -71,6 +71,7 @@
     //이동한 달의 목표 섭취 칼로리, 운동 칼로리 가져오기
     var tarExe = '';
     var tarKcal = '';
+    var content = '';
     //-------------------------------------------//
     
     //이전 달 이동 버튼 클릭시 
@@ -83,22 +84,7 @@
 		calendar.prev(); //이전달 이동
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
-		$.ajax({ 
-			type:'GET',
-			url:'getMonthData/'+formattedDate,
-			dataType:'JSON',
-			success:function(data){
-				console.log(data.monthTarExe);
-				console.log(data.monthTarKcal);
-				
-				tarExe = data.monthTarExe;
-				tarKcal = data.monthTarKcal;
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+		getMonthData(formattedDate);
 		
 	});
 	
@@ -112,22 +98,7 @@
 		calendar.next(); //다음달 이동
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
-		$.ajax({
-			type:'GET',
-			url:'getMonthData/'+formattedDate,
-			dataType:'JSON',
-			success:function(data){
-				console.log(data.monthTarExe);
-				console.log(data.monthTarKcal);
-				
-				tarExe = data.monthTarExe;
-				tarKcal = data.monthTarKcal;
-			     
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+		getMonthData(formattedDate);
 		
 	}); 	
 	  
@@ -160,6 +131,34 @@
 	      	return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]);
 	    }	
 	    //---------------------------------------------------------//
+	   
+	    //이동한 달의 목표 섭취, 운동 칼로리 가져오기
+	    function getMonthData(formattedDate){	
+			$.ajax({
+				type:'GET',
+				url:'getMonthData/'+formattedDate,
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.monthTarExe);
+					console.log(data.monthTarKcal);
+					console.log(data.monthContent);
+					
+					tarExe = data.monthTarExe;
+					tarKcal = data.monthTarKcal;
+					content = data.monthContent;
+					
+					if(tarExe)
+					
+					$("#tarKcal").val(tarKcal);
+					$("#tarExe").val(tarExe);
+					$("#goal").val(content); 	
+				     
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+	    }
 	    
   });	
 </script>
@@ -191,9 +190,10 @@ body {
 	<div class="row mb-3">
 		<div class="col-3"><a href="./goupdate">회원정보 수정</a></div>
 		<div class="col-6">
-			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" id="goal" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" style="text-align:center">
 			<input type="text" class="form-control-plainText" placeholder="섭취 칼로리" id="tarKcal" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="운동 칼로리" id="tarExe" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="운동 칼로리"  id="tarExe" style="text-align:center">
+			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight" style="text-align:center">
 		</div>
 		<div class="col-3"><button type="button" class="btn btn-secondary" id="prev">prev</button><button type="button" class="btn btn-secondary" id="next">next</button></div>
 	</div>

@@ -51,17 +51,21 @@ public class CalendarService {
 		//월 데이터가 없는 경우
 		String tarExe= "-";
 		String tarKcal= "-";
+		String content = "-";
 		
 		if(dto != null) {
 			tarExe = Integer.toString(dto.getC_tarExe());
 			tarKcal = Integer.toString(dto.getC_tarKcal());
+			content = dto.getC_content();
 		}
 		
 		logger.info("운동 칼로리:{}",tarExe);
 		logger.info("섭취 칼로리:{}", tarKcal);
+		logger.info("한달 목표:{}",content);
 		
 		map.put("monthTarExe",tarExe);
 		map.put("monthTarKcal",tarKcal);
+		map.put("monthContent", content);
 		
 ;		return map;
 	}
