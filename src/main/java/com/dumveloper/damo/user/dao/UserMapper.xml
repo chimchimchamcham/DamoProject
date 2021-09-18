@@ -70,4 +70,9 @@
 	</update>
 
 
+	<select id="dbuserlist" resultType="damo" parameterType="hashMap">
+		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM USERINFO
+	</select>
+
+
 </mapper>

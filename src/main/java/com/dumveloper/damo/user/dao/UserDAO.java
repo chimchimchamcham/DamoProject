@@ -1,5 +1,6 @@
 package com.dumveloper.damo.user.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import com.dumveloper.damo.dto.DamoDTO;
 public interface UserDAO {
@@ -25,6 +26,10 @@ public interface UserDAO {
 	String dbfilename(String id);
 	String dbninkname(String id);
 	String dbmanager(String id);
+	
+	//관리자 
+	//회원 목록
+	ArrayList<DamoDTO> dbuserlist(HashMap<String, String> param);
 	
 
 	
