@@ -41,6 +41,10 @@ public class CalendarService {
 			mav.addObject("monthTarExe",monthData.get(0));
 			mav.addObject("monthTarKcal",monthData.get(1));
 			mav.addObject("monthContent",monthData.get(2));
+			
+			DamoDTO weightData = dao.getWeight(id);
+			
+			//weightData.getU_tarWeight() 
 		}
 		
 		mav.setViewName("diary/calendar");

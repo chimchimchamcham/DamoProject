@@ -18,4 +18,8 @@
 	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param2}
 </select>
 
+<select id="getWeight" resultType="damo">
+	 SELECT U.U_tarWeight,U.U_WEIGHT FROM USERINFO U WHERE U.U_ID=#{param1}
+</select>
+
 </mapper>
