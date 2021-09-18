@@ -1,5 +1,8 @@
 package com.dumveloper.damo.user.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -8,8 +11,10 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.dto.DamoDTO;
@@ -20,6 +25,8 @@ public class UserService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired UserDAO dao;
+	
+	//@Value("#{config['Globals.filePath']}")String root;
 	
 	//회원가입 약관동의
 	public ModelAndView check_terms(HashMap<String, String> params) {
@@ -173,6 +180,73 @@ public class UserService {
 		String id = (String) session.getAttribute("loginId");
 		return dao.userinfo(id);
 	}
+
+
+	public ModelAndView update(HashMap<String, String> param, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		DamoDTO dto = new DamoDTO();
+		
+		dto.setU_id(id);
+		dto.setU_nick(param.get("nick"));
+		dto.setU_pw(param.get("pw"));
+		dto.setU_gender(param.get("gender"));
+		dto.setU_age(Integer.parseInt(param.get("age")));
+		dto.setU_tarWeight(Integer.parseInt(param.get("tarweight")));
+		dto.setU_height(Integer.parseInt(param.get("height")));
+		dto.setU_intro(param.get("u_intro"));
+		
+		
+		int success = dao.update(dto);//이번에는 파라미터를 dto로 전달
+		
+		String msg = "수정에 실패했습니다";
+		String page = "/diary/calendar";
+		if(success>0) {
+			msg = "수정에 성공했습니다";
+			page = "/diary/calendar"; //마이페이지 만들어지면 그쪽으로
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.setViewName(page);
+		
+		logger.info("update success : {}",success); 
+		
+		return mav;
+		
+	}
+
+
+public ModelAndView fileupload(MultipartFile file, HttpSession session) {
+		String id = (String) session.getAttribute("loginId");
+		ModelAndView mav = new ModelAndView();
+		logger.info("id 요청:{}",id);
+		mav.setViewName("redirect:/goupdate");
+		
+		logger.info("hellow_file");
+		
+		//1 파일명 추출
+		String fileName = file.getOriginalFilename();
+		//2 신규 파일명== 겹치는 파일 없게 중복되지
+		String newFileName = System.currentTimeMillis()+fileName.substring(fileName.lastIndexOf("."));
+		//3db에 저장
+		dao.dbphotoname(id,newFileName);
+		//4 파일 다운로드
+		try {
+			byte[] bytes = file.getBytes();
+			//이 저장방식은 java7부터 가능(java.nio)
+			Path filePath = Paths.get("C:/upload/"+newFileName);//경로지정
+			Files.write(filePath, bytes);//저장
+
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+		return mav;
+	}
+
 
 
 
