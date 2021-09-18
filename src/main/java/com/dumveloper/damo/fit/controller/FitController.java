@@ -1,6 +1,7 @@
 package com.dumveloper.damo.fit.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.fit.service.FitService;
 
@@ -74,7 +77,21 @@ public class FitController {
 	@RequestMapping(value = "/fitWriteForm", method = RequestMethod.GET)
 	public String fitWriteForm(Model model) {
 
-		logger.info("지식핏 글쓰기 접속");
+		logger.info("지식핏 글쓰기 폼 접속");
 		return "fit/fitWriteForm";
 	}
+	
+	@RequestMapping(value = "/fitWrite", method = RequestMethod.POST)
+	public ModelAndView fitWrite(@RequestParam HashMap<String,String> params, 
+			MultipartHttpServletRequest mtfRequest, HttpSession session,
+			@RequestParam(value="imgNo",required=true) List<String> imgNos) {
+
+		logger.info("지식핏 글쓰기 접속");
+		logger.info("params : {}",params);
+		logger.info("imgNos : {}",imgNos);
+		
+		return null;
+		//return fitservice.fitWrite(params,mtfRequest,session);
+	}
+
 }

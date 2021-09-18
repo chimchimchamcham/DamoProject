@@ -11,7 +11,8 @@
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
-
+	
+	<form id="fitWrite" action="fitWrite" method="post" enctype="multipart/form-data">
     <div id="fitTitle" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
         <div class="row">
             <div id="title"class="col-md-8">
@@ -21,6 +22,7 @@
                 </div>
             </div>
             <div id="titleBtn" class="col-md-4">
+            	<input type="submit" value="제출">
                 <button id="submit" type="button" class="btn btn-primary float-right ml-3 mt-1">질문등록</button>
                 <button id="cancel" type="button" class="btn btn-outline-primary float-right ml-3 mt-1">등록취소</button>
             </div>
@@ -30,8 +32,8 @@
     <div id="fitContent" class="container pt-4 pl-5">
         <div class="d-inline-flex">  
             <div id="c" class="mr-3 pt-2 text-secondary font-weight-bold">카테고리</div>
-            <div id="k_code" class="form-group" name="k_code"> <!-- 카테고리 -->
-                <select class="form-control">
+            <div id="k_code" class="form-group" >
+                <select name="k_code" class="form-control"> <!-- 카테고리 -->
                   <option value="">--선택--</option>
                   <option value="K001">자세교정</option>
                   <option value="K002">식단</option>
@@ -105,6 +107,7 @@
         <!-- 빈칸-->
         <div id="emptyWrap"></div>
     </div>
+    </form>
 </body>
 <style>
     #fitTitle{
@@ -322,7 +325,7 @@
             		content += '<div class="imgWrap">';
             		content += '<img src="'+e.target.result+'" width="400px" height="300px">';
             		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
-            		content += '<input type="hidden" name="imgNo" value="'+index+'">';
+            		content += '<input type="hidden" name="imgNo" value="'+(index+1)+'">';
             		content += '</div>';
             	
             		$("#imageWrap").append(content);
@@ -340,7 +343,11 @@
        
     });
 
-    
+    //submit
+    $("#submit").click(function(){
+    	alert('submit');
+		$("#fitWrite").submit();
+	});
     
 </script>
 </html>

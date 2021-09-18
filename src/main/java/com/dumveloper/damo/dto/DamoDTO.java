@@ -65,6 +65,37 @@ public class DamoDTO {
 	private int k_replyCnt; //답변수
 	private String k_solutionYN; //해결여부
 	private String k_blindYN; //블라인드 여부
+	
+	//지식핏 이미지
+	private int ki_no;
+	private String ki_name;
+	private String ki_imgYN;
+	public int getKi_no() {
+		return ki_no;
+	}
+	public void setKi_no(int ki_no) {
+		this.ki_no = ki_no;
+	}
+	public String getKi_name() {
+		return ki_name;
+	}
+	public void setKi_name(String ki_name) {
+		this.ki_name = ki_name;
+	}
+	public String getKi_imgYN() {
+		return ki_imgYN;
+	}
+	public void setKi_imgYN(String ki_imgYN) {
+		this.ki_imgYN = ki_imgYN;
+	}
+	public String getKi_knowYN() {
+		return ki_knowYN;
+	}
+	public void setKi_knowYN(String ki_knowYN) {
+		this.ki_knowYN = ki_knowYN;
+	}
+	private String ki_knowYN;
+	
 	public String getU_id() {
 		return u_id;
 	}
