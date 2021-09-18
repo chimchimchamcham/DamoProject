@@ -3,6 +3,7 @@ package com.dumveloper.damo.diary.service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +34,36 @@ public class CalendarService {
 		
 		
 		if(id != null) {
-			ArrayList<DamoDTO>list = dao.list(id,formatedNow);
+			ArrayList<DamoDTO>list = dao.list(id);
 			logger.info("작성 일기 갯수 : {}",list.size());
 			mav.addObject("list",list);
 		}
 		
 		mav.setViewName("diary/calendar");
 		return mav;
+	}
+
+	public HashMap<String, String> getMonthData(String id,String formattedDate) {
+		logger.info("요청한 달:{}",formattedDate);
+		HashMap<String, String> map = new HashMap<String, String>();
+		DamoDTO dto = dao.getMonthData(id, formattedDate);
+		
+		//월 데이터가 없는 경우
+		String tarExe= "-";
+		String tarKcal= "-";
+		
+		if(dto != null) {
+			tarExe = Integer.toString(dto.getC_tarExe());
+			tarKcal = Integer.toString(dto.getC_tarKcal());
+		}
+		
+		logger.info("운동 칼로리:{}",tarExe);
+		logger.info("섭취 칼로리:{}", tarKcal);
+		
+		map.put("monthTarExe",tarExe);
+		map.put("monthTarKcal",tarKcal);
+		
+;		return map;
 	}
 	
 	
