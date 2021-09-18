@@ -53,6 +53,9 @@ img {
 #input-file{
     display:none;
 }
+textarea{
+	resize: none;
+}
 </style>
 </head>
 <body>
@@ -127,12 +130,12 @@ img {
 
                     <div class="form-group row col-12 pl-4">
                         <label for="id" class="text-left col-2 my-1 mr-5">나이</label>
-                        <input type="text" class="col-3 form-control my-1 " id="age" name="age" value="${info.u_age}">
+                        <input type="text" class="col-3 form-control my-1 " id="age" name="age" value="${info.u_age}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                         <div class="textage">세</div>
 
 
                         <label for="id" class="text-right col-1 my-1 ml-2">키</label>
-                        <input type="text" class="col-3 form-control my-1 " id="height" name="height" value="${info.u_height}">
+                        <input type="text" class="col-3 form-control my-1 " id="height" name="height" value="${info.u_height}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
 
 
                     </div>
@@ -146,7 +149,7 @@ img {
                     
                     <div class="form-group row col-12">
                         <label for="id" class="text-left col-2 m-1 mr-5">목표 몸무게</label>
-                        <input type="text" class="col-4" name="tarweight" value="${info.u_tarWeight}">
+                        <input type="text" class="col-4" name="tarweight" value="${info.u_tarWeight}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                         <div class="textage">kg</div>
                     </div>
                     
@@ -171,13 +174,13 @@ img {
 
 var imgname = "${info.u_fileName}"
 var alarmboolean = "${info.u_alarmYN}";
-var msg="${msg}";
 var updatealarm = '';
 
 
 console.log("info:","${info.u_gender}");
 gender = "${info.u_gender}"
 console.log("gender:",gender);
+
 if (gender=='M') {
 	$('#M').prop('checked',true);
 }else if(gender=='F'){
@@ -189,9 +192,7 @@ if (gender=='M') {
 
 console.log("info:","${info.u_alarmYN}");
 
-if(msg!=""){
-	alert(msg);
-}
+
 
 function fileUpload(){
 	$('.help').submit();
@@ -199,6 +200,11 @@ function fileUpload(){
 
 
 $(document).ready(function(){
+	
+	var msg="${msg}";
+	if(msg!=""){
+		alert(msg);
+	}
 	
    	//알람여부
 	if (alarmboolean=='true') {
@@ -294,8 +300,10 @@ $(document).ready(function(){
 	        $("#pwch").css("border-color","#ced4da");
 	        
 	        
-	        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-	        	$(".matchornotpw").text('');
+	        if (pw1==''||pw2==''||(pw1==''&&pw2=='')) {
+				$(".matchornotpw").text('');			
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
 			}
 	        
 		}else{
@@ -304,6 +312,12 @@ $(document).ready(function(){
 	        $(".matchornotpw").css('color','red');
 	        $("#pw").css("border-color","red");
 	        $("#pwch").css("border-color","red");
+	        
+	        if (pw1==''||pw2==''||(pw1==''&&pw2=='')) {
+				$(".matchornotpw").text('');			
+		        $("#pw").css("border-color","#ced4da");
+		        $("#pwch").css("border-color","#ced4da");
+			}
 		}
    
     });
@@ -321,15 +335,24 @@ $(document).ready(function(){
 		        $("#pwch").css("border-color","#ced4da");
 		        
 		        
-		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
-		        	$(".matchornotpw").text('');
+		        if (pw1==''||pw2==''||(pw1==''&&pw2=='')) {
+					$(".matchornotpw").text('');			
+			        $("#pw").css("border-color","#ced4da");
+			        $("#pwch").css("border-color","#ced4da");
 				}
+		        
 			}else{
 				$(".matchornotpw").text('');
 		        $(".matchornotpw").text('비밀번호가 일치하지 않습니다');
 		        $(".matchornotpw").css('color','red');
 		        $("#pw").css("border-color","red");
 		        $("#pwch").css("border-color","red");
+		        
+		        if (pw1==''||pw2==''||(pw1==''&&pw2=='')) {
+					$(".matchornotpw").text('');			
+			        $("#pw").css("border-color","#ced4da");
+			        $("#pwch").css("border-color","#ced4da");
+				}
 			}
       
        });
