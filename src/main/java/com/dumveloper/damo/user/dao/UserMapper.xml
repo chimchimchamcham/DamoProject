@@ -65,4 +65,9 @@
 	</update>
 
 
+	<update id="dbalarmupdate" parameterType="string">
+		UPDATE USERINFO SET U_ALARMYN = #{param1}  WHERE U_ID = #{param2}
+	</update>
+
+
 </mapper>
