@@ -38,7 +38,10 @@
 	<div class="container mt-5">
 	<!-- 날짜 나타남 -->
 	<div class="col-md-3" style="float: none; margin:0 auto;">
-<button type="button" class="btn btn-light rounded-circle mr-3"><i class="fas fa-chevron-left "></i></button><span id="date" style="font-size:20px;"></span><button type="button" class="btn btn-light rounded-circle ml-3"><i class="fas fa-chevron-right"></i></button></div>
+		<button type="button" class="btn btn-light rounded-circle mr-3" onclick="preMonth()"><i class="fas fa-chevron-left "></i></button>
+			<span id="date" style="font-size:20px;"></span>
+		<button type="button" class="btn btn-light rounded-circle ml-3" onclick="nextMonth()"><i class="fas fa-chevron-right"></i></button>
+	</div>
 	
 		<!-- 몸무게 입력 -->
 		<form class="form-inline mt-5" action="#">
@@ -99,6 +102,7 @@
 <script src="chartjs-plugin-doughnutlabel.js"></script>
 <script src="chartjs-plugin-doughnutlabel.min.js"></script>
 <script>
+
 /*섭취 칼로리 그래프*/
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
 		value : 0.8, //진행된 수를 넣어주세요. 1이 100기준입니다.
@@ -111,6 +115,7 @@
 	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
 		$(this).find('strong').html(parseInt(100 * 0.8) + '%'+'<br/>성공');
 	});
+	
 	
 	/*운동 칼로리 그래프*/
 	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
@@ -166,16 +171,26 @@
 		    }
          }
       });
-     
-      var search = location.search
+
       
-      var params = new URLSearchParams(search);
-       
-      var getType= params.get('Date');
-      
+      /*클릭한 날짜 뿌려주기*/
+      var search = location.search    
+      var params = new URLSearchParams(search); 
+      var getType= params.get('Date');    
       console.log(getType);
-      
       document.getElementById("date").innerHTML=getType;
+      
+      function preMonth(){
+    	  var dt = new Date(document.getElementById("date").innerText);
+    	  console.log(dt);
+    	  /* var preDt = dt.getFullYear()+'-'+(dt.getMonth())+'-'+dt.getDate()-1; */
+    	  console.log(dt.getFullYear());
+    	  console.log(dt.getMonth());
+    	  console.log(dt.getDate()-1);
+    	  var arrDayStr = ['일','월','화','수','목','금','토'];
+    	  var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1)+'('+arrDayStr[dt.getDay()-1]+')';
+    	 console.log(preDt);
+      }
 </script>
 
 </html>
