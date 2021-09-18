@@ -50,15 +50,10 @@
     	  
     	  	]
       ,dateClick:function(date){
-<<<<<<< HEAD
     	  console.log('Date:',date.dateStr);
     	  console.log('Resource ID:',date.dateStr);
     	  location.href='goDiary?Date='+date.dateStr;
-=======
-    	  //console.log('Date:',date.dateStr); //일자 가져가기
-    	  //console.log('Resource ID:',date.dateStr);
-    	  //location.href='goDiary';
->>>>>>> 32e02a2954e4b102a52bfa02a2327e447935e6cc
+
       }
 
  	 });
