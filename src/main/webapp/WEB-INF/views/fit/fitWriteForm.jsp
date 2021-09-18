@@ -102,7 +102,7 @@
         <input type="hidden" name="imgNo" value="0">
         
         <!-- 동영상 url추출 저장 -->
-        <input type="text" name="url" id="iframeUrl">
+        <input type="hidden" name="url" id="iframeUrl">
 
         <!-- 빈칸-->
         <div id="emptyWrap"></div>
@@ -353,6 +353,9 @@
     		return false;
     	}else if($("#k_content").val()==""){
     		alert("내용을 입력하세요");
+    		return false;
+    	}else if($("#k_content").val().length>1000){
+    		alert("글자수를 1000자 이하로 작성해주세요");
     		return false;
     	}
     	
