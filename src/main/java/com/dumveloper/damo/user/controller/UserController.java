@@ -211,10 +211,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public ModelAndView update(@RequestParam HashMap<String, String> param,HttpSession session) {
-		logger.info("update info : {}",param);
+	public ModelAndView update(@RequestParam HashMap<String, String> params,HttpSession session) {
 		
-		return service.update(param,session);
+			ModelAndView mav = new ModelAndView();
+			logger.info("joinnow");
+			for (String num : params.keySet()) {
+				if (params.get(num)==null||params.get(num)=="") {
+					String msg = "회원정보를 전부 입력해주세요";
+					mav.addObject("msg",msg);
+					mav.setViewName("/user/msg");
+					return mav;
+			}else{
+				logger.info("join : {}",params);
+			}
+		}
+		return service.join(params);
 	}
 	
 	
