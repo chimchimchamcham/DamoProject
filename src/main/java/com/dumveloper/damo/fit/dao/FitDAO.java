@@ -10,4 +10,8 @@ public interface FitDAO {
 
 	ArrayList<DamoDTO> newFitList(int start, int end, String category);
 
+	int upload(int ki_no, String ki_name, String ki_imgyn, String ki_knowyn);
+
+	int fitWrite(DamoDTO dto);
+
 }

@@ -64,7 +64,7 @@ img {
         <!--회원 수정(이미지,알림) 정보-->
         <div class="m-3 mr-5">
             <div class="row col-4 d-flex flex-column justify-content-center align-items-center">
-             <img src="./upload/${info.u_fileName}" class="rounded-circle d-block mb-3 img-responsive center-block">
+             <img src="" id="img_form_url" class="rounded-circle d-block mb-3 img-responsive center-block">
              <!-- 경로 문제있음 -->
              <form class="help" action="upload" method="post" enctype="multipart/form-data">
              
@@ -169,9 +169,7 @@ img {
 </body>
 <script>
 
-//내일 할거 root 안먹힘 
 
-$("#img_form_url").attr("src","C:/upload/"+"${info.u_fileName}");
 
 console.log("info:","${info.u_gender}");
 gender = "${info.u_gender}"
@@ -196,7 +194,15 @@ function fileUpload(){
 
 $(document).ready(function(){
 	
-    
+   var imgname = "${info.u_fileName}"
+   
+   
+   if (imgname!="default-profile.png") {
+		$("#img_form_url").attr("src","/photo/"+imgname);	
+	}else{
+		$("#img_form_url").attr("src","resources/img/"+imgname);	
+	}
+	
     $(document).on("focusout focuson keyup","#nick", function() {
     	var x = $("#nick").val();
     	var nick = x;
