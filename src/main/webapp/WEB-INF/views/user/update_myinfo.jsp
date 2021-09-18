@@ -68,15 +68,15 @@ img {
              <!-- 경로 문제있음 -->
              <form class="help" action="upload" method="post" enctype="multipart/form-data">
              
-                <label for="input-file" class="btn btn-light btn-outline-dark mb-5 mx-5"">
+                <label for="input-file" class="btn btn-light btn-outline-dark mb-5 mx-5">
                       	사진수정
                 </label>
 				<input type="file" name="file" id="input-file" onchange="fileUpload()"/>
              </form>
-                <form class="mb-3 d-flex">
+                <div class="mb-3 d-flex">
                     <div class="alarm text-center mr-4">알림설정</div>
-                    <input type="checkbox" checked data-toggle="toggle" data-style="ios" data-width="100" data-height="25">
-                </form>
+                    <input id="toggle-demo" type="checkbox" checked data-toggle="toggle" data-style="ios" data-width="100" data-height="25">
+                </div>
              </div>
         </div>
         <!--회원 수정 정보-->
@@ -169,6 +169,10 @@ img {
 </body>
 <script>
 
+var imgname = "${info.u_fileName}"
+var alarmboolean = "${info.u_alarmYN}";
+var msg="${msg}";
+var updatealarm = '';
 
 
 console.log("info:","${info.u_gender}");
@@ -182,7 +186,9 @@ if (gender=='M') {
 	
 }
 
-var msg="${msg}";
+
+console.log("info:","${info.u_alarmYN}");
+
 if(msg!=""){
 	alert(msg);
 }
@@ -194,9 +200,43 @@ function fileUpload(){
 
 $(document).ready(function(){
 	
-   var imgname = "${info.u_fileName}"
+   	//알람여부
+	if (alarmboolean=='true') {
+		$('#toggle-demo').bootstrapToggle('on');
+		alarmyn = 'on';
+		
+	}else if(alarmboolean=='false'){
+		$('#toggle-demo').bootstrapToggle('off');
+		alarmyn = 'off';
+	}
+		
+   	//클릭시 알람여부 바꿈
+	$(document).on("click",".toggle-group label", function() {
+
+ 	   $.ajax({
+		      url : './check/alarms',
+		      type : 'get',
+		      data : {alarm:alarmyn},
+		      dataType : "text",
+		      success : function(data){
+		    	  console.log(data);
+		    	  if (data=='N') {
+		    		  $('#toggle-demo').bootstrapToggle('off');
+		    		  alarmyn = 'off';
+				}else if(data=='Y'){
+					$('#toggle-demo').bootstrapToggle('on');
+					alarmyn='on'
+				}
+		      },
+		      error : function(error){
+		         console.log(error);
+		      }
+		   });
+ 	   
+    })
    
    
+ //사진 수정 경로
    if (imgname!="default-profile.png") {
 		$("#img_form_url").attr("src","/photo/"+imgname);	
 	}else{
