@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.user.service.UserService;
 
 @Controller
@@ -196,9 +199,22 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/goupdate", method = RequestMethod.GET)
-	public String goupdate(Model model) {
+	public String goupdate(Model model,HttpSession session) {
 		logger.info("updateinfo");
+		DamoDTO dto = service.updateuserinfo(session);
+		model.addAttribute("info", dto);
+		
+		HashMap< String, String> list = new HashMap<String, String>();
+		session.setAttribute("filelist", list);
+		
 		return "/user/update_myinfo";
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public ModelAndView update(@RequestParam HashMap<String, String> param,HttpSession session) {
+		logger.info("update info : {}",param);
+		
+		return service.update(param,session);
 	}
 	
 	
@@ -211,4 +227,12 @@ public class UserController {
 		logger.info("로그아웃 요청");
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/upload",method = RequestMethod.POST)
+	public ModelAndView upload(MultipartFile file,HttpSession session) {
+		logger.info("업로드 요청:{}",file);
+		return service.fileupload(file,session);
+	}
+	
+	
 }

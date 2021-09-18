@@ -11,6 +11,10 @@
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1} AND U_PW = #{param2}  AND U_BLINDYN = 'N'
 	</select>
 
+	<select id="userinfo" resultType="damo">
+		SELECT * FROM USERINFO WHERE U_ID = #{param1}  AND U_BLINDYN = 'N'
+	</select>
+
 	<select id="dbblacklist" resultType="hashmap">
 		SELECT U_ID,TO_CHAR(B_ENDDT,'YYYY-MM-DD')AS ENDTIME,B_CONTENT FROM BLACKLIST WHERE U_ID = #{param1}
 	</select>
@@ -50,5 +54,15 @@
 		INSERT INTO USERINFO(U_ID,U_PW,U_NAME,U_EMAIL,U_NICK,U_AGE,U_WEIGHT,U_TARWEIGHT,U_HEIGHT,U_GENDER,U_ADMINYN,U_CHOOSECNT,U_ALARMYN)
 		VALUES(#{u_id},#{u_pw},#{u_name},#{u_email},#{u_nick},#{u_age},#{u_weight},#{u_tarWeight},#{u_height},#{u_gender},'N',0,'Y')
 	</insert>
+
+	<update id="update">
+		UPDATE USERINFO SET U_NICK = #{u_nick},U_PW = #{u_pw},U_GENDER = #{u_gender},U_AGE = #{u_age},U_HEIGHT = #{u_height},U_TARWEIGHT = #{u_tarWeight},U_INTRO = #{u_intro} WHERE U_ID = #{u_id}
+	</update>
+
+
+	<update id="dbphotoname" parameterType="string">
+		UPDATE USERINFO SET U_FILENAME = #{param2}  WHERE U_ID = #{param1}
+	</update>
+
 
 </mapper>

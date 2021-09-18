@@ -1,17 +1,18 @@
 package com.dumveloper.damo.user.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
 import com.dumveloper.damo.dto.DamoDTO;
-
 public interface UserDAO {
 
 	int login(String id, String pw);
 	HashMap<Object, String> dbblacklist(String id);
 	String iddbfind(String name, String email);
 	int pwdbfind(String id, String name, String email, String pw);
+	DamoDTO userinfo(String id);
+	//프사 바꾸기
+	void dbphotoname(String id, String newFileName);
 	
+	int update(DamoDTO dto);
 	int join(DamoDTO dto);
 	//중복체크
 	int checkdbId(String matchid);
@@ -22,6 +23,11 @@ public interface UserDAO {
 	String dbfilename(String id);
 	String dbninkname(String id);
 	String dbmanager(String id);
+
+	
+	
+	
+	
 
 
 	
