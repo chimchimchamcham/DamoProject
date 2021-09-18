@@ -46,10 +46,9 @@
 		<!-- 몸무게 입력 -->
 		<form class="form-inline mt-5" action="#">
 			<label for="weight">몸무게:</label> <input type="text"
-				class="form-control ml-3" id="weight" placeholder="몸무게 입력"
-				name="weight" style="width:80px;" value="${dto.u_weight}" /> <label class="ml-1">Kg</label>
+				class="form-control ml-3" id="d_weight" placeholder="몸무게 입력"
+				name="weight" style="width:80px;" value="" /> <label class="ml-1">Kg</label>
 		</form>
-
 
 		<div class="row">
 			<!-- 섭취 그래프 -->
@@ -61,8 +60,8 @@
 				
 				<form class="form-inline" action="#" class="circle_strong form-inline">
 							<label for="weight">목표 섭취 칼로리:</label> <input type="text"
-								class="form-control ml-3" id="weight" placeholder=""
-								name="weight" style="width:110px;" value="${dto.c_tarKcal}" /><label class="ml-1">Kcal</label>
+								class="form-control ml-3" id="d_tarKcal" placeholder=""
+								name="weight" style="width:110px;" value="" /><label class="ml-1">Kcal</label>
 						</form>
 			</div>
 
@@ -75,13 +74,13 @@
 				</div>
 				<form class="form-inline" action="#" class="circle_strong form-inline">
 							<label for="weight">목표 운동 칼로리 :</label> <input type="text"
-								class="form-control ml-3" id="weight" placeholder=""
-								name="weight" style="width:110px;" value="${dto.c_tarExe}" /> <label class="ml-1">Kcal</label>
+								class="form-control ml-3" id="d_tarExe" placeholder=""
+								name="weight" style="width:110px;" value="" /> <label class="ml-1">Kcal</label>
 						</form>
 			</div>
 
 			<!-- 탄단지 -->
-			<div class="col col-sm-5 mt-4">
+			<div class="col col-sm-4 mt-4">
 				<!-- 저탄고지, 밸런스 셀렉트 -->
 				<label for="weight">탄단지 그래프</label>
 				<select class="form-control form-control-sm float-right" style="width:100px;">
@@ -89,7 +88,11 @@
 					<option>저탄고지</option>
 				</select>
 				<div style="width:100%;">
-<canvas id="myChart" height="180" style="margin-top:25px;"></canvas>
+		<canvas id="myChart" height="180" style="margin-top:25px;">
+</canvas>
+<div class="col col-sm-1 mt-4">
+<span id="chartNum">(100/1000)<br/>(100/1000)<br/>(100/1000)<br/></span>
+</div>
 </div>
 </div>
 		</div>
@@ -107,6 +110,9 @@ var params = new URLSearchParams(search);
 var getType= params.get('Date');    
 console.log(getType);
 
+var d_carbo;
+var d_protein;
+var d_fat;
 
 /*처음 디폴트 값 뿌려주고 DB에 저장*/
 $.ajax({
@@ -118,12 +124,22 @@ $.ajax({
 				},
 				dataType : 'JSON',
 				success : function(data) {
+					console.log("성공");
 					console.log(data.dto);
+					
+					//몸무게, 목표 섭취 운동 칼로리 뿌려주기
+					document.getElementById("d_weight").value = data.dto.d_weight;
+					document.getElementById("d_tarKcal").value = data.dto.d_tarKcal;
+					document.getElementById("d_tarExe").value = data.dto.d_tarExe;
+					
+					//권장 탄단지 뿌려주기
+					d_carbo = JSON.parse(data.dto.d_carbo);
+					d_protein = JSON.parse(data.dto.d_protein);
+					d_fat = JSON.parse(data.dto.d_fat);
 				},
 				error : function(e) {
 					console.log(e);
 				}
-
 			});
 
 
@@ -155,7 +171,6 @@ $.ajax({
 	});
 
 	
-	
 	/*탄단지 그래프*/
 	  var ctx = document.getElementById('myChart').getContext('2d');
       var chart = new Chart(ctx, {
@@ -165,7 +180,7 @@ $.ajax({
               labels: ['탄수화물량(g)','단백질량(g)','지방량(g)'],
               datasets: [{
                   axis: 'y', // 가료형 막대로 바꾸는 옵션
-                  label: '색상',
+                  label: '탄단지',
                   backgroundColor: [
                 	  'rgba(255, 99, 132, 0.2)',
                       'rgba(255, 159, 64, 0.2)',
@@ -182,7 +197,7 @@ $.ajax({
                       'rgb(201, 203, 207)'
                     ],
                     borderWidth: 1,
-                  data: [2 ,10, 5,]
+                  data: [d_carbo ,d_protein, d_fat,]
               }]
           },
         options: {

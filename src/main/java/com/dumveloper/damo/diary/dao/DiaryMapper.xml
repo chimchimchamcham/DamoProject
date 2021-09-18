@@ -12,10 +12,15 @@ SELECT * FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') = #{param1} AND u_id=#{pa
 </select>
 
 <select id="diaryStartData" resultType="damo" parameterType="String">
-SELECT C.C_TARKCAL,C.C_TAREXE,C.C_DATE, u.u_weight
+SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	FROM USERINFO U ,CALENDER C 
-	WHERE U.U_ID=C.U_ID AND U.U_ID =#{param2}
+	WHERE U.U_ID=C.U_ID AND U.U_ID = #{param2}
 	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param1}
 </select>
+
+<insert id="diaryInsert" parameterType="damo">
+	INSERT INTO diary (d_no, u_id, d_date,d_weight,d_carbo,d_protein,d_fat,d_code,d_tarexe,d_tarkcal) VALUES
+		(d_no_seq.NEXTVAL,#{u_id},#{d_date},#{u_weight},#{d_carbo},#{d_protein},#{d_fat},'D001',#{c_tarExe},#{c_tarKcal})
+</insert>
 
 </mapper>

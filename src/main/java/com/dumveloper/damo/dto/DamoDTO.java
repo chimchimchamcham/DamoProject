@@ -36,7 +36,7 @@ public class DamoDTO {
 	//일기
 	private int d_no; //일기 번호
 	private String d_id; //일기 작성 아이디
-	private Date d_date; //일기 작성 날짜
+	private String d_date; //일기 작성 날짜
 	private String d_memo; //일기 메모
 	private int d_weight; //몸무게
 	private int d_carbo; //권장 탄수화물량
@@ -306,10 +306,10 @@ public class DamoDTO {
 	public void setD_id(String d_id) {
 		this.d_id = d_id;
 	}
-	public Date getD_date() {
+	public String getD_date() {
 		return d_date;
 	}
-	public void setD_date(Date d_date) {
+	public void setD_date(String d_date) {
 		this.d_date = d_date;
 	}
 	public String getD_memo() {

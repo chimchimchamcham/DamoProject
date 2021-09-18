@@ -9,4 +9,6 @@ public interface DiaryDAO {
 
 	DamoDTO diaryStartData(String date2, String id); //캘린더의 초기값 가져오기
 
+	int diaryInsert(DamoDTO dto);//다이어리 테이블에 컬럼 insert
+
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dumveloper.damo.diary.service.DiaryService;
 
@@ -25,7 +26,7 @@ public class DiaryController {
 	 }
 	 
 	 @RequestMapping(value="/diaryDetail") 
-	 public HashMap<String, Object> diaryDetail(@RequestParam String date,@RequestParam String id) {
+	 public @ResponseBody HashMap<String, Object> diaryDetail(@RequestParam String date,@RequestParam String id) {
 		 logger.info("일기 상세보기"+date+id);
 		return service.diaryDetail(date,id);
 	 }
