@@ -50,9 +50,18 @@
     	  
     	  	]
       ,dateClick:function(date){
-    	  console.log('Date:',date.dateStr);
-    	  console.log('Resource ID:',date.dateStr);
-    	  location.href='goDiary?Date='+date.dateStr;
+    	 //console.log('Date:',date.dateStr);
+    	  //console.log('Resource ID:',date.dateStr);
+    	  //#tarKcal/#tarExe/#goal
+    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
+    		  alert("목표를 입력해주세요!");
+    	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
+    		  alert("목표 섭취 칼로리를 입력해주세요!");
+    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
+    		  alert("목표 운동 칼로리를 입력해주세요!");
+    	  }else{
+    	 	location.href='goDiary?Date='+date.dateStr;
+    	  }
 
       }
 
@@ -61,7 +70,8 @@
     
     
     var date = calendar.getDate(); //현재 날짜 가져오기
-    
+  
+	
     //현재 날짜기준 월 이동시 이동한 달 데이터 가져오기
     var a = 0;
     var b = 0;
@@ -87,6 +97,10 @@
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
 		
+		formattedDate = formattedDate.toString().replace('-','년 ')+"월";
+		console.log(formattedDate);
+		$("#dateCal").text(formattedDate);
+		
 	});
 	
 	$("#next").on('click',function(){
@@ -95,11 +109,15 @@
 		//console.log("clickCnt:",clickCnt);
 		console.log("next :",date.yyyymm());
 		formattedDate = date.yyyymm(); //YYYY-MM 형태로 이동한 달 가져오기
-		//convertDate(date);
+		
 		calendar.next(); //다음달 이동
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
+		
+		formattedDate = formattedDate.toString().replace('-','년 ')+"월";
+		console.log(formattedDate);
+		$("#dateCal").text(formattedDate);
 		
 	}); 	
 	  
@@ -148,8 +166,6 @@
 					tarKcal = data.monthTarKcal;
 					content = data.monthContent;
 					
-					if(tarExe)
-					
 					$("#tarKcal").val(tarKcal);
 					$("#tarExe").val(tarExe);
 					$("#goal").val(content); 	
@@ -161,6 +177,99 @@
 			});
 	    }
 	    
+	    //달 가져오기
+	    var dateCal = date.yyyymm().toString();
+	    console.log(dateCal);
+	    $("#dateCal").text(dateCal.replace('-','년 ')+"월");
+	   
+	    //목표 섭취, 운동, 목표 내용 변경시 반영
+	    var monthId = '';
+	    var changeDT = '';
+
+	    //목표 섭취 칼로리 접근
+	    $("#tarKcal").focusin(function(){
+	    	console.log("섭취 칼로리 접근");
+	    	$(this).css("background-color","white");
+	    });
+
+	    //목표 섭취 칼로리 벗어났을 때
+	    $("#tarKcal").focusout(function(){
+	    	console.log("섭취 칼로리 벗어남");
+	    	$(this).css("background-color","#F4F4E9");
+	    	
+	    	//원래 입력했던 데이터와 다를 때 변경
+	    	if($(this).val() == '' || $(this).val()==null){
+	    		alert("내용을 입력해주세요");
+	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    		console.log('update 요청');	
+	    		reqUpdate($(this));
+	    	}
+	    });
+	    //목표 운동 칼로리 접근
+	    $("#tarExe").focusin(function(){
+	    	console.log("운동 칼로리 접근");
+	    	$(this).css("background-color","white");
+	    });
+	    //목표 운동 칼로리 벗어났을 때
+	    $("#tarExe").focusout(function(){
+	    	console.log("운동 칼로리 벗어남");
+	    	$(this).css("background-color","#F4F4E9");
+	    	
+	    	//console.log($(this).val())
+	    	
+	    	//원래 입력했던 데이터와 다를 때 변경
+	    	if($(this).val() == '' || $(this).val()==null){
+	    		alert("내용을 입력해주세요");
+	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    		console.log('update 요청');	
+	    		reqUpdate($(this));
+	    	}
+	    }); 
+
+	    //목표 접근
+	    $("#goal").focusin(function(){
+	    	console.log("목표 접근");
+	    	$(this).css("background-color","white");
+	    });
+	    //목표 운동 칼로리 벗어났을 때
+	    $("#goal").focusout(function(){
+	    	console.log("목표 벗어남");
+	    	$(this).css("background-color","#F4F4E9");
+	    	
+	    	//console.log($(this).val())
+	    	
+	    	//원래 입력했던 데이터와 다를 때 변경
+	    	if($(this).val() == '' || $(this).val()==null){
+	    		alert("내용을 입력해주세요");
+	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    		console.log('update 요청');	
+	    		reqUpdate($(this));
+	    	}
+	    });
+
+	    //입력한 내용으로 변경
+	    function reqUpdate(obj){
+	    	console.log("reqUpate 값 : "+obj.val());
+	    	console.log("reqUpdate 아이디 : "+obj.attr("id"));
+	    	var reqUrl = "updateMD/"+obj.attr("id")+"/"+obj.val()+"/"+dateCal;
+	    	console.log(reqUrl);
+	    	
+	    	$.ajax({
+	    	    	url:reqUrl,
+	    	    	type:'get', 
+	    	    	dataType:'json',
+	    	    	success:function(data){
+	    	    		console.log(data);
+	    	    	},
+	    	    	error:function(error){
+	    	    		console.log(error);
+	    	    	}
+	    	    });    
+	    }
+	  //----------------------------------------------//  	
+	  
+	  
+	  
   });	
 </script>
 <style>
@@ -187,24 +296,60 @@ body {
 <div class='p-3 mb-5 bg-white rounded'>
 
 	<div class='container pb-3' >
+	<a href="./goupdate">회원정보 수정</a>
 	<div class="row mb-3">
-		<div class="col-3"><a href="./goupdate">회원정보 수정</a></div>
-		<div class="col-6">
-			<input type="text" class="form-control-plainText" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="섭취 칼로리" id="tarKcal" value="${monthTarKcal}" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="운동 칼로리"  id="tarExe" value="${monthTarExe}" style="text-align:center">
-			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight" style="text-align:center">
+		<div class="col-3">
+			
+			<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align:center; background-color:#F4F4E9">
+			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight"  style="text-align:center">
 		</div>
-		<div class="col-3"><button type="button" class="btn btn-secondary" id="prev">prev</button><button type="button" class="btn btn-secondary" id="next">next</button></div>
+		<div class="col-6">
+			<h3 id="dateCal"></h3>
+		</div>
+		<div class="col-3">
+		
+			<button type="button" class="btn btn-secondary" id="prev">prev</button>
+			<button type="button" class="btn btn-secondary" id="next">next</button>
+		</div>
 	</div>
 	<div class="container"></div>
 	<div id='calendar' class=''>
 	</div>
+	<div class="container mt-3" id="drawGoal">
+		<div class="row">
+			<div class="col-2" >
+			<span style="font-size:15px; font-weight:bold;">목표 섭취 칼로리 :</span>
+			</div>
+			<div class="col-2">
+				 <input type="number" class="form-control" placeholder="섭취 칼로리" id="tarKcal" value="${monthTarKcal}" style="text-align:center; background-color:#F4F4E9">
+			</div>
+			<div class="col-2 pd-0"><span style="font-size:15px; font-weight:bold;">목표 운동 칼로리 : </span></div>
+			<div class="col-2">
+				<input type="number" class="form-control" placeholder="운동 칼로리"  id="tarExe" value="${monthTarExe}" style="text-align:center; background-color:#F4F4E9">
+			</div>
+		</div>
+	</div>
+	</div>
 </div>
-</div>
+
 </body>
 <script>
 
+//몸무게 가져오기
+var weight = "${weight}";
+var tarWeight = "${tarWeight}";
+var minusWeight = weight-tarWeight;
+var resultWeight = '';
+
+if(minusWeight<0){
+	resultWeight="목표 달성 성공!!!";
+}else{
+	resultWeight="남은 몸무게 : "+minusWeight;
+}
+	$("#remainWeight").val(resultWeight);
 	
+//-------------------------------------------//
+
+
 </script>
 </html>

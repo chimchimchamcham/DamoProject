@@ -37,14 +37,17 @@ public class CalendarService {
 			
 			ArrayList<String> monthData = getMonthData(id, formatedNow);
 			
+			DamoDTO weightData = dao.getWeight(id);
+			int tarWeight = weightData.getU_tarWeight();
+			int weight = weightData.getU_weight();
+			
 			mav.addObject("list",list);
 			mav.addObject("monthTarExe",monthData.get(0));
 			mav.addObject("monthTarKcal",monthData.get(1));
 			mav.addObject("monthContent",monthData.get(2));
+			mav.addObject("weight", weight);
+			mav.addObject("tarWeight", tarWeight);
 			
-			DamoDTO weightData = dao.getWeight(id);
-			
-			//weightData.getU_tarWeight() 
 		}
 		
 		mav.setViewName("diary/calendar");
@@ -71,9 +74,9 @@ public class CalendarService {
 		DamoDTO dto = dao.getMonthData(id, formattedDate);
 		
 		//월 데이터가 없는 경우
-		String tarExe= "-";
-		String tarKcal= "-";
-		String content = "-";
+		String tarExe= "";
+		String tarKcal= "";
+		String content = "";
 		
 		if(dto != null) {
 			tarExe = Integer.toString(dto.getC_tarExe());
@@ -90,6 +93,20 @@ public class CalendarService {
 		list.add(content);
 		
 		return list;
+	}
+	public HashMap<String, Object> updateMD(String monthId, String changeDT, String changeMonth, String id) {
+		HashMap<String,Object>map = new HashMap<String,Object>();
+		if(monthId.equals("tarKcal")) {
+			monthId = "C_TARKCAL";
+		}else if(monthId.equals("tarExe")) {
+			monthId = "C_TAREXE";
+		}else if(monthId.equals("goal")) {
+			monthId = "C_CONTENT";
+		}
+		
+		
+		map.put("success",dao.updateMD(monthId,changeDT,changeMonth,id));
+		return map;
 	}
 	
 }

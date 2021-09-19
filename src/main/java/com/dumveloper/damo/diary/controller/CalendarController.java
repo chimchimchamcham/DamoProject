@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -47,6 +48,14 @@ public class CalendarController {
 		 return map;
 		 
 	 }
+	 
+	 @RequestMapping(value="updateMD/{monthId}/{changeDT}/{changeMonth}",method =RequestMethod.GET)
+	 public HashMap<String,Object>updateMD(@PathVariable String monthId, @PathVariable String changeDT,@PathVariable String changeMonth,HttpSession session){
+		logger.info("월 데이터 업데이트 요청 : "+monthId+changeDT+changeMonth);
+		String id= (String)session.getAttribute("loginId"); 
+		return service.updateMD(monthId,changeDT,changeMonth,id);
+	 }
+	 
 	 
 	
 }
