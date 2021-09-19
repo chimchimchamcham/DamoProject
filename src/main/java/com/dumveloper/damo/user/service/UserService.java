@@ -3,6 +3,7 @@ package com.dumveloper.damo.user.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -258,6 +259,17 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 			
 			
 			return yn;
+		}
+
+
+		public ModelAndView userlist(HashMap<String, String> param) {
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("/user/mamnager");
+			
+			ArrayList<DamoDTO> userlist = dao.dbuserlist(param);
+			mav.addObject("userlist", userlist);
+			
+			return mav;
 		}
 
 

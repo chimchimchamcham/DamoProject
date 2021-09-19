@@ -16,13 +16,12 @@ import com.dumveloper.damo.dto.DamoDTO;
 
 @Service
 public class CalendarService {
-	
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	@Autowired CalendarDAO dao;
-	
-	public ModelAndView list(String id) {
-
+   
+   Logger logger = LoggerFactory.getLogger(this.getClass());
+   
+   @Autowired CalendarDAO dao;
+   
+   public ModelAndView list(String id) {
 		LocalDate now = LocalDate.now();
 		logger.info("오늘 날짜 출력:{}",now);
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM");

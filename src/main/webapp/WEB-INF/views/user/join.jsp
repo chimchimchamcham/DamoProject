@@ -17,7 +17,7 @@
 	    a:visited {text-decoration: none; color: black;}
 	    a:active {text-decoration: none; color: black;}
 	    a:hover {text-decoration: none; color: black;}
-	    .dont_use_english,.matchornotid,.matchornotnink,.matchornotemail,.matchornotpw{
+	    .dont_use_englishandnum,.matchornotid,.matchornotnink,.matchornotemail,.matchornotpw{
 	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
@@ -26,7 +26,7 @@
 	}
 </style>
 <body class="bg-primary">
-<div class="container mx-auto bg-white py-3 w-50 h-50" style="border-radius:3vh;margin-top: 5%;">
+<div class="container mx-auto bg-white px-5 py-3 w-50 h-50" style="border-radius:3vh;margin-top: 5%;">
    
    <div class="justify-content-center align-items-center my-2 p-2">
     <div class="row">
@@ -34,12 +34,12 @@
         <img src="resources/img/logo3.png" class="col-5 mx-auto" onclick="location.href='./'">
     </div>
 
-    <form action="join" method="post" class="row flex-column align-items-center justify-content-center my-5">
+    <form action="join" method="post" class="row flex-column align-items-center justify-content-center  my-5">
     
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
         <input type="text" class="col-5 form-control m-1 " id="id" name="id"/>
-        <div class="dont_use_english col-2 display-5 text-danger text-center pt-3"></div>
+        <div class="dont_use_englishandnum col-3 display-5 text-danger text-center pt-3"></div>
         <div class="matchornotid col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">
@@ -77,24 +77,24 @@
         <label for="man" class="b-inline text-left" >남</label>
 
         <input type="radio" value="F" class="col-1 form-control b-inline" name="gender">
-        <label for="girl" class="b-inline text-left">녀</label>
+        <label for="girl" class="b-inline text-left">여</label>
     </div>
 
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">나이:</label>
-        <input type="text" class="col-4 form-control m-1 " id="age" name="age">
+        <input type="text" class="col-4 form-control m-1 " id="age" name="age" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">몸무게:</label>
-        <input type="text" class="col-4 form-control m-1 " id="weight" name="weight">
+        <input type="text" class="col-4 form-control m-1 " id="weight" name="weight" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">목표몸무게:</label>
-        <input type="text" class="col-4 form-control m-1 " id="tarweight" name="tarweight">
+        <input type="text" class="col-4 form-control m-1 " id="tarweight" name="tarweight" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">키:</label>
-        <input type="text" class="col-4 form-control m-1 " id="height" name="height">
+        <input type="text" class="col-4 form-control m-1 " id="height" name="height" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
     </div>
     
     <button type="submit" id="jointocheck" class=" btn btn-primary align-self-end">회원가입</button>
@@ -104,7 +104,7 @@
 </body>
 <script type="text/javascript">
     // 입력을 제한 할 특수문자의 정규식
-    var checktext  = /[^A-Za-z]/ig;
+    var checktext  = /^[a-zA-Z0-9]*$/ig;
     
     
     
@@ -148,20 +148,30 @@
  		      }
  		   });
         	
-        	
+        	console.log(x.length);
             var x = $(this).val();
             if (x.length > 0) {
+            	
                 if (x.match(checktext)) {
-                   $(".dont_use_english").text('영어만 입력할수 있습니다');
-                   $("#id").css("border-color","red");
+                	$(".dont_use_englishandnum").text('');
+                	$("#id").css("border-color","#ced4da");
                    
-		        	if(id==''){
- 						$(".dont_use_english").text('');
+		        	if(id == ''){
+ 						$(".dont_use_englishandnum").text('');
+ 						$("#id").css("border-color","#ced4da");
  		        	}
                 }else{
-                	$(".dont_use_english").text('');
-                	$("#id").css("border-color","#ced4da");
+                    $(".dont_use_englishandnum").text('영어,숫자만 입력할수 있습니다');
+                    $("#id").css("border-color","red");
+                    
+		        	if(id == ''){
+ 						$(".dont_use_englishandnum").text('');
+ 						$("#id").css("border-color","#ced4da");
+ 		        	}
                 }
+            }else{
+            	$(".dont_use_englishandnum").text('');
+            	$("#id").css("border-color","#ced4da");
             }
             
         })
@@ -270,6 +280,10 @@
 		        $(".matchornotpw").css('color','red');
 		        $("#pw").css("border-color","red");
 		        $("#pwch").css("border-color","red");
+		        
+		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+		        	$(".matchornotpw").text('');
+				}
 			}
        
         });
@@ -295,6 +309,10 @@
    		        $(".matchornotpw").css('color','red');
    		        $("#pw").css("border-color","red");
    		        $("#pwch").css("border-color","red");
+   		        
+		        if((pw1 ==''&&pw2 =='')||(pw1 ==''||pw2 =='')){
+		        	$(".matchornotpw").text('');
+				}
    			}
           
            });

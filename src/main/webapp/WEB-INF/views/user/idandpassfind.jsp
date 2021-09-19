@@ -57,7 +57,7 @@
 		                  <input type="text" class="form-control" name="name" id="name" placeholder="이름">
 		                </div>
 		                <div class="form-floating mb-3">
-		                  <input type="password" class="form-control" name="email" id="email" placeholder="이메일">
+		                  <input type="email" class="form-control" name="email" id="email" placeholder="이메일">
 		                </div>
 		                <div class="d-grid">
 		                  <button class="btn btn-primary btn-block btn-login text-uppercase fw-bold" type="submit">아이디 찾기</button>
@@ -78,7 +78,7 @@
 	                  <input type="text" class="form-control" name="name" id="name" placeholder="이름">
 	                </div>
 	                <div class="form-floating mb-3">
-	                  <input type="text" class="form-control" name="email" id="email" placeholder="이메일">
+	                  <input type="email" class="form-control" name="email" id="email" placeholder="이메일">
 	                </div>
 	                <div class="form-floating mb-3">
 	                  <input type="password" class="form-control" name="pw" id="pw" placeholder="새 비밀번호">
@@ -136,6 +136,12 @@
 		        $("#pw").css("border-color","#ced4da");
 		        $("#checkpass").css("border-color","#ced4da");
 		        
+		        if (pw1==''&&pw2=='') {
+					$(".matchornotpw").text('');			
+			        $("#pw").css("border-color","#ced4da");
+			        $("#checkpass").css("border-color","#ced4da");
+				}
+		        
 
 			}else{
 				$(".matchornotpw").text('');
@@ -165,7 +171,11 @@
 		        $("#pw").css("border-color","#ced4da");
 		        $("#checkpass").css("border-color","#ced4da");
 
-	        	
+		        if (pw1==''&&pw2=='') {
+					$(".matchornotpw").text('');			
+			        $("#pw").css("border-color","#ced4da");
+			        $("#checkpass").css("border-color","#ced4da");
+				}
 		        	
 			}else{
 				$(".matchornotpw").text('');
