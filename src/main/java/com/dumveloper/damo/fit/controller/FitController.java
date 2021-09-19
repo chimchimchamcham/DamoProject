@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -103,4 +104,27 @@ public class FitController {
 		return fitservice.fitWrite(params,mtfRequest,session,imgNos,rAttr);
 	}
 
+	@RequestMapping(value = "/fitUpdateForm", method = RequestMethod.GET)
+	public ModelAndView fitUpdateForm(@RequestParam String k_no) {
+
+		logger.info("지식핏 글수정폼 접속");
+		logger.info("k_no : {}",k_no);
+		
+		return fitservice.fitUpdateForm(k_no);
+	}
+	
+	@RequestMapping(value = "/fitUpdate", method = RequestMethod.POST)
+	public ModelAndView fitUpdate(@RequestParam HashMap<String,String> params,
+			@RequestParam("imgNo") List<String> imgNos,
+			@RequestParam("file") List<MultipartFile> files,
+			RedirectAttributes rAttr
+			) {
+
+		logger.info("지식핏 글수정 접속");
+		logger.info("params : {}", params);
+		logger.info("imgNos : {}",imgNos);
+		logger.info("files : {}",files.size());
+		
+		return fitservice.fitUpdate(params,imgNos,files,rAttr);
+	}
 }
