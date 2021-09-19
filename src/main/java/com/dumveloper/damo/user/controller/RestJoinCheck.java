@@ -37,7 +37,7 @@ public class RestJoinCheck {
 	
 	@RequestMapping(value = "/matchnick")
 	public int matchnick(@RequestParam String matchnick) {
-		logger.info("nick 중복 체크");
+		logger.info("nick 중복 체크,{}",matchnick);
 		int alert = 0;
 		if (matchnick != null) {
 			alert = service.check_nick(matchnick);

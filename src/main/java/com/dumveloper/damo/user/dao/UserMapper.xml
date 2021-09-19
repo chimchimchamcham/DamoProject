@@ -42,9 +42,11 @@
 	<select id="checkdbId" resultType="int">
 		SELECT COUNT(U_ID) FROM USERINFO WHERE U_ID = #{param1}
 	</select>
+	
 	<select id="checkdbnink" resultType="int">
 		SELECT COUNT(U_NICK) FROM USERINFO WHERE U_NICK = #{param1}
 	</select>
+	
 	<select id="checkdbemail" resultType="int">
 		SELECT COUNT(U_EMAIL) FROM USERINFO WHERE U_EMAIL = #{param1}
 	</select>
@@ -81,6 +83,10 @@
 	
 	<select id="dbblack" resultType="damo">
 		SELECT  * FROM blacklist
+	</select>
+
+	<select id="nink_me_and_aother_check" resultType="int">
+		SELECT count(u_nick) FROM USERINFO WHERE U_NICK != #{param1}
 	</select>
 
 

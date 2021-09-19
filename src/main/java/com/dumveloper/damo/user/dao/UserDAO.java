@@ -17,10 +17,12 @@ public interface UserDAO {
 	
 	int update(DamoDTO dto);
 	int join(DamoDTO dto);
+	
 	//중복체크
 	int checkdbId(String matchid);
 	int checkdbnink(String matchnick);
 	int checkdbemail(String email);
+	int nink_me_and_aother_check(String mynick);
 	
 	//세션
 	String dbfilename(String id);
@@ -32,6 +34,7 @@ public interface UserDAO {
 	ArrayList<DamoDTO> dbuser();
 	ArrayList<DamoDTO> dbnotify();
 	ArrayList<DamoDTO> dbblack();
+	
 	
 
 	

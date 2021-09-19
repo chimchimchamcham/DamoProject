@@ -147,7 +147,11 @@ public class UserService {
 		return ismatch;
 	}
 	public int check_nick(String matchnick) {
+		
+		
 		int ismatch = dao.checkdbnink(matchnick);
+		
+		
 		return ismatch;
 	}
 	public int check_email(String email) {
@@ -183,6 +187,8 @@ public class UserService {
 		
 		dto.setU_id(id);
 		dto.setU_nick(param.get("nick"));
+		String mynick = param.get("nick");
+		int is_nick_match_athernick = dao.nink_me_and_aother_check(mynick);//닉네임 다른 유저와 겹치는지 확인
 		dto.setU_pw(param.get("pw"));
 		dto.setU_gender(param.get("gender"));
 		dto.setU_age(Integer.parseInt(param.get("age")));
@@ -190,24 +196,53 @@ public class UserService {
 		dto.setU_height(Integer.parseInt(param.get("height")));
 		dto.setU_intro(param.get("u_intro"));
 		
-		
+		ModelAndView mav = new ModelAndView();
 		int success = dao.update(dto);//이번에는 파라미터를 dto로 전달
 		
-		String msg = "수정에 실패했습니다";
-		String page = "/diary/calendar";
+		 int ismynick = dao.checkdbnink(mynick);//db에 있는 닉네임이 지금 파라메터에 들어가있는 닉네임 하고 동일하나 체크 
+		 System.out.println(ismynick);
+		 
+	if (ismynick==1) {
 		if(success>0) {
-			msg = "수정에 성공했습니다";
-			page = "/diary/calendar"; //마이페이지 만들어지면 그쪽으로
+			String msg = "수정에 성공했습니다";
+			String page = "/diary/calendar";//마이페이지 만들어지면 그쪽으로
+			
+			mav.addObject("msg",msg);
+			mav.setViewName(page);
 		}
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg",msg);
-		mav.setViewName(page);
-		
-		logger.info("update success : {}",success); 
-		
+	}else {
+		if (is_nick_match_athernick>0) {
+			String msg = "다른사람과 닉네임이 겹처서 수정에 실패했습니다";
+			String page = "/user/msg";
+			
+			
+			mav.addObject("msg",msg);
+			mav.setViewName(page);
+		}else {
+			String msg = "수정에 실패했습니다";
+			String page = "/user/msg";
+			
+			if(success>0) {
+				msg = "수정에 성공했습니다";
+				page = "/diary/calendar";//마이페이지 만들어지면 그쪽으로
+				
+				
+			}
+			
+			mav.addObject("msg",msg);
+			mav.setViewName(page);
+			logger.info("update success : {}",success); 
+		}
+	}
+
 		return mav;
 		
+	}
+
+
+private int checkdbnink(String id) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

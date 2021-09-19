@@ -176,7 +176,8 @@ var imgname = "${info.u_fileName}"
 var alarmboolean = "${info.u_alarmYN}";
 var updatealarm = '';
 
-
+var orinick = "${info.u_nick}";
+console.log(orinick)
 console.log("info:","${info.u_gender}");
 gender = "${info.u_gender}"
 console.log("gender:",gender);
@@ -252,7 +253,7 @@ $(document).ready(function(){
     $(document).on("focusout focuson keyup","#nick", function() {
     	var x = $("#nick").val();
     	var nick = x;
-    	
+    	var newnick = $('#nick').val();
     	console.log(nick);
     	
  	   $.ajax({
@@ -261,26 +262,28 @@ $(document).ready(function(){
 		      data : {matchnick:nick},
 		      dataType : 'json',
 		      success : function(data){
-		         if (data == 0) {
+		    if (data == 0) {
 		        	$(".matchornotnink").text('');
 		        	$(".matchornotnink").text('사용가능한 닉네임 입니다');
 		        	$(".matchornotnink").css('color','green');
 		        	$("#nick").css("border-color","#ced4da");
 			
 		        	if (nick=='') {
-		       			console.log('nick');
-					$(".matchornotnink").text('');										
-				}
+		       		console.log('nick');
+					$(".matchornotnink").text('');
+		        	}
 		        	
+			}else if(orinick==newnick){
+					$(".matchornotnink").text('');
+					$(".matchornotnink").text('이미 당신의 닉네임 입니다');
+		        	$(".matchornotnink").css('color','green');
 			}else{
 				$(".matchornotnink").text('');
-		        	$(".matchornotnink").text('중복된 닉네임 입니다');
+		        	$(".matchornotnink").text('다른 유저와 중복된 닉네임 입니다');
 		        	$(".matchornotnink").css('color','red');
 		        	$("#nick").css("border-color","red");
-			}
-		         
-		      },
-		      error : function(error){
+				}
+		     },error : function(error){
 		         console.log(error);
 		      }
 		   });
