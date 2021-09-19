@@ -8,7 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>helowBS</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
     <style>
         li.list-group-item{
             border-bottom-left-radius:0  !important;
@@ -18,6 +17,10 @@
 	.display-none{
 		display:none;
 	}
+	tbody{
+		text-align: center;
+	}
+	
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,14 +48,14 @@
                             <th class="text-center">이메일</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="userbody">
                         
-                        <c:forEach items="${userlist}" var="dto">
+                        <c:forEach items="${userlist}" var="dtouser">
                           <tr class="text-center">
-                            <td>${dto.u_id}</td>
-                            <td>${dto.u_nick}</td>
-                            <td>${dto.u_name}</td>
-                            <td>${dto.u_email}</td>
+                            <td>${dtouser.u_id}</td>
+                            <td>${dtouser.u_nick}</td>
+                            <td>${dtouser.u_name}</td>
+                            <td>${dtouser.u_email}</td>
                           </tr>
 						</c:forEach>
 						
@@ -90,18 +93,9 @@
                           <th class="text-center">신고 상태</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody class="notifybody">
                       
-                    <c:forEach items="${list}" var="dto">
-                        <tr class="text-center">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-					</c:forEach>
+
 
                       </tbody>
                     </table>
@@ -136,18 +130,9 @@
                           <th class="text-center">관리자 아이디</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody class="blackbody">
    
-   					<c:forEach items="${list }" var="dto">
-                        <tr class="text-center">
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                     </c:forEach>
+   					
                         
                       </tbody>
                     </table>
@@ -177,34 +162,69 @@
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
         $(this).addClass('active');
-          //유저리스트
-          if($(this).hasClass('userlist')){
+          
+          if($(this).hasClass('userlist')){//유저리스트
             console.log('userlist');
+            
+            $.ajax({
+     		      url : './check/usertable',
+     		      type : 'post',
+     		      data : {},
+     		      dataType : 'json',
+     		      success : function(data){
+     		    	 console.log(data);
+     		    	userlistPrint(data.userlist);
+     		      },
+     		      error : function(error){
+     		         console.log(error);
+     		      }
+     		   });
+            
             $('.usertable').removeClass('display-none');
             $('.notifytable').addClass('display-none');
             $('.blacktable').addClass('display-none');
             
-            
-          //신고리스트
-          }else if($(this).hasClass('notifylist')){
+          }else if($(this).hasClass('notifylist')){//신고리스트
             console.log('notifylist');
+            
+            $.ajax({
+   		      url : './check/notifytable',
+   		      type : 'post',
+   		      data : {},
+   		      dataType : 'json',
+   		      success : function(data){
+   		    	 console.log(data);
+   		    	 notifylistPrint(data.notifylist);
+   		      },
+   		      error : function(error){
+   		         console.log(error);
+   		      }
+   		   });
             $('.notifytable').removeClass('display-none');
             $('.usertable').addClass('display-none');
             $('.blacktable').addClass('display-none');
             
             
-          //블랙리스트
-          }else if($(this).hasClass('blacklist')){
+          
+          }else if($(this).hasClass('blacklist')){//블랙리스트
             console.log('blacklist');
+            $.ajax({
+     		      url : './check/blacktable',
+     		      type : 'post',
+     		      data : {},
+     		      dataType : 'json',
+     		      success : function(data){
+     		    	 console.log(data);
+     		    	 blacklistPrint(data.blacklist);
+     		      },
+     		      error : function(error){
+     		         console.log(error);
+     		      }
+     		   });
             $('.blacktable').removeClass('display-none');
             $('.usertable').addClass('display-none');
-            $('.notifytable').addClass('display-none');
-            
-            
+            $('.notifytable').addClass('display-none');  
           }
-
-
-
     });
 
     $(document).on('click','.page-item',function(){
@@ -216,7 +236,81 @@
             $(this).addClass('active');
         }
     });
+    
+    
+    
+    
+    //리스트 뿌려주는 ajax에는 c태그 안먹힘  유저
+    function userlistPrint(list){
+    	   var content = "";
+    	   for(var i = 0; i<list.length; i++){
+    	      content += "<tr>";
+    	      content += "<td>"+list[i].u_id+"</td>";
+    	      content += "<td>"+list[i].u_nick+"</td>";
+    	      content += "<td>"+list[i].u_name+"</td>";
+    	      content += "<td>"+list[i].u_email+"</td>";
+    	      content += "</tr>";
+    	   }
+    	   $(".userbody").empty();
+    	   $(".notifybody").empty();
+    	   $(".blackbody").empty();
+    	   $(".userbody").append(content);
+    	} 
+  //리스트 뿌려주는 ajax에는 c태그 안먹힘= 신고
+    function notifylistPrint(list){
+    	   var content = "";
+    	   for(var i = 0; i<list.length; i++){
+    	      content += "<tr>";
+    	      content += "<td>"+list[i].n_no+"</td>";
+    	      content += "<td>"+list[i].n_receiveid+"</td>";
+    	      content += "<td>"+list[i].n_sendid+"</td>";
+    	      content += "<td>"+list[i].n1_name+"</td>";
+    	      content += "<td>"+list[i].n2_name+"</td>";
+    	      content += "<td>"+list[i].c_name+"</td>";
+    	      content += "</tr>";
+    	   }
+    	   $(".userbody").empty();
+    	   $(".notifybody").empty();
+    	   $(".blackbody").empty();
+    	   $(".notifybody").append(content);
+    	}
+    
+    //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
+    function blacklistPrint(list){
+    	   var content = "";
+    	   for(var i = 0; i<list.length; i++){
+    	      content += "<tr>";
+    	      content += "<td>"+list[i].b_no+"</td>";
+    	      content += "<td>"+list[i].u_id+"</td>";
+    	      content += "<td>"+list[i].b_code+"</td>";
+    	      
+    	      var date = new Date(list[i].b_startdt);//등록날짜
 
+    	      let startyear = date.getFullYear();
+    	      let startmonth = date.getMonth();
+    	      let startday = date.getDate();
+    	      
+    	      let startedday = startyear+"/"+(startmonth+1)+"/"+startday;
+
+    	      content += "<td>"+startedday+"</td>";
+    	      
+    	      date = new Date(list[i].b_enddt);//끝나는 날짜
+    	      
+     	      let endyear = date.getFullYear();
+    	      let endmonth = date.getMonth();
+    	      let endday = date.getDate();
+    	      
+    	      let endedday = endyear+"/"+(endmonth+1)+"/"+endday;
+    	      
+    	      content += "<td>"+endedday+"</td>";
+    	      content += "<td>"+list[i].b_adminid+"</td>";
+    	      content += "</tr>";
+    	   }
+    	   $(".userbody").empty();
+    	   $(".notifybody").empty();
+    	   $(".blackbody").empty();
+    	   $(".blackbody").append(content);
+    	}
 </script>
 
 

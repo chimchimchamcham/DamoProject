@@ -1,13 +1,18 @@
 package com.dumveloper.damo.user.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.dumveloper.damo.user.service.UserService;
 
 
@@ -67,9 +72,30 @@ public class RestJoinCheck {
 		return ala;
 	}
 			
+	
+	@RequestMapping(value = "/usertable")
+	public HashMap<String, Object> usertable() {
+		
+		HashMap<String, Object> map = service.noset_view_userlist();
+		
+		return map;
+	}
 
+	@RequestMapping(value = "/notifytable")
+	public HashMap<String, Object> notifytable() {
+		
+		HashMap<String, Object> map = service.notifylist();
+		
+		return map;
+	}
 	
-	
+	@RequestMapping(value = "/blacktable")
+	public HashMap<String, Object> blacktable() {
+		
+		HashMap<String, Object> map = service.blacklist();
+		
+		return map;
+	}
 	
 }
 

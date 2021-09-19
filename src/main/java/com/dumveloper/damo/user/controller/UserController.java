@@ -247,9 +247,8 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/gouserlist")
-	public ModelAndView gouserlist(@RequestParam HashMap<String, String> param) {
-		logger.info("list : {}",param);
-		return service.userlist(param);
+	public ModelAndView gouserlist() {
+		return service.userlist();
 	}
 	
 }

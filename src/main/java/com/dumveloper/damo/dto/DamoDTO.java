@@ -70,6 +70,184 @@ public class DamoDTO {
 	private int ki_no;
 	private String ki_name;
 	private String ki_imgYN;
+	
+	
+	//신고
+	private int n_no;
+	private String n_receiveid;
+	private String n_sendid;
+	private String n_content;
+	private Date n_dt;
+	private int n_notifiedno;
+	private String n1_code;
+	private String n2_code;
+	
+	
+	//신고 히스토리
+	private int hn_no;
+	private Date hn_date;
+	private String hn_adminid;
+	private String hn_code;
+	
+
+	//신고대분류코드
+
+	private String n1_name;
+	
+	//신고중분류코드
+
+	private String n2_name;
+	
+	//코드
+	private String c_code;
+	private String c_name;
+	
+	
+	//블랙리스트
+	private int b_no;
+	private String b_code;
+	private Date b_startdt;
+	private Date b_enddt;
+	private String b_content;
+	private String b_adminid;
+	
+	
+	
+	
+	
+	
+	public int getB_no() {
+		return b_no;
+	}
+	public void setB_no(int b_no) {
+		this.b_no = b_no;
+	}
+	public String getB_code() {
+		return b_code;
+	}
+	public void setB_code(String b_code) {
+		this.b_code = b_code;
+	}
+	public Date getB_startdt() {
+		return b_startdt;
+	}
+	public void setB_startdt(Date b_startdt) {
+		this.b_startdt = b_startdt;
+	}
+	public Date getB_enddt() {
+		return b_enddt;
+	}
+	public void setB_enddt(Date b_enddt) {
+		this.b_enddt = b_enddt;
+	}
+	public String getB_content() {
+		return b_content;
+	}
+	public void setB_content(String b_content) {
+		this.b_content = b_content;
+	}
+	public String getB_adminid() {
+		return b_adminid;
+	}
+	public void setB_adminid(String b_adminid) {
+		this.b_adminid = b_adminid;
+	}
+	public String getC_code() {
+		return c_code;
+	}
+	public void setC_code(String c_code) {
+		this.c_code = c_code;
+	}
+	public String getC_name() {
+		return c_name;
+	}
+	public void setC_name(String c_name) {
+		this.c_name = c_name;
+	}
+	public int getN_no() {
+		return n_no;
+	}
+	public void setN_no(int n_no) {
+		this.n_no = n_no;
+	}
+	public String getN_receiveid() {
+		return n_receiveid;
+	}
+	public void setN_receiveid(String n_receiveid) {
+		this.n_receiveid = n_receiveid;
+	}
+	public String getN_sendid() {
+		return n_sendid;
+	}
+	public void setN_sendid(String n_sendid) {
+		this.n_sendid = n_sendid;
+	}
+	public String getN_content() {
+		return n_content;
+	}
+	public void setN_content(String n_content) {
+		this.n_content = n_content;
+	}
+	public Date getN_dt() {
+		return n_dt;
+	}
+	public void setN_dt(Date n_dt) {
+		this.n_dt = n_dt;
+	}
+	public int getN_notifiedno() {
+		return n_notifiedno;
+	}
+	public void setN_notifiedno(int n_notifiedno) {
+		this.n_notifiedno = n_notifiedno;
+	}
+	public String getN1_code() {
+		return n1_code;
+	}
+	public void setN1_code(String n1_code) {
+		this.n1_code = n1_code;
+	}
+	public String getN2_code() {
+		return n2_code;
+	}
+	public void setN2_code(String n2_code) {
+		this.n2_code = n2_code;
+	}
+	public int getHn_no() {
+		return hn_no;
+	}
+	public void setHn_no(int hn_no) {
+		this.hn_no = hn_no;
+	}
+	public Date getHn_date() {
+		return hn_date;
+	}
+	public void setHn_date(Date hn_date) {
+		this.hn_date = hn_date;
+	}
+	public String getHn_adminid() {
+		return hn_adminid;
+	}
+	public void setHn_adminid(String hn_adminid) {
+		this.hn_adminid = hn_adminid;
+	}
+	public String getHn_code() {
+		return hn_code;
+	}
+	public void setHn_code(String hn_code) {
+		this.hn_code = hn_code;
+	}
+	public String getN1_name() {
+		return n1_name;
+	}
+	public void setN1_name(String n1_name) {
+		this.n1_name = n1_name;
+	}
+	public String getN2_name() {
+		return n2_name;
+	}
+	public void setN2_name(String n2_name) {
+		this.n2_name = n2_name;
+	}
 	public int getKi_no() {
 		return ki_no;
 	}
