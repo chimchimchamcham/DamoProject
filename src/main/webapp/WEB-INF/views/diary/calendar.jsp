@@ -52,7 +52,6 @@
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
-    	  //#tarKcal/#tarExe/#goal
     	  if( $("#goal").val() == ''|| $("#goal").val() == null){
     		  alert("목표를 입력해주세요!");
     	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
