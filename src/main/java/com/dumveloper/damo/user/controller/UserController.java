@@ -225,7 +225,7 @@ public class UserController {
 				logger.info("join : {}",params);
 			}
 		}
-		return service.join(params);
+		return service.update(params,session);
 	}
 	
 	

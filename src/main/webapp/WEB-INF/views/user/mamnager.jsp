@@ -53,7 +53,7 @@
                         <c:forEach items="${userlist}" var="dtouser">
                           <tr class="text-center">
                             <td>${dtouser.u_id}</td>
-                            <td>${dtouser.u_nick}</td>
+                            <td class="${dtouser.u_nick}">${dtouser.u_nick}</td>
                             <td>${dtouser.u_name}</td>
                             <td>${dtouser.u_email}</td>
                           </tr>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="container row bg-light">
-                <ul class="pagination mx-auto">
+                <ul class="pagination mx-auto userpage">
                     <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
                     <li class="page-item one active"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -102,7 +102,7 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto">
+              <ul class="pagination mx-auto notifypage">
                   <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item one active"><a class="page-link" href="#">1</a></li>
                   <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -139,7 +139,7 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto">
+              <ul class="pagination mx-auto blackpage">
                   <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item one active"><a class="page-link" href="#">1</a></li>
                   <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -162,10 +162,11 @@
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
         $(this).addClass('active');
-          
+        
+        
           if($(this).hasClass('userlist')){//유저리스트
             console.log('userlist');
-            
+          
             $.ajax({
      		      url : './check/usertable',
      		      type : 'post',
@@ -246,7 +247,7 @@
     	   for(var i = 0; i<list.length; i++){
     	      content += "<tr>";
     	      content += "<td>"+list[i].u_id+"</td>";
-    	      content += "<td>"+list[i].u_nick+"</td>";
+    	      content += "<td class="list[i].u_nick">"+list[i].u_nick+"</td>";//나중에 타인 프로필 갈때 필요
     	      content += "<td>"+list[i].u_name+"</td>";
     	      content += "<td>"+list[i].u_email+"</td>";
     	      content += "</tr>";
@@ -311,6 +312,78 @@
     	   $(".blackbody").empty();
     	   $(".blackbody").append(content);
     	}
+    
+    
+    
+    
+	//페이징 처리
+    var currPage = 1;	
+	$("#pagePerNum").change(function(){
+	   //페이징 초기화
+	   $("#pagination").twbsPagination('destory');
+	   listCall(currPage);
+	});
+	
+	
+	
+	
+	
+	function listCall(page){
+	   
+	   var reqUrl = "list/"+$("#pagePerNum").val()+'/'+page;
+	   console.log('reqeust url :'+ reqUrl);
+	   console.log(page+"가져오기");
+	   $.ajax({
+	      url : reqUrl,
+	      type : 'post',
+	      data : {},
+	      dataType : 'json',
+	      success : function(data){
+	         console.log(data);
+	         listPrint(data.list);
+	         
+	         currPage = data.currPage;
+	         //페이징 처리
+	         $("#pagination").twbsPagination({
+	            startPage : data.currPage, //시작페이지
+	            totalPages : data.pages, //총 페이지 갯수
+	            visivlePages : $("#pagePerNum").val(), //보여줄 페이지 갯수
+	            onPageClick : function(e,page){
+	               console.log(e,page);
+	               listCall(page);
+	            }
+	         });
+	      },
+	      error : function(error){
+	         console.log(error);
+	      }
+	   });
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
 
 
