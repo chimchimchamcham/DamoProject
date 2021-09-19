@@ -31,9 +31,12 @@ public interface UserDAO {
 	
 	//관리자 
 	//회원 목록
-	ArrayList<DamoDTO> dbuser();
-	ArrayList<DamoDTO> dbnotify();
-	ArrayList<DamoDTO> dbblack();
+	ArrayList<DamoDTO> dbuser(int start, int end);
+	ArrayList<DamoDTO> dbnotify(int start, int end);
+	ArrayList<DamoDTO> dbblack(int start, int end);
+	int userallCount();
+	int notifyallCount();
+	int blackallCount();
 	
 	
 

@@ -73,21 +73,32 @@
 
 
 	<select id="dbuser" resultType="damo">
-		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM USERINFO
+		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL from userinfo) where rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="dbnotify" resultType="damo">
-		select n.n_no n_no,n.n_receiveid n_receiveid,n.n_sendid n_sendid,n1.n1_name n1_name,n2.n2_name n2_name,c.c_name c_name from notify n,his_notify hn,code c,n1_code n1,n2_code n2
-		where n.n_no = hn.hn_no and hn.hn_code = c.c_code and n.n1_code = n1.n1_code and n.n2_code = n2.n2_code and n1.n1_code = n2.n1_code order by n.n_no
+select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2_name,c.c_name c_name from notify n,(SELECT n_no,n_receiveid,n_sendid FROM (select row_number() over (order by n_no desc)rnum,n_no,n_receiveid,n_sendid from notify)where rnum BETWEEN 1 and 10),his_notify hn,code c,n1_code n1,n2_code n2
+		where n.n_no = hn.hn_no and hn.hn_code = c.c_code and n.n1_code = n1.n1_code and n.n2_code = n2.n2_code and n1.n1_code = n2.n1_code order by n_no
 	</select>
 	
 	<select id="dbblack" resultType="damo">
-		SELECT  * FROM blacklist
+		SELECT  * FROM (select row_number() over (order by B_no desc)rnum,U_id,B_code,B_startDt,B_endDt,B_content,B_adminId from BlackList) where rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="nink_me_and_aother_check" resultType="int">
 		SELECT count(u_nick) FROM USERINFO WHERE U_NICK != #{param1}
 	</select>
 
+	<select id="userallCount" resultType="int">
+ 		select count(*) from USERINFO
+	</select>
+	
+	<select id="notifyallCount" resultType="int">
+ 		select count(*) from notify
+	</select>
+
+	<select id="blackallCount" resultType="int">
+ 		select count(*) from BlackList
+	</select>
 
 </mapper>

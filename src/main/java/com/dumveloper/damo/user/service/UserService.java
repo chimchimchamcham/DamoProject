@@ -240,12 +240,6 @@ public class UserService {
 	}
 
 
-private int checkdbnink(String id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
 public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		String id = (String) session.getAttribute("loginId");
 		ModelAndView mav = new ModelAndView();
@@ -298,43 +292,147 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 
 		//관리 페이지로 갈때 처음으로 뿌려주는 데이터
 		public ModelAndView userlist() {
+			
+			int pagePerNum=10;
+			int page = 1;
+			int end = page * pagePerNum;
+			int start = end - pagePerNum+1;
+			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
+			
+			
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/user/mamnager");
-			ArrayList<DamoDTO> userlist = dao.dbuser();
+			ArrayList<DamoDTO> userlist = dao.dbuser(start,end);
+		
+			//2 데이터 총 갯수 -> 만들수있는 페이지 수
+			int totalCnt = dao.userallCount();
+			logger.info("totalCnt:"+totalCnt);
+			logger.info(userlist.size()+"/"+totalCnt);
+			
 			mav.addObject("userlist", userlist);
+			mav.addObject("cnt", totalCnt);
+			
+			
+			//총갯수
+			int pages = (int) (totalCnt%pagePerNum>0
+					? Math.floor(totalCnt/pagePerNum)+1:Math.floor(totalCnt/pagePerNum));
+
+			
+			page = page > pages ? pages:page;
+			
+			mav.addObject("currPage", page);
+			mav.addObject("pages", pages);
+			logger.info("pages:"+pages);
 			
 			return mav;
 		}
 		
 		//관리자 페이지 ajax
-		public HashMap<String, Object> noset_view_userlist() {//유저리스트
+		public HashMap<String, Object> noset_view_userlist(int page) {//유저리스트
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			ArrayList<DamoDTO> userlist = dao.dbuser();
-
+			int pagePerNum=10;//10
+			int chagepage = page;//2
+			int end = chagepage * pagePerNum;//20
+			int start = end-pagePerNum+1;//20-10+1
+			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
+			
+			ArrayList<DamoDTO> userlist = dao.dbuser(start,end);
+			
+			//2 데이터 총 갯수 -> 만들수있는 페이지 수
+			int totalCnt = dao.userallCount();
+			logger.info("totalCnt:"+totalCnt);
+			logger.info(userlist.size()+"/"+totalCnt);
+			
 			map.put("userlist", userlist);
+			map.put("cnt", totalCnt);
+			
+			
+			//총갯수
+			int pages = (int) (totalCnt%pagePerNum>0
+					? Math.floor(totalCnt/pagePerNum)+1:Math.floor(totalCnt/pagePerNum));
+
+			
+			page = page > pages ? pages:page;
+			
+			map.put("currPage", page);
+			map.put("pages", pages);
+			
+			logger.info("pages:"+pages);
+			
 			
 			return map;
 		}
 		
 
-		public HashMap<String, Object> notifylist() {//신고 리스트
+		public HashMap<String, Object> notifylist(int page) {//신고 리스트
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			ArrayList<DamoDTO> notifylist = dao.dbnotify();
+			int pagePerNum=10;//10
+			int chagepage = page;//2
+			int end = chagepage * pagePerNum;//20
+			int start = end-pagePerNum+1;//20-10+1
+			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
+			
+			
+			ArrayList<DamoDTO> notifylist = dao.dbnotify(start,end);
 
+			
+			//2 데이터 총 갯수 -> 만들수있는 페이지 수
+			int totalCnt = dao.notifyallCount();
+			logger.info("totalCnt:"+totalCnt);
+			logger.info(notifylist.size()+"/"+totalCnt);
+			
 			map.put("notifylist", notifylist);
+			map.put("cnt", totalCnt);
+			
+			//총갯수
+			int pages = (int) (totalCnt%pagePerNum>0
+					? Math.floor(totalCnt/pagePerNum)+1:Math.floor(totalCnt/pagePerNum));
+
+			
+			page = page > pages ? pages:page;
+			
+			map.put("currPage", page);
+			map.put("pages", pages);
+			
+			logger.info("pages:"+pages);
 			
 			return map;
 		}
 
 
-		public HashMap<String, Object> blacklist() {//블랙 리스트
+		public HashMap<String, Object> blacklist(int page) {//블랙 리스트
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			ArrayList<DamoDTO> blacklist = dao.dbblack();
+			int pagePerNum=10;//10
+			int chagepage = page;//2
+			int end = chagepage * pagePerNum;//20
+			int start = end-pagePerNum+1;//20-10+1
+			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
+			
+			ArrayList<DamoDTO> blacklist = dao.dbblack(start,end);
 
+			//2 데이터 총 갯수 -> 만들수있는 페이지 수
+			int totalCnt = dao.blackallCount();
+			logger.info("totalCnt:"+totalCnt);
+			logger.info(blacklist.size()+"/"+totalCnt);
+			
 			map.put("blacklist", blacklist);
+			map.put("cnt", totalCnt);
+			
+			//총갯수
+			int pages = (int) (totalCnt%pagePerNum>0
+					? Math.floor(totalCnt/pagePerNum)+1:Math.floor(totalCnt/pagePerNum));
+
+			
+			page = page > pages ? pages:page;
+			
+			map.put("currPage", page);
+			map.put("pages", pages);
+			
+			logger.info("pages:"+pages);
+			
 			
 			return map;
 		}
