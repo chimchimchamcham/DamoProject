@@ -29,7 +29,9 @@ public interface UserDAO {
 	
 	//관리자 
 	//회원 목록
-	ArrayList<DamoDTO> dbuserlist(HashMap<String, String> param);
+	ArrayList<DamoDTO> dbuser();
+	ArrayList<DamoDTO> dbnotify();
+	ArrayList<DamoDTO> dbblack();
 	
 
 	

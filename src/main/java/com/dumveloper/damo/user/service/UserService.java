@@ -261,18 +261,48 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 			return yn;
 		}
 
-
-		public ModelAndView userlist(HashMap<String, String> param) {
+		//관리 페이지로 갈때 처음으로 뿌려주는 데이터
+		public ModelAndView userlist() {
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/user/mamnager");
-			
-			ArrayList<DamoDTO> userlist = dao.dbuserlist(param);
+			ArrayList<DamoDTO> userlist = dao.dbuser();
 			mav.addObject("userlist", userlist);
 			
 			return mav;
 		}
+		
+		//관리자 페이지 ajax
+		public HashMap<String, Object> noset_view_userlist() {//유저리스트
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<DamoDTO> userlist = dao.dbuser();
+
+			map.put("userlist", userlist);
+			
+			return map;
+		}
+		
+
+		public HashMap<String, Object> notifylist() {//신고 리스트
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<DamoDTO> notifylist = dao.dbnotify();
+
+			map.put("notifylist", notifylist);
+			
+			return map;
+		}
 
 
+		public HashMap<String, Object> blacklist() {//블랙 리스트
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<DamoDTO> blacklist = dao.dbblack();
+
+			map.put("blacklist", blacklist);
+			
+			return map;
+		}
 
 
 
