@@ -22,12 +22,14 @@
 	}
 	
     </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="resources/js/jquery.twbsPagination.js"></script>  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="resources/js/jquery.twbsPagination.js"></script> 
+	
+
+	
 </head>
 <body class="bg-secondary">
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -101,8 +103,8 @@
                  
               </ul>
           </div>
-        </div>
-
+		</div>
+		
         <!--blacklist-->
         <div class="blacktable display-none">
           <div class="container row bg-light">
@@ -132,10 +134,33 @@
               </ul>
           </div>
         </div>
-
-
-
     </div>
+    
+      <!-- Modal -->
+  <div class="modal fade " id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+    
+      <!-- Modal content-->
+      <div class="modal-content row">
+        <div class="modal-header bg-danger px-5">
+          <h6 class="modal-title">신고 상세보기</h6>
+          <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body justify-content-center row d-flex m-5" style="font-size: 10px; font-weight: 900;">
+
+	         
+
+        </div>
+
+          
+
+      </div>
+      
+    </div>
+  </div>
+    
+    
+    
 </body>
 
 
@@ -144,6 +169,10 @@
 
 $(document).ready(function(){
 	
+//notify-팝업에 뿌려줘야 하는 것들
+   $(document).ready(function(){
+		
+ 
 	var currPage = 1;
 
 	userlistCall(currPage);
@@ -167,7 +196,60 @@ $(document).ready(function(){
 		});
 	
 	
-})
+});
+
+
+});
+
+$(document).on('click',".notifybody tr",function(){
+	 
+	var notifyno =  $(this).children('td.n_no').text();
+	console.log(notifyno);
+	
+	var urler = './check/notifyinfo';
+	 $.ajax({
+	 	      url : urler,
+	 	      type : 'post',
+	 	      data : {no:notifyno},
+	 	      dataType : 'json',
+	 	      success : function(data){
+	 	       console.log(data.notifyinfo);
+	 	       notifypoplist(data.notifyinfo);
+
+	 	      },error : function(error){
+	 	         console.log(error);
+	 	      }
+	 	   });
+	//모달
+	$('#myModal').modal('show');
+	});
+	
+	//신고 팝업
+ function notifypoplist(list){
+		console.log(list);
+   	var content = "";
+	   for(var i = 0; i<list.length; i++){
+	     	content +=  "<div class='col-12 row text-left'>";
+  	    	content +=   "<div class='col-2 m-1 mb-3 text-left'>신고번호 </div><div class='col-1 mb-3 m-1'>"+list[0].n_no+"</div>";
+  	    	content +=   "<div class='col-2 m-1 mb-3 text-center'>신고 글 번호</div><a href="+list[0].n_notifiedno+" class='col-1 mb-3 m-1 text-center'>"+list[0].n_notifiedno+"</a>";
+  	    	content +=   "<div class='col-2 m-1 mb-3 text-right'>신고날짜</div><div class='col-3 mb-3 m-1 text-right'>"+list[0].n_dt+"</div>";
+  	    	content +=   "<div class='col-2 my-3 m-1 text-left'>대분류 코드 </div> <div class='col-4 my-3 m-1'>"+list[0].n1_name+"</div>";
+  	    	content +=   "<div class='col-2 my-3 m-1 text-left'>중분류 코드</div> <div class='col-2 my-3 m-1'>"+list[0].n2_name+"</div>";
+  	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고받은 아이디</div> <a href="+list[0].n_receiveid+" class='col-4 mt-3 m-1'>"+list[0].n_receiveid+"</a>";
+  	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-2 mt-3 m-1'>"+list[0].n_sendid+"</a>";
+  	    	content +=	 "<div class='col-12 row'>";
+  	    	content +=       "<textarea class='col-12 .form-control p-1' style='resize: none; height:100px'>"+list[0].n_content+"</textarea>";
+  	    	content +=   "</div>";
+  	    	content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
+  	    	content +=   	"<button type='button' class='btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>";
+  	    	content +=	"</div>";
+	        content +=  "</div>";	      
+	   }
+	   $(".modal-body").empty();
+	   $(".modal-body").append(content);
+     }
+
+
 
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
@@ -330,7 +412,7 @@ function userlistCall(page){
    	   var content = "";
    	   for(var i = 0; i<list.length; i++){
    	      content += "<tr>";
-   	      content += "<td>"+list[i].n_no+"</td>";
+   	      content += "<td class='n_no'>"+list[i].n_no+"</td>";
    	      content += "<td>"+list[i].n_receiveid+"</td>";
    	      content += "<td>"+list[i].n_sendid+"</td>";
    	      content += "<td>"+list[i].n1_name+"</td>";
@@ -413,6 +495,11 @@ function userlistCall(page){
     	   $(".blackbody").empty();
     	   $(".blackbody").append(content);
     	}
+    
+    
+    
+    
+
     
 </script>
 
