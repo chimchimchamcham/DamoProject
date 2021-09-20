@@ -36,4 +36,10 @@ public class DiaryController {
 		 logger.info("다이어리 추가 팝업 이동");
 		 return "diary/diaryInsertPopUp";
 	 }
+	 
+	 @RequestMapping(value="/memoUpdate") 
+	 public @ResponseBody int memoUpdate(@RequestParam String d_no,@RequestParam String content) {
+		 logger.info("메모 업데이트 "+"/"+d_no+"/ 내용:"+content);
+		return service.memoUpdate(d_no,content);
+	 }
 }

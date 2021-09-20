@@ -18,9 +18,18 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param1}
 </select>
 
-<insert id="diaryInsert" parameterType="damo">
+<insert id="diaryInsert" 
+   useGeneratedKeys="true"
+   keyColumn="d_no"
+   keyProperty="d_no"
+   parameterType="damo"
+   >
 	INSERT INTO diary (d_no, u_id, d_date,d_weight,d_carbo,d_protein,d_fat,d_code,d_tarexe,d_tarkcal) VALUES
 		(d_no_seq.NEXTVAL,#{u_id},#{d_date},#{u_weight},#{d_carbo},#{d_protein},#{d_fat},'D001',#{c_tarExe},#{c_tarKcal})
 </insert>
+
+<update id="memoUpdate" parameterType="String">
+	UPDATE diary SET d_memo = #{param2} WHERE d_no = #{param1}
+</update>
 
 </mapper>

@@ -61,4 +61,10 @@ public class DiaryService {
 		map.put("dto", dto);
 		return map;
 	}
+
+	public int memoUpdate(String d_no, String content) {
+		int success = dao.memoUpdate(d_no,content);
+		logger.info("메모 업데이트 성공 : "+success);
+		return success;
+	}
 }
