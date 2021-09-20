@@ -438,6 +438,17 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 
 
+		public HashMap<String, Object> findnotifyinfo(int notify_no) {
+
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<DamoDTO> notifyinfo = dao.dbnotifyinfo(notify_no);
+			map.put("notifyinfo", notifyinfo);
+			
+			return map;
+		}
+
+
 
 
 
