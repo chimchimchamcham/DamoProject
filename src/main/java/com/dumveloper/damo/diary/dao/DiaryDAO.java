@@ -15,4 +15,6 @@ public interface DiaryDAO {
 
 	int memoUpdate(String d_no, String content); //메모 업데이트
 
+	int weightUpdate(String d_no, String content);  //몸무게 업데이트
+
 }
