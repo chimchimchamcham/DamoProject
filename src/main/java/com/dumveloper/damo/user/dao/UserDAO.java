@@ -37,6 +37,10 @@ public interface UserDAO {
 	int userallCount();
 	int notifyallCount();
 	int blackallCount();
+
+	
+	//팝업
+	ArrayList<DamoDTO> dbnotifyinfo(int notify_no);
 	
 	
 

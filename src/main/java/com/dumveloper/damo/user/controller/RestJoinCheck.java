@@ -5,10 +5,14 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.user.service.UserService;
 
 
@@ -84,6 +88,18 @@ public class RestJoinCheck {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/notifyinfo")
+	public HashMap<String, Object> notifyinfo(@RequestParam int no,Model model) {
+		
+		logger.info("notifyinfo");
+
+		HashMap<String, Object> map = service.findnotifyinfo(no);
+		
+	
+		return map;
+	}
+	
 	
 	@RequestMapping(value = "/blacktable/{page}")
 	public HashMap<String, Object> blacktable(@PathVariable int page) {
