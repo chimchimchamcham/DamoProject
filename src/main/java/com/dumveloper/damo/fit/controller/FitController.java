@@ -152,12 +152,14 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/dbsave", method = RequestMethod.POST)
-	public ModelAndView dbsave(@RequestParam Object jsondata) {
+	public @ResponseBody HashMap<String, Object> dbsave(@RequestParam String jsondata) {
 
 		logger.info("api db저장 접속");
 		logger.info("jsondata : {}",jsondata);
 		
-		return null;
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("success",true);
+		return map;
 	}
 
 }
