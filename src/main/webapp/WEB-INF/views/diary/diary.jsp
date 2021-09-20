@@ -313,20 +313,32 @@ a:hover {
 <script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
 
-//메모 작성
-$("#memoContent").focusout(function() {
-		console.log('메모 update 요청');
-		memoUpdate($(this));
+//몸무게 업데이트
+$("input[name='weight']").focusout(function() {
+		console.log('몸무게 update 요청');
+		update($(this));
 });
 
-function memoUpdate(obj) {
-	console.log("memoUpdate 값 : " + obj.val());
-	/* var memoUrl = "updateMD/" + obj.attr("id") + "/" + obj.val() + "/"
-			+ dateCal;
-	console.log(reqUrl); */
+//메모 업데이트
+$("#memoContent").focusout(function() {
+		console.log('메모 update 요청');
+		update($(this));
+});
+
+
+//값 업데이트 메서드
+function update(obj) {
+	console.log("update 값 : "+obj.attr('id')+"/"+ obj.val());
+	var url = '';
+	
+	if(obj.attr('id') == 'memoContent'){ //메모 업데이트
+		url = 'memoUpdate';
+	}else if(obj.attr('id') == 'd_weight'){ //몸무게 업데이트
+		url = 'weightUpdate';
+	}
 
 	$.ajax({
-		url : 'memoUpdate',
+		url : url,
 		type : 'get',
 		dataType : 'json',
 		data: {
@@ -334,7 +346,7 @@ function memoUpdate(obj) {
 			'content' : obj.val()
 		},
 		success : function(data) {
-			console.log(data);
+			console.log("업데이트 성공 여부 : "+data);
 		},
 		error : function(error) {
 			console.log(error);
@@ -495,9 +507,6 @@ function memoUpdate(obj) {
 	}
 
 	
-
-	
-
 	/*체크박스 추가 시*/
 
 	
@@ -508,22 +517,11 @@ function memoUpdate(obj) {
 		url : 'checkListUpdate',
 		data : {
 			'checkContent' : getType,
-			'id' : '${sessionScope.loginId}'
+
 		},
 		dataType : 'JSON',
 		success : function(data) {
-			console.log("성공");
-			console.log(data.dto);
-			
-			//몸무게, 목표 섭취 운동 칼로리 뿌려주기
-			document.getElementById("d_weight").value = data.dto.d_weight;
-			document.getElementById("d_tarKcal").value = data.dto.d_tarKcal;
-			document.getElementById("d_tarExe").value = data.dto.d_tarExe;
-			
-			//권장 탄단지 뿌려주기
-			d_carbo = JSON.parse(data.dto.d_carbo);
-			d_protein = JSON.parse(data.dto.d_protein);
-			d_fat = JSON.parse(data.dto.d_fat);
+			console.log("체크여부 업데이트 성공");
 		},
 		error : function(e) {
 			console.log(e);
