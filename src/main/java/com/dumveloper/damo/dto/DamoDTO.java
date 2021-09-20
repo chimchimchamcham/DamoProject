@@ -120,7 +120,7 @@ public class DamoDTO {
 	private int g_standard;//등급기준
 	
 	//지식fit 답변
-	private int kR_no;//답변번호
+	private String kR_no;//답변번호
 	//private int k_no; //지식fit 번호
 	//private String u_id; //회원 id
 	private char kR_chooseYN;//채낵여부
@@ -611,10 +611,10 @@ public class DamoDTO {
 	public void setAnscnt(int anscnt) {
 		this.anscnt = anscnt;
 	}
-	public int getkR_no() {
+	public String getkR_no() {
 		return kR_no;
 	}
-	public void setkR_no(int kR_no) {
+	public void setkR_no(String kR_no) {
 		this.kR_no = kR_no;
 	}
 	public char getkR_chooseYN() {
