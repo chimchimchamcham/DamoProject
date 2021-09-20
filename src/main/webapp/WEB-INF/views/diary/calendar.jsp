@@ -334,7 +334,7 @@ body {
 						<span style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리
 							:</span>
 					</div>
-					<div class="col-2">
+					<div class="col-2" id="tarKcalInput">
 						<input type="number" class="form-control" placeholder="섭취 칼로리"
 							id="tarKcal" value="${monthTarKcal}"
 							style="text-align: center; background-color: #F4F4E9">
