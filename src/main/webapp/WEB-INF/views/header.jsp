@@ -170,7 +170,7 @@
 							<div class="dropdown-menu" style="font-size: 14px;"
 								id="dropdown-menu">
 								<a class="dropdown-item text-muted mt-1" href="fitMain">지식Fit</a>
-								<a class="dropdown-item text-muted mt-1" href="#">명예의 전당</a>
+								<a class="dropdown-item text-muted mt-1" href="fitRanking">명예의 전당</a>
 								<c:if test="${loginManager ne 'Y'}"> <!-- 일반회원 -->
 								<a
 									class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>

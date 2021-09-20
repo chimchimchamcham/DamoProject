@@ -28,4 +28,6 @@ public interface FitDAO {
 
 	int knowfitUrlDelete(String k_no, String ki_imgYN, String ki_knowYN);
 
+	ArrayList<DamoDTO> fitRanking();
+
 }

@@ -26,6 +26,8 @@ public class DamoDTO {
 	private int u_chooseCnt; //채택 수
 	private String g_code; //등급 분류 코드
 	
+	private int anscnt; //답변수 cnt (명예의 전당에서 사용)
+	
 	//캘린더
 	private String c_id; //캘린더 사용자 아이디
 	private Date c_date; //등록날짜

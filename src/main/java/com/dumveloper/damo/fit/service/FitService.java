@@ -248,6 +248,13 @@ public class FitService {
 		mav.setViewName("redirect:/fitMain");
 		return mav;
 	}
+
+	public ModelAndView fitRanking() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", fitdao.fitRanking());
+		mav.setViewName("fit/fitRanking");
+		return mav;
+	}
 	
 	
 }
