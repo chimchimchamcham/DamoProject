@@ -126,11 +126,19 @@
 			<div class="row">
 				<div class="col-3" ></div>
 				<div class="col-6"></div>
-				<div class="col-3"><button type="button" class="btn btn-primary" style="width:80px; height:38px;'" >검색</button></div>
+				<div class="col-3"><button type="button" class="btn btn-primary" style="width:80px; height:38px;'" >등록</button></div>
 			</div>
 		</div>
 	</div>
 </div>
+<div class="container-fluid">
+	<!-- <ul class="list-group">
+	  <li class="list-group-item">First item</li>
+	  <li class="list-group-item">Second item</li>
+	  <li class="list-group-item">Third item</li>
+	</ul> -->
+</div>
+
 </body>
 <script>
 
@@ -174,6 +182,30 @@ $('select[name=selectAdd]').change(function(){
 	}
 	
 })	
+
+//api 가져오기 
+
+//url = http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?serviceKey=qZfScsNtL3zrPn%2BvoVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag%3D%3D&desc_kor=바나나&type=json
+ 		var desc_kor ='바나나';
+        var serviceKey = 'qZfScsNtL3zrPn%2BvoVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag%3D%3D';
+        var content = '';
+
+		$.ajax({
+            url:'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList',
+            type:'GET',
+            data:{
+                'serviceKey':serviceKey,
+                'desc_kor':desc_kor,
+                'type':'json'
+            },
+            dataType:'JSON',
+            success:function(data){
+                console.log(data);
+            },
+            error:function(error){
+                console.log(error);
+            }
+        })
 
 </script>
 </html>

@@ -56,9 +56,7 @@
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
-    	  if(loginId =='' || loginId == null){
-    		  alert("로그인하셔야 이용하실 수 있는 서비스입니다.");
-    	  }else{
+    	 
 	    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
 	    		  alert("목표를 입력해주세요!");
 	    	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
@@ -68,7 +66,7 @@
 	    	  }else{
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
-      	}
+      	
       }
  	 });
     calendar.render();
@@ -309,6 +307,7 @@ body {
 		<div class='container pb-3'>
 			<a href="./goupdate">회원정보 수정</a>
 			<a href="./diaryInsert">다이어리 추가</a>
+			<a href="./myPage">마이페이지 이동</a>
 			<div class="row mb-3">
 				<div class="col-3">
 
