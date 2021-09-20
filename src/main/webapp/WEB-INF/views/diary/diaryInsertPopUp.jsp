@@ -187,7 +187,7 @@ $('select[name=selectAdd]').change(function(){
 
 //url = http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?serviceKey=qZfScsNtL3zrPn%2BvoVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag%3D%3D&desc_kor=바나나&type=json
  		var desc_kor ='바나나';
-        var serviceKey = 'qZfScsNtL3zrPn%2BvoVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag%3D%3D';
+        var serviceKey = 'qZfScsNtL3zrPn+voVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag==';
         var content = '';
 
 		$.ajax({
