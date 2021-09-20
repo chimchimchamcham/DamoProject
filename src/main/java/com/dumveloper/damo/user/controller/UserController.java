@@ -251,4 +251,9 @@ public class UserController {
 		return service.userlist();
 	}
 	
+	@RequestMapping(value = "/myPage")
+	public String myPage() {
+		return "user/myPage";
+	}
+	
 }
