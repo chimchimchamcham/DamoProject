@@ -111,7 +111,11 @@ public class DamoDTO {
 	private String b_content;
 	private String b_adminid;
 	
-	
+	//회원등급
+	//private String g_code;//등급분류코드
+	private String g_name;//등급분류명
+	private String g_fileName;//사진파일명
+	private int g_standard;//등급기준
 	
 	
 	
@@ -573,6 +577,24 @@ public class DamoDTO {
 	}
 	public void setD_code(String d_code) {
 		this.d_code = d_code;
+	}
+	public String getG_name() {
+		return g_name;
+	}
+	public void setG_name(String g_name) {
+		this.g_name = g_name;
+	}
+	public String getG_fileName() {
+		return g_fileName;
+	}
+	public void setG_fileName(String g_fileName) {
+		this.g_fileName = g_fileName;
+	}
+	public int getG_standard() {
+		return g_standard;
+	}
+	public void setG_standard(int g_standard) {
+		this.g_standard = g_standard;
 	}
 	
 }
