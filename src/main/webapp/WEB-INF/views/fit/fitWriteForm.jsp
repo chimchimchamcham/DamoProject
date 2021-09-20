@@ -269,7 +269,7 @@
     
     //파일 등록시 이벤트
 
-     $("#photo").on("change",function(e){
+/*     $("#photo").on("change",function(e){
     	console.log('썸네일 등록');
     	//썸네일 등록
         	var reader = new FileReader();
@@ -290,7 +290,7 @@
     		
         	reader.readAsDataURL(e.target.files[0]); 
         
-    }); 
+    }); */
     
 	//파일 등록시 이벤트 (최대 4장)
     $("#photo").on("change",function(e){
