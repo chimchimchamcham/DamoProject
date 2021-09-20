@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <link href='resources/fullcalendar-5.9.0/lib/main.css' rel='stylesheet' />
 <script src='resources/fullcalendar-5.9.0/lib/main.js'></script>
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <script>  
   document.addEventListener('DOMContentLoaded', function() {
-	
+	var loginId = "${sessionScope.loginId}"; //로그인한 아이디 가져오기
     var calendarEl = document.getElementById('calendar');
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -52,24 +56,33 @@
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
-    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
-    		  alert("목표를 입력해주세요!");
-    	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
-    		  alert("목표 섭취 칼로리를 입력해주세요!");
-    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
-    		  alert("목표 운동 칼로리를 입력해주세요!");
+    	  if(loginId =='' || loginId == null){
+    		  alert("로그인하셔야 이용하실 수 있는 서비스입니다.");
     	  }else{
-    	 	location.href='goDiary?Date='+date.dateStr;
-    	  }
-
+	    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
+	    		  alert("목표를 입력해주세요!");
+	    	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
+	    		  alert("목표 섭취 칼로리를 입력해주세요!");
+	    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
+	    		  alert("목표 운동 칼로리를 입력해주세요!");
+	    	  }else{
+	    	 	location.href='goDiary?Date='+date.dateStr;
+	    	  }
+      	}
       }
-
  	 });
     calendar.render();
     
     
     var date = calendar.getDate(); //현재 날짜 가져오기
   
+    
+    console.log(loginId);
+    if(loginId == null || loginId == ''){
+    	$("#tarKcal").attr("disabled",true); 
+		$("#tarExe").attr("disabled",true); 
+		$("#goal").attr("disabled",true); 
+    }
 	
     //현재 날짜기준 월 이동시 이동한 달 데이터 가져오기
     var a = 0;
@@ -284,52 +297,61 @@ body {
 	max-width: 1100px;
 	margin: 0 auto;
 }
-
 </style>
 </head>
 <body>
 
 
-<jsp:include page="../header.jsp"></jsp:include>
+	<jsp:include page="../header.jsp"></jsp:include>
 
-<div class='p-3 mb-5 bg-white rounded'>
+	<div class='p-3 mb-5 bg-white rounded'>
 
-	<div class='container pb-3' >
-	<a href="./goupdate">회원정보 수정</a>
-	<div class="row mb-3">
-		<div class="col-3">
-			
-			<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align:center; background-color:#F4F4E9">
-			<input type="text" class="form-control-plainText" placeholder="남은 몸무게"  id="remainWeight"  style="text-align:center">
-		</div>
-		<div class="col-6">
-			<h3 id="dateCal"></h3>
-		</div>
-		<div class="col-3">
-		
-			<button type="button" class="btn btn-secondary" id="prev">prev</button>
-			<button type="button" class="btn btn-secondary" id="next">next</button>
-		</div>
-	</div>
-	<div class="container"></div>
-	<div id='calendar' class=''>
-	</div>
-	<div class="container mt-3" id="drawGoal">
-		<div class="row">
-			<div class="col-2" >
-			<span style="font-size:15px; font-weight:bold;">목표 섭취 칼로리 :</span>
+		<div class='container pb-3'>
+			<a href="./goupdate">회원정보 수정</a>
+			<div class="row mb-3">
+				<div class="col-3">
+
+					<input type="text" class="form-control" placeholder="목표를 입력하세요!"
+						aria-describedby="basic-addon3" id="goal" value="${monthContent}"
+						style="text-align: center; background-color: #F4F4E9"> <input
+						type="text" class="form-control-plainText" placeholder="남은 몸무게"
+						id="remainWeight" style="text-align: center">
+				</div>
+				<div class="col-6">
+					<h3 id="dateCal"></h3>
+				</div>
+				<div class="col-3">
+
+					<button type="button" class="btn btn-secondary" id="prev">prev</button>
+					<button type="button" class="btn btn-secondary" id="next">next</button>
+				</div>
 			</div>
-			<div class="col-2">
-				 <input type="number" class="form-control" placeholder="섭취 칼로리" id="tarKcal" value="${monthTarKcal}" style="text-align:center; background-color:#F4F4E9">
-			</div>
-			<div class="col-2 pd-0"><span style="font-size:15px; font-weight:bold;">목표 운동 칼로리 : </span></div>
-			<div class="col-2">
-				<input type="number" class="form-control" placeholder="운동 칼로리"  id="tarExe" value="${monthTarExe}" style="text-align:center; background-color:#F4F4E9">
+			<div class="container"></div>
+			<div id='calendar' class=''></div>
+			<div class="container mt-3" id="drawGoal">
+				<div class="row">
+					<div class="col-2">
+						<span style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리
+							:</span>
+					</div>
+					<div class="col-2">
+						<input type="number" class="form-control" placeholder="섭취 칼로리"
+							id="tarKcal" value="${monthTarKcal}"
+							style="text-align: center; background-color: #F4F4E9">
+					</div>
+					<div class="col-2 pd-0">
+						<span style="font-size: 15px; font-weight: bold;">목표 운동 칼로리
+							: </span>
+					</div>
+					<div class="col-2">
+						<input type="number" class="form-control" placeholder="운동 칼로리"
+							id="tarExe" value="${monthTarExe}"
+							style="text-align: center; background-color: #F4F4E9">
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-</div>
 
 </body>
 <script>
