@@ -18,9 +18,6 @@
 	<!-- 상세보기가 존재하지 않아 임시로 상세보기 링크 생성 -->
 	<div><a href="fitDetail">상세보기</a></div>
 	
-	<div><a href="dbsaveForm">dbsaveForm</a></div>
-	
-	
     <div class="container mt-3">
         <div class="d-flex justify-content-between mb-3">
             <div class="p-2">많이본 Q&A</div>
