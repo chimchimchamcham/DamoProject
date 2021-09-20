@@ -30,4 +30,10 @@ public class DiaryController {
 		 logger.info("일기 상세보기"+date+id);
 		return service.diaryDetail(date,id);
 	 }
+	 
+	 @RequestMapping(value="/diaryInsert")
+	 public String goDiaryInsert() {
+		 logger.info("다이어리 추가 팝업 이동");
+		 return "diary/diaryInsertPopUp";
+	 }
 }

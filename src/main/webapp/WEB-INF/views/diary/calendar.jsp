@@ -308,6 +308,7 @@ body {
 
 		<div class='container pb-3'>
 			<a href="./goupdate">회원정보 수정</a>
+			<a href="./diaryInsert">다이어리 추가</a>
 			<div class="row mb-3">
 				<div class="col-3">
 
