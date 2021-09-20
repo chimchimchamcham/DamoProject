@@ -31,6 +31,13 @@
 
 }
 
+a:hover{
+text-decoration: none;
+}
+
+#photo{
+        display : none;
+    }
 </style>
 </head>
 <body>
@@ -50,7 +57,7 @@
 				name="weight" style="width:80px;" value="" /> <label class="ml-1">Kg</label>
 		</form>
 
-		<div class="row">
+		<div class="row my-3">
 			<!-- 섭취 그래프 -->
 			<div class="col mt-4 col-sm-3.5">
 				<p>섭취 그래프</p>
@@ -92,19 +99,201 @@
 </canvas>
 <div class="col col-sm-1 mt-4">
 <span id="chartNum">(100/1000)<br/>(100/1000)<br/>(100/1000)<br/></span>
+<hr/>
 </div>
 </div>
 </div>
 		</div>
+<hr/>
 
-	</div>
-	<!-- --container end-- -->
+<!-- 음식,운동 리스트 -->
+<div class="container my-5">
+
+<div class="row mb-5">
+<a href="" style="">
+<button type="button" class="btn btn-primary btn-sm " style="width:33px; height:33px;"><i class="fas fa-plus"></i></button>
+<span style="font-size:18px; font-weight: bold" class="pl-1"> 추가하기</span>
+</a>
+</div>
+
+  <h3>섭취</h3>
+  <div id="accordion" class="my-3">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          <b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span> <b class="float-right">1000kcal</b>
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse hide" data-parent="#accordion">
+        <div class="card-body">
+        
+ <table class="table">
+    <thead>
+      <tr>
+        <th>음식명</th>
+        <th>섭취량(g)</th>
+        <th>탄수화물 (g)</th>
+        <th>단백질 (g)</th>
+        <th>지방(g)</th>
+        <th>칼로리(kcal)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+      </div>
+    </div>
+  </div>
+  
+   <hr/>
+   
+   
+    <h3>운동</h3>
+<div id="accordion" class="my-3">
+    <div class="card">
+      <div class="card-header">
+        <a class="card-link" data-toggle="collapse" href="#collapseOne">
+          <b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span> <b class="float-right">1000kcal</b>
+        </a>
+      </div>
+      <div id="collapseOne" class="collapse hide" data-parent="#accordion">
+        <div class="card-body">
+        
+ <table class="table">
+    <thead>
+      <tr>
+        <th>음식명</th>
+        <th>섭취량(g)</th>
+        <th>탄수화물 (g)</th>
+        <th>단백질 (g)</th>
+        <th>지방(g)</th>
+        <th>칼로리(kcal)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<!-- 일기 메모 -->
+<div class="container my-5">
+<div class="form-group">
+  <h3>일기 메모</h3>
+  <textarea class="form-control m-auto" rows="10" id="comment" style="overflow-y:scroll; resize:none;" placeholder="오늘의 일기를 적어보세요."></textarea>
+</div>
+
+<div class="row" >
+<button type="button" class="btn btn-primary btn-sm " style="width:33px; height:33px;" id="fileBtn"><i class="fas fa-plus"></i></button>
+
+<label for="photo"><span style="font-size:18px; font-weight: bold; cursor: pointer;" class="ml-1 text-primary" > 사진추가</span></label>
+            <input type="file" name="photo" id="photo" accept="image/gif,image/jpeg,image/png,image/jpg" > <!-- 사진 -->
+</div>
+
+ <!-- 이미지가 들어간다 -->
+        <div id="imageWrap">
+        </div>
+</div>
+
+<hr/>
+
+<!-- 체크 리스트 -->
+<div class="container my-5">
+  <h3>체크 리스트</h3>
+  <form>
+    <div class="checkbox pl-5 pt-3 pr-5">
+      <label style="font-size:18px;"><input type="checkbox" value="" style="transform : scale(1.3);" name="checkbox"> 물 2L마시기</label>
+      <hr/>
+    </div>
+  </form>
+
+  
+  
+<div class="container my-5">
+<!--     <label for="weight">체크리스트 추가</label> -->
+  <form class="form-inline " action="#" class="circle_strong form-inline">
+							<input type="text" class="form-control ml-3 mr-1" id="" placeholder="" name="checkList"  value=""/>
+							<span style="color:#eaeaea"><i class="fas fa-plus-square fa-2x"></i></span>
+						</form>
+    
+</div>
+         </div>
+         
+         
+    </div> <!-- --container end-- -->
 </body>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- <script src="chartjs-plugin-doughnutlabel.js"></script>
 <script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
+
+var uploadNo = 1;
+//파일 등록시 이벤트 (최대 4장)
+  $("input[name='photo']").on("change",function(e){
+  	console.log('썸네일 등록');
+  	
+  	//imageWrap에 자식요소가 4개 이상 있을 경우 업로드 막기
+  	if($("#imageWrap").children().length>=4){
+  		alert("최대 4장까지만 업로드 가능합니다.");
+  		$("#photo").val("");
+  	}else{
+          	var reader = new FileReader();
+
+          	reader.onload = function(e){
+          		
+          		var content = '';
+          		content += '<div class="imgWrap" style="display:inline; margin-right:10px;">';
+          		content += '<img src="'+e.target.result+'" width="220px" ">';
+          		content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+          		content += '<input type="hidden" name="imgNo" value="'+uploadNo+'">';
+          		content += '</div>';
+          		
+          		$("#imageWrap").append(content);
+          		
+          		//file 객체 복사 함수
+              	copyInputTypeFile(uploadNo);
+          		
+          	};
+
+          	reader.readAsDataURL(e.target.files[0]);
+  		
+  	}//end else
+  	
+  });
+  
+//x를 클릭 했을 때 이미지 삭제하기
+  $(document).on("click",".closeImgWrap",function(){
+      $(this).parent().remove();
+      changeImgIcon();
+      
+      var imgNo = $(this).parent().find("input[type='hidden']").val();
+      deleteInputTyleFile(imgNo);
+  });
+  
 var search = location.search    
 var params = new URLSearchParams(search); 
 var getType= params.get('Date');    
@@ -197,7 +386,7 @@ $.ajax({
                       'rgb(201, 203, 207)'
                     ],
                     borderWidth: 1,
-                  data: [d_carbo ,d_protein, d_fat,]
+                  data: [10 ,10, 10]
               }]
           },
         options: {
@@ -238,6 +427,83 @@ $.ajax({
     	  var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+30);
     	 console.log(nextDt);
       }
+      
+  
+      
+      //목표 접근
+	    $("#goal").focusin(function(){
+	    	console.log("목표 접근");
+	    	$(this).css("background-color","white");
+	    });
+	    //목표 운동 칼로리 벗어났을 때
+	    $("#goal").focusout(function(){
+	    	console.log("목표 벗어남");
+	    	$(this).css("background-color","#F4F4E9");
+	    	
+	    	//console.log($(this).val())
+	    	
+	    	//원래 입력했던 데이터와 다를 때 변경
+	    	if($(this).val() == '' || $(this).val()==null){
+	    		alert("내용을 입력해주세요");
+	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    		console.log('update 요청');	
+	    		reqUpdate($(this));
+	    	}
+	    });
+
+	    //입력한 내용으로 변경
+	    function reqUpdate(obj){
+	    	console.log("reqUpate 값 : "+obj.val());
+	    	console.log("reqUpdate 아이디 : "+obj.attr("id"));
+	    	var reqUrl = "updateMD/"+obj.attr("id")+"/"+obj.val()+"/"+dateCal;
+	    	console.log(reqUrl);
+	    	
+	    	$.ajax({
+	    	    	url:reqUrl,
+	    	    	type:'get', 
+	    	    	dataType:'json',
+	    	    	success:function(data){
+	    	    		console.log(data);
+	    	    	},
+	    	    	error:function(error){
+	    	    		console.log(error);
+	    	    	}
+	    	    });    
+	    }
+	    
+	    
+	    /*체크박스 추가 시*/
+	    
+	    
+	    /*체크박스 체크 시*/
+	   /*  $('input:checkbox[name="checkbox"]').is(":checked") ==  true{
+	    	type : 'get',
+			url : 'checkListUpdate',
+			data : {
+				'checkContent' : getType,
+				'id' : '${sessionScope.loginId}'
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				console.log("성공");
+				console.log(data.dto);
+				
+				//몸무게, 목표 섭취 운동 칼로리 뿌려주기
+				document.getElementById("d_weight").value = data.dto.d_weight;
+				document.getElementById("d_tarKcal").value = data.dto.d_tarKcal;
+				document.getElementById("d_tarExe").value = data.dto.d_tarExe;
+				
+				//권장 탄단지 뿌려주기
+				d_carbo = JSON.parse(data.dto.d_carbo);
+				d_protein = JSON.parse(data.dto.d_protein);
+				d_fat = JSON.parse(data.dto.d_fat);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+	    } */
+	    
+	   
 </script>
 
 </html>
