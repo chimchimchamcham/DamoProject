@@ -23,9 +23,11 @@
 	
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="resources/js/jquery.twbsPagination.js"></script>  
 </head>
 <body class="bg-secondary">
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -64,7 +66,7 @@
                 </div>
             </div>
             <div class="container row bg-light">
-                <ul class="pagination mx-auto userpage">
+                <ul class="pagination mx-auto userpage" id="pagination">
 
                 </ul>
             </div>
@@ -95,7 +97,7 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto notifypage">
+              <ul class="pagination mx-auto notifypage" id="pagination">
                  
               </ul>
           </div>
@@ -125,15 +127,8 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto blackpage">
-                  <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item one active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item"><a class="page-link" href="#">6</a></li>
-                  <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+              <ul class="pagination mx-auto blackpage" id="pagination">
+              
               </ul>
           </div>
         </div>
@@ -146,14 +141,37 @@
 
 <script>
 
-var firstpage ="${pages}";
-console.log(firstpage);
-userlistcnt(firstpage);
+
+$(document).ready(function(){
+	
+	var currPage = 1;
+
+	userlistCall(currPage);
+	
+	$("ul.userpage").change(function(){
+		   //유저 페이징 초기화
+		   $(".userpage").twbsPagination('destory');
+		   userlistCall(currPage);
+		});
+	
+	$("ul.notifypage").change(function(){
+		   //유저 페이징 초기화
+		   $(".notifypage").twbsPagination('destory');
+		   notifylistCall(currPage);
+		});
+	
+	$("ul.blackpage").change(function(){
+		   //유저 페이징 초기화
+		   $(".blackpage").twbsPagination('destory');
+		   blacklistCall(currPage);
+		});
+	
+	
+})
 
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
         $(this).addClass('active');
-        
         
           if($(this).hasClass('userlist')){//유저리스트
             console.log('userlist');
@@ -169,14 +187,12 @@ userlistcnt(firstpage);
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
-     		    	userlistPrint(data.userlist);
-     		    	userlistcnt(data.pages);
+     		    	 userlistCall(data.pages);
      		      },
      		      error : function(error){
      		         console.log(error);
      		      }
      		   });
-            
             
           }else if($(this).hasClass('notifylist')){//신고리스트
             console.log('notifylist');
@@ -191,16 +207,13 @@ userlistcnt(firstpage);
    		      dataType : 'json',
    		      success : function(data){
    		    	 console.log(data);
-   		    	 notifylistPrint(data.notifylist);
-   		    	 notifylistcnt(data.pages);
+   		    	 notifylistCall(data.pages);
    		      },
    		      error : function(error){
    		         console.log(error);
    		      }
    		   });
-            
-            
-          
+
           }else if($(this).hasClass('blacklist')){//블랙리스트
             console.log('blacklist');
             $('.blacktable').removeClass('display-none');
@@ -213,8 +226,7 @@ userlistcnt(firstpage);
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
-     		    	 blacklistPrint(data.blacklist);
-     		    	 blacklistcnt(data.pages);
+     		    	 blacklistCall(data.pages);
      		      },
      		      error : function(error){
      		         console.log(error);
@@ -224,57 +236,40 @@ userlistcnt(firstpage);
     });
 
     
-     //유저리스트 페이징 처리
-    $(document).on('click','.userpage .page-item',function(){
-        if($(this).hasClass('previous')||$(this).hasClass('next')){
-            $('.page-item').removeClass('active');
-            userlistcnt(data.pages);
-        }else{
-            $('.page-item').removeClass('active');
-            var page = $(this).text();
-            console.log(page);
-            	   //페이징 초기화
-            	   $(".userbody").empty();
-            	   var reqUrl = "./check/usertable"+"/"+page;
-            	   console.log('reqeust url :'+ reqUrl);
-            	
-            	   $.ajax({
-            		      url : reqUrl,
-            		      type : 'post',
-            		      data : {},
-            		      dataType : 'json',
-            		      success : function(data){
-            		         console.log(data.userlist);
-            		         var list = data.userlist;
-            		         console.log(data.cnt);
-            		         console.log(data.currPage);
-            		         console.log(data.pages);
-            		         
-            		         userlistPrint(list);
-            		         
-            		      },
-            		      error : function(error){
-            		         console.log(error);
-            		      }
-            		   });
-                   $(this).addClass('active');
-        }
-    });
-    
-  //유저 페이지 수 페이징바
-    function userlistcnt(pages){
-	   var pagebutton = "";
-	   
-	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
-	   for(var i = 1; i<=pages; i++){
-		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
-	   }
-	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
-	   $(".userpage").empty();
-	   $(".notifypage").empty();
-	   $(".blackbody").empty();
-	   $(".userpage").append(pagebutton);
-	} 
+    //유저리스트 페이징 처리
+function userlistCall(page){
+       
+     	   //페이징 초기화
+     	   $(".userbody").empty();
+     	   var reqUrl = "./check/usertable"+"/"+page;
+     	   console.log('reqeust url :'+ reqUrl);
+
+     	   $.ajax({
+     	      url : reqUrl,
+     	      type : 'post',
+     	      data : {},
+     	      dataType : 'json',
+     	      success : function(data){
+     	         console.log(data);
+     	         userlistPrint(data.userlist);
+     	         
+     	         currPage = data.currPage;
+     	         //페이징 처리
+     	         $(".userpage").twbsPagination({
+     	            startPage : data.currPage, //시작페이지
+     	            totalPages : data.pages, //총 페이지 갯수
+     	            visivlePages : $(".userpage").val(), //보여줄 페이지 갯수
+     	            onPageClick : function(e,page){
+     	               console.log(e,page);
+     	               userlistCall(page);
+     	            }
+     	         });
+     	      },
+     	      error : function(error){
+     	         console.log(error);
+     	      }
+     	   });
+    	}
      
     
     //리스트 뿌려주는 ajax에는 c태그 안먹힘  유저
@@ -295,62 +290,40 @@ userlistcnt(firstpage);
     	} 
   
   
-  
-    //신고리스트 페이징 처리
-   $(document).on('click','.notifypage .page-item',function(){
-       if($(this).hasClass('previous')||$(this).hasClass('next')){
-           $('.page-item').removeClass('active');
-           notifypage(data.pages);
-       }else{
-           $('.page-item').removeClass('active');
-           $(this).addClass('active');
-           var Page = $(this).text();
-           		console.log(page);
-           	   //페이징 초기화
-           	   $(".notifybody").empty();
-           	var reqUrl = "./check/notifytable"+"/"+page;
-     	    console.log('reqeust url :'+ reqUrl);
-     	
-     	   $.ajax({
-     		      url : reqUrl,
-     		      type : 'post',
-     		      data : {},
-     		      dataType : 'json',
-     		      success : function(data){
-     		         console.log(data.notifylist);
-     		         var list = data.userlist;
-     		         console.log(data.cnt);
-     		         console.log(data.currPage);
-     		         console.log(data.pages);
-     		         
-     		        notifylistPrint(list);
-     		         
+    function notifylistCall(page){
+        
+  	   //페이징 초기화
+  	   $(".notifybody").empty();
+  	   var reqUrl = "./check/notifytable"+"/"+page;
+  	   console.log('reqeust url :'+ reqUrl);
 
-     		      },
-     		      error : function(error){
-     		         console.log(error);
-     		      }
-     		   });
-            $(this).addClass('active');
-           	   
-           
-       }
-   });
-     
-   //신고 페이지 수 페이징바
-   function notifylistcnt(pages){
-	   var pagebutton = "";
-	   
-	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
-	   for(var i = 1; i<=pages; i++){
-		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
-	   }
-	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
-	   $(".notifypage").empty();
-	   $(".userpage").empty();
-	   $(".blackpage").empty();
-	   $(".notifypage").append(pagebutton);
-	} 
+  	   $.ajax({
+  	      url : reqUrl,
+  	      type : 'post',
+  	      data : {},
+  	      dataType : 'json',
+  	      success : function(data){
+  	         console.log(data);
+  	         notifylistPrint(data.notifylist);
+  	         
+  	         currPage = data.currPage;
+  	         //페이징 처리
+  	         $(".notifypage").twbsPagination({
+  	            startPage : data.currPage, //시작페이지
+  	            totalPages : data.pages, //총 페이지 갯수
+  	            visivlePages : $(".notifypage").val(), //보여줄 페이지 갯수
+  	            onPageClick : function(e,page){
+  	               console.log(e,page);
+  	              notifylistCall(page);
+  	            }
+  	         });
+  	      },
+  	      error : function(error){
+  	         console.log(error);
+  	      }
+  	   });
+ 	}
+  
     
    //리스트 뿌려주는 ajax에는 c태그 안먹힘= 신고
    function notifylistPrint(list){
@@ -370,71 +343,40 @@ userlistcnt(firstpage);
    	   $(".blackbody").empty();
    	   $(".notifybody").append(content);
    	}
-    
-   
-   
-   
-    
-    
-    
-   //블랙리스트 페이징 처리
-   $(document).on('click','.blackpage .page-item',function(){
-       if($(this).hasClass('previous')||$(this).hasClass('next')){
-           $('.page-item').removeClass('active');
-           blackpage(data.pages);
-       }else{
-           $('.page-item').removeClass('active');
-           $(this).addClass('active');
-           var Page = $(this).text();
-           		console.log(page);
-           	   //페이징 초기화
-           	   $(".blackbody").empty();
-            	var reqUrl = "./check/blacktable"+"/"+page;
-      	    	console.log('reqeust url :'+ reqUrl);
-      	
-      	   $.ajax({
-      		      url : reqUrl,
-      		      type : 'post',
-      		      data : {},
-      		      dataType : 'json',
-      		      success : function(data){
-      		         console.log(data.blacklist);
-      		         var list = data.userlist;
-      		         console.log(data.cnt);
-      		         console.log(data.currPage);
-      		         console.log(data.pages);
-      		         
-      		        blacklistPrint(list);
-      		         
 
-      		      },
-      		      error : function(error){
-      		         console.log(error);
-      		      }
-      		   });
-             $(this).addClass('active');
-           	   
-           
-       }
-   });
-    
-    
-   //블랙리스트 페이지 수 페이징바
-   function blacklistcnt(pages){
-	   var pagebutton = "";
-	   
-	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
-	   for(var i = 1; i<=pages; i++){
-		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
-	   }
-	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
-	   $(".blackpage").empty();
-	   $(".notifypage").empty();
-	   $(".userpage").empty();
-	   $(".blackpage").append(pagebutton);
-	} 
    
-
+   function blacklistCall(page){
+  	   //페이징 초기화
+  	   $(".blackbody").empty();
+  	   var reqUrl = "./check/blacktable"+"/"+page;
+  	   console.log('reqeust url :'+ reqUrl);
+  	   $.ajax({
+  	      url : reqUrl,
+  	      type : 'post',
+  	      data : {},
+  	      dataType : 'json',
+  	      success : function(data){
+  	         console.log(data);
+  	         blacklistPrint(data.blacklist);
+  	         
+  	         currPage = data.currPage;
+  	         //페이징 처리
+  	         $(".blackpage").twbsPagination({
+  	            startPage : data.currPage, //시작페이지
+  	            totalPages : data.pages, //총 페이지 갯수
+  	            visivlePages : $(".blackpage").val(), //보여줄 페이지 갯수
+  	            onPageClick : function(e,page){
+  	               console.log(e,page);
+  	               blacklistCall(page);
+  	            }
+  	         });
+  	      },
+  	      error : function(error){
+  	         console.log(error);
+  	      }
+  	   });
+ 	}
+   
     //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
     function blacklistPrint(list){
     	   var content = "";
@@ -471,13 +413,6 @@ userlistcnt(firstpage);
     	   $(".blackbody").empty();
     	   $(".blackbody").append(content);
     	}
-    
-    
-    
-    
-    
-    
-    
     
 </script>
 
