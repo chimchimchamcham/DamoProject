@@ -143,5 +143,21 @@ public class FitController {
 		
 		return fitservice.fitRanking();
 	}
+	
+	@RequestMapping(value = "/dbsaveForm", method = RequestMethod.GET)
+	public String dbsaveForm(Model model) {
+
+		logger.info("dbsaveForm 접속");
+		return "fit/dbsaveForm";
+	}
+	
+	@RequestMapping(value = "/dbsave", method = RequestMethod.POST)
+	public ModelAndView dbsave(@RequestParam Object jsondata) {
+
+		logger.info("api db저장 접속");
+		logger.info("jsondata : {}",jsondata);
+		
+		return null;
+	}
 
 }
