@@ -64,15 +64,8 @@
                 </div>
             </div>
             <div class="container row bg-light">
-                <ul class="pagination mx-auto">
-                    <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item one active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                    <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+                <ul class="pagination mx-auto userpage">
+
                 </ul>
             </div>
         </div>
@@ -102,15 +95,8 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto">
-                  <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item one active"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">4</a></li>
-                  <li class="page-item"><a class="page-link" href="#">5</a></li>
-                  <li class="page-item"><a class="page-link" href="#">6</a></li>
-                  <li class="page-item next"><a class="page-link" href="#">Next</a></li>
+              <ul class="pagination mx-auto notifypage">
+                 
               </ul>
           </div>
         </div>
@@ -139,7 +125,7 @@
               </div>
           </div>
           <div class="container row bg-light">
-              <ul class="pagination mx-auto">
+              <ul class="pagination mx-auto blackpage">
                   <li class="page-item previous"><a class="page-link" href="#">Previous</a></li>
                   <li class="page-item one active"><a class="page-link" href="#">1</a></li>
                   <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -159,86 +145,137 @@
 
 
 <script>
+
+var firstpage ="${pages}";
+console.log(firstpage);
+userlistcnt(firstpage);
+
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
         $(this).addClass('active');
-          
+        
+        
           if($(this).hasClass('userlist')){//유저리스트
             console.log('userlist');
-            
+
+            $('.usertable').removeClass('display-none');
+            $('.notifytable').addClass('display-none');
+            $('.blacktable').addClass('display-none');
+          
             $.ajax({
-     		      url : './check/usertable',
+     		      url : './check/usertable/1',
      		      type : 'post',
      		      data : {},
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
      		    	userlistPrint(data.userlist);
+     		    	userlistcnt(data.pages);
      		      },
      		      error : function(error){
      		         console.log(error);
      		      }
      		   });
             
-            $('.usertable').removeClass('display-none');
-            $('.notifytable').addClass('display-none');
-            $('.blacktable').addClass('display-none');
             
           }else if($(this).hasClass('notifylist')){//신고리스트
             console.log('notifylist');
             
+            $('.notifytable').removeClass('display-none');
+            $('.usertable').addClass('display-none');
+            $('.blacktable').addClass('display-none');
             $.ajax({
-   		      url : './check/notifytable',
+   		      url : './check/notifytable/1',
    		      type : 'post',
    		      data : {},
    		      dataType : 'json',
    		      success : function(data){
    		    	 console.log(data);
    		    	 notifylistPrint(data.notifylist);
+   		    	 notifylistcnt(data.pages);
    		      },
    		      error : function(error){
    		         console.log(error);
    		      }
    		   });
-            $('.notifytable').removeClass('display-none');
-            $('.usertable').addClass('display-none');
-            $('.blacktable').addClass('display-none');
             
             
           
           }else if($(this).hasClass('blacklist')){//블랙리스트
             console.log('blacklist');
+            $('.blacktable').removeClass('display-none');
+            $('.usertable').addClass('display-none');
+            $('.notifytable').addClass('display-none');  
             $.ajax({
-     		      url : './check/blacktable',
+     		      url : './check/blacktable/1',
      		      type : 'post',
      		      data : {},
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
      		    	 blacklistPrint(data.blacklist);
+     		    	 blacklistcnt(data.pages);
      		      },
      		      error : function(error){
      		         console.log(error);
      		      }
      		   });
-            $('.blacktable').removeClass('display-none');
-            $('.usertable').addClass('display-none');
-            $('.notifytable').addClass('display-none');  
           }
     });
 
-    $(document).on('click','.page-item',function(){
+    
+     //유저리스트 페이징 처리
+    $(document).on('click','.userpage .page-item',function(){
         if($(this).hasClass('previous')||$(this).hasClass('next')){
             $('.page-item').removeClass('active');
-            $('.page-item.one').addClass('active');
+            userlistcnt(data.pages);
         }else{
             $('.page-item').removeClass('active');
-            $(this).addClass('active');
+            var page = $(this).text();
+            console.log(page);
+            	   //페이징 초기화
+            	   $(".userbody").empty();
+            	   var reqUrl = "./check/usertable"+"/"+page;
+            	   console.log('reqeust url :'+ reqUrl);
+            	
+            	   $.ajax({
+            		      url : reqUrl,
+            		      type : 'post',
+            		      data : {},
+            		      dataType : 'json',
+            		      success : function(data){
+            		         console.log(data.userlist);
+            		         var list = data.userlist;
+            		         console.log(data.cnt);
+            		         console.log(data.currPage);
+            		         console.log(data.pages);
+            		         
+            		         userlistPrint(list);
+            		         
+            		      },
+            		      error : function(error){
+            		         console.log(error);
+            		      }
+            		   });
+                   $(this).addClass('active');
         }
     });
     
-    
-    
+  //유저 페이지 수 페이징바
+    function userlistcnt(pages){
+	   var pagebutton = "";
+	   
+	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
+	   for(var i = 1; i<=pages; i++){
+		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
+	   }
+	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
+	   $(".userpage").empty();
+	   $(".notifypage").empty();
+	   $(".blackbody").empty();
+	   $(".userpage").append(pagebutton);
+	} 
+     
     
     //리스트 뿌려주는 ajax에는 c태그 안먹힘  유저
     function userlistPrint(list){
@@ -256,25 +293,148 @@
     	   $(".blackbody").empty();
     	   $(".userbody").append(content);
     	} 
-  //리스트 뿌려주는 ajax에는 c태그 안먹힘= 신고
-    function notifylistPrint(list){
-    	   var content = "";
-    	   for(var i = 0; i<list.length; i++){
-    	      content += "<tr>";
-    	      content += "<td>"+list[i].n_no+"</td>";
-    	      content += "<td>"+list[i].n_receiveid+"</td>";
-    	      content += "<td>"+list[i].n_sendid+"</td>";
-    	      content += "<td>"+list[i].n1_name+"</td>";
-    	      content += "<td>"+list[i].n2_name+"</td>";
-    	      content += "<td>"+list[i].c_name+"</td>";
-    	      content += "</tr>";
-    	   }
-    	   $(".userbody").empty();
-    	   $(".notifybody").empty();
-    	   $(".blackbody").empty();
-    	   $(".notifybody").append(content);
-    	}
+  
+  
+  
+    //신고리스트 페이징 처리
+   $(document).on('click','.notifypage .page-item',function(){
+       if($(this).hasClass('previous')||$(this).hasClass('next')){
+           $('.page-item').removeClass('active');
+           notifypage(data.pages);
+       }else{
+           $('.page-item').removeClass('active');
+           $(this).addClass('active');
+           var Page = $(this).text();
+           		console.log(page);
+           	   //페이징 초기화
+           	   $(".notifybody").empty();
+           	var reqUrl = "./check/notifytable"+"/"+page;
+     	    console.log('reqeust url :'+ reqUrl);
+     	
+     	   $.ajax({
+     		      url : reqUrl,
+     		      type : 'post',
+     		      data : {},
+     		      dataType : 'json',
+     		      success : function(data){
+     		         console.log(data.notifylist);
+     		         var list = data.userlist;
+     		         console.log(data.cnt);
+     		         console.log(data.currPage);
+     		         console.log(data.pages);
+     		         
+     		        notifylistPrint(list);
+     		         
+
+     		      },
+     		      error : function(error){
+     		         console.log(error);
+     		      }
+     		   });
+            $(this).addClass('active');
+           	   
+           
+       }
+   });
+     
+   //신고 페이지 수 페이징바
+   function notifylistcnt(pages){
+	   var pagebutton = "";
+	   
+	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
+	   for(var i = 1; i<=pages; i++){
+		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
+	   }
+	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
+	   $(".notifypage").empty();
+	   $(".userpage").empty();
+	   $(".blackpage").empty();
+	   $(".notifypage").append(pagebutton);
+	} 
     
+   //리스트 뿌려주는 ajax에는 c태그 안먹힘= 신고
+   function notifylistPrint(list){
+   	   var content = "";
+   	   for(var i = 0; i<list.length; i++){
+   	      content += "<tr>";
+   	      content += "<td>"+list[i].n_no+"</td>";
+   	      content += "<td>"+list[i].n_receiveid+"</td>";
+   	      content += "<td>"+list[i].n_sendid+"</td>";
+   	      content += "<td>"+list[i].n1_name+"</td>";
+   	      content += "<td>"+list[i].n2_name+"</td>";
+   	      content += "<td>"+list[i].c_name+"</td>";
+   	      content += "</tr>";
+   	   }
+   	   $(".userbody").empty();
+   	   $(".notifybody").empty();
+   	   $(".blackbody").empty();
+   	   $(".notifybody").append(content);
+   	}
+    
+   
+   
+   
+    
+    
+    
+   //블랙리스트 페이징 처리
+   $(document).on('click','.blackpage .page-item',function(){
+       if($(this).hasClass('previous')||$(this).hasClass('next')){
+           $('.page-item').removeClass('active');
+           blackpage(data.pages);
+       }else{
+           $('.page-item').removeClass('active');
+           $(this).addClass('active');
+           var Page = $(this).text();
+           		console.log(page);
+           	   //페이징 초기화
+           	   $(".blackbody").empty();
+            	var reqUrl = "./check/blacktable"+"/"+page;
+      	    	console.log('reqeust url :'+ reqUrl);
+      	
+      	   $.ajax({
+      		      url : reqUrl,
+      		      type : 'post',
+      		      data : {},
+      		      dataType : 'json',
+      		      success : function(data){
+      		         console.log(data.blacklist);
+      		         var list = data.userlist;
+      		         console.log(data.cnt);
+      		         console.log(data.currPage);
+      		         console.log(data.pages);
+      		         
+      		        blacklistPrint(list);
+      		         
+
+      		      },
+      		      error : function(error){
+      		         console.log(error);
+      		      }
+      		   });
+             $(this).addClass('active');
+           	   
+           
+       }
+   });
+    
+    
+   //블랙리스트 페이지 수 페이징바
+   function blacklistcnt(pages){
+	   var pagebutton = "";
+	   
+	pagebutton += "<li class='page-item previous'><a class='page-link' href='#'>Previous</a></li>";
+	   for(var i = 1; i<=pages; i++){
+		   pagebutton += "<li class='page-item'><a class='page-link' href='#'>"+i+"</a></li>";
+	   }
+	pagebutton += "<li class='page-item next'><a class='page-link' href='#'>Next</a></li>";
+	   $(".blackpage").empty();
+	   $(".notifypage").empty();
+	   $(".userpage").empty();
+	   $(".blackpage").append(pagebutton);
+	} 
+   
+
     //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
     function blacklistPrint(list){
     	   var content = "";
@@ -311,6 +471,14 @@
     	   $(".blackbody").empty();
     	   $(".blackbody").append(content);
     	}
+    
+    
+    
+    
+    
+    
+    
+    
 </script>
 
 

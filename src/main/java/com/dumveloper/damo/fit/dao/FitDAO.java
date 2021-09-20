@@ -14,4 +14,18 @@ public interface FitDAO {
 
 	int fitWrite(DamoDTO dto);
 
+	DamoDTO fitUpdateForm(String k_no);
+
+	ArrayList<String> fitImgList(String k_no, String ki_imgYN, String ki_knowYN);
+
+	int knowfitUpdate(DamoDTO dto);
+
+	int knowfitImgInsert(String k_no, String url, String ki_imgYN, String ki_knowYN);
+
+	int knowfitimgUpdate(String k_no, String url, String ki_imgYN, String ki_knowYN);
+
+	int knowfitImgDelete(String k_no, String photo, String ki_imgYN, String ki_knowYN);
+
+	int knowfitUrlDelete(String k_no, String ki_imgYN, String ki_knowYN);
+
 }

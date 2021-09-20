@@ -1,18 +1,14 @@
 package com.dumveloper.damo.user.controller;
 
 import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.dumveloper.damo.user.service.UserService;
 
 
@@ -37,7 +33,7 @@ public class RestJoinCheck {
 	
 	@RequestMapping(value = "/matchnick")
 	public int matchnick(@RequestParam String matchnick) {
-		logger.info("nick 중복 체크");
+		logger.info("nick 중복 체크,{}",matchnick);
 		int alert = 0;
 		if (matchnick != null) {
 			alert = service.check_nick(matchnick);
@@ -73,26 +69,26 @@ public class RestJoinCheck {
 	}
 			
 	
-	@RequestMapping(value = "/usertable")
-	public HashMap<String, Object> usertable() {
+	@RequestMapping(value = "/usertable/{page}")
+	public HashMap<String, Object> usertable(@PathVariable int page) {
 		
-		HashMap<String, Object> map = service.noset_view_userlist();
+		HashMap<String, Object> map = service.noset_view_userlist(page);
 		
 		return map;
 	}
 
-	@RequestMapping(value = "/notifytable")
-	public HashMap<String, Object> notifytable() {
+	@RequestMapping(value = "/notifytable/{page}")
+	public HashMap<String, Object> notifytable(@PathVariable int page) {
 		
-		HashMap<String, Object> map = service.notifylist();
+		HashMap<String, Object> map = service.notifylist(page);
 		
 		return map;
 	}
 	
-	@RequestMapping(value = "/blacktable")
-	public HashMap<String, Object> blacktable() {
+	@RequestMapping(value = "/blacktable/{page}")
+	public HashMap<String, Object> blacktable(@PathVariable int page) {
 		
-		HashMap<String, Object> map = service.blacklist();
+		HashMap<String, Object> map = service.blacklist(page);
 		
 		return map;
 	}

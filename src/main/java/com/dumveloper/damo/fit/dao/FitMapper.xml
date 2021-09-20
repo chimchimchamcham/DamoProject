@@ -46,4 +46,31 @@
 	<insert id="upload">
 		INSERT INTO KNOWFIT_IMG VALUES(#{param1},#{param2},#{param3},#{param4})
 	</insert>
+	
+	<select id="fitImgList" resultType="String">
+		SELECT ki_name FROM KnowFit_Img WHERE ki_no = #{param1} AND ki_imgYN = #{param2} AND ki_knowYN = #{param3}
+	</select>
+	
+	<select id="fitUpdateForm" resultType="damo">
+		SELECT * FROM KnowFit WHERE k_no = #{param1}
+	</select>
+	
+	<update id="knowfitUpdate" parameterType="damo">
+		UPDATE knowfit SET k_code = #{k_code}, k_title = #{k_title}, k_content = #{k_content} WHERE k_no = #{k_no}
+	</update>
+	
+	<update id="knowfitimgUpdate">
+		UPDATE knowfit_img SET ki_name = #{param2} WHERE ki_no = #{param1} AND ki_imgyn = #{param3} AND ki_knowyn = #{param4}
+	</update>
+	<insert id="knowfitImgInsert">
+		INSERT INTO knowfit_img VALUES(#{param1},#{param2},#{param3},#{param4})
+	</insert>
+	
+	<delete id="knowfitImgDelete">
+		DELETE FROM knowfit_img WHERE ki_no = #{param1} AND ki_name = #{param2} AND ki_imgyn = #{param3} AND ki_knowyn = #{param4}
+	</delete>
+	
+	<delete id="knowfitUrlDelete">
+		DELETE FROM knowfit_img WHERE ki_no = #{param1} AND ki_imgyn = #{param2} AND ki_knowyn = #{param3}
+	</delete>
 </mapper>

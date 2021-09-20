@@ -214,7 +214,7 @@ public class UserController {
 	public ModelAndView update(@RequestParam HashMap<String, String> params,HttpSession session) {
 		
 			ModelAndView mav = new ModelAndView();
-			logger.info("joinnow");
+			logger.info("updatenow");
 			for (String num : params.keySet()) {
 				if (params.get(num)==null||params.get(num)=="") {
 					String msg = "회원정보를 전부 입력해주세요";
@@ -222,10 +222,10 @@ public class UserController {
 					mav.setViewName("/user/msg");
 					return mav;
 			}else{
-				logger.info("join : {}",params);
+				logger.info("update : {}",params);
 			}
 		}
-		return service.join(params);
+		return service.update(params,session);
 	}
 	
 	
