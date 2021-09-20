@@ -67,4 +67,10 @@ public class DiaryService {
 		logger.info("메모 업데이트 성공 : "+success);
 		return success;
 	}
+
+	public int weightUpdate(String d_no, String content) {
+		int success = dao.weightUpdate(d_no,content);
+		logger.info("몸무게 업데이트 성공 : "+success);
+		return success;
+	}
 }

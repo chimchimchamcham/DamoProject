@@ -42,4 +42,10 @@ public class DiaryController {
 		 logger.info("메모 업데이트 "+"/"+d_no+"/ 내용:"+content);
 		return service.memoUpdate(d_no,content);
 	 }
+	 
+	 @RequestMapping(value="/weightUpdate") 
+	 public @ResponseBody int weightUpdate(@RequestParam String d_no,@RequestParam String content) {
+		 logger.info("몸무게 업데이트 "+"/"+d_no+"/ 몸무게 :"+content);
+		return service.weightUpdate(d_no,content);
+	 }
 }
