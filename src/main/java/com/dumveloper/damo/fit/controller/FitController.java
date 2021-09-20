@@ -127,4 +127,21 @@ public class FitController {
 		
 		return fitservice.fitUpdate(params,imgNos,files,rAttr);
 	}
+	
+	@RequestMapping(value = "/fitDetail", method = RequestMethod.GET)
+	public String fitDetail(Model model) {
+
+		logger.info("지식핏 상세보기 접속");
+		
+		return "fit/fitDetail";
+	}
+	
+	@RequestMapping(value = "/fitRanking", method = RequestMethod.GET)
+	public ModelAndView fitRanking() {
+
+		logger.info("지식핏 명예의 전당 접속");
+		
+		return fitservice.fitRanking();
+	}
+
 }
