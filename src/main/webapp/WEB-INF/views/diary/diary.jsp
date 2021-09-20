@@ -313,6 +313,35 @@ a:hover {
 <script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
 
+//메모 작성
+$("#memoContent").focusout(function() {
+		console.log('메모 update 요청');
+		memoUpdate($(this));
+});
+
+function memoUpdate(obj) {
+	console.log("memoUpdate 값 : " + obj.val());
+	/* var memoUrl = "updateMD/" + obj.attr("id") + "/" + obj.val() + "/"
+			+ dateCal;
+	console.log(reqUrl); */
+
+	$.ajax({
+		url : 'memoUpdate',
+		type : 'get',
+		dataType : 'json',
+		data: {
+			'd_no' : d_no,
+			'content' : obj.val()
+		},
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(error) {
+			console.log(error);
+		}
+	});
+}
+
 	var uploadNo = 1;
 	//파일 등록시 이벤트 (최대 4장)
 	$("input[name='photo']")
@@ -367,6 +396,7 @@ a:hover {
 	var d_carbo;
 	var d_protein;
 	var d_fat;
+	var d_no;
 
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
@@ -385,11 +415,16 @@ a:hover {
 			document.getElementById("d_weight").value = data.dto.d_weight;
 			document.getElementById("d_tarKcal").value = data.dto.d_tarKcal;
 			document.getElementById("d_tarExe").value = data.dto.d_tarExe;
+			
+			//메모 뿌려주기
+			document.getElementById("memoContent").value = data.dto.d_memo;
 
 			//권장 탄단지 뿌려주기
 			d_carbo = JSON.parse(data.dto.d_carbo);
 			d_protein = JSON.parse(data.dto.d_protein);
 			d_fat = JSON.parse(data.dto.d_fat);
+			
+			d_no = data.dto.d_no;
 		},
 		error : function(e) {
 			console.log(e);
@@ -409,6 +444,7 @@ a:hover {
 		$(this).find('strong').html(parseInt(100 * 0.8) + '%' + '<br/>성공');
 	});
 
+	
 	/*운동 칼로리 그래프*/
 	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
 		value : 0.8, //진행된 수를 넣어주세요. 1이 100기준입니다.
@@ -422,17 +458,20 @@ a:hover {
 		$(this).find('strong').html(parseInt(100 * 0.8) + '%' + '<br/>실패');
 	});
 
+	
 	/*탄단지 그래프*/
 	$(".progress-bar").animate({
 		width : "70%"
 	}, 1000);
 
+	
 	/*클릭한 날짜 뿌려주기*/
 	document.getElementById("date").innerHTML = getType;
 
 	var dt = new Date(document.getElementById("date").innerText);
 	/*  var arrDayStr = ['일','월','화','수','목','금','토']; */
 
+	
 	/*전 날로 이동*/
 	function preMonth() {
 		console.log(dt);
@@ -445,6 +484,7 @@ a:hover {
 
 	threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // 2014-02-26 => 3일전으로~
 
+	
 	/*다음날로 이동*/
 	function nextMonth() {
 		console.log(dt);
@@ -454,42 +494,9 @@ a:hover {
 		console.log(nextDt);
 	}
 
-	//메모 작성
-	$("#memoContent").focusout(function() {
-		console.log("메모 벗어남");
-		$(this).css("background-color", "#F4F4E9");
+	
 
-		//console.log($(this).val())
-
-		//원래 입력했던 데이터와 다를 때 변경
-		if ($(this).val() == '' || $(this).val() == null) {
-			alert("내용을 입력해주세요");
-		} else if ($(this).val() != $(this).prop('defaultValue')) {
-			console.log('update 요청');
-			reqUpdate($(this));
-		}
-	});
-
-	//입력한 내용으로 변경
-	function reqUpdate(obj) {
-		console.log("reqUpate 값 : " + obj.val());
-		console.log("reqUpdate 아이디 : " + obj.attr("id"));
-		var reqUrl = "updateMD/" + obj.attr("id") + "/" + obj.val() + "/"
-				+ dateCal;
-		console.log(reqUrl);
-
-		$.ajax({
-			url : reqUrl,
-			type : 'get',
-			dataType : 'json',
-			success : function(data) {
-				console.log(data);
-			},
-			error : function(error) {
-				console.log(error);
-			}
-		});
-	}
+	
 
 	/*체크박스 추가 시*/
 
