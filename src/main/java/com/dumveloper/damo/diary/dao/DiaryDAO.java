@@ -18,8 +18,13 @@ public interface DiaryDAO {
 
 	int weightUpdate(String d_no, String content);  //몸무게 업데이트
 
+	int eatTarKcalUpdate(String d_no, String content); //목표 섭취 칼로리 업데이트 
+
+	int exeTarKcalUpdate(String d_no, String content);//목표 운동 칼로리 업데이트 
+
 	ArrayList<DamoDTO> searchFood(String searchInsert); //음식 검색 결과
 
 	ArrayList<DamoDTO> searchExe(String searchInsert);//운동 검색 결과
+
 
 }

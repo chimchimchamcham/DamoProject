@@ -1,6 +1,5 @@
 package com.dumveloper.damo.diary.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -75,12 +74,21 @@ public class DiaryService {
 		return success;
 	}
 
-	//public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
-	public HashMap<String,Object> searchList(String selectMenu,String searchInsert) {
-		//HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
-		HashMap<String,Object> map = new HashMap<>();
-		//ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
-		ArrayList<DamoDTO>list = null;
+	public int eatTarKcalUpdate(String d_no, String content) {
+		int success = dao.eatTarKcalUpdate(d_no,content);
+		logger.info("목표 섭취 칼로리 업데이트 성공 : "+success);
+		return success;
+	}
+
+	public int exeTarKcalUpdate(String d_no, String content) {
+		int success = dao.exeTarKcalUpdate(d_no,content);
+		logger.info("목표 운동 칼로리 업데이트 성공 : "+success);
+		return success;
+	}
+		
+	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
+		HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
+		ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
 		logger.info("테이블 명 : {}, 검색 내용:{}",selectMenu,searchInsert);
 		if(selectMenu.equals("foodlist")) {//음식 검색
 			list = dao.searchFood(searchInsert);

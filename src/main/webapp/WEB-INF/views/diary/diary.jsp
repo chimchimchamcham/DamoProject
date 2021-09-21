@@ -27,10 +27,6 @@
 	font-size: 24px;
 }
 
-.circle1, .circle2 {
-	
-}
-
 a:hover {
 	text-decoration: none;
 }
@@ -56,7 +52,7 @@ a:hover {
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="container mt-5">
-	
+
 		<!-- 날짜 나타남 -->
 		<div class="col-md-3" style="float: none; margin: 0 auto;">
 			<button type="button" class="btn btn-light rounded-circle mr-3"
@@ -73,40 +69,42 @@ a:hover {
 		<!-- 몸무게 입력 -->
 		<form class="form-inline mt-5" action="#">
 			<label for="weight">몸무게:</label> <input type="text"
-				class="form-control ml-3" id="d_weight" placeholder="몸무게 입력"
+				class="form-control ml-3 " id="d_weight" placeholder="몸무게 입력"
 				name="weight" style="width: 80px;" value="" /> <label class="ml-1">Kg</label>
 		</form>
 
-<div class="row my-3">
+		<div class="row my-3">
 
 			<!-- 섭취 그래프 -->
 			<div class="col mt-4 col-sm-3.2">
 				<p>섭취 그래프</p>
-				<div class="circle1">
+				<div class="circle1" id="KcalCircle">
 					<strong class="circle_strong"></strong>
 				</div>
 
 				<form class="form-inline" action="#"
 					class="circle_strong form-inline">
 					<label for="weight">목표 섭취 칼로리:</label> <input type="text"
-						class="form-control ml-3" id="d_tarKcal" placeholder=""
-						name="weight" style="width: 110px;" value="" /><label
+						class="form-control ml-3 mb-1" id="d_tarKcal" placeholder=""
+						name="eatTarKcal" style="width: 110px;" value="" /><label
 						class="ml-1">Kcal</label>
+						<p id="eatKcal"></p>
 				</form>
 			</div>
 
 			<!-- 운동 그래프 -->
 			<div class="col mt-4 col-sm-3.2">
 				<p>운동 그래프</p>
-				<div class="circle2">
-					<strong class="circle_strong"> </strong>
+				<div class="circle2" id="ExeCircle">
+					<strong class="circle_strong"></strong>
 				</div>
 				<form class="form-inline" action="#"
 					class="circle_strong form-inline">
 					<label for="weight">목표 운동 칼로리 :</label> <input type="text"
 						class="form-control ml-3" id="d_tarExe" placeholder=""
-						name="weight" style="width: 110px;" value="" /> <label
+						name="exeTarKcal" style="width: 110px;" value="" /> <label
 						class="ml-1">Kcal</label>
+					<p id="exeKcal"></p>
 				</form>
 			</div>
 
@@ -115,28 +113,44 @@ a:hover {
 
 				<!-- 저탄고지, 밸런스 셀렉트 -->
 				<div class="row my-3 mr-1 ">
-				탄단지 섭취 그래프
-					<select class="form-control form-control-sm float-right"
-						style="width: 100px;">
+					<span>탄단지 섭취 그래프</span>
+					<select class="form-control form-control-sm"
+						style="width: 90px; margin-left:120px;">
 						<option>밸런스</option>
 						<option>저탄고지</option>
 					</select>
 				</div>
 
-				<div class="row my-3 mr-1">
-				탄수화물 (g)
-				</div>
+				<div class="row my-3 mr-1 pt-3">탄수화물 (g)</div>
 				<div class="row my-3 mr-1">
 					<div class="col-sm-9 progress-container">
 						<div class="progress active">
-							<div class="progress-bar progress-bar-success" style="width: 0%">70%</div>
+							<div class="progress-bar progress-bar-success" id="carboPercent"></div>
 						</div>
 					</div>
-					<div class="col-sm-3" >(100/1000)</div>
-					
-		</div>
+					<div class="col-sm-3" id="carbo"></div>
+				</div>
+				<div class="row my-3 mr-1 pt-1">단백질 (g)</div>
+				<div class="row my-3 mr-1">
+					<div class="col-sm-9 progress-container">
+						<div class="progress active">
+							<div class="progress-bar progress-bar-success"id="proteinPercent"></div>
+						</div>
+					</div>
+					<div class="col-sm-3" id="protein"></div>
+				</div>
+				<div class="row my-3 mr-1 pt-1">지방 (g)</div>
+				<div class="row my-3 mr-1">
+					<div class="col-sm-9 progress-container">
+						<div class="progress active">
+							<div class="progress-bar progress-bar-success" id="fatPercent"></div>
+						</div>
+					</div>
+					<div class="col-sm-3" id="fat"></div>
+				</div>
+				
 			</div>
-</div>
+		</div>
 
 		<hr />
 
@@ -300,7 +314,6 @@ a:hover {
 
 
 	</div>
-	</div>
 	<!-- --container end-- -->
 </body>
 
@@ -313,46 +326,63 @@ a:hover {
 <script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
 
-//몸무게 업데이트
-$("input[name='weight']").focusout(function() {
+
+	//몸무게 업데이트
+	$("input[name='weight']").focusout(function() {
 		console.log('몸무게 update 요청');
 		update($(this));
-});
+	});
 
-//메모 업데이트
-$("#memoContent").focusout(function() {
+	//메모 업데이트
+	$("#memoContent").focusout(function() {
 		console.log('메모 update 요청');
 		update($(this));
-});
-
-
-//값 업데이트 메서드
-function update(obj) {
-	console.log("update 값 : "+obj.attr('id')+"/"+ obj.val());
-	var url = '';
-	
-	if(obj.attr('id') == 'memoContent'){ //메모 업데이트
-		url = 'memoUpdate';
-	}else if(obj.attr('id') == 'd_weight'){ //몸무게 업데이트
-		url = 'weightUpdate';
-	}
-
-	$.ajax({
-		url : url,
-		type : 'get',
-		dataType : 'json',
-		data: {
-			'd_no' : d_no,
-			'content' : obj.val()
-		},
-		success : function(data) {
-			console.log("업데이트 성공 여부 : "+data);
-		},
-		error : function(error) {
-			console.log(error);
-		}
 	});
-}
+	
+	//목표 섭취 칼로리 업데이트
+	$("input[name='eatTarKcal']").focusout(function() {
+		console.log('목표 섭취 칼로리 update 요청');
+		update($(this));
+	});
+	
+	//목표 섭취 칼로리 업데이트
+	$("input[name='exeTarKcal']").focusout(function() {
+		console.log('목표 운동 칼로리 update 요청');
+		update($(this));
+	});
+
+	//값 업데이트 메서드
+	function update(obj) {
+		console.log("update 값 : " + obj.attr('id') + "/" + obj.val());
+		var url = '';
+
+		if (obj.attr('id') == 'memoContent') { //메모 업데이트
+			url = 'memoUpdate';
+		} else if (obj.attr('id') == 'd_weight') { //몸무게 업데이트
+			url = 'weightUpdate';
+		}else if (obj.attr('id') == 'd_tarKcal') { //목표 섭취 칼로리 업데이트
+			url = 'eatTarKcalUpdate';
+		}else if (obj.attr('id') == 'd_tarExe') { //목표 운동 칼로리 업데이트
+			url = 'exeTarKcalUpdate';
+		}
+		
+
+		$.ajax({
+			url : url,
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'd_no' : d_no,
+				'content' : obj.val()
+			},
+			success : function(data) {
+				console.log("업데이트 성공 여부 : " + data);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
 
 	var uploadNo = 1;
 	//파일 등록시 이벤트 (최대 4장)
@@ -405,11 +435,29 @@ function update(obj) {
 	var getType = params.get('Date');
 	console.log(getType);
 
-	var d_carbo;
-	var d_protein;
-	var d_fat;
+	var d_tarKcal;//목표 섭취 칼로리
+	var d_resultEat;//섭취 칼로리 합계
+	var d_tarKcalPercent; //섭취 칼로리 달성률
+	
+	var d_tarExe;//목표 운동 칼로리
+	var  d_resultExe; //운동칼로리 합계
+	var d_tarExePercent; //운동 칼로리 달성률
+	
+	var d_carbo; //권장 탄수화물
+	var carboPercent; //탄수화물 섭취 비율
+	
+	var d_protein;//권장 단백질
+	var proteinPercent;//단백질 섭취 비율
+	
+	var d_fat;//권장 지방
+	var fatPercent;//지방 섭취 비율
+	
 	var d_no;
 
+	
+	var tarKcalPercent;
+	var tarExePercent;
+	
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
 		type : 'get',
@@ -423,10 +471,27 @@ function update(obj) {
 			console.log("성공");
 			console.log(data.dto);
 
-			//몸무게, 목표 섭취 운동 칼로리 뿌려주기
+			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
+			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
+			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리
+			document.getElementById("eatKcal").innerText = '총 섭취 칼로리 : '+d_resultEat+'   Kcal';
+			
+			d_resultExe = parseInt(data.dto.d_resultExe); //운동 칼로리
+			document.getElementById("exeKcal").innerText = '총 운동 칼로리 : '+d_resultExe+'   Kcal';
+			
+			//몸무게 , 목표 섭취,운동 칼로리 뿌려주기
 			document.getElementById("d_weight").value = data.dto.d_weight;
-			document.getElementById("d_tarKcal").value = data.dto.d_tarKcal;
-			document.getElementById("d_tarExe").value = data.dto.d_tarExe;
+			document.getElementById("d_tarKcal").value = d_tarKcal;
+			document.getElementById("d_tarExe").value = d_tarExe;
+			
+			//목표 섭취,운동 달성률 계산
+			d_tarKcalPercent = Math.floor((data.dto.d_resultEat/data.dto.d_tarKcal)*100);
+			d_tarExePercent = Math.floor((data.dto.d_resultExe/data.dto.d_tarExe)*100);
+			console.log("섭취 칼로리 달성률: ",d_tarKcalPercent,"운동 칼로리 달성률 : ",d_tarExePercent);
+			
+			tarKcalPercent = (data.dto.d_resultEat/data.dto.d_tarKcal);
+			tarExePercent = (data.dto.d_resultExe/data.dto.d_tarExe);
+			console.log("섭취 칼로리 달성률: ",tarKcalPercent,"률 : ",tarExePercent);
 			
 			//메모 뿌려주기
 			document.getElementById("memoContent").value = data.dto.d_memo;
@@ -436,6 +501,25 @@ function update(obj) {
 			d_protein = JSON.parse(data.dto.d_protein);
 			d_fat = JSON.parse(data.dto.d_fat);
 			
+			//섭취 탄단지/권장 탄단지 뿌려주기
+			document.getElementById("carbo").innerText = '('+data.dto.d_resultCarbo+'/'+data.dto.d_carbo+')';
+			document.getElementById("protein").innerText = '('+data.dto.d_resultProtein+'/'+data.dto.d_protein+')';
+			document.getElementById("fat").innerText = '('+data.dto.d_resultFat+'/'+data.dto.d_fat+')';
+			
+			//탄단지 섭취 비율 계산 (밸런스)
+			//탄수화물
+			carboPercent = JSON.parse(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
+			document.getElementById("carboPercent").innerText = carboPercent+'%';
+			document.getElementById("carboPercent").style.width = carboPercent+'%';
+			//단백질
+			proteinPercent = JSON.parse(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
+			document.getElementById("proteinPercent").innerText = proteinPercent+'%';
+			document.getElementById("proteinPercent").style.width = proteinPercent+'%';
+			//지방
+			fatPercent = JSON.parse(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
+			document.getElementById("fatPercent").innerText = fatPercent+'%';
+			document.getElementById("fatPercent").style.width = fatPercent+'%';
+
 			d_no = data.dto.d_no;
 		},
 		error : function(e) {
@@ -443,23 +527,25 @@ function update(obj) {
 		}
 	});
 
-	/*섭취 칼로리 그래프*/
+	
+	/*==목표 섭취 그래프==*/
+	//초기 값(성공)
+
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : 0.8, //진행된 수를 넣어주세요. 1이 100기준입니다.
+		value : tarKcalPercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
 			gradient : [ "#0275d8", "#5bc0de" ]
 		//도넛의 색을 결정해줍니다.
 		}
-	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
-		$(this).find('strong').html(parseInt(100 * 0.8) + '%' + '<br/>성공');
+	}).on('circle-animation-progress', function(event, progress) {
+		$(this).find('strong').html(d_tarKcalPercent + '%' + '<br/>성공');
 	});
-
 	
-	/*운동 칼로리 그래프*/
-	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : 0.8, //진행된 수를 넣어주세요. 1이 100기준입니다.
+	//목표 섭취 달성 실패
+	$('.circle1_2').circleProgress({ //들어갈 div class명을 넣어주세요
+		value : tarKcalPercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
@@ -467,23 +553,72 @@ function update(obj) {
 		//도넛의 색을 결정해줍니다.
 		}
 	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
-		$(this).find('strong').html(parseInt(100 * 0.8) + '%' + '<br/>실패');
+		$(this).find('strong').html(d_tarKcalPercent + '%' + '<br/>실패');
+	});
+		
+	//섭취 목표 실패 시
+	if(d_tarKcalPercent>100){
+		document.getElementById('KcalCircle').className = 'circle1_2';
+	}else{//섭취 목표 성공 시
+		document.getElementById('KcalCircle').className = 'circle1';
+	}
+
+	
+	/*==목표 운동 그래프==*/
+	//초기 값(실패)
+	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
+		value : tarExePercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
+		size : 230, //도넛의 크기를 결정해줍니다.
+		startAngle : 1.5 * 3.14,
+		fill : {
+			gradient : [ "#ff4b1f", "#ff9068" ]
+		//도넛의 색을 결정해줍니다.
+		}
+	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
+		$(this).find('strong').html(d_tarExePercent + '%' + '<br/>실패');
+	});
+	
+	//초기 값(성공)
+	$('.circle2_2').circleProgress({ //들어갈 div class명을 넣어주세요
+		value : tarExePercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
+		size : 230, //도넛의 크기를 결정해줍니다.
+		startAngle : 1.5 * 3.14,
+		fill : {
+			gradient : [ "#0275d8", "#5bc0de" ]
+		//도넛의 색을 결정해줍니다.
+		}
+	}).on('circle-animation-progress', function(event, progress) {
+		$(this).find('strong').html(d_tarExePercent + '%' + '<br/>성공');
 	});
 
+	//운동 목표 실패 시
+	if(d_tarExePercent<100){
+		document.getElementById('ExeCircle').className = 'circle2';
+	}else{//운동 목표 성공 시
+		document.getElementById('ExeCircle').className = 'circle2_2';
+	}
 	
-	/*탄단지 그래프*/
-	$(".progress-bar").animate({
-		width : "70%"
+	
+	/*==탄단지 그래프==*/
+	$("#carboPercent").animate({
+		width : carboPercent
 	}, 1000);
-
 	
+	$("#proteinPercent").animate({
+		width : proteinPercent
+	}, 1000);
+	
+	$("#fatPercent").animate({
+		width : fatPercent
+	}, 1000);
+	
+
 	/*클릭한 날짜 뿌려주기*/
 	document.getElementById("date").innerHTML = getType;
 
 	var dt = new Date(document.getElementById("date").innerText);
 	/*  var arrDayStr = ['일','월','화','수','목','금','토']; */
 
-	
 	/*전 날로 이동*/
 	function preMonth() {
 		console.log(dt);
@@ -496,7 +631,6 @@ function update(obj) {
 
 	threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // 2014-02-26 => 3일전으로~
 
-	
 	/*다음날로 이동*/
 	function nextMonth() {
 		console.log(dt);
@@ -506,11 +640,8 @@ function update(obj) {
 		console.log(nextDt);
 	}
 
-	
 	/*체크박스 추가 시*/
 
-	
-	
 	/*체크박스 체크 시*/
 	/*  $('input:checkbox[name="checkbox"]').is(":checked") ==  true{
 	 	type : 'get',
