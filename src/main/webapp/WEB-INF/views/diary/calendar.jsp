@@ -66,8 +66,8 @@
 	    	  }else{
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
-      	
-      }
+      	}
+      
  	 });
     calendar.render();
     

@@ -183,24 +183,30 @@ $('select[name=selectAdd]').change(function(){
 	
 })	
 
-//api 가져오기 
+	//api 가져오기 
 
-//url = http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList?serviceKey=qZfScsNtL3zrPn%2BvoVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag%3D%3D&desc_kor=바나나&type=json
- 		var desc_kor ='바나나';
-        var serviceKey = 'qZfScsNtL3zrPn+voVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag==';
-        var content = '';
-
-		$.ajax({
+ 	var desc_kor ='바나나';
+    var serviceKey = 'qZfScsNtL3zrPn+voVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag==';
+    var numOfRows = 10;
+    var pageNo = 1;
+    var content = '';
+	$.ajax({
             url:'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList',
             type:'GET',
             data:{
                 'serviceKey':serviceKey,
                 'desc_kor':desc_kor,
+                'numOfRows':numOfRows,
+                'pageNo':pageNo,
                 'type':'json'
             },
             dataType:'JSON',
             success:function(data){
-                console.log(data);
+            	console.log(data.body);
+            	console.log(data.body.totalCount);
+                console.log(data.items);
+                console.log(data.body.items);
+                
             },
             error:function(error){
                 console.log(error);
