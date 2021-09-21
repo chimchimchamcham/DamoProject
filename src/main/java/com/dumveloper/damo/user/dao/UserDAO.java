@@ -41,6 +41,7 @@ public interface UserDAO {
 	
 	//팝업
 	ArrayList<DamoDTO> dbnotifyinfo(int notify_no);
+	ArrayList<DamoDTO> dbblackinfo(int black_no);
 	
 	
 

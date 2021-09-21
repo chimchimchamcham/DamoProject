@@ -33,7 +33,7 @@
     line-height: 2.5;
     white-space: nowrap;
 }
-img {
+img#img_form_url{
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -59,7 +59,7 @@ textarea{
 </style>
 </head>
 <body>
-
+ <jsp:include page="../header.jsp"></jsp:include>
   <div class="container-fluid justify-content-center align-items-center">
 
   	<h3 class="mx-5 px-5 text-secondary">회원 정보 수정</h3>

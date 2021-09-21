@@ -135,11 +135,12 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/fitDetail", method = RequestMethod.GET)
-	public String fitDetail(Model model) {
+	public ModelAndView fitDetail(@RequestParam String k_no) {
 
 		logger.info("지식핏 상세보기 접속");
+		logger.info("k_no : {}",k_no);
 		
-		return "fit/fitDetail";
+		return fitservice.fitDetail(k_no);
 	}
 	
 	@RequestMapping(value = "/fitRanking", method = RequestMethod.GET)
