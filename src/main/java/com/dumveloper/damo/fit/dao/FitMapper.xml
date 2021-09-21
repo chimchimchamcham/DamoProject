@@ -75,7 +75,8 @@
 	</delete>
 	
 	<select id="fitRanking" resultType="damo">
-		SELECT u_id, u_nick, u_filename, u_choosecnt, anscnt
+		SELECT u_id, u_nick, u_filename, u_choosecnt, anscnt,
+			(SELECT g_filename FROM GRADE WHERE u_choosecnt BETWEEN g_standard  AND g_maxstandard ) g_filename
 		FROM (
 		    SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
 		          U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
@@ -84,5 +85,36 @@
 		    WHERE U.u_id = K.u_id(+)
 		    ORDER BY U.u_choosecnt DESC, anscnt DESC)
 		WHERE rnum BETWEEN 1 AND 10    
+	</select>
+	<!-- 여기부터 -->
+
+	<select id="myRanking" resultType="int">
+		SELECT rnum
+		FROM (
+		    SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
+		          U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
+		    FROM (SELECT u_id, u_nick, u_filename, u_choosecnt FROM userinfo) U,
+		         (SELECT u_id, count(*) anscnt FROM knowFit_R GROUP BY u_id) K
+		    WHERE U.u_id = K.u_id(+)
+		    ORDER BY U.u_choosecnt DESC, anscnt DESC)
+		WHERE U_ID = #{param1}
+	</select>	
+	<select id="fitDetail" resultType="damo">
+		SELECT K.k_no,K.u_id,C.c_name,K.k_title,K.k_content,K.k_date,K.k_view,K.k_replycnt,K.k_solutionyn,K.k_blindyn, G.g_filename 
+		FROM knowfit K LEFT JOIN userinfo U on K.u_id = U.u_id JOIN GRADE G ON U.g_code = G.g_code JOIN code C ON K.k_code =  C.c_code WHERE K.k_no = #{k_no}
+		<!-- SELECT * FROM KnowFit WHERE k_no = #{k_no} -->
+	</select>
+	
+	<update id="upView" parameterType="String">
+		UPDATE knowFit SET k_view = k_view+1 WHERE k_no = #{k_no}
+	</update>
+	
+	<select id="fitImgLinkList" resultType="damo">
+		SELECT ki_no, ki_name,ki_imgYN FROM KnowFit_Img WHERE ki_no = #{param1} AND ki_knowYN = #{param2}
+	</select>
+	
+	<select id="fitAnsDetail" resultType="damo">
+		SELECT kr_no,kr.u_id,U.u_nick,kr_chooseyn,kr_date,kr_content, G.g_filename FROM knowFit_r KR LEFT JOIN userinfo U on KR.u_id = U.u_id JOIN GRADE G ON U.g_code = G.g_code WHERE k_no = #{k_no} AND kr_blindyn = 'N' ORDER BY kr.kr_chooseyn DESC, kr.kr_date 
+		<!-- SELECT * FROM KnowFit WHERE k_no = #{k_no} -->
 	</select>
 </mapper>

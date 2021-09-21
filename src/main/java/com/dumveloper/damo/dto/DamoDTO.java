@@ -119,7 +119,14 @@ public class DamoDTO {
 	private String g_fileName;//사진파일명
 	private int g_standard;//등급기준
 	
-	
+	//지식fit 답변
+	private String kR_no;//답변번호
+	//private int k_no; //지식fit 번호
+	//private String u_id; //회원 id
+	private char kR_chooseYN;//채낵여부
+	private Date kR_date;//작성일
+	private String kR_content;//내용
+	private char kR_blindYN;//블라인드 여부
 	
 	
 	public int getB_no() {
@@ -597,6 +604,42 @@ public class DamoDTO {
 	}
 	public void setG_standard(int g_standard) {
 		this.g_standard = g_standard;
+	}
+	public int getAnscnt() {
+		return anscnt;
+	}
+	public void setAnscnt(int anscnt) {
+		this.anscnt = anscnt;
+	}
+	public String getkR_no() {
+		return kR_no;
+	}
+	public void setkR_no(String kR_no) {
+		this.kR_no = kR_no;
+	}
+	public char getkR_chooseYN() {
+		return kR_chooseYN;
+	}
+	public void setkR_chooseYN(char kR_chooseYN) {
+		this.kR_chooseYN = kR_chooseYN;
+	}
+	public Date getkR_date() {
+		return kR_date;
+	}
+	public void setkR_date(Date kR_date) {
+		this.kR_date = kR_date;
+	}
+	public String getkR_content() {
+		return kR_content;
+	}
+	public void setkR_content(String kR_content) {
+		this.kR_content = kR_content;
+	}
+	public char getkR_blindYN() {
+		return kR_blindYN;
+	}
+	public void setkR_blindYN(char kR_blindYN) {
+		this.kR_blindYN = kR_blindYN;
 	}
 	
 }

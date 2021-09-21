@@ -90,7 +90,7 @@ public class RestJoinCheck {
 	}
 	
 	@RequestMapping(value = "/notifyinfo")
-	public HashMap<String, Object> notifyinfo(@RequestParam int no,Model model) {
+	public HashMap<String, Object> notifyinfo(@RequestParam int no) {
 		
 		logger.info("notifyinfo");
 
@@ -108,6 +108,18 @@ public class RestJoinCheck {
 		
 		return map;
 	}
+	//블랙리스트 팝업
+	@RequestMapping(value = "/blackinfo")
+	public HashMap<String, Object> blackinfo(@RequestParam int no) {
+		
+		logger.info("blackinfo");
+
+		HashMap<String, Object> map = service.findblackinfo(no);
+		
+	
+		return map;
+	}
+	
 	
 }
 

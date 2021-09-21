@@ -136,10 +136,9 @@
         </div>
     </div>
     
-      <!-- Modal -->
-  <div class="modal fade " id="myModal" role="dialog">
+      <!-- 신고 팝업 Modal -->
+  <div class="modal fade " id="notifymyModal" role="dialog">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-    
       <!-- Modal content-->
       <div class="modal-content row">
         <div class="modal-header bg-danger px-5">
@@ -148,14 +147,25 @@
         </div>
         <div class="modal-body justify-content-center row d-flex m-5" style="font-size: 10px; font-weight: 900;">
 
-	         
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+          <!-- 블랙리스트 팝업 Modal -->
+  <div class="modal fade " id="blackmyModal" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <!-- Modal content-->
+      <div class="modal-content row">
+        <div class="modal-header bg-dark px-5 text-light">
+          <h6 class="modal-title">블랙리스트 상세보기</h6>
+          <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body justify-content-center row d-flex m-5" style="font-weight: 900;">
 
         </div>
-
-          
-
       </div>
-      
     </div>
   </div>
     
@@ -201,6 +211,7 @@ $(document).ready(function(){
 
 });
 
+//신고 팝업
 $(document).on('click',".notifybody tr",function(){
 	 
 	var notifyno =  $(this).children('td.n_no').text();
@@ -221,10 +232,10 @@ $(document).on('click',".notifybody tr",function(){
 	 	      }
 	 	   });
 	//모달
-	$('#myModal').modal('show');
+	$('#notifymyModal').modal('show');
 	});
 	
-	//신고 팝업
+	//신고 팝업 그리기
  function notifypoplist(list){
 		console.log(list);
    	var content = "";
@@ -238,10 +249,10 @@ $(document).on('click',".notifybody tr",function(){
   	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고받은 아이디</div> <a href="+list[0].n_receiveid+" class='col-4 mt-3 m-1'>"+list[0].n_receiveid+"</a>";
   	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-2 mt-3 m-1'>"+list[0].n_sendid+"</a>";
   	    	content +=	 "<div class='col-12 row'>";
-  	    	content +=       "<textarea class='col-12 .form-control p-1' style='resize: none; height:100px'>"+list[0].n_content+"</textarea>";
+  	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px'>"+list[0].n_content+"</textarea>";
   	    	content +=   "</div>";
   	    	content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
-  	    	content +=   	"<button type='button' class='btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>";
+  	    	content +=   	"<button type='button' class='btn text-light btn-danger' data-dismiss='modal' onclick='registeblacklist("+""+list[0].n_receiveid+""+")>블랙리스트 등록</button>";
   	    	content +=	"</div>";
 	        content +=  "</div>";	      
 	   }
@@ -249,6 +260,90 @@ $(document).on('click',".notifybody tr",function(){
 	   $(".modal-body").append(content);
      }
 
+	//블랙리스트 등록
+ 	function registeblacklist(black_id){
+ 		console.log("black_id",black_id);
+ 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//블랙리스트 팝업
+ $(document).on('click',".blackbody tr",function(){
+ 	 
+ 	var blackno =  $(this).children('td.b_no').text();
+ 	console.log(blackno);
+ 	
+ 	var urler = './check/blackinfo';
+ 	 $.ajax({
+ 	 	      url : urler,
+ 	 	      type : 'post',
+ 	 	      data : {no:blackno},
+ 	 	      dataType : 'json',
+ 	 	      success : function(data){
+ 	 	       console.log(data.blackinfo);
+ 	 	       blackpoplist(data.blackinfo);
+
+ 	 	      },error : function(error){
+ 	 	         console.log(error);
+ 	 	      }
+ 	 	   });
+ 	//모달
+ 	$('#blackmyModal').modal('show');
+ 	});
+ 	
+ 	//블랙리스트 팝업 그리기
+  function blackpoplist(list){
+ 		console.log(list);
+    	var content = "";
+ 	   for(var i = 0; i<list.length; i++){
+ 	     	content +=  "<div class='col-12 row text-left'>";
+   	    	content +=   "<div class='my-3 mr-1 text-right'>ID</div><div class='my-3  text-left'>"+list[0].u_id+"</div>";
+   	    	content +=   "<div class='col-3 my-3 text-right'>종류</div><div class='my-3  text-right'>"+list[0].c_name+"</div>";
+   	    	content +=   "<div class='col-4 my-3 text-right'>관리자ID</div><div class='my-3  text-right'>"+list[0].b_adminid+"</div>";
+	   	     
+   	    	var date = new Date(list[0].b_startdt);//등록날짜
+	
+		      let startyear = date.getFullYear();
+		      let startmonth = date.getMonth();
+		      let startday = date.getDate();
+		      
+		      let startedday = startyear+"/"+(startmonth+1)+"/"+startday;
+   	    	content +=   "<div class='col-2 my-3 m-1 text-right'>등록날짜 </div> <div class='my-3 m-1'>"+startedday+"</div>";
+   	    	
+   	    	date = new Date(list[0].b_enddt);//끝나는 날짜
+  	      
+	   	      let endyear = date.getFullYear();
+	  	      let endmonth = date.getMonth();
+	  	      let endday = date.getDate();
+	  	      
+	  	     let endedday = endyear+"/"+(endmonth+1)+"/"+endday;
+   	    	content +=   "<div class='col-4 my-3 m-1 text-right'>종료날짜 </div> <div class=' my-3 m-1'>"+endedday+"</div>";
+   	    	
+   	    	
+   	    	content +=	 "<div class='col-12 row'>";
+   	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px' readonly>"+list[0].b_content+"</textarea>";
+   	    	content +=   "</div>";
+	   	    	
+/* 			content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
+			content +=   	"<button type='button' class='btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>";
+			content +=	"</div>"; */
+	   	    	
+ 	        content +=  "</div>";	      
+ 	   }
+ 	   $(".modal-body").empty();
+ 	   $(".modal-body").append(content);
+      }
+
+	
 
 
     $(document).on('click','.list-group-item',function(){
@@ -464,7 +559,7 @@ function userlistCall(page){
     	   var content = "";
     	   for(var i = 0; i<list.length; i++){
     	      content += "<tr>";
-    	      content += "<td>"+list[i].b_no+"</td>";
+    	      content += "<td class='b_no'>"+list[i].b_no+"</td>";
     	      content += "<td>"+list[i].u_id+"</td>";
     	      content += "<td>"+list[i].b_code+"</td>";
     	      

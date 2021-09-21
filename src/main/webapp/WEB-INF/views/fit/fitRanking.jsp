@@ -30,7 +30,11 @@
   		
   		<div class="row">
   			<div class="col-sm-8 mx-auto">
-  				<p>현재시각기준</p>
+  				<div class="mb-2">
+  					<span>현재시각기준</span>
+  					<span style="float:right">${sessionScope.loginNick } 님의 순위  : ${myRanking }위</span>
+  				</div>
+  				
   				<table class="table table-hover">
 				    <thead>
 				      <tr>
@@ -46,17 +50,14 @@
 					        	<c:if test="${i.count eq 1 }"><img src="resources/img/gold_medal.png" width="30px" height="30px"></c:if>
 					        	<c:if test="${i.count eq 2 }"><img src="resources/img/silver_medal.png" width="30px" height="30px"></c:if>
 					        	<c:if test="${i.count eq 3 }"><img src="resources/img/bronze_medal.png" width="30px" height="30px"></c:if>
-					        	<c:if test="${i.count > 3 }"><span>&nbsp;&nbsp;&nbsp;${i.count }</span></c:if>			        	
+					        	<c:if test="${i.count > 3 }"><span <c:if test="${dto.u_id eq sessionScope.loginId }">style="font-weight:700"</c:if>>&nbsp;&nbsp;&nbsp;${i.count }</span></c:if>			        	
 					        </td>
 					        <td>
-					        	<img 
-									<c:if test="${dto.u_fileName eq 'default-profile.png'}">src="resources/img/${dto.u_fileName }"</c:if> 
-									<c:if test="${dto.u_fileName ne 'default-profile.png'}">src="/photo/${dto.u_fileName }"</c:if> 
-									width="30px" height="30px">
-								<span>&nbsp;&nbsp;${dto.u_nick }</span>
+					        	<img src="resources/img/${dto.g_fileName }.png" width="30px" height="30px">
+								<span <c:if test="${dto.u_id eq sessionScope.loginId }">style="font-weight:700"</c:if>>&nbsp;&nbsp;${dto.u_nick }</span>
 					        </td>
 					        <td>
-					        	<span>${dto.u_chooseCnt }</span>
+					        	<span <c:if test="${dto.u_id eq sessionScope.loginId }">style="font-weight:700"</c:if>>${dto.u_chooseCnt }</span>
 					        </td>
 					      </tr>
 				    	</c:forEach>

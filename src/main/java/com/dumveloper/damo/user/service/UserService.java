@@ -449,6 +449,17 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 
 
+		public HashMap<String, Object> findblackinfo(int black_no) {
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			ArrayList<DamoDTO> blackinfo = dao.dbblackinfo(black_no);
+			map.put("blackinfo", blackinfo);
+			
+			return map;
+		}
+
+
 
 
 

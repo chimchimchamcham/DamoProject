@@ -1,7 +1,9 @@
 package com.dumveloper.damo.fit.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,6 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dumveloper.damo.fit.service.FitService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class FitController {
@@ -129,19 +135,20 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/fitDetail", method = RequestMethod.GET)
-	public String fitDetail(Model model) {
+	public ModelAndView fitDetail(@RequestParam String k_no) {
 
 		logger.info("지식핏 상세보기 접속");
+		logger.info("k_no : {}",k_no);
 		
-		return "fit/fitDetail";
+		return fitservice.fitDetail(k_no);
 	}
 	
 	@RequestMapping(value = "/fitRanking", method = RequestMethod.GET)
-	public ModelAndView fitRanking() {
+	public ModelAndView fitRanking(HttpSession session) {
 
 		logger.info("지식핏 명예의 전당 접속");
 		
-		return fitservice.fitRanking();
+		return fitservice.fitRanking(session);
 	}
 
 }
