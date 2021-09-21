@@ -43,7 +43,7 @@
 	    <div class="col-5"  id="userInfo" >
 	      <div class="container" style="width:445px; background-color:white">
 	      	<div class="row">
-	      		<div class="col-12" id="profile_img" style="width:200px; display:flex; height:300px; padding:30px 105px; ">
+	      		<div class="col-12" id="profile_img" style="width:200px; display:flex; height:300px; padding:50px 125px; ">
 	      			 <img src="resources/img/default-profile.png" id="img_form_url" class=" rounded-circle">
 	      		</div>
 	      	</div>
@@ -53,7 +53,7 @@
 	      		<div class="col-3" style="text-align:center; display:flex;padding-top:10px"><button type="btn" class="btn btn-secondary" style="height:35px; ">수정</button></div>
 	      	</div>
 	      	<div class="row">
-	      		<div class="col-4"><img src="resources/level3.png"></div>
+	      		<div class="col-4"><img src="resources/img/level3.png"></div>
 	      	</div>
 	      </div>
 	      

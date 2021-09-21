@@ -41,6 +41,16 @@
 	#eating_gram, #eating_Fat, #eating_Kcal, #eating_Carbo, #eating_Pro,#exe_time,#exe_Kcal{
 		padding-top:5px;
 	}
+	ul{
+        list-style: none;
+		}
+	li{
+		border:1px solid lightgray;
+		cursor:pointer;
+	   }
+	li:hover{
+		background-color: lightgray;
+        }
 	
 </style>
 </head>
@@ -63,9 +73,22 @@
 				</select>
 			</div>
 			<div class="col-6" id="search_insert"><input type="text" class="form-control" name="search_insert" ></div>
-			<div class="col-2" id="search_btn"><button type="button" class="btn btn-primary" style="width:80px; height:38px;'" >검색</button></div>
+			<div class="col-2" id="search_btn"><button type="button" class="btn btn-primary" style="width:80px; height:38px;'" id="goSearch">검색</button></div>
 			<div class="col-1"></div>
 		</div>
+		<!-- 검색 결과 리스트 -->
+		<div class="container-fluid" style="z-index:1000; position:fixed; left:150px; width:240px; height:150px; color" id="search_list">
+			<ul class="list-group" style="overflow-y:scroll; overflow-x: hidden;" id="search_ul">
+			 <!--  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">첫번째</span><span class="carbo" style="display:none">첫번째 탄수화물</span></li>
+			  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">두번째</span><span class="carbo" style="display:none">두번째 탄수화물</span></li>
+			  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">세번째</span><span class="carbo" style="display:none">세번째 탄수화물</span></li>
+			  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">네번째</span><span class="carbo"style="display:none">네번째 탄수화물</span></li>
+			  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">다섯번째</span><span class="carbo" style="display:none">다섯번째 탄수화물</span></li>
+			  <li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0"><span class="first">여섯번째</span><span class="carbo"style="display:none">여섯번째 탄수화물</span></li>  -->
+			</ul> 
+		</div>
+		<!-- -------------------------------------------------------------------- -->
+		
 	</div>
 	<div class="container" id="content_all">
 		<div class="row">
@@ -131,26 +154,23 @@
 		</div>
 	</div>
 </div>
-<div class="container-fluid">
-	<!-- <ul class="list-group">
-	  <li class="list-group-item">First item</li>
-	  <li class="list-group-item">Second item</li>
-	  <li class="list-group-item">Third item</li>
-	</ul> -->
-</div>
 
 </body>
 <script>
 
+var selectMenu = ''; 
+
 //초기 상태
-$("#content_eat,#content_exe,#search,#search_food,#content_water").hide();
+$("#content_eat,#content_exe,#search,#search_food,#content_water,#search_list").hide();
 $("#search_insert,#search_btn").show();
 $("input[name=search_insert]").attr("disabled",true); 
 
 $('select[name=selectAdd]').change(function(){
 	console.log( $(this).val());
+	selectMenu = $(this).val();
 	//섭취목록 선택시
-	if( $(this).val()=='breakfast' || $(this).val()=='morning_snack' || $(this).val()=='lunch' || $(this).val()=='afternoon_snack' || $(this).val()=='dinner' || $(this).val()=='late_night_meal'){
+	if( $(this).val()=='breakfast' || $(this).val()=='morning_snack' || $(this).val()=='lunch' || $(this).val()=='afternoon_snack' || $(this).val()=='dinner' || $(this).val()=='late_night_meal'){selectMenu = $(this).val();
+		selectMenu = 'foodlist';
 		$("#content_exe").hide();
 		$("#content_water").hide();
 		$("#search_insert").show();
@@ -161,6 +181,7 @@ $('select[name=selectAdd]').change(function(){
 		$("input[name=search_insert]").attr("disabled",false); 
 	//운동 선택시
 	}else if($(this).val() == 'excercise'){
+		selectMenu = 'met';
 		$("#content_eat").hide();
 		$("#content_water").hide();
 		$("#search_insert").show();
@@ -181,37 +202,33 @@ $('select[name=selectAdd]').change(function(){
 		$("#search_insert").attr("disabled",true); 
 	}
 	
-})	
+});	
 
-	//api 가져오기 
 
- 	var desc_kor ='바나나';
-    var serviceKey = 'qZfScsNtL3zrPn+voVpHx4MCjASDnhUpcB04etB1b5ieeKveZTErEkqOuooRGJ9K9O6cy7LKcfyozanZi4sPag==';
-    var numOfRows = 10;
-    var pageNo = 1;
-    var content = '';
+var reqUrl = 'searchList/';
+$("#goSearch").click(function(){
+	$("#search_list").show();
+	
+	console.log("선택된 메뉴:",selectMenu);
+	reqUrl +=selectMenu;
+	
 	$.ajax({
-            url:'http://apis.data.go.kr/1470000/FoodNtrIrdntInfoService/getFoodNtrItdntList',
-            type:'GET',
-            data:{
-                'serviceKey':serviceKey,
-                'desc_kor':desc_kor,
-                'numOfRows':numOfRows,
-                'pageNo':pageNo,
-                'type':'json'
-            },
-            dataType:'JSON',
-            success:function(data){
-            	console.log(data.body);
-            	console.log(data.body.totalCount);
-                console.log(data.items);
-                console.log(data.body.items);
-                
-            },
-            error:function(error){
-                console.log(error);
-            }
-        })
+    	url:reqUrl,
+    	type:'get', 
+    	dataType:'json',
+    	success:function(data){
+    		console.log(data);
+    	},
+    	error:function(error){
+    		console.log(error);
+    	}
+    });  
+});
+
+$("#search_ul").on("click","li",function(){
+	console.log($(this).find(".first").text());
+	console.log($(this).find(".carbo").text());
+});
 
 </script>
 </html>
