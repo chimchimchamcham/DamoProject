@@ -26,7 +26,7 @@ public class BlackListController {
 	
 	
 	@RequestMapping(value = "/registerblacklist/{resivedid}/{adminid}/{scope}/{endtime}/{content}")
-	public ModelAndView registerblacklist(Model model,@PathVariable String resivedid,@PathVariable String adminid,@PathVariable String scope,@PathVariable Date endtime,@PathVariable String content) {
+	public ModelAndView registerblacklist(Model model,@PathVariable String resivedid,@PathVariable String adminid,@PathVariable String scope,@PathVariable Date endtime,@PathVariable String content,@PathVariable int notifynum) {
 		
 		
 		logger.info("블랙리스트 등록 시작");
@@ -34,7 +34,7 @@ public class BlackListController {
 		logger.info("가져온 인자값:{}/{}",content,resivedid);
 		logger.info("가져온 인자값:{}",adminid);
 		
-		ModelAndView mav = service.registerblacklist(resivedid,adminid,scope,endtime,content);
+		ModelAndView mav = service.registerblacklist(resivedid,adminid,scope,endtime,content,notifynum);
 		
 		
 		return mav;

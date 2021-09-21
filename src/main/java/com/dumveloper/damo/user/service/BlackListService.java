@@ -11,20 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.user.dao.BlackListDAO;
+import com.dumveloper.damo.user.dao.NotifyDAO;
 
 @Service
 public class BlackListService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	@Autowired BlackListDAO dao;
+	@Autowired BlackListDAO blackdao;
+	@Autowired NotifyDAO notifydao;
+	
 	
 	@Transactional
-	public ModelAndView registerblacklist(String resivedid, String adminid, String scope, Date endtime, String content) {
+	public ModelAndView registerblacklist(String resivedid, String adminid, String scope, Date endtime, String content, int notifynum) {
 		logger.info("블랙리스트 등록 서비스");
 		
 	
 		
-		dao.dbregister(resivedid,scope,endtime,content,adminid);
+		blackdao.dbregister(resivedid,scope,endtime,content,adminid);
+		notifydao.updatenotify(notifynum);
+		
 		
 		ModelAndView mav = new ModelAndView();
 				

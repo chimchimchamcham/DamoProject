@@ -6,4 +6,7 @@
 >
 
 <mapper namespace="com.dumveloper.damo.user.dao.NotifyDAO">
+	<update id="updatenotify">
+		UPDATE his_notify SET HN_code = 'HN003' where HN_no = #{param1};
+	</update>
 </mapper>

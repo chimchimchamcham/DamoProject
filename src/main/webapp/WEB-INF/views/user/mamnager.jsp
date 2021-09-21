@@ -224,8 +224,9 @@ $(document).ready(function(){
 $(document).on('click',".notifybody tr",function(){
 	 
 	var notifyno =  $(this).children('td.n_no').text();
+	var notify_state = $(this).children('td.state').text();
 	console.log(notifyno);
-	
+	console.log("notify_state:",notify_state);
 	var urler = './check/notifyinfo';
 	 $.ajax({
 	 	      url : urler,
@@ -234,7 +235,7 @@ $(document).on('click',".notifybody tr",function(){
 	 	      dataType : 'json',
 	 	      success : function(data){
 	 	       console.log(data.notifyinfo);
-	 	       notifypoplist(data.notifyinfo);
+	 	       notifypoplist(data.notifyinfo,notify_state);
 
 	 	      },error : function(error){
 	 	         console.log(error);
@@ -251,26 +252,28 @@ $(document).on('click',".notifybody tr",function(){
 	});
 	
 	//신고 팝업 그리기
- function notifypoplist(list){
+ function notifypoplist(list,notify_state){
 		console.log(list);
    	var content = "";
-	   for(var i = 0; i<list.length; i++){
+
 	     	content +=  "<div class='col-12 row text-left'>";
   	    	content +=   "<div class='col-2 m-1 mb-3 text-left'>신고번호 </div><div class='col-1 mb-3 m-1'>"+list[0].n_no+"</div>";
-  	    	content +=   "<div class='col-2 m-1 mb-3 text-center'>신고 글 번호</div><a href="+list[0].n_notifiedno+" class='col-1 mb-3 m-1 text-center'>"+list[0].n_notifiedno+"</a>";
+  	    	content +=   "<div class='col-2 m-1 mb-3 text-center'>신고 글 번호</div><a href="+list[0].n_notifiedno+" class='noifyno col-1 mb-3 m-1 text-center'>"+list[0].n_notifiedno+"</a>";
   	    	content +=   "<div class='col-2 m-1 mb-3 text-right'>신고날짜</div><div class='col-3 mb-3 m-1 text-right'>"+list[0].n_dt+"</div>";
   	    	content +=   "<div class='col-2 my-3 m-1 text-left'>대분류 코드 </div> <div class='col-4 my-3 m-1'>"+list[0].n1_name+"</div>";
   	    	content +=   "<div class='col-2 my-3 m-1 text-left'>중분류 코드</div> <div class='col-2 my-3 m-1'>"+list[0].n2_name+"</div>";
   	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고받은 아이디</div> <div id="+list[0].n_receiveid+" class='receid col-4 mt-3 m-1'>"+list[0].n_receiveid+"</div>";
   	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-2 mt-3 m-1'>"+list[0].n_sendid+"</a>";
   	    	content +=	 "<div class='col-12 row'>";
-  	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px'>"+list[0].n_content+"</textarea>";
+  	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
   	    	content +=   "</div>";
-  	    	content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
-  	    	content +=   	`<button type="button" class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
-  	    	content +=	"</div>";
+	 	    	if (notify_state!='처리완료') {
+	 	    		content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
+	 	    		content +=   	`<button type="button" class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
+	 	    		content +=	"</div>";
+	 	    	}
 	        content +=  "</div>";	      
-	   }
+
 	   $(".modal-body").empty();
 	   $("#notifymyModal .modal-body").append(content);
      }
@@ -283,6 +286,7 @@ $(document).on('click',".notifybody tr",function(){
 	 $(document).on('click',".notifytoblackbtn",function(){
 		$('h6.blacktitle').text('블랙리스트 등록');
 		var black_id = $('.receid').attr('id');//신고 받은 아이디
+		var notify_no = $('.noifyno').text();//신고창 num
 		var loginId = "${sessionScope.loginId}"; //로그인한 관리자 아이디 가져오기
 		var loginManager="${sessionScope.loginManager}";//로그인한 아이디가 ('Y')메니저일경우
 
@@ -290,7 +294,7 @@ $(document).on('click',".notifybody tr",function(){
 		
 		if (loginManager=='Y') {
 			console.log('당신은 관리자 입니다');
-			goblacklistpop(black_id,loginId)
+			goblacklistpop(notify_no,black_id,loginId)
 			$('#blackmyModal').modal('show');
 		}else{
 			console.log('오류 당신은 관리자가 아닙니다');
@@ -300,7 +304,7 @@ $(document).on('click',".notifybody tr",function(){
 	});
 	
 	//블랙리스트 등록 그리기
-	 function goblacklistpop(black_id,loginId){
+	 function goblacklistpop(notify_no,black_id,loginId){
 		
 			console.log("black_id:"+black_id);
 			console.log("loginId:"+loginId);
@@ -349,7 +353,7 @@ $(document).on('click',".notifybody tr",function(){
 	 		 	 $(document).on('click',"button.register",function(){
 	 				
 	 		 		if (blacklistscopeoption_val!=undefined&&blacklistendday_val!=undefined&&blacklistcause_val!=undefined) {
-	 		 			var url = "./registerblacklist/"+black_id+"/"+loginId+"/"+blacklistscopeoption_val+'/'+blacklistendday_val+'/'+blacklistcause_val;
+	 		 			var url = "./registerblacklist/"+black_id+"/"+loginId+"/"+blacklistscopeoption_val+'/'+blacklistendday_val+'/'+blacklistcause_val+'/'+notify_no;
 	 		 			$(location).attr('href',url);						
 					}else{
 						alert('모든 값을 입력햐주세요');
@@ -439,10 +443,6 @@ $(document).on('click',".notifybody tr",function(){
    	    	content +=	 "<div class='col-12 row'>";
    	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px' readonly>"+list[0].b_content+"</textarea>";
    	    	content +=   "</div>";
-	   	    	
-/* 			content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
-			content +=   	"<button type='button' class='btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>";
-			content +=	"</div>"; */
 	   	    	
  	        content +=  "</div>";	      
  	   }
@@ -619,7 +619,7 @@ function userlistCall(page){
    	      content += "<td>"+list[i].n_sendid+"</td>";
    	      content += "<td>"+list[i].n1_name+"</td>";
    	      content += "<td>"+list[i].n2_name+"</td>";
-   	      content += "<td>"+list[i].c_name+"</td>";
+   	      content += "<td class='state'>"+list[i].c_name+"</td>";
    	      content += "</tr>";
    	   }
    	   $(".userbody").empty();
