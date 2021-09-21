@@ -73,4 +73,16 @@ public class DiaryService {
 		logger.info("몸무게 업데이트 성공 : "+success);
 		return success;
 	}
+
+	public int eatTarKcalUpdate(String d_no, String content) {
+		int success = dao.eatTarKcalUpdate(d_no,content);
+		logger.info("목표 섭취 칼로리 업데이트 성공 : "+success);
+		return success;
+	}
+
+	public int exeTarKcalUpdate(String d_no, String content) {
+		int success = dao.exeTarKcalUpdate(d_no,content);
+		logger.info("목표 운동 칼로리 업데이트 성공 : "+success);
+		return success;
+	}
 }
