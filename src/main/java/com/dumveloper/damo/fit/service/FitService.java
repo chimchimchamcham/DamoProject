@@ -257,4 +257,35 @@ public class FitService {
 		return mav;
 	}
 
+	public ModelAndView fitDetail(String k_no) {
+		ModelAndView mav = new ModelAndView();		
+		fitdao.upView(k_no);
+		DamoDTO dto = fitdao.fitDetail(k_no);		
+		mav.addObject("bean", dto);
+		
+		//질문 사진과 링크 불러오기
+		ArrayList<DamoDTO> photoList = fitdao.fitImgLinkList(k_no,"Y");
+		logger.info("photoList : {}",photoList);
+		mav.addObject("qPhoto", photoList);
+		
+		if(dto.getK_replyCnt() > 0) {
+			logger.info("답변 상세보기");
+			ArrayList<DamoDTO> list = fitdao.fitAnsDetail(k_no);		
+			mav.addObject("answer", list);
+			
+			//답변 사진과 링크 불러오기
+			for (DamoDTO ansArr : list) {
+				photoList.clear();
+				photoList = fitdao.fitImgLinkList(ansArr.getkR_no(),"N");
+				logger.info(ansArr.getkR_no()+"photoList : {}",photoList);
+				mav.addObject("aPhoto", photoList);
+			}
+		}		
+		
+		String page = "fit/fitDetail";
+		mav.setViewName(page);	
+		
+		return mav;
+	}
+
 }
