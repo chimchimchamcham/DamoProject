@@ -75,7 +75,7 @@ public class DiaryService {
 		return success;
 	}
 
-<<<<<<< HEAD
+
 	public int eatTarKcalUpdate(String d_no, String content) {
 		int success = dao.eatTarKcalUpdate(d_no,content);
 		logger.info("목표 섭취 칼로리 업데이트 성공 : "+success);
@@ -86,7 +86,8 @@ public class DiaryService {
 		int success = dao.exeTarKcalUpdate(d_no,content);
 		logger.info("목표 운동 칼로리 업데이트 성공 : "+success);
 		return success;
-=======
+	}
+		
 	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
 		HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
 		ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
@@ -99,6 +100,5 @@ public class DiaryService {
 		logger.info("검색결과수:{}",list.size());
 		map.put("resultList", list);
 		return map;
->>>>>>> 0a092da62862a0de590080ee806b100b26ac9e28
 	}
 }

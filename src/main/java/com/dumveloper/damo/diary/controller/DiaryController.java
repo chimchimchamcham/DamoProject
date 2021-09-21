@@ -52,7 +52,6 @@ public class DiaryController {
 		return service.weightUpdate(d_no,content);
 	 }
 	 
-<<<<<<< HEAD
 	 @RequestMapping(value="/eatTarKcalUpdate") 
 	 public @ResponseBody int eatTarKcalUpdate(@RequestParam String d_no,@RequestParam String content) {
 		 logger.info("목표 섭취 칼로리 업데이트 "+"/"+d_no+"/ 칼로리 :"+content);
@@ -65,11 +64,10 @@ public class DiaryController {
 		return service.exeTarKcalUpdate(d_no,content);
 	 }
 
-=======
 	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
 	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
 		 logger.info("검색요청");
 		 return service.searchList(selectMenu,searchInsert);
 	 }
->>>>>>> 0a092da62862a0de590080ee806b100b26ac9e28
+
 }
