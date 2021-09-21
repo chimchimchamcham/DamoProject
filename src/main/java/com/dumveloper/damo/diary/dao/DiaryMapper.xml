@@ -36,7 +36,6 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	UPDATE diary SET d_weight = #{param2} WHERE d_no = #{param1}
 </update>
 
-<<<<<<< HEAD
 <update id="eatTarKcalUpdate" parameterType="String">
 	UPDATE diary SET d_tarKcal = #{param2} WHERE d_no = #{param1}
 </update>
@@ -45,7 +44,6 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	UPDATE diary SET d_tarExe = #{param2} WHERE d_no = #{param1}
 </update>
 
-=======
 <select id="searchFood" resultType="damo">
 	SELECT FOOD_NAME, FOOD_WEIGHT, FOOD_CALORIE, FOOD_CARBO, FOOD_PROTEIN, FOOD_FAT FROM FOODLIST WHERE REPLACE(FOOD_NAME,' ','') LIKE '%'||#{param1}||'%'
 </select>
@@ -53,5 +51,5 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 <select id="searchExe" resultType="damo">
 	SELECT MET_NAME, MET FROM MET WHERE REPLACE(MET_NAME,' ','') LIKE '%'||#{param1}||'%'
 </select>
->>>>>>> 0a092da62862a0de590080ee806b100b26ac9e28
+
 </mapper>

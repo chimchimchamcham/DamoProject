@@ -521,6 +521,8 @@ a:hover {
 			document.getElementById("fatPercent").style.width = fatPercent+'%';
 
 			d_no = data.dto.d_no;
+			
+			myChart.update();
 		},
 		error : function(e) {
 			console.log(e);
@@ -530,7 +532,6 @@ a:hover {
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)
-
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
 		value : tarKcalPercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
