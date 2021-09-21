@@ -1,6 +1,7 @@
 package com.dumveloper.damo.diary.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -74,6 +75,7 @@ public class DiaryService {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public int eatTarKcalUpdate(String d_no, String content) {
 		int success = dao.eatTarKcalUpdate(d_no,content);
 		logger.info("목표 섭취 칼로리 업데이트 성공 : "+success);
@@ -84,5 +86,19 @@ public class DiaryService {
 		int success = dao.exeTarKcalUpdate(d_no,content);
 		logger.info("목표 운동 칼로리 업데이트 성공 : "+success);
 		return success;
+=======
+	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
+		HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
+		ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
+		logger.info("테이블 명 : {}, 검색 내용:{}",selectMenu,searchInsert);
+		if(selectMenu.equals("foodlist")) {//음식 검색
+			list = dao.searchFood(searchInsert);
+		}else if(selectMenu.equals("met")) {//운동 검색
+		    list = dao.searchExe(searchInsert);
+		}
+		logger.info("검색결과수:{}",list.size());
+		map.put("resultList", list);
+		return map;
+>>>>>>> 0a092da62862a0de590080ee806b100b26ac9e28
 	}
 }

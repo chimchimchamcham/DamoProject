@@ -1,17 +1,20 @@
 package com.dumveloper.damo.diary.controller;	
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dumveloper.damo.diary.service.DiaryService;
+import com.dumveloper.damo.dto.DamoDTO;
 
 @Controller
 public class DiaryController {
@@ -49,6 +52,7 @@ public class DiaryController {
 		return service.weightUpdate(d_no,content);
 	 }
 	 
+<<<<<<< HEAD
 	 @RequestMapping(value="/eatTarKcalUpdate") 
 	 public @ResponseBody int eatTarKcalUpdate(@RequestParam String d_no,@RequestParam String content) {
 		 logger.info("목표 섭취 칼로리 업데이트 "+"/"+d_no+"/ 칼로리 :"+content);
@@ -61,4 +65,11 @@ public class DiaryController {
 		return service.exeTarKcalUpdate(d_no,content);
 	 }
 
+=======
+	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
+	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
+		 logger.info("검색요청");
+		 return service.searchList(selectMenu,searchInsert);
+	 }
+>>>>>>> 0a092da62862a0de590080ee806b100b26ac9e28
 }
