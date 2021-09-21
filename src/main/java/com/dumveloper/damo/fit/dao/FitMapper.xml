@@ -85,4 +85,5 @@
 		    ORDER BY U.u_choosecnt DESC, anscnt DESC)
 		WHERE rnum BETWEEN 1 AND 10    
 	</select>
+	
 </mapper>
