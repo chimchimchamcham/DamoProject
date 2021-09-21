@@ -259,7 +259,15 @@ $(document).on('click',".notifybody tr",function(){
 	     	content +=  "<div class='col-12 row text-left'>";
   	    	content +=   "<div class='col-2 m-1 mb-3 text-left'>신고번호 </div><div class='col-1 mb-3 m-1'>"+list[0].n_no+"</div>";
   	    	content +=   "<div class='col-2 m-1 mb-3 text-center'>신고 글 번호</div><a href="+list[0].n_notifiedno+" class='noifyno col-1 mb-3 m-1 text-center'>"+list[0].n_notifiedno+"</a>";
-  	    	content +=   "<div class='col-2 m-1 mb-3 text-right'>신고날짜</div><div class='col-3 mb-3 m-1 text-right'>"+list[0].n_dt+"</div>";
+  	    	
+	  	      var date = new Date(list[0].n_dt);//등록날짜
+	
+		      let startyear = date.getFullYear();
+		      let startmonth = date.getMonth();
+		      let startday = date.getDate();
+		      let notifyday = startyear+"/"+(startmonth+1)+"/"+startday;
+  	    	
+  	    	content +=   "<div class='col-2 m-1 mb-3 text-right'>신고날짜</div><div class='col-3 mb-3 m-1 text-right'>"+notifyday+"</div>";
   	    	content +=   "<div class='col-2 my-3 m-1 text-left'>대분류 코드 </div> <div class='col-4 my-3 m-1'>"+list[0].n1_name+"</div>";
   	    	content +=   "<div class='col-2 my-3 m-1 text-left'>중분류 코드</div> <div class='col-2 my-3 m-1'>"+list[0].n2_name+"</div>";
   	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고받은 아이디</div> <div id="+list[0].n_receiveid+" class='receid col-4 mt-3 m-1'>"+list[0].n_receiveid+"</div>";
