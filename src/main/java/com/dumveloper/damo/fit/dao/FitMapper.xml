@@ -75,7 +75,8 @@
 	</delete>
 	
 	<select id="fitRanking" resultType="damo">
-		SELECT u_id, u_nick, u_filename, u_choosecnt, anscnt
+		SELECT u_id, u_nick, u_filename, u_choosecnt, anscnt,
+			(SELECT g_filename FROM GRADE WHERE u_choosecnt BETWEEN g_standard  AND g_maxstandard ) g_filename
 		FROM (
 		    SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
 		          U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
@@ -86,4 +87,15 @@
 		WHERE rnum BETWEEN 1 AND 10    
 	</select>
 	
+	<select id="myRanking" resultType="int">
+		SELECT rnum
+		FROM (
+		    SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
+		          U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
+		    FROM (SELECT u_id, u_nick, u_filename, u_choosecnt FROM userinfo) U,
+		         (SELECT u_id, count(*) anscnt FROM knowFit_R GROUP BY u_id) K
+		    WHERE U.u_id = K.u_id(+)
+		    ORDER BY U.u_choosecnt DESC, anscnt DESC)
+		WHERE U_ID = #{param1}
+	</select>
 </mapper>

@@ -143,11 +143,11 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/fitRanking", method = RequestMethod.GET)
-	public ModelAndView fitRanking() {
+	public ModelAndView fitRanking(HttpSession session) {
 
 		logger.info("지식핏 명예의 전당 접속");
 		
-		return fitservice.fitRanking();
+		return fitservice.fitRanking(session);
 	}
 
 }

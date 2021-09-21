@@ -30,4 +30,6 @@ public interface FitDAO {
 
 	ArrayList<DamoDTO> fitRanking();
 
+	int myRanking(String id);
+
 }
