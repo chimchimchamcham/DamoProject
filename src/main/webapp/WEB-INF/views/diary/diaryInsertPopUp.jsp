@@ -206,11 +206,18 @@ $('select[name=selectAdd]').change(function(){
 
 
 var reqUrl = 'searchList/';
+var searchInsert = '';
+
 $("#goSearch").click(function(){
 	$("#search_list").show();
 	
 	console.log("선택된 메뉴:",selectMenu);
-	reqUrl +=selectMenu;
+	console.log($("input[name=search_insert]").val()); //검색내용
+	
+	reqUrl +=selectMenu+"/";
+	searchInsert = $("input[name=search_insert]").val(); //검색 분류
+	reqUrl += searchInsert;
+	console.log("요청url: ",reqUrl);
 	
 	$.ajax({
     	url:reqUrl,

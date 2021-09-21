@@ -75,14 +75,16 @@ public class DiaryService {
 		return success;
 	}
 
-	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu) {
+	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
 		HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
 		ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
+		logger.info("테이블 명 : {}, 검색 내용:{}",selectMenu,searchInsert);
 		if(selectMenu.equals("foodlist")) {//음식 검색
-			list = dao.searchFood(selectMenu);
+			list = dao.searchFood(searchInsert);
 		}else if(selectMenu.equals("met")) {//운동 검색
-		    list = dao.searchExe(selectMenu);
+		    list = dao.searchExe(searchInsert);
 		}
+		logger.info("검색결과수:{}",list.size());
 		map.put("resultList", list);
 		return map;
 	}

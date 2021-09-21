@@ -52,10 +52,9 @@ public class DiaryController {
 		return service.weightUpdate(d_no,content);
 	 }
 	 
-	 @RequestMapping(value="/searchList/{selectMenu}")
-	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu){
+	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
+	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
 		 logger.info("검색요청");
-		 HashMap<String,ArrayList<DamoDTO>> map = service.searchList(selectMenu);
-		 return map;
+		 return service.searchList(selectMenu,searchInsert);
 	 }
 }
