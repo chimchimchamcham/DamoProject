@@ -454,6 +454,10 @@ a:hover {
 	
 	var d_no;
 
+	
+	var tarKcalPercent;
+	var tarExePercent;
+	
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
 		type : 'get',
@@ -481,9 +485,13 @@ a:hover {
 			document.getElementById("d_tarExe").value = d_tarExe;
 			
 			//목표 섭취,운동 달성률 계산
-			d_tarKcalPercent = (data.dto.d_resultEat/data.dto.d_tarKcal)*100;
-			d_tarExePercent = (data.dto.d_resultExe/data.dto.d_tarExe)*100;
+			d_tarKcalPercent = Math.floor((data.dto.d_resultEat/data.dto.d_tarKcal)*100);
+			d_tarExePercent = Math.floor((data.dto.d_resultExe/data.dto.d_tarExe)*100);
 			console.log("섭취 칼로리 달성률: ",d_tarKcalPercent,"운동 칼로리 달성률 : ",d_tarExePercent);
+			
+			tarKcalPercent = (data.dto.d_resultEat/data.dto.d_tarKcal);
+			tarExePercent = (data.dto.d_resultExe/data.dto.d_tarExe);
+			console.log("섭취 칼로리 달성률: ",tarKcalPercent,"률 : ",tarExePercent);
 			
 			//메모 뿌려주기
 			document.getElementById("memoContent").value = data.dto.d_memo;
@@ -500,15 +508,15 @@ a:hover {
 			
 			//탄단지 섭취 비율 계산 (밸런스)
 			//탄수화물
-			carboPercent = JSON.parse((data.dto.d_resultCarbo/data.dto.d_carbo)*100);
+			carboPercent = JSON.parse(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
 			document.getElementById("carboPercent").innerText = carboPercent+'%';
 			document.getElementById("carboPercent").style.width = carboPercent+'%';
 			//단백질
-			proteinPercent = JSON.parse((data.dto.d_resultProtein/data.dto.d_protein)*100);
+			proteinPercent = JSON.parse(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
 			document.getElementById("proteinPercent").innerText = proteinPercent+'%';
 			document.getElementById("proteinPercent").style.width = proteinPercent+'%';
 			//지방
-			fatPercent = JSON.parse((data.dto.d_resultFat/data.dto.d_fat)*100);
+			fatPercent = JSON.parse(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
 			document.getElementById("fatPercent").innerText = fatPercent+'%';
 			document.getElementById("fatPercent").style.width = fatPercent+'%';
 
@@ -522,8 +530,9 @@ a:hover {
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)
+
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : d_tarKcalPercent*0.01,  //진행된 수를 넣어주세요. 1이 100기준입니다.
+		value : tarKcalPercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
@@ -536,7 +545,7 @@ a:hover {
 	
 	//목표 섭취 달성 실패
 	$('.circle1_2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : d_tarKcalPercent*0.01, //진행된 수를 넣어주세요. 1이 100기준입니다.
+		value : tarKcalPercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
@@ -558,7 +567,7 @@ a:hover {
 	/*==목표 운동 그래프==*/
 	//초기 값(실패)
 	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : d_tarExePercent*0.01, //진행된 수를 넣어주세요. 1이 100기준입니다.
+		value : tarExePercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
@@ -571,7 +580,7 @@ a:hover {
 	
 	//초기 값(성공)
 	$('.circle2_2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : d_tarExePercent*0.01,  //진행된 수를 넣어주세요. 1이 100기준입니다.
+		value : tarExePercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
 		startAngle : 1.5 * 3.14,
 		fill : {
