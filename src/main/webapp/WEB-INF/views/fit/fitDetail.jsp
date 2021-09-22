@@ -234,7 +234,7 @@
 					<!-- 답변 내용 -->
 					<div class="aContent ">${ans.kR_content }</div>
 					<br>
-					<div class="aPhoto">${ans.kR_no }
+					<div class="aPhoto">
 						<c:forEach items="${ aPhoto}" var="photo">
 							<c:if
 								test="${ans.kR_no eq photo.ki_no &&  photo.ki_imgYN eq 'Y'}">
@@ -243,9 +243,10 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<div id="qVideo">
+					<div id="aVideo">
 						<c:forEach items="${aPhoto }" var="link">
 							<c:if test="${ans.kR_no eq photo.ki_no && link.ki_imgYN eq 'N' }">
+							${link.ki_name }
 								<iframe id="video"
 									src="https://www.youtube.com/embed/${link.ki_name }"
 									title="YouTube video player" frameborder="0"
@@ -254,8 +255,10 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<div>${ans.kR_date }</div>
-					<button type="button" class="btn btn-primary float-right ml-3 mt-1">댓글</button>
+					<div>${ans.kR_date }
+						<button type="button"
+							class="btn btn-primary float-right ml-3 mt-1">댓글</button>
+					</div>
 				</div>
 			</c:if>
 			<!-- 채택되지 않은 답변들 -->
@@ -271,7 +274,7 @@
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<button type="button" class="btn btn-primary" name="${ans.kR_no}"
-								onclick="selectAns(this)">채택하기</button>
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'">채택하기</button>
 						</c:if>
 
 						<c:if test="${ans.u_id ne sessionId}">
@@ -600,9 +603,11 @@ a.notify, a.del {
 			$("#goAnsForm").css({
 				"display" : "none"
 			});
-		}else if (flag == 'change') {
+		} else if (flag == 'change') {
 			/* $("#goAnsForm h3").html("답변을 채택해 주세요!"); */
-			$("#title").html('<h3 class="titleTxt">'+loginNick+'님, 답변을 채택해 주세요!</h3>답변 채택 부탁드립니다!');
+			$("#title").html(
+					'<h3 class="titleTxt">' + loginNick
+							+ '님, 답변을 채택해 주세요!</h3>답변 채택 부탁드립니다!');
 			$("#right").css({
 				"display" : "none"
 			});
@@ -775,18 +780,15 @@ a.notify, a.del {
 	});
 
 	//모달 닫기 버튼 클릭시 링크에 있는 주소 일부를 추출해서 iframe으로 만들어 주기
-	$("#checkBtn")
-			.on(
-					"click",
-					function() {
-						var url = $("#link").val();
-						console.log(url);
+	$("#checkBtn").on("click",	function() {
+		var url = $("#link").val();
+		console.log(url);
 
 						if (url == '') {
 							$("#movieWrap").empty();
 							$("#iframeUrl").val('');
 						} else {
-							url = url.split('=')[1].split('&')[0]
+							url = url.split('embed/')[1].split('"')[0];
 
 							var content = "";
 							content += '<div class="iframeWrap">';
