@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +77,7 @@ public class DiaryService {
 		return success;
 	}
 
-	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert) {
+	public HashMap<String,ArrayList<DamoDTO>> searchList(String selectMenu,String searchInsert,String id) {
 		HashMap<String,ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
 		ArrayList<DamoDTO>list = new ArrayList<DamoDTO>();
 		logger.info("테이블 명 : {}, 검색 내용:{}",selectMenu,searchInsert);
