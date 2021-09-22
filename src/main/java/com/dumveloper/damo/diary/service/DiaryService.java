@@ -114,10 +114,32 @@ public class DiaryService {
 	}
 
 	public HashMap<String,String> submitList(Map<String, String> param) {
+		
+		DamoDTO dto = new DamoDTO();
+		
+		//음식등록
 		if(param.get("selectMenu").equals("foodlist")){
+			String hd_no = param.get("hd_no");
+			String hd_code = param.get("hd_code");
+			String hd_eat = param.get("hd_eat");
+			String hd_foodName = param.get("hd_foodname");
 			
+			String hd_carbo = param.get("hd_carbo");
+			String hd_protein = param.get("hd_protein");
+			String hd_fat = param.get("hd_fat");
+			String hd_kcal = param.get("hd_kcal");
+			
+			System.out.println("음식 등록 - 일기번호 : "+hd_no+" / 등록 코드 : "+hd_code+" / 먹은 양 : "+hd_eat+" / 음식 이름 : "+hd_foodName);
+			System.out.println("탄수화물량 : "+hd_carbo+" / 단백질량 : "+hd_protein+" / 지방량 : "+hd_fat+" / 열량 : "+hd_kcal);
+		
+		//운동 등록 
 		}else if(param.get("selectMenu").equals("met")) {
-			
+			String he_no = param.get("he_no");
+			String he_time = param.get("he_time");
+			String he_kcal = param.get("he_kcal");
+			String met_name = param.get("met_name");
+			System.out.println("운동 등록-일기번호 :"+he_no+" / 운동 시간 :"+he_time+" / 운동 소모 칼로리 : "+he_kcal+" / 운동 이름 :"+met_name);
+		
 		}
 		
 		return null;
