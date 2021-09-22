@@ -55,7 +55,8 @@ public class DamoDTO {
 	private String d_code; //분류 코드
 	
 	//체크리스트
-	private int ch_no; //체크리스트 번호
+	private int ch_no; //체크리스트 고유 번호
+	private int cd_no; //체크리스트 글 번호
 	private String cd_content; //체크리스트 내용
 	private String cd_checkYN; //체크 여부
 	
@@ -739,6 +740,12 @@ public class DamoDTO {
 	}
 	public void setCd_checkYN(String cd_checkYN) {
 		this.cd_checkYN = cd_checkYN;
+	}
+	public int getCd_no() {
+		return cd_no;
+	}
+	public void setCd_no(int cd_no) {
+		this.cd_no = cd_no;
 	}
 	public String getHd_no() {
 		return hd_no;

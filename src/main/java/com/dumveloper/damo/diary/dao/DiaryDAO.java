@@ -26,9 +26,11 @@ public interface DiaryDAO {
 
 	ArrayList<DamoDTO> searchExe(String searchInsert);//운동 검색 결과
 
-	int checkList(String d_no, String content); //체크리스트 추가
+	int checkList(DamoDTO dto); //체크리스트 추가
 
-	int checkList(DamoDTO dto);
+	ArrayList<DamoDTO> checklistDetail(String date, String id);//체크리스트 목록 뿌리기
+
+	int checkDel(String ch_no); //체크리스트 삭제
 
 
 }

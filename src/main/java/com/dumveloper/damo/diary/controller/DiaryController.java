@@ -77,7 +77,7 @@ public class DiaryController {
 	 }
 	 
 	 @RequestMapping(value="/checkList") 
-	 public @ResponseBody int checkList(@RequestParam int d_no,@RequestParam String content) {
+	 public @ResponseBody HashMap<String, Object> checkList(@RequestParam int d_no,@RequestParam String content) {
 		 logger.info("체크리스트 추가 "+"/"+d_no+"/ 내용 :"+content);
 		return service.checkList(d_no,content);
 	 }
@@ -89,6 +89,12 @@ public class DiaryController {
 		 return service.searchList(selectMenu,searchInsert,id);
 	 }
 	 
+	 @RequestMapping(value="/checkDel/{ch_no}")
+		public ModelAndView checkDel(@PathVariable String ch_no) {
+			logger.info("체크리스트 삭제 요청 : "+ch_no);
+			return service.checkDel(ch_no);
+		}
+
 	 @RequestMapping(value="/submitList")
 	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){
 		 logger.info("일기 항목 추가 요청");
@@ -97,7 +103,6 @@ public class DiaryController {
 		 service.submitList(param);
 		 return null;
 	 }
-	 
 	 
 
 }

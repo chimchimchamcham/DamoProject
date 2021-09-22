@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.CDATASection;
 
 import com.dumveloper.damo.diary.dao.DiaryDAO;
 import com.dumveloper.damo.dto.DamoDTO;
@@ -30,7 +32,8 @@ public class DiaryService {
 		logger.info("일기 상세보기" + date + "/" + id);
 
 		// 일기 값 불러오기
-		DamoDTO dto = dao.diaryDetail(date, id);
+		DamoDTO dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
+		ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
 		logger.info("dto : {}" + dto + "/ date : " + date + "/ id: " + id);
 
 		// diary 테이블에 값이 없을 경우(캘린더 값 가져오고 diary에 인서트)
@@ -63,6 +66,7 @@ public class DiaryService {
 		}
 
 		map.put("dto", dto);
+		map.put("ch_noList", ch_noList);
 		return map;
 	}
 
@@ -104,13 +108,24 @@ public class DiaryService {
 		return map;
 	}
 
-	public int checkList(int d_no, String content) {
+	public HashMap<String, Object> checkList(int d_no, String content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		DamoDTO dto = new DamoDTO();
-		dto.setD_no(d_no);
-		
-		int success = dao.checkList(dto);
-		logger.info("체크리스트 추가 성공 : "+success);
-		return success;
+		dto.setCd_no(d_no);
+		dto.setCd_content(content);
+		if(dao.checkList(dto)>0) {	
+			map.put("dto", dto);
+			logger.info("no check : "+dto.getCh_no());
+		}
+		return map;
+	}
+
+	public ModelAndView checkDel(String ch_no) {
+		int sucess = dao.checkDel(ch_no);
+		logger.info("체크리스트 삭제 : "+sucess);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/goDiary");
+		return mav;
 	}
 
 	public HashMap<String,String> submitList(Map<String, String> param) {
