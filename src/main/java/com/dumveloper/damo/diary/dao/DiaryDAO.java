@@ -28,5 +28,7 @@ public interface DiaryDAO {
 
 	int checkList(String d_no, String content); //체크리스트 추가
 
+	int checkList(DamoDTO dto);
+
 
 }

@@ -103,7 +103,6 @@ public class DiaryService {
 	public int checkList(int d_no, String content) {
 		DamoDTO dto = new DamoDTO();
 		dto.setD_no(d_no);
-		dto.set
 		
 		int success = dao.checkList(dto);
 		logger.info("체크리스트 추가 성공 : "+success);
