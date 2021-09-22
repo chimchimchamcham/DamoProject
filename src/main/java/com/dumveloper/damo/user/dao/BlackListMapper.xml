@@ -6,4 +6,10 @@
 >
 
 <mapper namespace="com.dumveloper.damo.user.dao.BlackListDAO">
+
+	<insert id="dbregister">
+		insert into blacklist VALUES(B_NO_SEQ.NEXTVAL,#{param1},#{param2},SYSDATE,TO_DATE(#{param3},'yy/mm/dd'),#{param4},#{param5})
+	</insert>
+
+
 </mapper>
