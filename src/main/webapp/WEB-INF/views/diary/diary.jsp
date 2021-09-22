@@ -360,7 +360,22 @@ a:hover {
 		 if(CheckContent.val() != null || CheckContent.val() != ''){
 		 		alert("체크리스트 추가");
 				console.log('체크리스트 insert 요청');
-				update(CheckContent);
+				$.ajax({
+					url : "checkList",
+					type : 'get',
+					dataType : 'json',
+					data : {
+						'd_no' : d_no,
+						'content' : obj.val()
+					},
+					success : function(data) {
+						console.log("체크리스트 추가 성공 여부 : " + data.dto);
+						console.log("체크리스트 추가 성공 여부 : " + data.dto);
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
 		 }else{
 			 alert("체크리스트 내용을 적어주세요.");
 		 }
@@ -379,8 +394,6 @@ a:hover {
 			url = 'eatTarKcalUpdate';
 		}else if (obj.attr('id') == 'd_tarExe') { //목표 운동 칼로리 업데이트
 			url = 'exeTarKcalUpdate';
-		}else if (obj.attr('id') == 'checkList') { //체크리스트 추가
-			url = 'checkList';
 		}
 		
 

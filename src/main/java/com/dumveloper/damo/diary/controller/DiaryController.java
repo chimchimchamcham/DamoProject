@@ -65,7 +65,7 @@ public class DiaryController {
 	 }
 	 
 	 @RequestMapping(value="/checkList") 
-	 public @ResponseBody int checkList(@RequestParam int d_no,@RequestParam String content) {
+	 public @ResponseBody HashMap<String, Object> checkList(@RequestParam int d_no,@RequestParam String content) {
 		 logger.info("체크리스트 추가 "+"/"+d_no+"/ 내용 :"+content);
 		return service.checkList(d_no,content);
 	 }

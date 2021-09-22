@@ -100,12 +100,10 @@ public class DiaryService {
 		return map;
 	}
 
-	public int checkList(int d_no, String content) {
-		DamoDTO dto = new DamoDTO();
-		dto.setD_no(d_no);
-		
-		int success = dao.checkList(dto);
-		logger.info("체크리스트 추가 성공 : "+success);
-		return success;
+	public HashMap<String, Object> checkList(int d_no, String content) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		DamoDTO dto = dao.checkList(d_no,content);
+		map.put("dto", dto);
+		return map;
 	}
 }
