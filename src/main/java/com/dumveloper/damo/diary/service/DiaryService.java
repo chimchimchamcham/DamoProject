@@ -102,4 +102,13 @@ public class DiaryService {
 		map.put("resultList", list);
 		return map;
 	}
+
+	public int checkList(int d_no, String content) {
+		DamoDTO dto = new DamoDTO();
+		dto.setD_no(d_no);
+		
+		int success = dao.checkList(dto);
+		logger.info("체크리스트 추가 성공 : "+success);
+		return success;
+	}
 }
