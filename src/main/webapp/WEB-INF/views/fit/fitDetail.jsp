@@ -589,7 +589,7 @@ a.notify, a.del {
 	function hideAnsForm() {
 		console.log(flag);
 		//console.log(typeof(flag));
-		if (flag=='true') {
+		if (flag == 'true') {
 			$("#goAnsForm").css({
 				"display" : "none"
 			});
@@ -608,17 +608,17 @@ a.notify, a.del {
 			"display" : "none"
 		});
 
-		if (flag=='true') {//답변글 수정을 눌렀을 경우			
+		if (flag == 'true') {//답변글 수정을 눌렀을 경우			
 			$("#right")
 					.append(
-							'<button type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansUpdate()">답변수정</button>');
+							'<button id="submit" type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansUpdate()">답변수정</button>');
 			$("#right")
 					.append(
 							'<button type="button" class="btn ans btn-outline-primary float-right ml-3 mt-1" onclick="closeAnsForm()">수정취소</button>');
 		} else {//답변하기를 눌렀을 경우
 			$("#right")
 					.append(
-							'<button type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansWrite()">답변등록</button>');
+							'<button id="submit" type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansWrite()">답변등록</button>');
 			$("#right")
 					.append(
 							'<button type="button" class="btn ans btn-outline-primary float-right ml-3 mt-1" onclick="closeAnsForm()">등록취소</button>');
@@ -632,7 +632,7 @@ a.notify, a.del {
 
 	//취소 버튼을 눌렀을 경우
 	function closeAnsForm() {
-		if (flag=='true') {//수정취소
+		if (flag == 'true') {//수정취소
 			hideAnsForm();//답변해주세요 숨기기
 			myAnswer.css({
 				"display" : "block"
@@ -649,14 +649,18 @@ a.notify, a.del {
 	}
 
 	function ansUpdate() {
-		formName.action = "fitAnsUpdate?kr_no=" + ansNo + "&k_no=" + kNo;
-		formName.method = "post";
-		formName.enctype = "multipart/form-data"
-		formName.submit();
+		if (chkForm()) {
+			formName.action = "fitAnsUpdate?kr_no=" + ansNo + "&k_no=" + kNo;
+			formName.method = "post";
+			formName.enctype = "multipart/form-data"
+			formName.submit();
+		}
 	}
 
 	function ansWrite() {
-		$("form").submit();
+		if (chkForm()) {
+			$("form").submit();
+		}
 	}
 
 	//답변 채택하기
@@ -873,8 +877,8 @@ a.notify, a.del {
 
 					});
 
-	//글등록 전 처리
-	$("#submit").click(function() {
+	//글 등록 전 처리
+	function chkForm() {
 		if ($("#k_content").val() == "") {
 			alert("내용을 입력하세요");
 			return false;
@@ -884,7 +888,8 @@ a.notify, a.del {
 		}
 
 		//빈 칸이 없으면 글쓰기 등록
-	});
+		return true;
+	};
 
 	//이미지가 있냐 없냐에 따라 아이콘의 색을 변경 (1장 이상이면 초록, 없으면 검정)
 	function changeImgIcon() {
