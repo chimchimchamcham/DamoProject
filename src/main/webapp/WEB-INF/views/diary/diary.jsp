@@ -168,11 +168,13 @@ a:hover {
 		<div class="container my-5">
 
 			<div class="row mb-5">
+				<a href="" style="">
 					<button type="button" class="btn btn-primary btn-sm "
-						style="width: 33px; height: 33px;" id="addDiaryList">
+						style="width: 33px; height: 33px;">
 						<i class="fas fa-plus"></i>
 					</button> <span style="font-size: 18px; font-weight: bold" class="pl-1">
 						추가하기</span>
+				</a>
 			</div>
 
 			<h3>섭취</h3>
@@ -354,11 +356,10 @@ a:hover {
 
 	var ch_no;
 	//체크박스 추가 시
-	 $("#checklistBtn").on("click",function(){
+	$("#checklistBtn").on("click",function(){
 		 var CheckContent = $("input[name='checkList']");
 		 console.log("체크리스트",CheckContent);
 		 if(CheckContent.val() != null || CheckContent.val() != ''){
-		 		alert("체크리스트 추가");
 				console.log('체크리스트 insert 요청');
 				$.ajax({
 					url : 'checkList',
@@ -371,12 +372,14 @@ a:hover {
 					success : function(data) {
 						console.log("체크리스트 추가 성공 여부 : " + data.dto);
 						console.log("체크리스트 번호: " + data.dto.ch_no);
-						ch_no = data.dto.ch_no;
-						$("#checkListBox").innerHtml(
-								"<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'><input type='checkbox' value='"+dto.ch_no+"' style='transform: scale(1.3);' name='checkbox'>"
-								+data.dto.cd_content+
-								"</label><a href='checkDel?ch_no="+dto.ch_no+"' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>"
-							)
+	
+						$("#checkListBox").append(
+								"<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'>"+
+								"<input type='checkbox' value='"+data.dto.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+data.dto.cd_content+"</label>"+
+								"<a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>"
+							) 
+
+						$("input[name='checkList']").val('');
 					},
 					error : function(error) {
 						console.log(error);
@@ -390,22 +393,34 @@ a:hover {
 		//체크리스트 삭제 시
 	 	$(document).on("click",".CheckDelBtn",function(){
 			console.log($(this).prev().children().first().val());
-			/* $.ajax({
-				url : url,
+			var delElement = $(this);
+			$.ajax({
+				url : 'checkDel',
 				type : 'get',
 				dataType : 'json',
 				data : {
 					'ch_no' : $(this).prev().children().first().val()
 				},
 				success : function(data) {
-					console.log("업데이트 성공 여부 : " + data);
+					console.log("체크리스트 삭제 성공 여부 : " + data);
+					if(data>0){
+						delElement.parent().remove();
+					}
+					
 				},
 				error : function(error) {
 					console.log(error);
 				}
-			}); */
+			});
 		});
 	
+	 	/*체크박스 체크 시*/
+		 if($('input:checkbox[name="checkbox"]').is(":checked") ==  true){
+		 	
+		 }else{
+			 
+		 }
+		 
 	//값 업데이트 메서드
 	function update(obj) {
 		console.log("update 값 : " + obj.attr('id') + "/" + obj.val());
@@ -512,10 +527,6 @@ a:hover {
 	var tarKcalPercent;
 	var tarExePercent;
 	
-	/* 일기 목록 추가시 필요한 데이터 : 몸무게*/
-	var u_weight; 
-	/*--------------------------------------*/
-	
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
 		type : 'get',
@@ -528,7 +539,7 @@ a:hover {
 		success : function(data) {
 			console.log("성공");
 			console.log(data.dto);
-			console.log(data.ch_noList[1].ch_no);
+			/* console.log(data.ch_noList[1].ch_no); */
 			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
 			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
 			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리
@@ -541,8 +552,6 @@ a:hover {
 			document.getElementById("d_weight").value = data.dto.d_weight;
 			document.getElementById("d_tarKcal").value = d_tarKcal;
 			document.getElementById("d_tarExe").value = d_tarExe;
-			
-			u_weight = data.dto.d_weight;
 			
 			//목표 섭취,운동 달성률 계산
 			d_tarKcalPercent = Math.floor((data.dto.d_resultEat/data.dto.d_tarKcal)*100);
@@ -582,7 +591,6 @@ a:hover {
 
 			d_no = data.dto.d_no;
 			
-<<<<<<< HEAD
 			//체크리스트 뿌리기
 			var ch_noList = data.ch_noList;
 			var checkContent = '';
@@ -590,19 +598,15 @@ a:hover {
 				console.log(element);
 				checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'>";
 				checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+element.cd_content+"</label>";
-				checkContent += "<button type='button' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></button></div>";
+				checkContent += "<a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>";
 			});
 			$("#checkListBox").html(checkContent);
 			
-			
-=======
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 		},
 		error : function(e) {
 			console.log(e);
 		}
 	});
-
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)
@@ -704,11 +708,7 @@ a:hover {
 		console.log(preDt);
 	}
 
-<<<<<<< HEAD
 	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
-=======
-
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 
 	/*다음날로 이동*/
 	function nextMonth() {
@@ -719,35 +719,6 @@ a:hover {
 		console.log(nextDt);
 	}
 
-	/*체크박스 추가 시*/
-
-	/*체크박스 체크 시*/
-	/*  $('input:checkbox[name="checkbox"]').is(":checked") ==  true{
-	 	type : 'get',
-		url : 'checkListUpdate',
-		data : {
-			'checkContent' : getType,
-
-		},
-		dataType : 'JSON',
-		success : function(data) {
-			console.log("체크여부 업데이트 성공");
-		},
-		error : function(e) {
-			console.log(e);
-		}
-	 } */
-	 
-	 /* 일기 추가 시 */
-	 $("#addDiaryList").click(function(){
-		 console.log("일기 항목 추가 팝업 열림");
-		 console.log("전달할 일기 번호 : ",d_no);
-		 console.log("전달할 내 몸무게 : ",u_weight);
-		 window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight, "일기 항목 추가하기", "width=570, height=380, left=700, top=400, resizable=no, scrollbars=no");  
-	 });
-	 
-	 
-	 
 </script>
 
 </html>

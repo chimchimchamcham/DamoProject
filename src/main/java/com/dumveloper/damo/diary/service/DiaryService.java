@@ -119,11 +119,9 @@ public class DiaryService {
 		return map;
 	}
 
-	public ModelAndView checkDel(String ch_no) {
+	public int checkDel(String ch_no) {
 		int sucess = dao.checkDel(ch_no);
 		logger.info("체크리스트 삭제 : "+sucess);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/goDiary");
-		return mav;
+		return sucess;
 	}
 }

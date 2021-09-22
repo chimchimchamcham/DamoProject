@@ -89,8 +89,8 @@ public class DiaryController {
 		 return service.searchList(selectMenu,searchInsert,id);
 	 }
 	 
-	 @RequestMapping(value="/checkDel/{ch_no}")
-		public ModelAndView checkDel(@PathVariable String ch_no) {
+	 @RequestMapping(value="/checkDel")
+		public @ResponseBody int checkDel(@RequestParam String ch_no) {
 			logger.info("체크리스트 삭제 요청 : "+ch_no);
 			return service.checkDel(ch_no);
 		}
