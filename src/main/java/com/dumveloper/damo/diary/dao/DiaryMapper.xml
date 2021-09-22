@@ -44,7 +44,6 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	UPDATE diary SET d_tarExe = #{param2} WHERE d_no = #{param1}
 </update>
 
-
 <select id="searchFood" resultType="damo">
 	SELECT FOOD_NAME, FOOD_WEIGHT, FOOD_CALORIE, FOOD_CARBO, FOOD_PROTEIN, FOOD_FAT FROM FOODLIST WHERE REPLACE(FOOD_NAME,' ','') LIKE '%'||#{param1}||'%'
 </select>
