@@ -26,8 +26,12 @@ public class DamoDTO {
 	private int u_chooseCnt; //채택 수
 	private String g_code; //등급 분류 코드
 	
-	private int anscnt; //답변수 cnt (명예의 전당에서 사용)
+	private int anscnt; //답변수 cnt (명예의 전당,마이페이지에서 사용)
+	private int fitcnt; //질문수 cnt (마이페이지에서 사용)
+	private int choosePct; //채택률 (마이페이지에서 사용)
+	private int ranking; //순위 (마이페이지에서 사용)
 	
+
 	//캘린더
 	private String c_id; //캘린더 사용자 아이디
 	private Date c_date; //등록날짜
@@ -162,6 +166,24 @@ public class DamoDTO {
 	private int he_kcal; //운동 소모 칼로리
 	//private String met_name;
 	
+	public int getFitcnt() {
+		return fitcnt;
+	}
+	public void setFitcnt(int fitcnt) {
+		this.fitcnt = fitcnt;
+	}
+	public int getChoosePct() {
+		return choosePct;
+	}
+	public void setChoosePct(int choosepct) {
+		this.choosePct = choosepct;
+	}
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
 	public int getB_no() {
 		return b_no;
 	}
