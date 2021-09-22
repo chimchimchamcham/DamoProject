@@ -582,7 +582,7 @@ a:hover {
 
 			d_no = data.dto.d_no;
 			
-<<<<<<< HEAD
+
 			//체크리스트 뿌리기
 			var ch_noList = data.ch_noList;
 			var checkContent = '';
@@ -595,8 +595,6 @@ a:hover {
 			$("#checkListBox").html(checkContent);
 			
 			
-=======
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 		},
 		error : function(e) {
 			console.log(e);
@@ -704,11 +702,7 @@ a:hover {
 		console.log(preDt);
 	}
 
-<<<<<<< HEAD
-	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
-=======
 
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 
 	/*다음날로 이동*/
 	function nextMonth() {

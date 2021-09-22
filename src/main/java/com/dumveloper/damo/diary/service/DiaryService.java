@@ -130,35 +130,59 @@ public class DiaryService {
 
 	public HashMap<String,String> submitList(Map<String, String> param) {
 		
+		HashMap<String, String> map = new HashMap<String,String>();
+		int success = 0;
 		DamoDTO dto = new DamoDTO();
-		
+		String checker="fail";
 		//음식등록
 		if(param.get("selectMenu").equals("foodlist")){
 			String hd_no = param.get("hd_no");
 			String hd_code = param.get("hd_code");
-			String hd_eat = param.get("hd_eat");
+			int hd_eat = Integer.parseInt(param.get("hd_eat"));
 			String hd_foodName = param.get("hd_foodname");
 			
-			String hd_carbo = param.get("hd_carbo");
-			String hd_protein = param.get("hd_protein");
-			String hd_fat = param.get("hd_fat");
-			String hd_kcal = param.get("hd_kcal");
+			int hd_carbo = (int) Double.parseDouble(param.get("hd_carbo"));
+			int hd_protein = (int) Double.parseDouble(param.get("hd_protein"));
+			int hd_fat = (int) Double.parseDouble(param.get("hd_fat"));
+			int hd_kcal = (int) Double.parseDouble(param.get("hd_kcal"));
 			
 			System.out.println("음식 등록 - 일기번호 : "+hd_no+" / 등록 코드 : "+hd_code+" / 먹은 양 : "+hd_eat+" / 음식 이름 : "+hd_foodName);
 			System.out.println("탄수화물량 : "+hd_carbo+" / 단백질량 : "+hd_protein+" / 지방량 : "+hd_fat+" / 열량 : "+hd_kcal);
-		
+			
+			dto.setHd_no(hd_no);
+			dto.setHd_code(hd_code);
+			dto.setHd_eat(hd_eat);
+			dto.setHd_foodName(hd_foodName);
+			
+			dto.setHd_carbo(hd_carbo);
+			dto.setHd_protein(hd_protein);
+			dto.setHd_fat(hd_fat);
+			dto.setHd_kcal(hd_kcal);
+			
+			success = dao.insertEat(dto);
+			
 		//운동 등록 
 		}else if(param.get("selectMenu").equals("met")) {
 			String he_no = param.get("he_no");
-			String he_time = param.get("he_time");
-			String he_kcal = param.get("he_kcal");
+			int he_time = Integer.parseInt(param.get("he_time"));
+			int he_kcal = (int) Double.parseDouble(param.get("he_kcal"));
 			String met_name = param.get("met_name");
+			
 			System.out.println("운동 등록-일기번호 :"+he_no+" / 운동 시간 :"+he_time+" / 운동 소모 칼로리 : "+he_kcal+" / 운동 이름 :"+met_name);
 		
+			dto.setHe_no(he_no);
+			dto.setHe_time(he_time);
+			dto.setHe_kcal(he_kcal);
+			dto.setMet_name(met_name);
+			success = dao.insertExe(dto);
 		}
 		
-		return null;
+		if(success>0) {
+			checker = "success";
+		}
 		
-		
+		map.put("success", checker);
+		return map;
+
 	}
 }

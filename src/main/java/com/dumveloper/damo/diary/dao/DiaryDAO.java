@@ -32,5 +32,9 @@ public interface DiaryDAO {
 
 	int checkDel(String ch_no); //체크리스트 삭제
 
+	int insertExe(DamoDTO dto);//운동 추가
+
+	int insertEat(DamoDTO dto);//음식 추가 
+
 
 }
