@@ -63,6 +63,12 @@ public class DiaryController {
 		 logger.info("목표 운동 칼로리 업데이트 "+"/"+d_no+"/ 칼로리 :"+content);
 		return service.exeTarKcalUpdate(d_no,content);
 	 }
+	 
+	 @RequestMapping(value="/checkList") 
+	 public @ResponseBody int checkList(@RequestParam String d_no,@RequestParam String content) {
+		 logger.info("체크리스트 추가 "+"/"+d_no+"/ 내용 :"+content);
+		return service.checkList(d_no,content);
+	 }
 
 	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
 	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){

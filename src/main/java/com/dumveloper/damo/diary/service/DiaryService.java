@@ -101,4 +101,10 @@ public class DiaryService {
 		map.put("resultList", list);
 		return map;
 	}
+
+	public int checkList(String d_no, String content) {
+		int success = dao.checkList(d_no,content);
+		logger.info("체크리스트 추가 성공 : "+success);
+		return success;
+	}
 }

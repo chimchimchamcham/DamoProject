@@ -47,6 +47,11 @@ a:hover {
 .progress-bar {
 	background: -webkit-linear-gradient(left, #0275d8 " 0%, #5bc0de 100%);
 }
+
+.checked{
+	text-decoration: line-through;
+	color:gray;
+}
 </style>
 </head>
 <body>
@@ -254,10 +259,10 @@ a:hover {
 		<hr />
 
 		<!-- 일기 메모 -->
-		<div class="container my-5">
+		<div class="container my-4">
 			<div class="form-group">
 				<h3>일기 메모</h3>
-				<textarea class="form-control m-auto" rows="10" id="memoContent"
+				<textarea class="form-control m-auto pt-4" rows="10" id="memoContent"
 					style="overflow-y: scroll; resize: none;"
 					placeholder="오늘의 일기를 적어보세요."></textarea>
 			</div>
@@ -283,10 +288,10 @@ a:hover {
 		<hr />
 
 		<!-- 체크 리스트 -->
-		<div class="container my-5">
+		<div class="container my-4">
 			<h3>체크 리스트</h3>
 			<form>
-				<div class="checkbox pl-5 pt-3 pr-5">
+				<div class="checkbox pl-5 pt-4 pr-5">
 					<label style="font-size: 18px;"><input type="checkbox"
 						value="" style="transform: scale(1.3);" name="checkbox"> 물
 						2L마시기</label>
@@ -296,18 +301,14 @@ a:hover {
 			<hr />
 
 			<div class="row m-auto">
-				<form class="form-inline " action="#"
-					class="circle_strong form-inline">
-					<button type="button" class="btn btn-primary btn-sm "
-						style="width: 33px; height: 33px;" id="fileBtn">
+				<form class="form-inline " action="#" class="circle_strong form-inline">
+					<button type="button" class="btn btn-primary btn-sm"
+						style="width: 33px; height: 33px;" id="checklistBtn">
 						<i class="fas fa-plus"></i>
 					</button>
-
-					<span style="font-size: 18px; font-weight: bold; cursor: pointer;"
-						class="ml-1 text-primary "> 체크리스트 추가</span> <input type="text"
-						class="form-control mr-1 ml-4" id="" placeholder=""
-						name="checkList" value="" style="width: 860px;" />
-
+					<input type="text"
+						class="form-control mr-1 ml-4" id="checkList" placeholder="체크리스트를 적어보세요."
+						name="checkList" value="" style="width: 1000px;" />
 				</form>
 			</div>
 		</div>
@@ -351,6 +352,20 @@ a:hover {
 		update($(this));
 	});
 
+	
+	//체크박스 추가 시
+	 $("#checklistBtn").on("click",function(){
+		 var CheckContent = $("input[name='checkList']");
+		 console.log("체크리스트",CheckContent);
+		 if(CheckContent.val() != null || CheckContent.val() != ''){
+		 		alert("체크리스트 추가");
+				console.log('체크리스트 insert 요청');
+				update(CheckContent);
+		 }else{
+			 alert("체크리스트 내용을 적어주세요.");
+		 }
+	 });
+	
 	//값 업데이트 메서드
 	function update(obj) {
 		console.log("update 값 : " + obj.attr('id') + "/" + obj.val());
@@ -364,6 +379,8 @@ a:hover {
 			url = 'eatTarKcalUpdate';
 		}else if (obj.attr('id') == 'd_tarExe') { //목표 운동 칼로리 업데이트
 			url = 'exeTarKcalUpdate';
+		}else if (obj.attr('id') == 'checkList') { //체크리스트 추가
+			url = 'checkList';
 		}
 		
 
@@ -659,6 +676,9 @@ a:hover {
 			console.log(e);
 		}
 	 } */
+	 
+	 
+	 
 </script>
 
 </html>
