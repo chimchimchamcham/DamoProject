@@ -51,6 +51,7 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 <select id="searchExe" resultType="damo">
 	SELECT MET_NAME, MET FROM MET WHERE REPLACE(MET_NAME,' ','') LIKE '%'||#{param1}||'%'
 </select>
+<<<<<<< HEAD
 
 <insert id="checkList" 
    useGeneratedKeys="true"
@@ -62,4 +63,6 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 		(ch_no_seq.NEXTVAL,#{param1}, #{param2},'Y')
 </insert>
 
+=======
+>>>>>>> d1f4ff54e53ef25e9618462937c431af604d685e
 </mapper>
