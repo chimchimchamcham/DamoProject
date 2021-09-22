@@ -145,5 +145,17 @@
 	<update id="knowfitRUpdate" parameterType="damo">
 		UPDATE knowfit_r SET kr_content = #{kR_content} WHERE kr_no = #{kR_no}
 	</update>
+	
+	<select id="chkChoose" resultType="String">
+		SELECT k_solutionYN FROM knowFit WHERE k_no = #{kr_n}		
+	</select>
+	
+	<update id="chooseFitAns" parameterType="String">
+		UPDATE knowfit_r SET kr_chooseYN = 'Y' WHERE kr_no = #{kR_no}
+	</update>
+	
+	<update id="upFitAns" parameterType="String">
+		UPDATE knowfit SET k_solutionYN = 'Y' WHERE k_no = #{k_no}
+	</update>
 
 </mapper>

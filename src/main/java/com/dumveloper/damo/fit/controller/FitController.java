@@ -207,4 +207,14 @@ public class FitController {
 		return fitservice.fitAnsUpdate(params, imgNos, files, rAttr);
 	}
 
+	@RequestMapping(value = "/chooseFitAns", method = RequestMethod.GET)
+	public ModelAndView chooseFitAns(@RequestParam String kr_no, @RequestParam String k_no) {
+
+		logger.info("지식핏 답변채택 접속");
+		logger.info("k_no : {}", k_no);
+		logger.info("kr_no : {}", kr_no);
+
+		return fitservice.chooseFitAns(k_no,kr_no);
+	
+	}
 }

@@ -484,4 +484,19 @@ public class FitService {
 		return mav;
 	}
 
+	public ModelAndView chooseFitAns(String k_no, String kr_no) {
+		ModelAndView mav = new ModelAndView();
+		String chk = fitdao.chkChoose(k_no);
+		logger.info("" + chk);
+		//logger.info("" + chk.equals("N"));
+		if (chk.equals("N")) {
+			fitdao.chooseFitAns(kr_no);
+			fitdao.upFitAns(k_no);
+		}
+
+		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
+
+		return mav;		
+	}
+
 }
