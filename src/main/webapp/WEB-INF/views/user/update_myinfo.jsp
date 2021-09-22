@@ -54,13 +54,17 @@ img#img_form_url{
     display:none;
 }
 textarea{
+    height: 150px;
 	resize: none;
+}
+.conbox{
+	font-family: arial;
 }
 </style>
 </head>
 <body>
  <jsp:include page="../header.jsp"></jsp:include>
-  <div class="container-fluid justify-content-center align-items-center">
+  <div class="conbox container-fluid justify-content-center align-items-center">
 
   	<h3 class="mx-5 px-5 text-secondary">회원 정보 수정</h3>
     <div class="bg-white container d-flex flex-row justify-content-center px-5 pt-5 mb-5">
@@ -85,81 +89,83 @@ textarea{
         <!--회원 수정 정보-->
         <div class="userinfo d-flex m-3 ml-5">
             <div class="row col-12 d-flex justify-content-center align-items-center ">
-                <form action="update" method="post" class="row flex-column align-items-center justify-content-center my-5">
+                <form action="update" method="post" class="row flex-column align-items-center justify-content-center mb-5">
     
-                    <div class="form-group row col-12">
-                        <label for="id" class="text-left col-3 m-1">아이디</label>
-                        <div class="id_name">${info.u_id}</div>
+                    <div class="form-group row col-12 my-1">
+                        <label for="id_name" class="text-center col-3  pl-0 my-1">아이디</label>
+                        <div id="id">${info.u_id}</div>
                     </div>
 
-                    <div class="form-group row col-12">
-                        <label for="id" class="text-left col-3 m-1">이름</label>
-                        <div class="id_name">${info.u_name}</div>
+                    <div class="form-group row col-12 my-1">
+                        <label for="name" class="text-center col-3  pl-0 my-1">이름</label>
+                        <div id="name">${info.u_name}</div>
                     </div>                    
-                    <div class="form-group row col-12">
-                        <label for="id" class="text-left col-3 m-1">이메일</label>
-                        <div class="id_name">${info.u_email}</div>
+                    <div class="form-group row col-12 my-1">
+                        <label for="email" class="text-center col-3 pl-0 my-1">이메일</label>
+                        <div id="email">${info.u_email}</div>
                     </div>
 
-                    <div class="form-group row col-12">
-                        <label for="id" class="text-left col-3 m-1">닉네임</label>
-                        <input type="text" class="col-5 m-1" name="nick" id="nick" value="${info.u_nick}">
+                    <div class="form-group row col-12 my-1">
+                        <label for="nick" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">닉네임</label>
+                        <input type="text" class="col-4 form-control my-1" name="nick" id="nick" value="${info.u_nick}">
                         <div class="text-left col-2 m-1 matchornotnink"></div>
                     </div>
 
 
 
-                    <div class="form-group row col-12">  
-                        <label for="pass" class="text-left col-3 m-1">비밀번호</label>
-                        <input type="password" class="col-4 form-control m-1 " id="pw" name="pw" value="${info.u_pw}">
-                        <input type="password" class="col-3 form-control m-1 " id="pwch" name="pwcheck">
+                    <div class="form-group row col-12 my-1">  
+                        <label for="pass" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">비밀번호</label>
+                        <input type="password" class="col-4 form-control my-1 mr-2" id="pw" name="pw" value="${info.u_pw}">
+                        <input type="password" class="col-3 form-control my-1 " id="pwch" name="pwcheck">
                         <div class="row col-12  justify-content-end pr-5">
-                        	<div style="visibility: hidden">비밀번호 확읜ㄴㄴㄴㄴㄴㄴㅁㅁㅁ</div>
-                        	<div class="matchornotpw text-right pr-5"></div>
+                        	<div style="visibility: hidden;font-size: 3px;">비밀번호 확읜ㄴㄴㄴㄴㄴㄴㅁㅁㅁ</div>
+                        	<div class="matchornotpw text-right pr-5 d-flex align-self-end"></div>
                         </div>
                     </div>
 
-                    <div class="form-group row col-12 mb-2 pl-4">
-                        <div class="text-left col-3 my-1"> 성별 </div>
-                        <input type="radio" value="M" class="col-1 form-control" name="gender" id="M">
-                        <label for="man" class="b-inline text-left col-3" >남</label>
-                
-                        <input type="radio" value="F" class="col-1 form-control b-inline" name="gender" id="F">
-                        <label for="girl" class="b-inline text-center">녀</label>
+                    <div class="form-group row col-12 my-1">
+                        <div class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center"> 성별 </div>
+                        <input type="radio" value="M" style="height: calc(0.5em + .75rem + 2px)"; class="col-1 form-control align-self-center" name="gender" id="M">
+                        <label for="man" class="b-inline pl-0 my-1 d-flex align-self-center" >남</label>
+                		<div  class="b-inline col-2"></div>
+                        <input type="radio" value="F" style="height: calc(0.5em + .75rem + 2px)"; class="col-1 form-control b-inline align-self-center;" name="gender" id="F">
+                        <label for="girl" class="b-inline pl-0 my-1 d-flex align-self-center">여</label>
                     </div>
 
-                    <div class="form-group row col-12 pl-4">
-                        <label for="id" class="text-left col-2 my-1 mr-5">나이</label>
-                        <input type="text" class="col-3 form-control my-1 " id="age" name="age" value="${info.u_age}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-                        <div class="textage">세</div>
+                    <div class="form-group row col-12 my-1">
+                        <label for="id" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">나이</label>
+                        <input type="text" class="text-center col-3 form-control my-1 " id="age" name="age" value="${info.u_age}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <div class="textage my-1 ml-1 d-flex align-self-center">세</div>
 
+						<div style="visibility: hidden">----</div>
 
-                        <label for="id" class="text-right col-1 my-1 ml-2">키</label>
-                        <input type="text" class="col-3 form-control my-1 " id="height" name="height" value="${info.u_height}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-
+                        <label for="id" class="text-right my-1 mr-1 d-flex align-self-center">키</label>
+                        <input type="text" class="text-center col-3 form-control my-1 " id="height" name="height" value="${info.u_height}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+						<div class="textage ml-1 d-flex align-self-center">cm</div>
 
                     </div>
 
 
                     <div class="form-group row col-12">
-                        <label for="id" class="text-left col-2 m-1 mr-5">몸무게</label>
-                        <div class="textage col-4">${info.u_weight}</div> 
-                        <div class="textage">kg</div>
+                        <label for="id" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">몸무게</label>
+                        <div class="textage col-3 pl-0 my-1 d-flex justify-content-center align-self-center">${info.u_weight}</div> 
+                        <div class="textage col-3 pl-0 my-1 d-flex align-self-center">kg</div>
                     </div>
                     
                     <div class="form-group row col-12">
-                        <label for="id" class="text-left col-2 m-1 mr-5">목표 몸무게</label>
-                        <input type="text" class="col-4" name="tarweight" value="${info.u_tarWeight}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
-                        <div class="textage">kg</div>
+                        <label for="id" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">목표 몸무게</label>
+                        <input type="text" class="form-control text-center col-3" name="tarweight" value="${info.u_tarWeight}" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                        <div class="textage d-flex align-self-center">kg</div>
                     </div>
                     
                     <div class="form-group row col-12">
-                        <label for="id" class="text-center col-2 mr-5">자기소개</label>
-                        <textarea name="u_intro" class="col-8" >${info.u_intro}</textarea>
-                    </div>
-                    <div class="d-flex buttons ">
-                    	<a id="jointocheck" class="btn bg-secondary mr-1">취소</a>
-                   		<button type="submit" id="jointocheck" class="btn btn-primary">수정</button>
+                        <label for="id" style="height: 150px"; class="text-center col-3 pl-0 my-1 d-flex justify-content-center align-self-center">자기소개</label>
+                        <textarea name="u_intro"  class="form-control col-7" >${info.u_intro}</textarea>
+                    
+	                    <div class="col-2 d-flex buttons">
+	                    	<a id="jointocheck" class="btn bg-secondary mr-1">취소</a>
+	                   		<button type="submit" id="jointocheck" class="btn btn-primary">수정</button>
+	                   	</div>
                    	</div>
                     </form>
              </div>
