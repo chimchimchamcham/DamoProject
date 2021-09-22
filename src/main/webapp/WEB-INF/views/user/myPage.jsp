@@ -53,7 +53,7 @@
 	      		<div class="col-3" style="text-align:center; display:flex;padding-top:10px"><button type="btn" class="btn btn-secondary" style="height:35px; ">수정</button></div>
 	      	</div>
 	      	<div class="row">
-	      		<div class="col-4"><img src="resources/img/level3.png"></div>
+	      		<!-- <div class="col-4"><img src="resources/img/level3.png"></div> -->
 	      	</div>
 	      </div>
 	      

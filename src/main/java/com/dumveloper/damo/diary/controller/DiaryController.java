@@ -3,6 +3,7 @@ package com.dumveloper.damo.diary.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.diary.service.DiaryService;
 import com.dumveloper.damo.dto.DamoDTO;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class DiaryController {
@@ -38,9 +41,15 @@ public class DiaryController {
 	 }
 	 
 	 @RequestMapping(value="/diaryInsert")
-	 public String goDiaryInsert() {
-		 logger.info("다이어리 추가 팝업 이동");
-		 return "diary/diaryInsertPopUp";
+	 public ModelAndView goDiaryInsert(@RequestParam String d_no, @RequestParam String u_weight) {
+		 logger.info("다이어리 추가 팝업 이동(일기번호 : {} / 사용자 몸무게 : {}",d_no,u_weight);
+		 ModelAndView mav = new ModelAndView();
+		 
+		 mav.addObject("d_no",d_no);
+		 mav.addObject("u_weight",u_weight);
+		 mav.setViewName("diary/diaryInsertPopUp");
+		 
+		 return mav;
 	 }
 	 
 	 @RequestMapping(value="/memoUpdate") 
@@ -80,9 +89,32 @@ public class DiaryController {
 		 return service.searchList(selectMenu,searchInsert,id);
 	 }
 	 
+<<<<<<< HEAD
 	 @RequestMapping(value="/checkDel/{ch_no}")
 		public ModelAndView checkDel(@PathVariable String ch_no) {
 			logger.info("체크리스트 삭제 요청 : "+ch_no);
 			return service.checkDel(ch_no);
 		}
+=======
+	 @RequestMapping(value="/submitList")
+	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){
+		 /*
+		 ObjectMapper mapper = new ObjectMapper();
+	     HashMap<String,String> map = null;
+	     try {
+	         map = mapper.readValue(jsondata, new TypeReference<HashMap<String,String>>(){});
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	     }
+		 */
+		 
+		 logger.info("hd_no:{}",param.get("hd_no"));
+		 
+		 
+		 return null;
+	 }
+	 
+	 
+
+>>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 }

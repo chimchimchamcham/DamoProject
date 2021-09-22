@@ -289,13 +289,13 @@ public class FitService {
 		return mav;
 	}
 
-	public ModelAndView fitDelete(String k_no) {
+	public ModelAndView fitDelete(String k_no, RedirectAttributes rAttr) {
 
 		ModelAndView mav = new ModelAndView();
 		fitdao.fitDelete(k_no);
-
-		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
-
+		rAttr.addFlashAttribute("msg", "삭제가 완료되었습니다");
+		mav.setViewName("redirect:/fitMain");
+		
 		return mav;
 	}
 
@@ -482,6 +482,21 @@ public class FitService {
 		rAttr.addFlashAttribute("msg", "수정이 완료되었습니다");
 		mav.setViewName("redirect:/fitDetail?k_no=" + dto.getK_no());
 		return mav;
+	}
+
+	public ModelAndView chooseFitAns(String k_no, String kr_no) {
+		ModelAndView mav = new ModelAndView();
+		String chk = fitdao.chkChoose(k_no);
+		logger.info("" + chk);
+		//logger.info("" + chk.equals("N"));
+		if (chk.equals("N")) {
+			fitdao.chooseFitAns(kr_no);
+			fitdao.upFitAns(k_no);
+		}
+
+		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
+
+		return mav;		
 	}
 
 }
