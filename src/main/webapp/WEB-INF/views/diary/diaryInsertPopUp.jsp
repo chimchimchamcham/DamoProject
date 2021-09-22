@@ -470,7 +470,8 @@ $("#submitBtn").click(function(){
 	//음식의 경우
 	//검색 리스트에서 선택했을 경우
 	if(selectMenu =='foodlist'){
-		submitArr.hd_no = '100'; 
+		submitArr.hd_no = d_no; 
+		submitArr.selectMenu=selectMenu;
 		submitArr.hd_code = d_code;
 		submitArr.hd_eat = gram;
 		submitArr.hd_foodname = food_name;
@@ -486,14 +487,16 @@ $("#submitBtn").click(function(){
 		 submitArr.hd_fat = fat;
 		 submitArr.hd_kcal = kcal;
 		}
+		
 	//운동의 경우
-	}else if(selectMenu =='met' ){
+	}else if(selectMenu =='met'){
 		submitArr.he_no=d_no;
 		submitArr.he_time = exeTime;
 		submitArr.he_kcal = exeKcal;
 		submitArr.met_name = exe_name;
 	}
 	console.log(submitArr);
+	
 	//최종적 전송
 	$.ajax({
 		url:submitUrl,

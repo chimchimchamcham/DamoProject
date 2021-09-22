@@ -3,6 +3,7 @@ package com.dumveloper.damo.diary.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -110,5 +111,17 @@ public class DiaryService {
 		int success = dao.checkList(dto);
 		logger.info("체크리스트 추가 성공 : "+success);
 		return success;
+	}
+
+	public HashMap<String,String> submitList(Map<String, String> param) {
+		if(param.get("selectMenu").equals("foodlist")){
+			
+		}else if(param.get("selectMenu").equals("met")) {
+			
+		}
+		
+		return null;
+		
+		
 	}
 }

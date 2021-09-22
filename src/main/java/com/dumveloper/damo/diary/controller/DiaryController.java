@@ -91,19 +91,10 @@ public class DiaryController {
 	 
 	 @RequestMapping(value="/submitList")
 	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){
-		 /*
-		 ObjectMapper mapper = new ObjectMapper();
-	     HashMap<String,String> map = null;
-	     try {
-	         map = mapper.readValue(jsondata, new TypeReference<HashMap<String,String>>(){});
-	     } catch (Exception e) {
-	         e.printStackTrace();
-	     }
-		 */
+		 logger.info("일기 항목 추가 요청");
+		 logger.info("selectMenu:{}",param.get("selectMenu"));
 		 
-		 logger.info("hd_no:{}",param.get("hd_no"));
-		 
-		 
+		 service.submitList(param);
 		 return null;
 	 }
 	 
