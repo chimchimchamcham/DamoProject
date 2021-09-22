@@ -154,12 +154,12 @@ public class FitController {
 	////////////////////////////////////////여기부터/////////////////////////////////////
 	
 	@RequestMapping(value = "/fitDelete", method = RequestMethod.GET)
-	public ModelAndView fitDelete(@RequestParam String k_no) {
+	public ModelAndView fitDelete(@RequestParam String k_no, RedirectAttributes rAttr) {
 
 		logger.info("지식핏 글삭제 접속");
 		logger.info("k_no : {}", k_no);
 
-		return fitservice.fitDelete(k_no);
+		return fitservice.fitDelete(k_no, rAttr);
 	}
 
 	@RequestMapping(value = "/fitAnsWrite", method = RequestMethod.POST)

@@ -289,13 +289,13 @@ public class FitService {
 		return mav;
 	}
 
-	public ModelAndView fitDelete(String k_no) {
+	public ModelAndView fitDelete(String k_no, RedirectAttributes rAttr) {
 
 		ModelAndView mav = new ModelAndView();
 		fitdao.fitDelete(k_no);
-
-		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
-
+		rAttr.addFlashAttribute("msg", "삭제가 완료되었습니다");
+		mav.setViewName("redirect:/fitMain");
+		
 		return mav;
 	}
 
