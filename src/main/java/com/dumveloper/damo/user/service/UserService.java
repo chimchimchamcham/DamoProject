@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -64,7 +65,13 @@ public class UserService {
 		dto.setU_id(param.get("id"));
 		dto.setU_name(param.get("name"));
 		dto.setU_nick(param.get("nick"));
-		dto.setU_pw(param.get("pw"));
+
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		String enc_pass = encoder.encode(param.get("pw"));//해쉬 암호화(평문을 32비트 16진수로 표현)
+		dto.setU_pw(enc_pass);//해쉬 암호화한걸 getter에 집어넣는다
+		
+		
 		dto.setU_email(email);
 		dto.setU_gender(param.get("gender"));
 		dto.setU_age(Integer.parseInt(param.get("age")));
