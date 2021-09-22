@@ -7,21 +7,21 @@
 
 <mapper namespace="com.dumveloper.damo.fit.dao.FitDAO">
 	<select id="bestFitList" resultType="damo">
-		SELECT k_no,k_title, u_id,u_nick, k_view, k_replycnt, k_solutionyn, k_code, k_name
+		SELECT k_no,k_title, u_id,u_nick, k_view, k_replycnt, k_solutionyn, k_code, k_name, k_blindyn
 		FROM (SELECT ROW_NUMBER() OVER(ORDER BY k.k_replycnt DESC, k.k_view) AS rnum,
-			k.k_no,k.k_title, u.u_id, u.u_nick, k.k_view, k.k_replycnt, k.k_solutionyn, k.k_code, 
+			k.k_no,k.k_title, u.u_id, u.u_nick, k.k_view, k.k_replycnt, k.k_solutionyn, k.k_code, k.k_blindyn,
 			(SELECT c_name FROM code WHERE c_code = UPPER(k.k_code)) AS k_name
-			FROM knowfit k INNER JOIN userInfo u ON k.u_id = u.u_id)
+			FROM (SELECT * FROM knowfit WHERE k_blindyn = 'N') k INNER JOIN userInfo u ON k.u_id = u.u_id)
 		WHERE rnum BETWEEN 1 AND 4
 	</select>
 	
 	<select id="newFitList" resultType="damo">
-		SELECT rnum, k_no, k_title, k_view, k_replycnt, k_solutionyn, u_id, u_nick, k_name
+		SELECT rnum, k_no, k_title, k_view, k_replycnt, k_solutionyn, u_id, u_nick, k_name, k_blindyn
 		FROM (SELECT ROW_NUMBER() OVER(ORDER BY k.k_no DESC) AS rnum,
-		        k.k_no,k.k_title, k.k_view, k.k_replycnt, k.k_solutionyn, 
+		        k.k_no,k.k_title, k.k_view, k.k_replycnt, k.k_solutionyn, k.k_blindyn,
 		        u.u_id, u.u_nick,
 		        (SELECT c_name FROM code WHERE c_code = UPPER(k.k_code)) AS k_name 
-		        FROM knowfit k INNER JOIN userInfo u ON k.u_id = u.u_id 
+		        FROM (SELECT * FROM knowfit WHERE k_blindyn = 'N') k INNER JOIN userInfo u ON k.u_id = u.u_id 
 		        <where>
 		        	<if test="param3.equals('전체')"></if>
 		        	<if test="param3.equals('자세교정')">k_code = (SELECT c_code FROM CODE WHERE c_name = '자세교정')</if>
