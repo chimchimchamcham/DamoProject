@@ -145,6 +145,22 @@ public class DamoDTO {
 	private String met_name;
 	private int met;
 	
+	//섭취 히스토리
+	private String hd_no; //일기 고유번호
+	private String hd_code; //일기 분류코드
+	private int hd_eat; //섭취량
+	private String hd_foodName; //음식 이름
+	private int hd_carbo; //탄수화물량
+	private int hd_protein; //단백질량
+	private int hd_fat; //지방량
+	private int hd_kcal; //열량
+	
+	//운동 히스토리
+	private String he_no; //일기 고유번호 
+	private int he_time; //운동 시간
+	private int he_kcal; //운동 소모 칼로리
+	//private String met_name;
+	
 	public int getB_no() {
 		return b_no;
 	}
@@ -723,6 +739,72 @@ public class DamoDTO {
 	}
 	public void setCd_checkYN(String cd_checkYN) {
 		this.cd_checkYN = cd_checkYN;
+	}
+	public String getHd_no() {
+		return hd_no;
+	}
+	public void setHd_no(String hd_no) {
+		this.hd_no = hd_no;
+	}
+	public String getHd_code() {
+		return hd_code;
+	}
+	public void setHd_code(String hd_code) {
+		this.hd_code = hd_code;
+	}
+	public int getHd_eat() {
+		return hd_eat;
+	}
+	public void setHd_eat(int hd_eat) {
+		this.hd_eat = hd_eat;
+	}
+	public String getHd_foodName() {
+		return hd_foodName;
+	}
+	public void setHd_foodName(String hd_foodName) {
+		this.hd_foodName = hd_foodName;
+	}
+	public int getHd_carbo() {
+		return hd_carbo;
+	}
+	public void setHd_carbo(int hd_carbo) {
+		this.hd_carbo = hd_carbo;
+	}
+	public int getHd_protein() {
+		return hd_protein;
+	}
+	public void setHd_protein(int hd_protein) {
+		this.hd_protein = hd_protein;
+	}
+	public int getHd_fat() {
+		return hd_fat;
+	}
+	public void setHd_fat(int hd_fat) {
+		this.hd_fat = hd_fat;
+	}
+	public int getHd_kcal() {
+		return hd_kcal;
+	}
+	public void setHd_kcal(int hd_kcal) {
+		this.hd_kcal = hd_kcal;
+	}
+	public String getHe_no() {
+		return he_no;
+	}
+	public void setHe_no(String he_no) {
+		this.he_no = he_no;
+	}
+	public int getHe_time() {
+		return he_time;
+	}
+	public void setHe_time(int he_time) {
+		this.he_time = he_time;
+	}
+	public int getHe_kcal() {
+		return he_kcal;
+	}
+	public void setHe_kcal(int he_kcal) {
+		this.he_kcal = he_kcal;
 	}
 	
 }
