@@ -4,6 +4,8 @@ package com.dumveloper.damo.diary.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +73,10 @@ public class DiaryController {
 	 }
 
 	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
-	 public @ResponseBody HashMap<String, ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
+	 public @ResponseBody HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert,HttpSession session){
 		 logger.info("검색요청");
-		 return service.searchList(selectMenu,searchInsert);
+		 String id= (String)session.getAttribute("loginId"); 
+		 return service.searchList(selectMenu,searchInsert,id);
 	 }
 
 }

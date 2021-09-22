@@ -134,6 +134,17 @@ public class DamoDTO {
 	private String kR_content;//내용
 	private char kR_blindYN;//블라인드 여부
 	
+	//음식항목
+	private String food_name;
+	private int food_weight;
+	private int food_calorie;
+	private int food_carbo;
+	private int food_protein;
+	private int food_fat;
+	
+	//met
+	private String met_name;
+	private int met;
 	
 	public int getB_no() {
 		return b_no;
@@ -646,6 +657,55 @@ public class DamoDTO {
 	}
 	public void setkR_blindYN(char kR_blindYN) {
 		this.kR_blindYN = kR_blindYN;
+	}
+
+	public String getFood_name() {
+		return food_name;
+	}
+	public void setFood_name(String food_name) {
+		this.food_name = food_name;
+	}
+	public int getFood_weight() {
+		return food_weight;
+	}
+	public void setFood_weight(int food_weight) {
+		this.food_weight = food_weight;
+	}
+	public int getFood_calorie() {
+		return food_calorie;
+	}
+	public void setFood_calorie(int food_calorie) {
+		this.food_calorie = food_calorie;
+	}
+	public int getFood_carbo() {
+		return food_carbo;
+	}
+	public void setFood_carbo(int food_carbo) {
+		this.food_carbo = food_carbo;
+	}
+	public int getFood_protein() {
+		return food_protein;
+	}
+	public void setFood_protein(int food_protein) {
+		this.food_protein = food_protein;
+	}
+	public int getFood_fat() {
+		return food_fat;
+	}
+	public void setFood_fat(int food_fat) {
+		this.food_fat = food_fat;
+	}
+	public String getMet_name() {
+		return met_name;
+	}
+	public void setMet_name(String met_name) {
+		this.met_name = met_name;
+	}
+	public int getMet() {
+		return met;
+	}
+	public void setMet(int met) {
+		this.met = met;
 	}
 	public int getCh_no() {
 		return ch_no;
