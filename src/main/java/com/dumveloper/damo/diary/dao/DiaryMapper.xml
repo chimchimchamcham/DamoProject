@@ -59,7 +59,15 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
    parameterType="damo"
    >
 	INSERT INTO checkList_diary (ch_no,cd_no, cd_content, cd_checkyn) VALUES
-		(ch_no_seq.NEXTVAL,#{param1}, #{param2},'Y')
+		(ch_no_seq.NEXTVAL,#{cd_no}, #{cd_content},'N')
 </insert>
+
+<select id="checklistDetail" resultType="damo"  parameterType="damo">
+SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+</select>
+
+<delete id="checkDel" parameterType="String">
+	DELETE FROM checklist_diary WHERE ch_no = #{param1}
+</delete>
 
 </mapper>
