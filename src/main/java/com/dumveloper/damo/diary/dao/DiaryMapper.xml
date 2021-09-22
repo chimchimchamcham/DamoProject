@@ -52,4 +52,14 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	SELECT MET_NAME, MET FROM MET WHERE REPLACE(MET_NAME,' ','') LIKE '%'||#{param1}||'%'
 </select>
 
+<insert id="checkList" 
+   useGeneratedKeys="true"
+   keyColumn="ch_no"
+   keyProperty="ch_no"
+   parameterType="damo"
+   >
+	INSERT INTO checkList_diary (ch_no,cd_no, cd_content, cd_checkyn) VALUES
+		(ch_no_seq.NEXTVAL,#{param1}, #{param2},'Y')
+</insert>
+
 </mapper>

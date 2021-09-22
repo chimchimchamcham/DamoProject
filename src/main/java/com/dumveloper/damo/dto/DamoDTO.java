@@ -54,6 +54,11 @@ public class DamoDTO {
 	private boolean d_success; //성공 여부
 	private String d_code; //분류 코드
 	
+	//체크리스트
+	private int ch_no; //체크리스트 번호
+	private String cd_content; //체크리스트 내용
+	private String cd_checkYN; //체크 여부
+	
 	
 	//지식fit
 	private int k_no; //글번호
@@ -640,6 +645,24 @@ public class DamoDTO {
 	}
 	public void setkR_blindYN(char kR_blindYN) {
 		this.kR_blindYN = kR_blindYN;
+	}
+	public int getCh_no() {
+		return ch_no;
+	}
+	public void setCh_no(int ch_no) {
+		this.ch_no = ch_no;
+	}
+	public String getCd_content() {
+		return cd_content;
+	}
+	public void setCd_content(String cd_content) {
+		this.cd_content = cd_content;
+	}
+	public String getCd_checkYN() {
+		return cd_checkYN;
+	}
+	public void setCd_checkYN(String cd_checkYN) {
+		this.cd_checkYN = cd_checkYN;
 	}
 	
 }
