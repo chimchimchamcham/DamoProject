@@ -221,7 +221,7 @@ $("#goSearch").click(function(){
 	
 	$.ajax({
     	url:reqUrl,
-    	type:'get', 
+    	type:'post', 
     	dataType:'json',
     	success:function(data){
     		console.log(data);

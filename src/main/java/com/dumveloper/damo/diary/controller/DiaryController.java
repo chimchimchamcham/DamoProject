@@ -71,7 +71,7 @@ public class DiaryController {
 	 }
 
 	 @RequestMapping(value="/searchList/{selectMenu}/{searchInsert}")
-	 public HashMap<String,ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
+	 public @ResponseBody HashMap<String, ArrayList<DamoDTO>> searchList(@PathVariable String selectMenu, @PathVariable String searchInsert){
 		 logger.info("검색요청");
 		 return service.searchList(selectMenu,searchInsert);
 	 }

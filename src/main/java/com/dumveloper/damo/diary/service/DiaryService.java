@@ -1,6 +1,5 @@
 package com.dumveloper.damo.diary.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -74,7 +73,6 @@ public class DiaryService {
 		logger.info("몸무게 업데이트 성공 : "+success);
 		return success;
 	}
-
 
 	public int eatTarKcalUpdate(String d_no, String content) {
 		int success = dao.eatTarKcalUpdate(d_no,content);
