@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.diary.service.DiaryService;
 import com.dumveloper.damo.dto.DamoDTO;
@@ -78,5 +79,10 @@ public class DiaryController {
 		 String id= (String)session.getAttribute("loginId"); 
 		 return service.searchList(selectMenu,searchInsert,id);
 	 }
-
+	 
+	 @RequestMapping(value="/checkDel/{ch_no}")
+		public ModelAndView checkDel(@PathVariable String ch_no) {
+			logger.info("체크리스트 삭제 요청 : "+ch_no);
+			return service.checkDel(ch_no);
+		}
 }

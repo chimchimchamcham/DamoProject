@@ -52,6 +52,11 @@ a:hover {
 	text-decoration: line-through;
 	color:gray;
 }
+
+.CheckDelBtn:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -290,12 +295,8 @@ a:hover {
 		<!-- 체크 리스트 -->
 		<div class="container my-4">
 			<h3>체크 리스트</h3>
-			<form>
-				<div class="checkbox pl-5 pt-4 pr-5">
-					<label style="font-size: 18px;"><input type="checkbox"
-						value="" style="transform: scale(1.3);" name="checkbox"> 물
-						2L마시기</label>
-				</div>
+			<form id="checkListBox">
+			<!-- 체크리스트 뿌려준다. -->
 			</form>
 
 			<hr />
@@ -310,6 +311,7 @@ a:hover {
 						class="form-control mr-1 ml-4" id="checkList" placeholder="체크리스트를 적어보세요."
 						name="checkList" value="" style="width: 1000px;" />
 				</form>
+				
 			</div>
 		</div>
 
@@ -352,7 +354,7 @@ a:hover {
 		update($(this));
 	});
 
-	
+	var ch_no;
 	//체크박스 추가 시
 	 $("#checklistBtn").on("click",function(){
 		 var CheckContent = $("input[name='checkList']");
@@ -361,16 +363,22 @@ a:hover {
 		 		alert("체크리스트 추가");
 				console.log('체크리스트 insert 요청');
 				$.ajax({
-					url : "checkList",
+					url : 'checkList',
 					type : 'get',
 					dataType : 'json',
 					data : {
 						'd_no' : d_no,
-						'content' : obj.val()
+						'content' : CheckContent.val()
 					},
 					success : function(data) {
 						console.log("체크리스트 추가 성공 여부 : " + data.dto);
-						console.log("체크리스트 추가 성공 여부 : " + data.dto);
+						console.log("체크리스트 번호: " + data.dto.ch_no);
+						ch_no = data.dto.ch_no;
+						$("#checkListBox").innerHtml(
+								"<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'><input type='checkbox' value='"+dto.ch_no+"' style='transform: scale(1.3);' name='checkbox'>"
+								+data.dto.cd_content+
+								"</label><a href='checkDel?ch_no="+dto.ch_no+"' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>"
+							)
 					},
 					error : function(error) {
 						console.log(error);
@@ -380,6 +388,25 @@ a:hover {
 			 alert("체크리스트 내용을 적어주세요.");
 		 }
 	 });
+
+		//체크리스트 삭제 시
+	 	$(document).on("click",".CheckDelBtn",function(){
+			console.log($(this).prev().children().first().val());
+			/* $.ajax({
+				url : url,
+				type : 'get',
+				dataType : 'json',
+				data : {
+					'ch_no' : $(this).prev().children().first().val()
+				},
+				success : function(data) {
+					console.log("업데이트 성공 여부 : " + data);
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			}); */
+		});
 	
 	//값 업데이트 메서드
 	function update(obj) {
@@ -484,7 +511,6 @@ a:hover {
 	
 	var d_no;
 
-	
 	var tarKcalPercent;
 	var tarExePercent;
 	
@@ -500,7 +526,7 @@ a:hover {
 		success : function(data) {
 			console.log("성공");
 			console.log(data.dto);
-
+			console.log(data.ch_noList[1].ch_no);
 			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
 			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
 			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리
@@ -552,7 +578,18 @@ a:hover {
 
 			d_no = data.dto.d_no;
 			
-			myChart.update();
+			//체크리스트 뿌리기
+			var ch_noList = data.ch_noList;
+			var checkContent = '';
+			ch_noList.forEach(function(element){
+				console.log(element);
+				checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'>";
+				checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+element.cd_content+"</label>";
+				checkContent += "<button type='button' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></button></div>";
+			});
+			$("#checkListBox").html(checkContent);
+			
+			
 		},
 		error : function(e) {
 			console.log(e);
@@ -660,7 +697,7 @@ a:hover {
 		console.log(preDt);
 	}
 
-	threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // 2014-02-26 => 3일전으로~
+	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
 
 	/*다음날로 이동*/
 	function nextMonth() {
