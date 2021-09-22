@@ -83,6 +83,12 @@
 
 	<!-- 유저와 글 작성자가 다를 경우 -->
 	<c:set var="loop_flag" value="false" />
+	<c:if test="${fitId eq sessionId and bean.k_solutionYN eq 'Y'}">
+		<c:set var="loop_flag" value="true" />
+	</c:if>
+	<c:if test="${fitId eq sessionId and bean.k_solutionYN eq 'N'}">
+		<c:set var="loop_flag" value="change" />
+	</c:if>
 	<c:if test="${fitId ne sessionId }">
 		<c:if test="${bean.k_replyCnt ne '0' }">
 			<!-- 답변을 작성한 유저인지 확인 -->
@@ -563,6 +569,7 @@ a.notify, a.del {
 <script type="text/javascript">
 	//console.log(${bean.k_solutionYN});
 	var loginId = "${sessionScope.loginId}";
+	var loginNick = "${sessionScope.loginNick}";
 	var writerId = "${bean.u_id}";
 	var kNo = "${bean.k_no}";
 	var flag = '<c:out value="${loop_flag}"/>';//글 작성자가 아니고, 답변한 유저이면 true
@@ -585,12 +592,18 @@ a.notify, a.del {
 
 	hideAnsForm();
 
-	//flag 값에 따라 답변하기 감춘다
+	//flag 값에 따라 답변하기 변화
 	function hideAnsForm() {
 		console.log(flag);
 		//console.log(typeof(flag));
 		if (flag == 'true') {
 			$("#goAnsForm").css({
+				"display" : "none"
+			});
+		}else if (flag == 'change') {
+			/* $("#goAnsForm h3").html("답변을 채택해 주세요!"); */
+			$("#title").html('<h3 class="titleTxt">'+loginNick+'님, 답변을 채택해 주세요!</h3>답변 채택 부탁드립니다!');
+			$("#right").css({
 				"display" : "none"
 			});
 		}
