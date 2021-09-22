@@ -741,13 +741,12 @@ public class DamoDTO {
 	public void setCd_checkYN(String cd_checkYN) {
 		this.cd_checkYN = cd_checkYN;
 	}
-<<<<<<< HEAD
 	public int getCd_no() {
 		return cd_no;
 	}
 	public void setCd_no(int cd_no) {
 		this.cd_no = cd_no;
-=======
+	}
 	public String getHd_no() {
 		return hd_no;
 	}
@@ -813,7 +812,6 @@ public class DamoDTO {
 	}
 	public void setHe_kcal(int he_kcal) {
 		this.he_kcal = he_kcal;
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 	}
 	
 }

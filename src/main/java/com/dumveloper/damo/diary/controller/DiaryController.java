@@ -89,13 +89,12 @@ public class DiaryController {
 		 return service.searchList(selectMenu,searchInsert,id);
 	 }
 	 
-<<<<<<< HEAD
 	 @RequestMapping(value="/checkDel/{ch_no}")
 		public ModelAndView checkDel(@PathVariable String ch_no) {
 			logger.info("체크리스트 삭제 요청 : "+ch_no);
 			return service.checkDel(ch_no);
 		}
-=======
+
 	 @RequestMapping(value="/submitList")
 	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){
 		 /*
@@ -114,7 +113,5 @@ public class DiaryController {
 		 return null;
 	 }
 	 
-	 
 
->>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 }
