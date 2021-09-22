@@ -54,4 +54,10 @@ public interface FitDAO {
 
 	int knowfitRUpdate(DamoDTO dto);
 
+	String chkChoose(String k_no);
+
+	void chooseFitAns(String kr_no);
+
+	void upFitAns(String k_no);
+
 }
