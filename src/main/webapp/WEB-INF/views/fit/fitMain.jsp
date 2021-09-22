@@ -219,7 +219,7 @@ function bestFitListDraw(list){
         content += 				'<div class="p-2 flex-fill">조회수'+item.k_view+'</div>';
         content += 				'<div class="p-2 flex-fill">답변수'+item.k_replyCnt+'</div>';
         content += 			'</div>';
-        content += 			'<a href="#" class="btn btn-white stretched-link"></a>';
+        content += 			'<a href="fitDetail?k_no='+item.k_no+'" class="btn btn-white stretched-link"></a>';
         content += 		'</div>';
         content += '</div>';
 	});
@@ -242,7 +242,7 @@ function newFitListDraw(list){
         content += 				'<div class="p-2 flex-fill">조회수'+item.k_view+'</div>';
         content += 				'<div class="p-2 flex-fill">답변수'+item.k_replyCnt+'</div>';
         content += 			'</div>';
-        content += 			'<a href="#" class="btn btn-white stretched-link"></a>';
+        content += 			'<a href="fitDetail?k_no='+item.k_no+'" class="btn btn-white stretched-link"></a>';
         content += 		'</div>';
         content += '</div>';
 	});

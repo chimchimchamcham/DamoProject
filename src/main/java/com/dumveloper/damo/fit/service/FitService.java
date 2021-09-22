@@ -289,4 +289,214 @@ public class FitService {
 		return mav;
 	}
 
+	public ModelAndView fitDelete(String k_no, RedirectAttributes rAttr) {
+
+		ModelAndView mav = new ModelAndView();
+		fitdao.fitDelete(k_no);
+		rAttr.addFlashAttribute("msg", "삭제가 완료되었습니다");
+		mav.setViewName("redirect:/fitMain");
+		
+		return mav;
+	}
+
+	public ModelAndView fitAnsWrite(String k_no, HashMap<String, String> params, MultipartHttpServletRequest mtfRequest,
+			HttpSession session, List<String> imgNos, RedirectAttributes rAttr) {
+
+		// (1) 아이디, 내용, 카테고리 저장
+		String u_id = (String) session.getAttribute("loginId");
+		String kR_content = params.get("k_content");
+
+		DamoDTO dto = new DamoDTO();
+		dto.setK_no(Integer.parseInt(k_no));
+		dto.setU_id(u_id);
+		dto.setkR_content(kR_content);
+
+		int success = fitdao.fitAnsWrite(dto);
+		fitdao.upRpl(k_no);
+		logger.info("success : {}", success);
+		logger.info("ki_no : {}", dto.getKi_no());
+
+		// (2) 이미지 저장
+
+		// input파일에 있는 파일들을 가져온다
+		List<MultipartFile> fileList = mtfRequest.getFiles("photo");
+		String root = "C:/upload/"; // 이미지를 저장할 경로
+
+		logger.info("fileList.size()", fileList.size());
+
+		// imgNos 크기가 1보다 클 때 이미지 업로드 실행 (이미지가 없어도 이미 0이라는 값이 존재하기 때문에)
+		if (imgNos.size() > 1) {
+			int i = 1; // 사진 index와 비교하기 위한 변수
+			for (MultipartFile mf : fileList) { // 파일들을 하나씩 업로드 한다
+
+				// 인덱스가 있어야만 사진 업로드 실행
+				if (imgNos.contains("" + i)) {
+					logger.info("인덱스 {} 사진 업로드", i);
+
+					String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+					long fileSize = mf.getSize(); // 파일 사이즈
+
+					logger.info("originFileName : " + originFileName);
+					logger.info("fileSize : " + fileSize);
+
+					String newFileName = System.currentTimeMillis()
+							+ originFileName.substring(originFileName.lastIndexOf("."));
+					;
+					try {
+						mf.transferTo(new File(root + newFileName)); // 파일을 업로드!! 간단
+						int imgUploadSuccess = fitdao.upload(dto.getKi_no(), newFileName, "Y", "N");// 파일명을 DB에 저장
+						logger.info("imgUploadSuccess : {}", imgUploadSuccess);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+
+				i++;
+			}
+		}
+
+		// (3) 동영상 저장
+
+		String url = params.get("url");
+		logger.info("url : " + url);
+
+		if (url != null && !url.equals("")) {
+			int urlUploadSuccess = fitdao.upload(dto.getKi_no(), url, "N", "N");// 동영상url을 DB에 저장
+			logger.info("urlUploadSuccess : {}", urlUploadSuccess);
+		}
+		// ModelAndView
+
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
+		/* rAttr.addFlashAttribute("msg", "작성이 완료되었습니다"); */
+		return mav;
+
+	}
+
+	public ModelAndView fitAnsDel(String k_no, String kr_no) {
+		ModelAndView mav = new ModelAndView();
+		String chk = fitdao.chkChoosed(kr_no);
+		logger.info("" + chk);
+		logger.info("" + chk.equals("N"));
+		if (chk.equals("N")) {
+			fitdao.fitAnsDel(kr_no);
+			fitdao.downRpl(k_no);
+		}
+
+		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
+
+		return mav;
+	}
+
+	public ModelAndView fitAnsUpdate(HashMap<String, String> params, List<String> imgNos, List<MultipartFile> files,
+			RedirectAttributes rAttr) {
+
+		// (1) 일반 변경
+		DamoDTO dto = new DamoDTO();
+		String k_no = params.get("k_no");	
+		String kr_no = params.get("kr_no");		
+		String k_content = params.get("k_content");		
+
+		dto.setK_no(Integer.parseInt(k_no));
+		dto.setkR_no(kr_no);		
+		dto.setkR_content(k_content);		
+
+		int success = fitdao.knowfitRUpdate(dto);
+		logger.info("success : {}", success);
+
+		// (2) 사진 변경
+		// 사진 불러오기
+		ArrayList<String> photoList = fitdao.fitImgList(kr_no, "Y", "N");
+		logger.info("photoList : {}", photoList);
+
+		// 삭제처리
+		for (String photo : photoList) {
+			logger.info("photo : {}", photo);
+
+			boolean deleteYN = true; // 삭제여부를 Y로 세팅해둔다.
+
+			for (String imgNo : imgNos) {
+				if (photo.equals(imgNo)) {
+					deleteYN = false; // 같은 파일명이 존재해면 삭제하지 않는다.
+					break;
+				}
+			}
+
+			if (deleteYN) {
+				// 같은 파일명이 존재하지 않으면 삭제처리한다.
+				success = fitdao.knowfitImgDelete(kr_no, photo, "Y", "N");
+			}
+		}
+
+		// 업로드처리
+		String root = "C:/upload/"; // 이미지를 저장할 경로
+
+		// List<MultipartFile> files
+		if (files.size() > 0) {
+			for (MultipartFile mf : files) { // 파일들을 하나씩 업로드 한다
+
+				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+				long fileSize = mf.getSize(); // 파일 사이즈
+
+				logger.info("originFileName : " + originFileName);
+				logger.info("fileSize : " + fileSize);
+
+				String newFileName = System.currentTimeMillis()
+						+ originFileName.substring(originFileName.lastIndexOf("."));
+				
+				try {
+					mf.transferTo(new File(root + newFileName)); // 파일을 업로드!! 간단
+					int imgUploadSuccess = fitdao.upload(Integer.parseInt(kr_no), newFileName, "Y", "N");// 파일명을 DB에 저장
+					logger.info("imgUploadSuccess : {}", imgUploadSuccess);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		// (3) URL 변경
+		String url = params.get("url");
+		// knowfit_img 에서 url이 존재하는지 확인
+		ArrayList<String> urlList = fitdao.fitImgList(kr_no, "N", "N");
+		if (url.equals("") || url == null) {
+			success = fitdao.knowfitUrlDelete(kr_no, "N", "N");
+			logger.info("success1 : {}", success);
+		} else { // url이 존재할 경우
+			if (urlList.size() == 0) {
+				// DB에 url이 존재하지 않을 경우 insert
+				success = fitdao.knowfitImgInsert(kr_no, url, "N", "N");
+				logger.info("success2 : {}", success);
+			} else if (urlList.size() > 0 && !url.equals(urlList.get(0))) {
+				// DB에 url이 존재하지만 일치하지 않을 경우
+				success = fitdao.knowfitimgUpdate(kr_no, url, "N", "N");
+				logger.info("success3 : {}", success);
+			} else if (urlList.size() > 0 && url.equals(urlList.get(0))) {
+				// DB에 url이 존재gkrh 일치할 경우
+				logger.info("DB데이터와 동일");
+			}
+
+		}
+
+		ModelAndView mav = new ModelAndView();
+		// 상세보기가 구현되지 않았으므로 메인으로 이동처리
+		// mav.setViewName("fitDetail?k_no="+k_no);
+		rAttr.addFlashAttribute("msg", "수정이 완료되었습니다");
+		mav.setViewName("redirect:/fitDetail?k_no=" + dto.getK_no());
+		return mav;
+	}
+
+	public ModelAndView chooseFitAns(String k_no, String kr_no) {
+		ModelAndView mav = new ModelAndView();
+		String chk = fitdao.chkChoose(k_no);
+		logger.info("" + chk);
+		//logger.info("" + chk.equals("N"));
+		if (chk.equals("N")) {
+			fitdao.chooseFitAns(kr_no);
+			fitdao.upFitAns(k_no);
+		}
+
+		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
+
+		return mav;		
+	}
+
 }

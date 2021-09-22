@@ -40,4 +40,24 @@ public interface FitDAO {
 
 	ArrayList<DamoDTO> fitAnsDetail(String k_no);
 
+	void fitDelete(String k_no);
+
+	int fitAnsWrite(DamoDTO dto);
+
+	void upRpl(String k_no);
+
+	void fitAnsDel(String kr_no);
+
+	void downRpl(String k_no);
+
+	String chkChoosed(String kr_no);
+
+	int knowfitRUpdate(DamoDTO dto);
+
+	String chkChoose(String k_no);
+
+	void chooseFitAns(String kr_no);
+
+	void upFitAns(String k_no);
+
 }

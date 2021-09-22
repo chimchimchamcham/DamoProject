@@ -150,5 +150,61 @@ public class FitController {
 		
 		return fitservice.fitRanking(session);
 	}
+	
+	////////////////////////////////////////여기부터/////////////////////////////////////
+	
+	@RequestMapping(value = "/fitDelete", method = RequestMethod.GET)
+	public ModelAndView fitDelete(@RequestParam String k_no, RedirectAttributes rAttr) {
+
+		logger.info("지식핏 글삭제 접속");
+		logger.info("k_no : {}", k_no);
+
+		return fitservice.fitDelete(k_no, rAttr);
+	}
+
+	@RequestMapping(value = "/fitAnsWrite", method = RequestMethod.POST)
+	public ModelAndView fitAnsWrite(@RequestParam HashMap<String, String> params, String k_no,
+			MultipartHttpServletRequest mtfRequest, HttpSession session,
+			@RequestParam(value = "imgNo", required = true) List<String> imgNos, RedirectAttributes rAttr) {
+
+		logger.info("지식핏 답변쓰기 접속");
+		logger.info("params : {}", params);
+		logger.info("imgNos : {}", imgNos);
+		logger.info("k_no : {}", k_no);
+		
+		for (int i = 1; i <= imgNos.size(); i++) {
+			System.out.println("i = " + i + " " + imgNos.contains("" + i));
+			if (!imgNos.contains("" + i)) {
+				continue;
+			}
+			System.out.println("실행!!");
+		}
+
+		return fitservice.fitAnsWrite(k_no, params, mtfRequest, session, imgNos, rAttr);
+	}
+	
+	@RequestMapping(value = "/fitAnsDel", method = RequestMethod.GET)
+	public ModelAndView fitAnsDel(@RequestParam String kr_no, @RequestParam String k_no) {
+
+		logger.info("지식핏 답변삭제 접속");
+		logger.info("k_no : {}", k_no);
+		logger.info("kr_no : {}", kr_no);
+
+		return fitservice.fitAnsDel(k_no,kr_no);
+	
+	}
+	
+	@RequestMapping(value = "/fitAnsUpdate", method = RequestMethod.POST)
+	public ModelAndView fitAnsUpdate(@RequestParam HashMap<String, String> params,
+			@RequestParam("imgNo") List<String> imgNos, @RequestParam("file") List<MultipartFile> files,
+			RedirectAttributes rAttr) {
+
+		logger.info("지식핏 글수정 접속");
+		logger.info("params : {}", params);
+		logger.info("imgNos : {}", imgNos);
+		logger.info("files : {}", files.size());
+
+		return fitservice.fitAnsUpdate(params, imgNos, files, rAttr);
+	}
 
 }

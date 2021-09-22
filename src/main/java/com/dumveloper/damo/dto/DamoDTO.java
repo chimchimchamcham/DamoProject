@@ -54,6 +54,12 @@ public class DamoDTO {
 	private boolean d_success; //성공 여부
 	private String d_code; //분류 코드
 	
+	//체크리스트
+	private int ch_no; //체크리스트 고유 번호
+	private int cd_no; //체크리스트 글 번호
+	private String cd_content; //체크리스트 내용
+	private String cd_checkYN; //체크 여부
+	
 	
 	//지식fit
 	private int k_no; //글번호
@@ -128,6 +134,33 @@ public class DamoDTO {
 	private String kR_content;//내용
 	private char kR_blindYN;//블라인드 여부
 	
+	//음식항목
+	private String food_name;
+	private int food_weight;
+	private int food_calorie;
+	private int food_carbo;
+	private int food_protein;
+	private int food_fat;
+	
+	//met
+	private String met_name;
+	private int met;
+	
+	//섭취 히스토리
+	private String hd_no; //일기 고유번호
+	private String hd_code; //일기 분류코드
+	private int hd_eat; //섭취량
+	private String hd_foodName; //음식 이름
+	private int hd_carbo; //탄수화물량
+	private int hd_protein; //단백질량
+	private int hd_fat; //지방량
+	private int hd_kcal; //열량
+	
+	//운동 히스토리
+	private String he_no; //일기 고유번호 
+	private int he_time; //운동 시간
+	private int he_kcal; //운동 소모 칼로리
+	//private String met_name;
 	
 	public int getB_no() {
 		return b_no;
@@ -640,6 +673,145 @@ public class DamoDTO {
 	}
 	public void setkR_blindYN(char kR_blindYN) {
 		this.kR_blindYN = kR_blindYN;
+	}
+
+	public String getFood_name() {
+		return food_name;
+	}
+	public void setFood_name(String food_name) {
+		this.food_name = food_name;
+	}
+	public int getFood_weight() {
+		return food_weight;
+	}
+	public void setFood_weight(int food_weight) {
+		this.food_weight = food_weight;
+	}
+	public int getFood_calorie() {
+		return food_calorie;
+	}
+	public void setFood_calorie(int food_calorie) {
+		this.food_calorie = food_calorie;
+	}
+	public int getFood_carbo() {
+		return food_carbo;
+	}
+	public void setFood_carbo(int food_carbo) {
+		this.food_carbo = food_carbo;
+	}
+	public int getFood_protein() {
+		return food_protein;
+	}
+	public void setFood_protein(int food_protein) {
+		this.food_protein = food_protein;
+	}
+	public int getFood_fat() {
+		return food_fat;
+	}
+	public void setFood_fat(int food_fat) {
+		this.food_fat = food_fat;
+	}
+	public String getMet_name() {
+		return met_name;
+	}
+	public void setMet_name(String met_name) {
+		this.met_name = met_name;
+	}
+	public int getMet() {
+		return met;
+	}
+	public void setMet(int met) {
+		this.met = met;
+	}
+	public int getCh_no() {
+		return ch_no;
+	}
+	public void setCh_no(int ch_no) {
+		this.ch_no = ch_no;
+	}
+	public String getCd_content() {
+		return cd_content;
+	}
+	public void setCd_content(String cd_content) {
+		this.cd_content = cd_content;
+	}
+	public String getCd_checkYN() {
+		return cd_checkYN;
+	}
+	public void setCd_checkYN(String cd_checkYN) {
+		this.cd_checkYN = cd_checkYN;
+	}
+	public int getCd_no() {
+		return cd_no;
+	}
+	public void setCd_no(int cd_no) {
+		this.cd_no = cd_no;
+	}
+	public String getHd_no() {
+		return hd_no;
+	}
+	public void setHd_no(String hd_no) {
+		this.hd_no = hd_no;
+	}
+	public String getHd_code() {
+		return hd_code;
+	}
+	public void setHd_code(String hd_code) {
+		this.hd_code = hd_code;
+	}
+	public int getHd_eat() {
+		return hd_eat;
+	}
+	public void setHd_eat(int hd_eat) {
+		this.hd_eat = hd_eat;
+	}
+	public String getHd_foodName() {
+		return hd_foodName;
+	}
+	public void setHd_foodName(String hd_foodName) {
+		this.hd_foodName = hd_foodName;
+	}
+	public int getHd_carbo() {
+		return hd_carbo;
+	}
+	public void setHd_carbo(int hd_carbo) {
+		this.hd_carbo = hd_carbo;
+	}
+	public int getHd_protein() {
+		return hd_protein;
+	}
+	public void setHd_protein(int hd_protein) {
+		this.hd_protein = hd_protein;
+	}
+	public int getHd_fat() {
+		return hd_fat;
+	}
+	public void setHd_fat(int hd_fat) {
+		this.hd_fat = hd_fat;
+	}
+	public int getHd_kcal() {
+		return hd_kcal;
+	}
+	public void setHd_kcal(int hd_kcal) {
+		this.hd_kcal = hd_kcal;
+	}
+	public String getHe_no() {
+		return he_no;
+	}
+	public void setHe_no(String he_no) {
+		this.he_no = he_no;
+	}
+	public int getHe_time() {
+		return he_time;
+	}
+	public void setHe_time(int he_time) {
+		this.he_time = he_time;
+	}
+	public int getHe_kcal() {
+		return he_kcal;
+	}
+	public void setHe_kcal(int he_kcal) {
+		this.he_kcal = he_kcal;
 	}
 	
 }

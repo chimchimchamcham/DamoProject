@@ -47,6 +47,16 @@ a:hover {
 .progress-bar {
 	background: -webkit-linear-gradient(left, #0275d8 " 0%, #5bc0de 100%);
 }
+
+.checked{
+	text-decoration: line-through;
+	color:gray;
+}
+
+.CheckDelBtn:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -158,13 +168,11 @@ a:hover {
 		<div class="container my-5">
 
 			<div class="row mb-5">
-				<a href="" style="">
 					<button type="button" class="btn btn-primary btn-sm "
-						style="width: 33px; height: 33px;">
+						style="width: 33px; height: 33px;" id="addDiaryList">
 						<i class="fas fa-plus"></i>
 					</button> <span style="font-size: 18px; font-weight: bold" class="pl-1">
 						추가하기</span>
-				</a>
 			</div>
 
 			<h3>섭취</h3>
@@ -254,10 +262,10 @@ a:hover {
 		<hr />
 
 		<!-- 일기 메모 -->
-		<div class="container my-5">
+		<div class="container my-4">
 			<div class="form-group">
 				<h3>일기 메모</h3>
-				<textarea class="form-control m-auto" rows="10" id="memoContent"
+				<textarea class="form-control m-auto pt-4" rows="10" id="memoContent"
 					style="overflow-y: scroll; resize: none;"
 					placeholder="오늘의 일기를 적어보세요."></textarea>
 			</div>
@@ -283,32 +291,25 @@ a:hover {
 		<hr />
 
 		<!-- 체크 리스트 -->
-		<div class="container my-5">
+		<div class="container my-4">
 			<h3>체크 리스트</h3>
-			<form>
-				<div class="checkbox pl-5 pt-3 pr-5">
-					<label style="font-size: 18px;"><input type="checkbox"
-						value="" style="transform: scale(1.3);" name="checkbox"> 물
-						2L마시기</label>
-				</div>
+			<form id="checkListBox">
+			<!-- 체크리스트 뿌려준다. -->
 			</form>
 
 			<hr />
 
 			<div class="row m-auto">
-				<form class="form-inline " action="#"
-					class="circle_strong form-inline">
-					<button type="button" class="btn btn-primary btn-sm "
-						style="width: 33px; height: 33px;" id="fileBtn">
+				<form class="form-inline " action="#" class="circle_strong form-inline">
+					<button type="button" class="btn btn-primary btn-sm"
+						style="width: 33px; height: 33px;" id="checklistBtn">
 						<i class="fas fa-plus"></i>
 					</button>
-
-					<span style="font-size: 18px; font-weight: bold; cursor: pointer;"
-						class="ml-1 text-primary "> 체크리스트 추가</span> <input type="text"
-						class="form-control mr-1 ml-4" id="" placeholder=""
-						name="checkList" value="" style="width: 860px;" />
-
+					<input type="text"
+						class="form-control mr-1 ml-4" id="checkList" placeholder="체크리스트를 적어보세요."
+						name="checkList" value="" style="width: 1000px;" />
 				</form>
+				
 			</div>
 		</div>
 
@@ -351,6 +352,60 @@ a:hover {
 		update($(this));
 	});
 
+	var ch_no;
+	//체크박스 추가 시
+	 $("#checklistBtn").on("click",function(){
+		 var CheckContent = $("input[name='checkList']");
+		 console.log("체크리스트",CheckContent);
+		 if(CheckContent.val() != null || CheckContent.val() != ''){
+		 		alert("체크리스트 추가");
+				console.log('체크리스트 insert 요청');
+				$.ajax({
+					url : 'checkList',
+					type : 'get',
+					dataType : 'json',
+					data : {
+						'd_no' : d_no,
+						'content' : CheckContent.val()
+					},
+					success : function(data) {
+						console.log("체크리스트 추가 성공 여부 : " + data.dto);
+						console.log("체크리스트 번호: " + data.dto.ch_no);
+						ch_no = data.dto.ch_no;
+						$("#checkListBox").innerHtml(
+								"<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'><input type='checkbox' value='"+dto.ch_no+"' style='transform: scale(1.3);' name='checkbox'>"
+								+data.dto.cd_content+
+								"</label><a href='checkDel?ch_no="+dto.ch_no+"' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>"
+							)
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+		 }else{
+			 alert("체크리스트 내용을 적어주세요.");
+		 }
+	 });
+
+		//체크리스트 삭제 시
+	 	$(document).on("click",".CheckDelBtn",function(){
+			console.log($(this).prev().children().first().val());
+			/* $.ajax({
+				url : url,
+				type : 'get',
+				dataType : 'json',
+				data : {
+					'ch_no' : $(this).prev().children().first().val()
+				},
+				success : function(data) {
+					console.log("업데이트 성공 여부 : " + data);
+				},
+				error : function(error) {
+					console.log(error);
+				}
+			}); */
+		});
+	
 	//값 업데이트 메서드
 	function update(obj) {
 		console.log("update 값 : " + obj.attr('id') + "/" + obj.val());
@@ -454,9 +509,12 @@ a:hover {
 	
 	var d_no;
 
-	
 	var tarKcalPercent;
 	var tarExePercent;
+	
+	/* 일기 목록 추가시 필요한 데이터 : 몸무게*/
+	var u_weight; 
+	/*--------------------------------------*/
 	
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
@@ -470,7 +528,7 @@ a:hover {
 		success : function(data) {
 			console.log("성공");
 			console.log(data.dto);
-
+			console.log(data.ch_noList[1].ch_no);
 			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
 			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
 			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리
@@ -483,6 +541,8 @@ a:hover {
 			document.getElementById("d_weight").value = data.dto.d_weight;
 			document.getElementById("d_tarKcal").value = d_tarKcal;
 			document.getElementById("d_tarExe").value = d_tarExe;
+			
+			u_weight = data.dto.d_weight;
 			
 			//목표 섭취,운동 달성률 계산
 			d_tarKcalPercent = Math.floor((data.dto.d_resultEat/data.dto.d_tarKcal)*100);
@@ -521,6 +581,22 @@ a:hover {
 			document.getElementById("fatPercent").style.width = fatPercent+'%';
 
 			d_no = data.dto.d_no;
+			
+<<<<<<< HEAD
+			//체크리스트 뿌리기
+			var ch_noList = data.ch_noList;
+			var checkContent = '';
+			ch_noList.forEach(function(element){
+				console.log(element);
+				checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'>";
+				checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+element.cd_content+"</label>";
+				checkContent += "<button type='button' class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></button></div>";
+			});
+			$("#checkListBox").html(checkContent);
+			
+			
+=======
+>>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 		},
 		error : function(e) {
 			console.log(e);
@@ -530,7 +606,6 @@ a:hover {
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)
-
 	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
 		value : tarKcalPercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
 		size : 230, //도넛의 크기를 결정해줍니다.
@@ -629,7 +704,11 @@ a:hover {
 		console.log(preDt);
 	}
 
-	threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); // 2014-02-26 => 3일전으로~
+<<<<<<< HEAD
+	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
+=======
+
+>>>>>>> abccce1b552c9de0df42ca3face3daebb0b2400f
 
 	/*다음날로 이동*/
 	function nextMonth() {
@@ -658,6 +737,17 @@ a:hover {
 			console.log(e);
 		}
 	 } */
+	 
+	 /* 일기 추가 시 */
+	 $("#addDiaryList").click(function(){
+		 console.log("일기 항목 추가 팝업 열림");
+		 console.log("전달할 일기 번호 : ",d_no);
+		 console.log("전달할 내 몸무게 : ",u_weight);
+		 window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight, "일기 항목 추가하기", "width=570, height=380, left=700, top=400, resizable=no, scrollbars=no");  
+	 });
+	 
+	 
+	 
 </script>
 
 </html>
