@@ -99,7 +99,6 @@ public class DiaryController {
 	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){
 		 logger.info("일기 항목 추가 요청");
 		 logger.info("selectMenu:{}",param.get("selectMenu"));
-		 
 		 service.submitList(param);
 		 return null;
 	 }

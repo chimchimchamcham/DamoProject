@@ -495,11 +495,12 @@ $("#submitBtn").click(function(){
 	else if(selectType == 'late_night_meal'){d_code='HD006'}
 	else if(selectType == 'water'){d_code='HD007'}
 	
+	
+	submitArr.selectMenu=selectMenu;
 	//음식의 경우
 	//검색 리스트에서 선택했을 경우
 	if(selectMenu =='foodlist'){
 		submitArr.hd_no = d_no; 
-		submitArr.selectMenu=selectMenu;
 		submitArr.hd_code = d_code;
 		submitArr.hd_eat = gram;
 		submitArr.hd_foodname = food_name;

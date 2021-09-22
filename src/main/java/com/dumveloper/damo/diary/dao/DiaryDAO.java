@@ -36,5 +36,9 @@ public interface DiaryDAO {
 
 	int insertEat(DamoDTO dto);//음식 추가 
 
+	DamoDTO checkHisDaily(DamoDTO dto);
+
+	int updateHisDaily(DamoDTO dto);
+
 
 }

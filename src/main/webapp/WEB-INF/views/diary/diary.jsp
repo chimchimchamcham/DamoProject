@@ -528,7 +528,7 @@ a:hover {
 		success : function(data) {
 			console.log("성공");
 			console.log(data.dto);
-			console.log(data.ch_noList[1].ch_no);
+			//console.log(data.ch_noList[1].ch_no);
 			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
 			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
 			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리

@@ -98,6 +98,10 @@ public class DiaryService {
 		HashMap<String, ArrayList<DamoDTO>> map = new HashMap<String, ArrayList<DamoDTO>>();
 		ArrayList<DamoDTO> list = new ArrayList<DamoDTO>();
 		logger.info("테이블 명 : {}, 검색 내용:{}", selectMenu, searchInsert);
+		
+		searchInsert=searchInsert.replaceAll(" ", "");
+		logger.info("공백 제거 : {}",searchInsert);
+		
 		if (selectMenu.equals("foodlist")) {// 음식 검색
 			list = dao.searchFood(searchInsert);
 		} else if (selectMenu.equals("met")) {// 운동 검색
@@ -159,7 +163,13 @@ public class DiaryService {
 			dto.setHd_fat(hd_fat);
 			dto.setHd_kcal(hd_kcal);
 			
-			success = dao.insertEat(dto);
+			if(checkHisDaily(dto).equals("none")){//전에 섭취한 기록이 없는 경우 - 항목 insert
+				success = dao.insertEat(dto);
+			}else if(checkHisDaily(dto).equals("exist_update_success")) { //전에 섭취한 기록이 있는 경우 - 항목 업데이트
+				success = 1;
+			}else if(checkHisDaily(dto).equals("exist_update_fail")) { //항목 업데이트 실패했을 경우
+				success =0;
+			}
 			
 		//운동 등록 
 		}else if(param.get("selectMenu").equals("met")) {
@@ -174,15 +184,68 @@ public class DiaryService {
 			dto.setHe_time(he_time);
 			dto.setHe_kcal(he_kcal);
 			dto.setMet_name(met_name);
+			
 			success = dao.insertExe(dto);
 		}
 		
 		if(success>0) {
 			checker = "success";
 		}
-		
+		logger.info("일기 추가 등록 성공 여부 : {}",checker);
 		map.put("success", checker);
 		return map;
 
 	}
+	
+	public String checkHisDaily(DamoDTO dto) {
+		logger.info("섭취 목록 조회");
+		DamoDTO resultDTO = dao.checkHisDaily(dto);//이전 항목 조회
+		String searchResult = "none";
+		
+		if(resultDTO !=null) {//항목이 존재
+			//이전 항목에서 값 가져오기
+			int carbo = resultDTO.getHd_carbo();
+			int protein = resultDTO.getHd_protein();
+			int fat = resultDTO.getHd_fat();
+			int kcal = resultDTO.getHd_kcal();
+			
+			//추가하려는 값과 더하기
+			int addCarbo = dto.getHd_carbo()+carbo;
+			int addProtein = dto.getHd_protein()+protein;
+			int addFat = dto.getHd_fat()+fat;
+			int addKcal = dto.getHd_kcal()+kcal;
+			
+			dto.setHd_carbo(addCarbo);
+			dto.setHd_protein(addProtein);
+			dto.setHd_fat(addFat);
+			dto.setHd_kcal(addKcal);
+			
+			int success = updateHisDaily(dto);
+			searchResult="exist_update_fail";
+			
+			if(success>0) {
+				searchResult="exist_update_success";
+			}
+		}
+		
+		return searchResult;
+		
+	}
+	
+	//섭취 항목 수정
+	public int updateHisDaily(DamoDTO dto) {
+		logger.info("등록한 섭취 목록 수정");
+		String result="수정 실패";
+		int success = 0;
+		success = dao.updateHisDaily(dto);
+		if(success>0) {
+			result = "수정 성공";
+		}
+		logger.info(result);
+		return success;
+	}
+	
+	//전에 입력한 운동 기록이 있는지 조회
+	
+	//운동 기록 수정 
 }
