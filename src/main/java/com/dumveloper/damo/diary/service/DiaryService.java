@@ -337,7 +337,7 @@ public class DiaryService {
 		
 		int success;
 		
-		DamoDTO setDto = new DamoDTO();
+		DamoDTO setDto = new DamoDTO(); //더해준 값을 넣어줄 DTO
 		
 		//일기에서 섭취 칼로리 합계, 운동 칼로리 합계, 탄단지 가져오기
 		if(HisDailyYN) {
@@ -354,18 +354,27 @@ public class DiaryService {
 			
 			int d_resulteat = getDTO.getD_resultEat();
 			int d_resultcarbo = getDTO.getD_resultCarbo();
-			int d_resultprotein = getDTO.getD_protein();
+			int d_resultprotein = getDTO.getD_resultProtein();
 			int d_resultfat = getDTO.getD_resultFat();
 			
-			System.out.println("기존 입력된 섭취 열량 : "+d_resulteat+" / 기존 입력된 섭취 탄수화물 : "+d_resultcarbo);
-			System.out.println("기존 입력된 섭취 단백질 : "+d_resultprotein+" / 기존 입력된 섭취 지방 : "+d_resultfat);
+			logger.info("---------------기존 diary 데이터---------------");
+			logger.info("이전 diary 섭취 총량 : {}",d_resulteat);
+			logger.info("이전 diary 탄수화물 총량 : {}",d_resultcarbo);
+			logger.info("이전 diary 탄수화물 총량 : {}",d_resultprotein);
+			logger.info("이전 diary 지방 총량 : {}",d_resultfat);
+			logger.info("-----------------------------------------------");
 			
 			hd_kcal = dto.getHd_kcal()+d_resulteat;
 			hd_carbo = dto.getHd_carbo()+d_resultcarbo;
 			hd_protein = dto.getHd_protein()+d_resultprotein;
 			hd_fat = dto.getHd_fat()+d_resultfat;
 			
-			System.out.println("합친 섭취 데이터 - 칼로리 : "+hd_kcal+" / 단백질 : "+hd_protein+" / 탄수화물 : "+hd_carbo+" / 지방 : "+hd_fat);
+			logger.info("---------------합친 diary 데이터---------------");
+			logger.info("합친 diary 섭취 열량 총량 : {}",hd_kcal);
+			logger.info("합친 diary 탄수화물 총량 : {}",hd_carbo);
+			logger.info("합친 diary 단백질 총량 : {}",hd_protein);
+			logger.info("합친 diary 지방 총량 : {}",hd_fat);
+			logger.info("-----------------------------------------------");
 			
 			setDto.setD_resultEat(hd_kcal);
 			setDto.setD_resultCarbo(hd_carbo);
