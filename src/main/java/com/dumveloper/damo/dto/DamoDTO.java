@@ -164,7 +164,6 @@ public class DamoDTO {
 	private String he_no; //일기 고유번호 
 	private int he_time; //운동 시간
 	private int he_kcal; //운동 소모 칼로리
-	//private String met_name;
 	
 	public int getFitcnt() {
 		return fitcnt;

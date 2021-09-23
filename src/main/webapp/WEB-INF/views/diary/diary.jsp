@@ -177,7 +177,7 @@ a:hover {
 			</div>
 
 			<h3>섭취</h3>
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3" style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse1">
@@ -208,7 +208,7 @@ a:hover {
 				</div>
 			</div>
 			
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse2">
@@ -239,7 +239,7 @@ a:hover {
 				</div>
 			</div>
 			
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse3">
@@ -270,7 +270,7 @@ a:hover {
 				</div>
 			</div>
 
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse4">
@@ -301,7 +301,7 @@ a:hover {
 				</div>
 			</div>
 			
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse5">
@@ -332,7 +332,7 @@ a:hover {
 				</div>
 			</div>
 			
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse6">
@@ -363,7 +363,7 @@ a:hover {
 				</div>
 			</div>
 			
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse7">
@@ -398,7 +398,7 @@ a:hover {
 
 
 			<h3>운동</h3>
-			<div id="accordion" class="my-3" >
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse8">
@@ -417,7 +417,7 @@ a:hover {
 										<th colspan="2">소모 칼로리</th>
 									</tr>
 								</thead>
-								<tbody id="HD008">
+								<tbody id="exerciseBox">
 								<!-- 목록 뿌리기 -->
 								</tbody>
 							</table>
@@ -823,7 +823,6 @@ a:hover {
 			
 			//섭취 목록 뿌려주기
 			var hisDailyList = data.hisDailyList;
-			
 			hisDailyList.forEach(function(element){
 				var hisDailyListContent = '';
 				console.log("음식 목록 테이블 추가 ",element);
@@ -834,25 +833,67 @@ a:hover {
 				hisDailyListContent +=	"<td>"+element.hd_protein+"</td>";
 				hisDailyListContent +=	"<td>"+element.hd_fat+"</td>";
 				hisDailyListContent +=	"<td>"+element.hd_kcal+"</td>";
-				hisDailyListContent +=	"<td><a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>";
+				hisDailyListContent +=	"<td><a class='EatDelBtn' id="+element.hd_foodName+"><i class='fas fa-trash-alt float-right' ></i></a></td>";
 				hisDailyListContent +="</tr>";
 				
 				$("#"+element.hd_code).append(hisDailyListContent);
+				$("#"+element.hd_code).parents("#accordion").css("display","");
+
+			});
+
+			
+			//운동 목록 뿌려주기
+			var hisExerciseList = data.hisExerciseList;
+			hisExerciseList.forEach(function(element){
+				var hisExerciseListContent = '';
+				console.log("운동 목록 테이블",element);
+				hisExerciseListContent += "<tr>";
+				hisExerciseListContent +=	"<td>"+element.met_name+"</td>";
+				hisExerciseListContent +=	"<td>"+element.he_time+"</td>";
+				hisExerciseListContent +=	"<td>"+element.he_kcal+"</td>";
+				hisExerciseListContent +=	"<td><a class='ExeDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>";
+				hisExerciseListContent +="</tr>";
+				
+				$("#exerciseBox").append(hisExerciseListContent);
+				$("#exerciseBox").parents("#accordion").css("display","");
+
 			});
 			
-			 
-			
-		
 
 		},
 		error : function(e) {
 			console.log(e);
 		}
+	}); /*-----뿌려주기 ajax end-----*/
+	
+	
+	//섭취 목록 삭제
+ 	$(document).on("click",".EatDelBtn",function(){
+ 		var hd_code = ''; //삭제할 음식의 코드 분류
+ 		var hd_foodName = $(this).attr("id"); //삭제할 음식 명
+ 		
+		console.log($(this).prev().children().first().val());
+		var delElement = $(this);
+		$.ajax({
+			url : 'checkDel',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'ch_no' : $(this).prev().children().first().val()
+			},
+			success : function(data) {
+				console.log("체크리스트 삭제 성공 여부 : " + data);
+				if(data>0){
+					delElement.parent().remove();
+				}
+				
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
 	});
-	
-	
-	
-	
+
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)

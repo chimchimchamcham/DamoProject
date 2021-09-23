@@ -121,6 +121,11 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 	FROM his_daily WHERE hd_no = (SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
 </select>
 
+<select id="hisExerciseList" resultType="damo"  parameterType="damo">
+	SELECT * FROM his_exercise
+	WHERE he_no = (SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+</select>
+
 <!-- <select id="totalKcal" resultType="hashmap"  parameterType="damo">
 	 SELECT (select c_name from code where his_daily.hd_code = code.c_code)as c_name, SUM(HD_KCAL) as totalKcal
    FROM his_daily
