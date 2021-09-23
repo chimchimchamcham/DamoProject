@@ -209,7 +209,7 @@
 	    $("#tarKcal").focusout(function(){
 	    	console.log("섭취 칼로리 벗어남");
 	    	$(this).css("background-color","#F4F4E9");
-	    	
+	    	console.log($(this));
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
@@ -247,6 +247,7 @@
 	    //목표 운동 칼로리 벗어났을 때
 	    $("#goal").focusout(function(){
 	    	console.log("목표 벗어남");
+	    	console.log($(this));
 	    	$(this).css("background-color","#F4F4E9");
 	    	
 	    	//console.log($(this).val())

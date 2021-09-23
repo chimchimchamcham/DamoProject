@@ -168,13 +168,11 @@ a:hover {
 		<div class="container my-5">
 
 			<div class="row mb-5">
-				<a href="" style="">
 					<button type="button" class="btn btn-primary btn-sm "
-						style="width: 33px; height: 33px;">
+						style="width: 33px; height: 33px;" id="submitListBtn">
 						<i class="fas fa-plus"></i>
 					</button> <span style="font-size: 18px; font-weight: bold" class="pl-1">
 						추가하기</span>
-				</a>
 			</div>
 
 			<h3>섭취</h3>
@@ -562,6 +560,10 @@ a:hover {
 	var tarKcalPercent;
 	var tarExePercent;
 	
+	/*일기 목록 추가시 필요한 데이터 : 몸무게 */
+	var u_weight;
+	/*--------------------------------------*/
+	
 	/*처음 디폴트 값 뿌려주고 DB에 저장*/
 	$.ajax({
 		type : 'get',
@@ -587,6 +589,8 @@ a:hover {
 			document.getElementById("d_weight").value = data.dto.d_weight;
 			document.getElementById("d_tarKcal").value = d_tarKcal;
 			document.getElementById("d_tarExe").value = d_tarExe;
+			
+			u_weight=data.dto.d_weight;
 			
 			//목표 섭취,운동 달성률 계산
 			d_tarKcalPercent = Math.floor((data.dto.d_resultEat/data.dto.d_tarKcal)*100);
@@ -791,7 +795,14 @@ a:hover {
 				+ (dt.getDate() + 30);
 		console.log(nextDt);
 	}
-
+	
+	/*버튼 클릭시 일기 추가 팝업*/
+	$("#submitListBtn").click(function(){
+		console.log("일기 추가 팝업 요청");
+		window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight,"일기 항목 추가하기","width=570, height=380, left=700,top=400, resizable=no, scrollbars=no");
+		
+	})
+	
 </script>
 
 </html>
