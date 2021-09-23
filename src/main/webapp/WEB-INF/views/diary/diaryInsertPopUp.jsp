@@ -139,7 +139,14 @@
 		<div id="content_water">
 			<div class="row" id="water_ml">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">분량(ml)</div>
-				<div class="col-6"><input type="text" class="form-control" name="water_ml"></div>
+				<div class="col-6">
+					<input type="text" class="form-control " name="water_ml"><!-- form-control is-valid -->
+					<div class="invalid-feedback" style="display:none">
+	       				 0이상을 입력해주세요!
+	      			</div>
+      			</div> 
+				
+      			
 			</div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
@@ -228,6 +235,7 @@ $('select[name=selectAdd]').change(function(){
 		$("input[name=search_insert]").attr("disabled",false); 
 	//물 선택시
 	}else if($(this).val() == 'water'){
+		selectMenu = 'water';
 		$("#content_eat,#content_exe,#search_inser,#search_btnt,#search").hide();
 		$("#content_water,#search_food").show();
 		$("input[name=search_insert]").attr("disabled",true); 
@@ -321,6 +329,9 @@ var met;
 var u_weight;
 var exeTime;
 var exeKcal;
+
+//물 마신량 불러오기
+var waterml;
 
 //검색 리스트에서 항목 선택시 
 $("#search_ul").on("click","li",function(){
@@ -436,10 +447,10 @@ $("input[name=eating_gram]").focusout(function(){
 	    	gram=$(this).val();
 	    	
 	    	//변경되는 계산식
-	    	changeKcal = kcal/weight * gram;
-	    	changeCarbo = carbo/weight * gram;
-	    	changeProtein = protein/weight * gram;
-	    	changeFat = fat/weight * gram;
+	    	changeKcal = Math.ceil(kcal/weight * gram);
+	    	changeCarbo = Math.ceil(carbo/weight * gram);
+	    	changeProtein = Math.ceil(protein/weight * gram);
+	    	changeFat = Math.ceil(fat/weight * gram);
 	    	
 	    	console.log(gram+"/"+weight+"/"+kcal+"/"+changeKcal+"/"+carbo+"/"+protein+"/"+fat);
 	    	
@@ -461,7 +472,8 @@ $("input[name = exe_time]").focusin(function(){
 //운동시간 입력칸 벗어났을 때
 $("input[name = exe_time]").focusout(function(){
 	console.log("운동시간 입력칸 벗어남");
-	$(this).css("background-color","#F4F4E9");
+	
+	
 	
 	if($(this).val() != $(this).prop('defaultValue')){
 		
@@ -470,7 +482,7 @@ $("input[name = exe_time]").focusout(function(){
 		console.log("운동 시간 : ",exeTime);
 		console.log("met : ",met);
 		//운동 칼로리 계산 공식
-		exeKcal = met *3.5*u_weight/200*exeTime;
+		exeKcal = Math.ceil(met *3.5*u_weight/200*exeTime);
 		
 		console.log("운동 칼로리 : ",exeKcal);
 		$("#exeKcal_span").text(exeKcal);
@@ -479,6 +491,38 @@ $("input[name = exe_time]").focusout(function(){
 });
 /*-------------------------------------------------------*/
 
+//물 입력시
+$("input[name = water_ml]").focusin(function(){
+	console.log("물 입력칸 접근");
+	$(this).css("background-color","white");
+});
+
+//운동시간 입력칸 벗어났을 때
+$("input[name = water_ml]").focusout(function(){
+	console.log("물 입력칸 벗어남");
+	
+	if($(this).val() != $(this).prop('defaultValue')){
+		
+		console.log('물 입력칸 벗어남');
+		water_ml = $(this).val();
+		
+	}
+	
+	if(water_ml>0){
+		console.log("물 섭취량 : ",water_ml);
+		$(this).removeClass("is-invalid");
+		$("#water_ml").find(".invalid-feedback").css("display","none");
+		$("#search").show();//등록 버튼 보이기
+		
+	}else{
+		console.log("물 0보다 적게 섭취 했을 때");
+		$(this).addClass("is-invalid");
+		$("#water_ml").find(".invalid-feedback").css("display","inline");
+		$("#search").hide();
+	}
+});
+
+/*-----------------------------------------------*/
 var d_code; //분류코드
 var submitUrl = 'submitList';
 var submitArr={}; // 값을 넘겨 줄 배열 선언
@@ -486,13 +530,6 @@ var submitArr={}; // 값을 넘겨 줄 배열 선언
 //전송 버튼 클릭시
 $("#submitBtn").click(function(){
 	console.log("selectMenu: ",selectMenu);
-	//분류항목 선택 안했을 때 - selectType
-	
-	//음식 이름이 비어있을 때 
-	
-	//음식 분량 입력 칸이 비어있거나 0일 때
-	
-	//empty
 	
 	//분류 코드 구분 
 	if(selectType == 'breakfast'){d_code = 'HD001'}
@@ -533,7 +570,18 @@ $("#submitBtn").click(function(){
 		submitArr.he_time = exeTime;
 		submitArr.he_kcal = exeKcal;
 		submitArr.met_name = exe_name;
+	}else if(selectMenu =='water'){
+		submitArr.hd_no =d_no;
+		submitArr.hd_code=d_code;
+		submitArr.hd_foodname = '물';
+		
+		submitArr.hd_eat = water_ml;
+		submitArr.hd_carbo = 0;
+		submitArr.hd_protein = 0;
+		submitArr.hd_fat = 0;
+		submitArr.hd_kcal = 0;
 	}
+	
 	console.log(submitArr);
 	
 	//최종적 전송

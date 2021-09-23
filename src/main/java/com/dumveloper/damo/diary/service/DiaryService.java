@@ -150,7 +150,8 @@ public class DiaryService {
 		String searchResult ="";
 		
 		//음식등록
-		if(param.get("selectMenu").equals("foodlist")){
+		if(param.get("selectMenu").equals("foodlist") || param.get("selectMenu").equals("water")){
+			
 			String hd_no = param.get("hd_no");
 			String hd_code = param.get("hd_code");
 			int hd_eat = Integer.parseInt(param.get("hd_eat"));
