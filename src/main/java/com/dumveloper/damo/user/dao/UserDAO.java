@@ -43,6 +43,12 @@ public interface UserDAO {
 	ArrayList<DamoDTO> dbnotifyinfo(int notify_no);
 	ArrayList<DamoDTO> dbblackinfo(int black_no);
 	
+	//마이페이지 관련
+	DamoDTO myPageUserInfo(String u_id);
+	ArrayList<DamoDTO> myFitList(String u_id);
+	ArrayList<DamoDTO> myAnsList(String u_id);
+	ArrayList<DamoDTO> myDirList(String u_id);
+	
 	
 
 	

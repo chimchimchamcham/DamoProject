@@ -467,6 +467,36 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 
 
+		public ModelAndView myPage(HttpSession session) {
+			String u_id = (String) session.getAttribute("loginId");
+			
+			//회원정보 테이블 + 순위 + 질문수 + 답변수 + 채택률
+			DamoDTO dto = dao.myPageUserInfo(u_id);
+			
+			//내가 쓴 fit 목록
+			ArrayList<DamoDTO> myFitList = dao.myFitList(u_id);
+			logger.info("myFitList.size() : {}",myFitList.size());
+			
+			//내가 쓴 답변
+			ArrayList<DamoDTO> myAnsList = dao.myAnsList(u_id);
+			logger.info("myAnsList.size() : {}",myAnsList.size());
+			
+			//내 사전
+			ArrayList<DamoDTO> myDirList = dao.myDirList(u_id);
+			logger.info("myDirList.size() : {}",myDirList.size());
+			
+			ModelAndView mav = new ModelAndView();
+			
+			mav.addObject("dto", dto);
+			mav.addObject("myFitList", myFitList);
+			mav.addObject("myAnsList", myAnsList);
+			mav.addObject("myDirList", myDirList);
+			
+			mav.setViewName("user/myPage");
+			return mav;
+		}
+
+
 
 
 

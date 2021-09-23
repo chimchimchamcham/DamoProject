@@ -110,4 +110,42 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 			select * from blacklist b,code c where b.b_no = #{param1} and b.b_code = c.c_code
 	</select>
 
+	<select id="myPageUserInfo" resultType="damo">
+		SELECT u_id, u_pw, u_name, u_email, u_nick, u_age, u_weight, u_tarweight, u_height, u_gender, u_intro, u_filename, u_choosecnt,
+	        (SELECT g_filename FROM grade WHERE g_code = u.g_code) g_filename,
+	        (SELECT count(*) FROM knowfit WHERE u_id = #{param1} AND k_blindyn = 'N') fitcnt,
+	        (SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') anscnt,
+	        u_choosecnt*100/(SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') choosepct,
+	        (SELECT rnum
+	         FROM (SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
+	            U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
+	            FROM (SELECT u_id, u_nick, u_filename, u_choosecnt FROM userinfo WHERE u_blindyn = 'N') U,
+	            (SELECT u_id, count(*) anscnt FROM knowFit_R GROUP BY u_id) K
+	            WHERE U.u_id = K.u_id(+)
+	            ORDER BY U.u_choosecnt DESC, anscnt DESC)
+	         WHERE U_ID = #{param1}
+	        ) ranking
+		FROM userinfo u
+		WHERE u_id = #{param1}
+	</select>
+	
+	<select id="myFitList" resultType="damo">
+		SELECT k_no, k_code, k_title, k_content, k_solutionyn 
+		FROM knowfit 
+		WHERE k_blindyn = 'N' AND u_id = #{param1}
+	</select>
+	
+	<select id="myAnsList" resultType="damo">
+		SELECT k.k_no, k.k_code, k.k_title, 
+       		   kr.kr_content, kr.kr_chooseyn  
+		FROM knowfit k, knowfit_r kr 
+		WHERE k.k_no = kr.k_no AND k.k_blindyn = 'N' AND 
+      		  kr.kr_blindyn = 'N' AND k.u_id = #{param1}
+	</select>
+	
+	<select id="myDirList" resultType="damo">
+		SELECT k.k_no, k.k_code, k.k_title, k.k_content, k.k_solutionyn 
+		FROM knowfit k, mydir m
+		WHERE k.k_no = m.k_no AND k.k_blindyn = 'N' AND m.u_id = #{param1}
+	</select>
 </mapper>
