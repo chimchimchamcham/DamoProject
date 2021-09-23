@@ -74,4 +74,17 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 	UPDATE checklist_diary SET cd_checkYN = #{param2} WHERE ch_no = #{param1}
 </update>
 
+<select id="hisDailyList" resultType="damo"  parameterType="damo">
+	SELECT hd_no, hd_code, hd_eat,hd_foodname,hd_carbo,hd_protein, hd_fat,hd_kcal,
+		(select c_name from code where his_daily.hd_code = code.c_code)as c_name
+	FROM his_daily WHERE hd_no = (SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+</select>
+
+<!-- <select id="totalKcal" resultType="hashmap"  parameterType="damo">
+	 SELECT (select c_name from code where his_daily.hd_code = code.c_code)as c_name, SUM(HD_KCAL) as totalKcal
+   FROM his_daily
+   WHERE hd_no = (SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+   GROUP BY HD_CODE;
+</select> -->
+
 </mapper>
