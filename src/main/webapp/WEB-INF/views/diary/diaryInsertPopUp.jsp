@@ -95,6 +95,7 @@
 		<div class="row">
 			<div class="col-10" id="search_food" style="font-size:25px;font-weight:bold;"><span id="default_msg">선택해주세요!</span><input type="hidden" class="form-control" name="search_food" placeholder="음식을 입력하세요" style="margin:0 15px"></div>
 		</div>
+		<!-- ------------------------------------------------------------------ -->
 		<!-- 섭취 선택했을 때 -->
 		<div id="content_eat">
 			<div class="row" id="eating_gram">
@@ -181,6 +182,27 @@ $('select[name=selectAdd]').change(function(){
 	//검색까지 한 후 다시 선택시 
 	$("input[name=search_insert]").attr('readonly',false);
 	$("input[name=search_insert]").val('');
+	$("#search_list").hide(); //검색 결과 숨기기
+	
+	//음식 칸 초기화
+	$("input[name=eating_gram]").val('');
+	$("#default_Kcal").text('');
+	$("#default_Carbo").text('');
+	$("#default_Pro").text('');
+	$("#default_Fat").text('');
+	//직접입력칸 초기화
+	$("input[name=search_food]").prop('type','hidden');
+	 $("input[name=eating_Kcal]").prop('type','hidden');
+	 $("input[name=eating_Carbo]").prop('type','hidden');
+	 $("input[name=eating_Pro]").prop('type','hidden');
+	 $("input[name=eating_Fat]").prop('type','hidden');
+	 
+	 //운동 칸 초기화
+	 $("input[name=exe_time]").val('');
+	 $("#exeKcal_span").text('');
+	 //직접입력칸 초기화
+	 $("input[name=exe_Kcal]").prop('type','hidden');
+	 $("input[name=exe_Kcal]").val('');
 	
 	//섭취목록 선택시
 	if( $(this).val()=='breakfast' || $(this).val()=='morning_snack' || $(this).val()=='lunch' || $(this).val()=='afternoon_snack' || $(this).val()=='dinner' || $(this).val()=='late_night_meal'){selectMenu = $(this).val();
@@ -225,6 +247,7 @@ var content = '';
 
 //검색 버튼 클릭시 
 $("#goSearch").click(function(){
+	content ='';
 	$("#search_list").show();
 	
 	console.log("선택된 메뉴:",selectMenu);
@@ -244,6 +267,7 @@ $("#goSearch").click(function(){
     		console.log(data.resultList);
     		console.log(data.resultList.length);
     		console.log(data.resultList[0].food_name); */
+           
     		if(selectMenu =='foodlist'){
 	    		for(var i = 0; i<data.resultList.length; i++){
 	    			content += '<li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0">';
@@ -260,14 +284,17 @@ $("#goSearch").click(function(){
 	    			content += '<li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0">';
 	    			content +='<span class="met_name">'+data.resultList[i].met_name+'</span>';
 	    			content +='<span class="met" style="display:none">'+data.resultList[i].met+'</span>';
-	    			content +='<span class="u_weight" style="display:none">'+data.resultList[i].u_weight+'</span>';
 	    			content +='</li>'; 
 	    		}
     		}
     		content +='<li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0; color:blue"><span class="empty">직접 입력</span></li>';
-    		 $("#search_ul").empty();
-             $("#search_ul").append(content);
-             reqUrl ='searchList/';
+    		 
+    		//초기화
+    		
+    		$("#search_ul li").remove();
+    		$("#search_ul").append(content);
+           /*  $("#search_ul").append(content); */
+            reqUrl ='searchList/';
     	},
     	error:function(error){
     		console.log(error);
@@ -299,8 +326,11 @@ var exeKcal;
 $("#search_ul").on("click","li",function(){
 	console.log($(this)[0].firstChild.className);
 	$("#search_list").hide(); //검색 결과 숨기기
+	$("#search_ul li").remove();
 	$("input[name=search_insert]").attr('readonly',true);
-	 if($(this)[0].firstChild.className=="empty"){
+	 
+	//직접 선택시 
+	if($(this)[0].firstChild.className=="empty"){
 		 console.log("직접선택 요청");
 		 $("#default_msg").text(''); 
 		 //음식
@@ -313,8 +343,9 @@ $("#search_ul").on("click","li",function(){
 		 //운동
 		 $("input[name=exe_Kcal]").prop('type','text');
 		 
-		 
+	//검색항목에서 선택시 	 
 	 }else{
+		 
 		 $("input[name=search_food]").prop('type','hidden');
 		 $("input[name=eating_Kcal]").prop('type','hidden');
 		 $("input[name=eating_Carbo]").prop('type','hidden');
@@ -330,20 +361,21 @@ $("#search_ul").on("click","li",function(){
 		protein = $(this).find(".food_protein").text();
 		fat = $(this).find(".food_fat").text();
 		
-		$("#default_msg").text($(this).find(".foodName").text()); 
-		$("input[name=eating_gram]").val($(this).find(".food_weight").text());
-		$("#default_Kcal").text($(this).find(".food_calorie").text());
-		$("#default_Carbo").text($(this).find(".food_carbo").text());
-		$("#default_Pro").text($(this).find(".food_protein").text());
-		$("#default_Fat").text($(this).find(".food_fat").text());
+		if(selectMenu == 'foodlist'){
+			$("#default_msg").text($(this).find(".foodName").text()); 
+			$("input[name=eating_gram]").val($(this).find(".food_weight").text());
+			$("#default_Kcal").text($(this).find(".food_calorie").text());
+			$("#default_Carbo").text($(this).find(".food_carbo").text());
+			$("#default_Pro").text($(this).find(".food_protein").text());
+			$("#default_Fat").text($(this).find(".food_fat").text());
 		
-		//운동일 경우 - met 데이터 받아오기
-		exe_name = $(this).find(".met_name").text();
-		met = $(this).find(".met").text();
-		
-		console.log(met);
-		$("#default_msg").text($(this).find(".met_name").text()); //선택한 운동으로 이름 바꾸기
-		
+		}else if(selectMenu == 'met'){
+			//운동일 경우 - met 데이터 받아오기
+			exe_name = $(this).find(".met_name").text();
+			met = $(this).find(".met").text();
+			
+			$("#default_msg").text($(this).find(".met_name").text()); //선택한 운동으로 이름 바꾸기
+		}
 	 }
 	
 });
@@ -354,7 +386,7 @@ $("#deleteSearch").click(function(){
 	//검색칸 초기화
 	$("input[name=search_insert]").attr('readonly',false);
 	$("input[name=search_insert]").val('');
-	
+	$("#search_ul li").remove();
 	//이름 초기화
 	$("#default_msg").text('선택해주세요!'); 
 	
@@ -467,33 +499,39 @@ $("#submitBtn").click(function(){
 	else if(selectType == 'late_night_meal'){d_code='HD006'}
 	else if(selectType == 'water'){d_code='HD007'}
 	
+	
+	submitArr.selectMenu=selectMenu;
 	//음식의 경우
 	//검색 리스트에서 선택했을 경우
 	if(selectMenu =='foodlist'){
-		submitArr.hd_no = '100'; 
+		submitArr.hd_no = d_no; 
 		submitArr.hd_code = d_code;
 		submitArr.hd_eat = gram;
 		submitArr.hd_foodname = food_name;
 		
 		if(changCnt >0){ //분량을 변경한 경우
-		 submitArr.hd_carbo = changeKcal;
-		 submitArr.hd_protein = changeCarbo;
+		 submitArr.hd_eat = gram;
+		 submitArr.hd_carbo = changeCarbo;
+		 submitArr.hd_protein = changeProtein;
 		 submitArr.hd_fat = changeFat;
 		 submitArr.hd_kcal = changeKcal;
 		}else{//변경하지 않은 경우
+		 submitArr.hd_eat = weight;
 		 submitArr.hd_carbo = carbo;
 		 submitArr.hd_protein = protein;
 		 submitArr.hd_fat = fat;
 		 submitArr.hd_kcal = kcal;
 		}
+		
 	//운동의 경우
-	}else if(selectMenu =='met' ){
+	}else if(selectMenu =='met'){
 		submitArr.he_no=d_no;
 		submitArr.he_time = exeTime;
 		submitArr.he_kcal = exeKcal;
 		submitArr.met_name = exe_name;
 	}
 	console.log(submitArr);
+	
 	//최종적 전송
 	$.ajax({
 		url:submitUrl,
@@ -508,5 +546,7 @@ $("#submitBtn").click(function(){
 		}
 	})
 });
+
+
 </script>
 </html>

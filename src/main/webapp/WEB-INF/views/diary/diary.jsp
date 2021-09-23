@@ -574,7 +574,7 @@ a:hover {
 		success : function(data) {
 			console.log("성공");
 			console.log(data.dto);
-			/* console.log(data.ch_noList[1].ch_no); */
+
 			d_tarKcal = parseInt(data.dto.d_tarKcal); //목표 섭취 칼로리
 			d_tarExe = parseInt(data.dto.d_tarExe); //목표 운동 칼로리
 			d_resultEat = parseInt(data.dto.d_resultEat); //섭취 칼로리
@@ -626,6 +626,7 @@ a:hover {
 
 			d_no = data.dto.d_no;
 			
+
 			//체크리스트 뿌리기
 			var ch_noList = data.ch_noList;
 			var checkContent = '';
@@ -642,6 +643,7 @@ a:hover {
 			});
 			$("#checkListBox").html(checkContent);
 			
+
 			
 			//섭취 목록 뿌려주기
 			
@@ -666,6 +668,7 @@ a:hover {
 			
 			
 			
+
 		},
 		error : function(e) {
 			console.log(e);
@@ -776,7 +779,9 @@ a:hover {
 		console.log(preDt);
 	}
 
+
 	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
+
 
 	/*다음날로 이동*/
 	function nextMonth() {

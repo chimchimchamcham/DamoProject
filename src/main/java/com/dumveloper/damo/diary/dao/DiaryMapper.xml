@@ -70,8 +70,48 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 	DELETE FROM checklist_diary WHERE ch_no = #{param1}
 </delete>
 
+
+<insert id="insertExe" parameterType="damo">
+	INSERT INTO HIS_EXERCISE(HE_NO,HE_TIME,HE_KCAL,MET_NAME) VALUES(#{he_no},#{he_time},#{he_kcal},#{met_name})
+</insert>
+
+<insert id="insertEat" parameterType="damo">
+	INSERT INTO HIS_DAILY(HD_NO,HD_CODE,HD_EAT, HD_FOODNAME,HD_CARBO,HD_PROTEIN,HD_FAT,HD_KCAL) 
+	VALUES(#{hd_no},#{hd_code},#{hd_eat},#{hd_foodName},#{hd_carbo},#{hd_protein},#{hd_fat},#{hd_kcal})
+</insert>
+
+<select id="checkHisDaily" parameterType="damo" resultType="damo">
+	SELECT HD_EAT,HD_CARBO,HD_PROTEIN,HD_FAT,HD_KCAL, HD_FOODNAME  FROM HIS_DAILY
+	WHERE HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName}
+</select>
+
+<update id="updateHisDaily" parameterType="damo">
+	UPDATE HIS_DAILY SET HD_EAT=#{hd_eat}, HD_CARBO=#{hd_carbo},HD_PROTEIN=#{hd_protein},HD_FAT=#{hd_fat} 
+	WHERE  HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName}
+</update>
+
+<select id="checkHisExe" parameterType="damo" resultType="damo">
+	SELECT HE_TIME,HE_KCAL,MET_NAME FROM HIS_EXERCISE WHERE HE_NO=#{he_no} AND MET_NAME=#{met_name}
+</select>
+
+<update id="updateHisExe" parameterType="damo">
+	UPDATE HIS_EXERCISE SET HE_TIME=#{he_time} ,HE_KCAL=#{he_kcal} WHERE HE_NO=#{he_no} AND MET_NAME=#{met_name}
+</update>
+
+<select id="searchDiary" resultType="damo">
+	SELECT D_RESULTEAT, D_RESULTEXE, D_RESULTCARBO, D_RESULTPROTEIN, D_RESULTFAT FROM DIARY WHERE D_NO=#{param1}
+</select>
+
+<update id="updateDiaryEat" parameterType="damo">
+	UPDATE DIARY SET D_RESULTEAT=#{d_resultEat}, D_RESULTCARBO=#{d_resultCarbo}, D_RESULTPROTEIN=#{d_resultProtein} ,D_RESULTFAT=#{d_resultFat} WHERE D_NO=#{d_no}
+</update>
+
+<update id="updateDiaryExe" parameterType="damo">
+	UPDATE DIARY SET D_RESULTEXE=#{d_resultExe} WHERE D_NO=#{d_no}
+</update>
 <update id="checkYN" parameterType="String">
 	UPDATE checklist_diary SET cd_checkYN = #{param2} WHERE ch_no = #{param1}
+
 </update>
 
 <select id="hisDailyList" resultType="damo"  parameterType="damo">
