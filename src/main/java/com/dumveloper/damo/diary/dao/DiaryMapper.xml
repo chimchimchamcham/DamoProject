@@ -87,7 +87,7 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 </select>
 
 <update id="updateHisDaily" parameterType="damo">
-	UPDATE HIS_DAILY SET HD_EAT=#{hd_eat}, HD_CARBO=#{hd_carbo},HD_PROTEIN=#{hd_protein},HD_FAT=#{hd_fat} 
+	UPDATE HIS_DAILY SET HD_EAT=#{hd_eat}, HD_CARBO=#{hd_carbo},HD_PROTEIN=#{hd_protein},HD_FAT=#{hd_fat},HD_KCAL=#{hd_kcal}
 	WHERE  HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName}
 </update>
 

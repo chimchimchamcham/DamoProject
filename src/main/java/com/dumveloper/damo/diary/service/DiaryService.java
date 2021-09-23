@@ -260,6 +260,7 @@ public class DiaryService {
 				int addProtein = dto.getHd_protein()+resultDTO.getHd_protein();
 				int addFat = dto.getHd_fat()+resultDTO.getHd_fat();
 				int addKcal = dto.getHd_kcal()+resultDTO.getHd_kcal();
+				int addEat = dto.getHd_eat()+resultDTO.getHd_eat();
 				
 				System.out.println("추가 섭취 칼로리:"+dto.getHd_kcal()+" / 이전 섭취 칼로리 : "+resultDTO.getHd_kcal());
 				
@@ -270,8 +271,8 @@ public class DiaryService {
 				addDTO.setHd_foodName(dto.getHd_foodName());
 				addDTO.setHd_no(dto.getHd_no());
 				addDTO.setHd_code(dto.getHd_code());
-				
-			
+				addDTO.setHd_eat(addEat);
+
 				success = dao.updateHisDaily(addDTO);
 				logger.info("섭취 히스토리 수정 추가 성공 여부 :{}",success);
 			}
@@ -359,6 +360,7 @@ public class DiaryService {
 			he_kcal = dto.getHe_kcal()+d_resultexe;
 			
 			setDto.setD_resultExe(he_kcal);
+			setDto.setD_no(d_no);
 			
 			success = dao.updateDiaryExe(setDto);
 		}

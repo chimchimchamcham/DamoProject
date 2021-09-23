@@ -121,6 +121,15 @@ public class RestJoinCheck {
 	}
 	
 	
+	@RequestMapping(value = "/changenotify/{notifyval}/{state}")
+	public void notifytable(@PathVariable int notifyval,@PathVariable String state) {
+		logger.info("신고상태 변경");
+		 service.changenotifystate(notifyval,state);
+		
+
+	}
+	
+	
 }
 
 

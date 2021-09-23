@@ -124,11 +124,11 @@
 		<div id="content_exe">
 			<div class="row" id="exe_time">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">시간(분)</div>
-				<div class="col-6"><input type="text" class="form-control" name="exe_time"></div>
+				<div class="col-6" style="text-align:center;"><input type="text" class="form-control" name="exe_time" style="text-align:center;"></div>
 			</div>
 			<div class="row" id="exe_Kcal">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">칼로리(kcal)</div>
-				<div class="col-6"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal"></div>
+				<div class="col-6" style="text-align:center;"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal"></div>
 			</div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
@@ -213,7 +213,7 @@ $('select[name=selectAdd]').change(function(){
 		$("#search_btn").show();
 		$("#content_eat").show();
 		$("#search_food").show();
-		$("#search").show();
+		$("#search").hide();
 		$("input[name=search_insert]").attr("disabled",false); 
 	//운동 선택시
 	}else if($(this).val() == 'excercise'){
@@ -224,16 +224,16 @@ $('select[name=selectAdd]').change(function(){
 		$("#search_btn").show();
 		$("#content_exe").show();
 		$("#search_food").show();
-		$("#search").show();
+		$("#search").hide();
 		$("input[name=search_insert]").attr("disabled",false); 
 	//물 선택시
 	}else if($(this).val() == 'water'){
-		$("#content_eat,#content_exe,#search_inser,#search_btnt").hide();
-		$("#content_water,#search_food,#search").show();
+		$("#content_eat,#content_exe,#search_inser,#search_btnt,#search").hide();
+		$("#content_water,#search_food").show();
 		$("input[name=search_insert]").attr("disabled",true); 
 	//아무것도 선택 안했을 때
 	}else if($(this).val() == 'select'){
-		$("#content_eat,#content_exe,#search,#search_food,#content_water").hide();
+		$("#content_eat,#content_exe,#search,#search_food,#content_water,#search").hide();
 		$("#search_insert,#search_btn").show();
 		$("#search_insert").attr("disabled",true); 
 	}
@@ -325,6 +325,7 @@ var exeKcal;
 //검색 리스트에서 항목 선택시 
 $("#search_ul").on("click","li",function(){
 	console.log($(this)[0].firstChild.className);
+	$("#search").show();//등록 버튼 보이기
 	$("#search_list").hide(); //검색 결과 숨기기
 	$("#search_ul li").remove();
 	$("input[name=search_insert]").attr('readonly',true);
@@ -351,7 +352,7 @@ $("#search_ul").on("click","li",function(){
 		 $("input[name=eating_Carbo]").prop('type','hidden');
 		 $("input[name=eating_Pro]").prop('type','hidden');
 		 $("input[name=eating_Fat]").prop('type','hidden');
-		 $("input[name=exe_Kcal]").prop('type','text');
+		 $("input[name=exe_Kcal]").prop('type','hidden');
 		 
 		// 선택한 음식 받아온 값 집어넣기
 		food_name = $(this).find(".foodName").text();
@@ -390,6 +391,9 @@ $("#deleteSearch").click(function(){
 	//이름 초기화
 	$("#default_msg").text('선택해주세요!'); 
 	
+	//등록버튼 지우기
+	$("#search").hide();
+	
 	//음식 칸 초기화
 	$("input[name=eating_gram]").val('');
 	$("#default_Kcal").text('');
@@ -422,7 +426,7 @@ $("input[name=eating_gram]").focusin(function(){
 //분량 벗어났을 때
 $("input[name=eating_gram]").focusout(function(){
 	   console.log("섭취 칼로리 벗어남");
-	   $(this).css("background-color","#F4F4E9");
+	   console.log($(this));
 	
 	    //원래 입력했던 데이터와 다를 때 변경
 	    if($(this).val() != $(this).prop('defaultValue')){

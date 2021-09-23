@@ -71,7 +71,10 @@
 		UPDATE USERINFO SET U_ALARMYN = #{param1}  WHERE U_ID = #{param2}
 	</update>
 
-
+	<update id="dbchangenotifystate">
+		UPDATE his_notify SET HN_CODE = #{param2} WHERE HN_NO = #{param1}
+	</update>
+	
 	<select id="dbuser" resultType="damo">
 		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL from userinfo) where rnum BETWEEN #{param1} and #{param2}
 	</select>
