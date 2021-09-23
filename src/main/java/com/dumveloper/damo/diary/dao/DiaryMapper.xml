@@ -70,6 +70,7 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 	DELETE FROM checklist_diary WHERE ch_no = #{param1}
 </delete>
 
+
 <insert id="insertExe" parameterType="damo">
 	INSERT INTO HIS_EXERCISE(HE_NO,HE_TIME,HE_KCAL,MET_NAME) VALUES(#{he_no},#{he_time},#{he_kcal},#{met_name})
 </insert>
@@ -107,6 +108,10 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 
 <update id="updateDiaryExe" parameterType="damo">
 	UPDATE DIARY SET D_RESULTEXE=#{d_resultExe} WHERE D_NO=#{d_no}
+</update>
+<update id="checkYN" parameterType="String">
+	UPDATE checklist_diary SET cd_checkYN = #{param2} WHERE ch_no = #{param1}
+
 </update>
 
 </mapper>

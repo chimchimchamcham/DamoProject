@@ -32,6 +32,7 @@ public interface DiaryDAO {
 
 	int checkDel(String ch_no); //체크리스트 삭제
 
+
 	int insertExe(DamoDTO dto);//운동 추가
 
 	int insertEat(DamoDTO dto);//음식 추가 
@@ -51,6 +52,11 @@ public interface DiaryDAO {
 	int updateDiaryExe(DamoDTO dto); //운동합계 변경
 	
 	
+
+	int checkYN(String ch_no, String checkYN); //체크리스트 체크 여부 변경
+
+	ArrayList<DamoDTO> hisDailyList(String date, String id); //섭취 히스토리 가져오기
+
 
 
 }

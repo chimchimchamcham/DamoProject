@@ -34,6 +34,7 @@ public class DiaryService {
 		// 일기 값 불러오기
 		DamoDTO dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
 		ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
+		ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
 		logger.info("dto : {}" + dto + "/ date : " + date + "/ id: " + id);
 
 		// diary 테이블에 값이 없을 경우(캘린더 값 가져오고 diary에 인서트)
@@ -124,12 +125,16 @@ public class DiaryService {
 		return map;
 	}
 
-	public ModelAndView checkDel(String ch_no) {
+	public int checkDel(String ch_no) {
 		int sucess = dao.checkDel(ch_no);
 		logger.info("체크리스트 삭제 : "+sucess);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/goDiary");
-		return mav;
+		return sucess;
+	}
+
+	public int checkYN(String ch_no, String checkYN) {
+		int sucess = dao.checkYN(ch_no,checkYN);
+		logger.info("체크리스트 체크 여부 변경 : "+sucess);
+		return sucess;
 	}
 	
 	@Transactional
