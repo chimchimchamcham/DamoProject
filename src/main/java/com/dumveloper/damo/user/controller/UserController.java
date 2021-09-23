@@ -252,9 +252,9 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/myPage")
-	public ModelAndView myPage(HttpSession session) {
+	public ModelAndView myPage(@RequestParam String u_id) {
 		logger.info("마이페이지  요청");
-		return service.myPage(session);
+		return service.myPage(u_id);
 	}
 	
 }

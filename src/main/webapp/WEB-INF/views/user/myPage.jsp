@@ -23,9 +23,16 @@
             <div id="userInfo" class="col-md-4 bg-white shadow">
                 <!-- 상단 회원정보 -->
                 <div id="profileTop">
-                    <img id="profileTopImg" class="rounded-circle" src="/photo/${dto.u_fileName }">
+                	<c:if test="${dto.u_fileName eq 'default-profile.png' }">
+                		<img id="profileTopImg" class="rounded-circle" src="resources/img/${dto.u_fileName }">
+                	</c:if>
+                	<c:if test="${dto.u_fileName ne 'default-profile.png' }">
+                		<img id="profileTopImg" class="rounded-circle" src="/photo/${dto.u_fileName }">
+                	</c:if>
                     <div id="profileTopNick">${dto.u_nick }</div>
-                    <button id="userInfoUpdateBtn" type="button" class="btn btn-secondary btn-sm">수정</button>
+                    <c:if test="${sessionScope.loginId eq dto.u_id }">
+                    	<button id="userInfoUpdateBtn" type="button" class="btn btn-secondary btn-sm">수정</button>
+                    </c:if>
                     <img id="profileTopGradeImg" src="resources/img/${dto.g_fileName}.png" class="rounded-circle">
                     <div id="profileTopRanking"><span>${dto.ranking }</span><span>위</span></div>
                 </div>
@@ -37,6 +44,7 @@
 
                 <!-- 테이블 프로필 -->
                 <div id="profileTable">
+                	<c:if test="${sessionScope.loginId eq dto.u_id }">
                     <table>
                         <tr>
                             <th>이름</th><td>${dto.u_name }</td>
@@ -60,10 +68,18 @@
                             <th>목표 몸무게</th><td><span>${dto.u_tarWeight }</span><span>kg</span></td>
                         </tr>
                     </table>
+                    </c:if>
                 </div>
 
                 <!-- 회원탈퇴 -->
-                <div class="mt-3"><a href="#" id="userBlind" class="link-primary mt-3">회원탈퇴</a></div>
+                <c:if test="${sessionScope.loginId eq dto.u_id }">
+                	<div class="mt-3"><a href="#" id="userBlind" class="link-primary mt-3">회원탈퇴</a></div>
+                </c:if>
+                <!-- 신고하기(타인프로필) -->
+                <c:if test="${sessionScope.loginId ne dto.u_id }">
+                	<div class="mt-3"><a href="#" id="userNotify" class="link-primary mt-3 float-right">신고하기</a></div>
+                </c:if>
+                
             </div>
             <div id="fitSection" class="col-md-8">
                 <!-- 통계 -->
@@ -96,9 +112,11 @@
                         <li class="nav-item mr-2">
                             <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitAnswer">내가 쓴 답변</a>
                         </li>
+                        <c:if test="${sessionScope.loginId eq dto.u_id }">
                         <li class="nav-item mr-2">
                             <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
                         </li>
+                        </c:if>
                     </ul>
                 
                   <!-- 탭 클릭시 보여지는 화면 -->
@@ -150,6 +168,7 @@
 	                            </div>
                         	</c:forEach>
                         </div>
+                        <c:if test="${sessionScope.loginId eq dto.u_id }">
                         <div id="myFitDictionary" class="container tab-pane fade overflow-auto shadow"><br>
                         	 <c:forEach items="${myDirList }" var="myDir">
                             	<div class="container shadow items 
@@ -168,6 +187,7 @@
 	                            </div>
                             </c:forEach> 
                         </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -223,6 +243,10 @@
     }
 
     /* 테이블 프로필 */
+    #profileTable{
+        height:200px;
+    }
+    
     #profileTable table{
         width:350px;
         text-align:center;
