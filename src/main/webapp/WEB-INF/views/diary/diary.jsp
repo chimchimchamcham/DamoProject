@@ -179,7 +179,7 @@ a:hover {
 
 			<h3>섭취</h3>
 			<div id="accordion" class="my-3">
-				<div class="card">
+				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapseOne">
 							<b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
@@ -198,7 +198,7 @@ a:hover {
 										<th>탄수화물 (g)</th>
 										<th>단백질 (g)</th>
 										<th>지방(g)</th>
-										<th>칼로리(kcal)</th>
+										<th colspan="2">칼로리(kcal)</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -209,6 +209,7 @@ a:hover {
 										<td>30g</td>
 										<td>5g</td>
 										<td>200Kcal</td>
+										<td><a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -237,7 +238,7 @@ a:hover {
 									<tr>
 										<th>운동명</th>
 										<th>운동시간</th>
-										<th>소모 칼로리</th>
+										<th colspan="2">소모 칼로리</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -245,6 +246,7 @@ a:hover {
 										<td>줄넘기</td>
 										<td>30분</td>
 										<td>1000Kcal</td>
+										<td><a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>
 									</tr>
 								</tbody>
 							</table>
@@ -642,6 +644,30 @@ a:hover {
 			$("#checkListBox").html(checkContent);
 			
 
+			
+			//섭취 목록 뿌려주기
+			
+			/* var hisDailyList = data.hisDailyList;
+			var hisDailyContent = '';
+			hisDailyList.forEach(function(element){
+				hisDailyContent += "";
+			});  */
+			
+			//섭취 목록 헤더
+		/* 	var hisDailyHeader = '';
+			hisDailyContent += "<div class='card-header'>";
+			hisDailyContent += 	"<a class="card-link" data-toggle="collapse" href="#collapseOne">"
+			hisDailyContent += 		"<b>"+data.hisDailyList.c_name+" - </b>";
+												//<span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>";
+			hisDailyContent += 		"<b class='float-right'>"+dsfdd+"</b>";
+			hisDailyContent += 	"</a>"
+			hisDailyContent += "</div>";
+			
+			$("#hisDailyDiv").html(hisDailyContent); */
+			
+			
+			
+			
 
 		},
 		error : function(e) {
