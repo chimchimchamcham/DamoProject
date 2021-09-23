@@ -34,7 +34,7 @@ public class DiaryService {
 		DamoDTO dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
 		ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
 		ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
-		/* ArrayList<HashMap<String, Object>> totalKcal = dao.totalKcal(date, id); */ //c_dode별 칼로리 합산
+		 ArrayList<HashMap<String, Object>> totalKcal = dao.totalKcal(date, id);  //c_dode별 칼로리 합산
 		logger.info("dto : {}" + dto + "/ date : " + date + "/ id: " + id);
 
 		// diary 테이블에 값이 없을 경우(캘린더 값 가져오고 diary에 인서트)
