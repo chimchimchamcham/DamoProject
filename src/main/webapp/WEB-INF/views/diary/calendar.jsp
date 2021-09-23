@@ -336,7 +336,7 @@ body {
 					<!-- ---- -->
 				</div>
 				
-				<div class="col-sm-3 m-1 float-right">
+				<div class="col-sm-2 m-1 float-right">
 					<!-- 남은 몸무게 -->
 					<input type="text" class="float-right form-control-plainText" placeholder="남은 몸무게" id="remainWeight" style="text-align: center">
 					<!-- ---------- -->	
