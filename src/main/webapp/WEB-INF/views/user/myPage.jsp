@@ -116,23 +116,39 @@
                             </div> -->
                             <c:forEach items="${myFitList }" var="myFit">
                             	<div class="container shadow items 
-                            		<c:if test="${dto.k_solutionYN eq 'Y'}"> solution</c:if>">
-                                <div class="itemsTop container pt-3">
-                                    <span class="q 
-                                    	<c:if test="${dto.k_solutionYN eq 'Y'}"> text-success</c:if>
-                                    	<c:if test="${dto.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
-                                    </span>
-                                    <span class="title">${myFit.k_title }</span>
-                                    <span class="category text-secondary float-right">${myFit.k_code }</span>
-                                </div>
-                                <div class="itemsBottom container pt-2">
-                                    <p class="text-secondary">${myFit.k_content }</p>
-                                </div>
-                            </div>
+                            		<c:if test="${myFit.k_solutionYN eq 'Y'}"> solution</c:if>">
+	                                <div class="itemsTop container pt-3">
+	                                    <span class=" 
+	                                    	<c:if test="${myFit.k_solutionYN eq 'Y'}"> text-success</c:if>
+	                                    	<c:if test="${myFit.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
+	                                    </span>
+	                                    <span class="title">${myFit.k_title }</span>
+	                                    <span class="category text-secondary float-right">${myFit.k_code }</span>
+	                                </div>
+	                                <div class="itemsBottom container pt-2">
+	                                    <p class="text-secondary">${myFit.k_content }</p>
+	                                </div>
+	                            </div>
                             </c:forEach>      
                         </div>
                         <div id="myFitAnswer" class="container tab-pane fade overflow-auto shadow"><br>
-                        
+                        	<c:forEach items="${myAnsList }" var="myAns">
+                        		<div class="container shadow items 
+                            		<c:if test="${myAns.kR_chooseYN eq 'Y'}"> solution</c:if>">
+	                                <div class="itemsTop container pt-3">
+	                                    <span class="text-secondary">Q. </span>
+	                                    <span class="title text-secondary">${myAns.k_title }</span>
+	                                    <span class="category text-secondary float-right">${myAns.k_code }</span>
+	                                </div>
+	                                <div class="itemsBottom container pt-2">
+	                                    <span class=" 
+	                                    	<c:if test="${myAns.kR_chooseYN eq 'Y'}"> text-success</c:if>
+	                                    	<c:if test="${myAns.kR_chooseYN ne 'Y'}"> text-primary</c:if>">Q. 
+	                                    </span>
+	                                    <span>${myAns.kR_content }</span>
+	                                </div>
+	                            </div>
+                        	</c:forEach>
                         </div>
                         <div id="myFitDictionary" class="container tab-pane fade overflow-auto shadow"><br>
                         
