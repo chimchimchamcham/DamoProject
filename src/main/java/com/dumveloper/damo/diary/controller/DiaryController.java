@@ -109,5 +109,16 @@ public class DiaryController {
 		 return null;
 	 }
 	 
+	 @RequestMapping(value="/EatDel")
+		public @ResponseBody int EatDel(@RequestParam String hd_no, @RequestParam String hd_code,@RequestParam String hd_foodName) {
+			logger.info("음식 삭제 요청 : "+ hd_no+"/ "+hd_code+"/ "+hd_foodName);
+			return service.EatDel(hd_no,hd_code,hd_foodName);
+		}
+	 
+	 @RequestMapping(value="/ExeDel")
+		public @ResponseBody int ExeDel(@RequestParam String he_no, @RequestParam String met_name) {
+			logger.info("운동 삭제 요청 : "+ he_no+"/ "+met_name);
+			return service.ExeDel(he_no,met_name);
+		}
 
 }

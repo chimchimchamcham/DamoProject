@@ -851,7 +851,7 @@ a:hover {
 				hisExerciseListContent +=	"<td>"+element.met_name+"</td>";
 				hisExerciseListContent +=	"<td>"+element.he_time+"</td>";
 				hisExerciseListContent +=	"<td>"+element.he_kcal+"</td>";
-				hisExerciseListContent +=	"<td><a class='ExeDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>";
+				hisExerciseListContent +=	"<td><a class='ExeDelBtn' id="+element.met_name+"><i class='fas fa-trash-alt float-right' ></i></a></td>";
 				hisExerciseListContent +="</tr>";
 				
 				$("#exerciseBox").append(hisExerciseListContent);
@@ -869,22 +869,52 @@ a:hover {
 	
 	//섭취 목록 삭제
  	$(document).on("click",".EatDelBtn",function(){
- 		var hd_code = ''; //삭제할 음식의 코드 분류
+ 		var hd_code = $(this).parents("tbody").attr("id"); //삭제할 음식의 코드 분류
  		var hd_foodName = $(this).attr("id"); //삭제할 음식 명
- 		
-		console.log($(this).prev().children().first().val());
-		var delElement = $(this);
+		console.log(hd_code,hd_foodName);
+		var EatDelElement = $(this);
+		
 		$.ajax({
-			url : 'checkDel',
+			url : 'EatDel',
 			type : 'get',
 			dataType : 'json',
 			data : {
-				'ch_no' : $(this).prev().children().first().val()
+				'hd_no' : d_no,
+				'hd_code' : hd_code,
+				'hd_foodName' : hd_foodName
 			},
 			success : function(data) {
-				console.log("체크리스트 삭제 성공 여부 : " + data);
+				console.log("음식 삭제 성공 여부 : " + data);
 				if(data>0){
-					delElement.parent().remove();
+					EatDelElement.parents("tr").remove();
+				}
+				
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	});
+	
+	
+	//운동 목록 삭제
+ 	$(document).on("click",".ExeDelBtn",function(){
+ 		var met_name = $(this).attr("id"); //삭제할 운동 명
+		console.log(met_name);
+		var ExeDelElement = $(this);
+		
+		$.ajax({
+			url : 'ExeDel',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'he_no' : d_no,
+				'met_name' : met_name
+			},
+			success : function(data) {
+				console.log("운동 삭제 성공 여부 : " + data);
+				if(data>0){
+					ExeDelElement.parents("tr").remove();
 				}
 				
 			},
