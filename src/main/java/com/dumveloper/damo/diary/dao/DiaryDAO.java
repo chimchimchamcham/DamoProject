@@ -32,11 +32,33 @@ public interface DiaryDAO {
 
 	int checkDel(String ch_no); //체크리스트 삭제
 
+
+	int insertExe(DamoDTO dto);//운동 추가
+
+	int insertEat(DamoDTO dto);//음식 추가 
+
+	DamoDTO checkHisDaily(DamoDTO dto);//이미 추가한 섭취 이력이 있는지 조회
+
+	int updateHisDaily(DamoDTO dto);//섭취 이력 업데이트
+
+	DamoDTO checkHisExe(DamoDTO dto); //이미 추가한 운동 이력이 있는지 조회
+
+	int updateHisExe(DamoDTO dto); //운동 이력 업데이트
+
+	DamoDTO searchDiary(int d_no); //일기 조회
+
+	int updateDiaryEat(DamoDTO dto); //섭취합계 변경
+
+	int updateDiaryExe(DamoDTO dto); //운동합계 변경
+	
+	
+
 	int checkYN(String ch_no, String checkYN); //체크리스트 체크 여부 변경
 
 	ArrayList<DamoDTO> hisDailyList(String date, String id); //섭취 히스토리 가져오기
 
 	 ArrayList<HashMap<String, Object>> totalKcal(String date, String id);  //c_dode별 칼로리 합산
+
 
 
 }

@@ -56,7 +56,9 @@
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
-    	 
+    	 if(loginId == null || loginId == ''){
+    		 
+    	 }else{
 	    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
 	    		  alert("목표를 입력해주세요!");
 	    	  }else if($("#tarKcal").val() == '' || $("#tarKcal").val() == null){
@@ -67,6 +69,7 @@
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
       	}
+      }
       
  	 });
     calendar.render();
