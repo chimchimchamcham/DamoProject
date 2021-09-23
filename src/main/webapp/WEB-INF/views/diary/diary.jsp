@@ -57,6 +57,7 @@ a:hover {
 	opacity: 0.5;
 	cursor: pointer;
 }
+
 </style>
 </head>
 <body>
@@ -178,17 +179,17 @@ a:hover {
 			</div>
 
 			<h3>섭취</h3>
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3" style="display: none;">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
-						<a class="card-link" data-toggle="collapse" href="#collapseOne">
+						<a class="card-link" data-toggle="collapse" href="#collapse1">
 							<b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
 							<b class="float-right">1000kcal</b>
 						</a>
 					</div>
-					<div id="collapseOne" class="collapse hide"
+					<div id="collapse1" class="collapse hide"
 						data-parent="#accordion">
-						<div class="card-body">
+						<div class="card-body" id="breakfast">
 
 							<table class="table">
 								<thead>
@@ -213,24 +214,126 @@ a:hover {
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse2">
+							<b>오전간식 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b>
+						</a>
+					</div>
+					<div id="collapse2" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="morningSnack">
+
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse3">
+							<b>점심 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b>
+						</a>
+					</div>
+					<div id="collapse3" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="launchContent">
+
+						</div>					
 					</div>
 				</div>
 			</div>
 
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse4">
+							<b>오후간식 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b>
+						</a>
+					</div>
+					<div id="collapse4" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="afterSnack">
+
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse5">
+							<b>저녁 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b>
+						</a>
+					</div>
+					<div id="collapse5" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="dinner">
+
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse6">
+							<b>야식 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b>
+						</a>
+					</div>
+					<div id="collapse6" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="midSnack">
+
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3" style="display: none;">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse7">
+							<b>물</b>
+							<b class="float-right">1000ml</b>
+						</a>
+					</div>
+					<div id="collapse7" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="water">
+
+						</div>					
+					</div>
+				</div>
+			</div>
+			
 			<hr />
 
 
 			<h3>운동</h3>
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3" style="display: none;">
 				<div class="card">
 					<div class="card-header">
-						<a class="card-link" data-toggle="collapse" href="#collapseOne">
+						<a class="card-link" data-toggle="collapse" href="#collapse8">
 							<b>운동 - </b> <span>줄넘기</span> <span>달리기</span> <span>뛰기</span> <span>훌라후프</span>
 							<b class="float-right">1000kcal</b>
 						</a>
 					</div>
-					<div id="collapseOne" class="collapse hide"
+					<div id="collapse8" class="collapse hide"
 						data-parent="#accordion">
 						<div class="card-body">
 							<table class="table">
