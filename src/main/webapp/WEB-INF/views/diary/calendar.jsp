@@ -89,8 +89,8 @@
     var a = 0;
     var b = 0;
     var clickCnt = 0;
-    var formattedDate = '';
-    var reformattedDate = '';
+    var formattedDate = ''; //이동한 월(2021-08)
+    var reformattedDate = '';//이동한 월(2021년 08월)
     //-------------------------------------------//
     
     //이동한 달의 목표 섭취 칼로리, 운동 칼로리 가져오기
@@ -216,7 +216,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else {
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
@@ -236,7 +236,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else{
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
@@ -258,7 +258,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else{
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
