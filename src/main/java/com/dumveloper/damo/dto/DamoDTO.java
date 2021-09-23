@@ -133,10 +133,10 @@ public class DamoDTO {
 	private String kR_no;//답변번호
 	//private int k_no; //지식fit 번호
 	//private String u_id; //회원 id
-	private char kR_chooseYN;//채낵여부
+	private String kR_chooseYN;//채낵여부
 	private Date kR_date;//작성일
 	private String kR_content;//내용
-	private char kR_blindYN;//블라인드 여부
+	private String kR_blindYN;//블라인드 여부
 	
 	//음식항목
 	private String food_name;
@@ -672,10 +672,10 @@ public class DamoDTO {
 	public void setkR_no(String kR_no) {
 		this.kR_no = kR_no;
 	}
-	public char getkR_chooseYN() {
+	public String getkR_chooseYN() {
 		return kR_chooseYN;
 	}
-	public void setkR_chooseYN(char kR_chooseYN) {
+	public void setkR_chooseYN(String kR_chooseYN) {
 		this.kR_chooseYN = kR_chooseYN;
 	}
 	public Date getkR_date() {
@@ -690,10 +690,10 @@ public class DamoDTO {
 	public void setkR_content(String kR_content) {
 		this.kR_content = kR_content;
 	}
-	public char getkR_blindYN() {
+	public String getkR_blindYN() {
 		return kR_blindYN;
 	}
-	public void setkR_blindYN(char kR_blindYN) {
+	public void setkR_blindYN(String kR_blindYN) {
 		this.kR_blindYN = kR_blindYN;
 	}
 
