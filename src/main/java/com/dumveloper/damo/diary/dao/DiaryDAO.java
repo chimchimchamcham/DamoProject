@@ -57,7 +57,9 @@ public interface DiaryDAO {
 
 	ArrayList<DamoDTO> hisDailyList(String date, String id); //섭취 히스토리 가져오기
 
-	/* ArrayList<HashMap<String, Object>> totalKcal(String date, String id); */ //c_dode별 칼로리 합산
+	ArrayList<DamoDTO> hisExerciseList(String date, String id);//운동 히스토리 가져오기
+
+	/* ArrayList<HashMap<String, Object>> totalKcal(String date, String id); */  //c_dode별 칼로리 합산
 
 
 

@@ -57,6 +57,7 @@ a:hover {
 	opacity: 0.5;
 	cursor: pointer;
 }
+
 </style>
 </head>
 <body>
@@ -176,18 +177,17 @@ a:hover {
 			</div>
 
 			<h3>섭취</h3>
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3" style="display:none">
 				<div class="card" id="hisDailyDiv">
 					<div class="card-header">
-						<a class="card-link" data-toggle="collapse" href="#collapseOne">
-							<b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
-							<b class="float-right">1000kcal</b>
+						<a class="card-link" data-toggle="collapse" href="#collapse1">
+							<b>아침</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
 						</a>
 					</div>
-					<div id="collapseOne" class="collapse hide"
+					<div id="collapse1" class="collapse hide"
 						data-parent="#accordion">
-						<div class="card-body">
-
+						<div class="card-body" id="breakfast">
 							<table class="table">
 								<thead>
 									<tr>
@@ -199,36 +199,214 @@ a:hover {
 										<th colspan="2">칼로리(kcal)</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>바나나</td>
-										<td>20g</td>
-										<td>5g</td>
-										<td>30g</td>
-										<td>5g</td>
-										<td>200Kcal</td>
-										<td><a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>
-									</tr>
+								<tbody id="HD001">
+									
 								</tbody>
 							</table>
-						</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse2">
+							<b>오전간식</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
+						</a>
+					</div>
+					<div id="collapse2" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="morningSnack">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD002">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse3">
+							<b>점심</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
+						</a>
+					</div>
+					<div id="collapse3" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="launchContent">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD003">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
 					</div>
 				</div>
 			</div>
 
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse4">
+							<b>오후간식</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
+						</a>
+					</div>
+					<div id="collapse4" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="afterSnack">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD004">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse5">
+							<b>저녁</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
+						</a>
+					</div>
+					<div id="collapse5" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="dinner">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD005">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse6">
+							<b>야식</b> <!-- <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b class="float-right">1000kcal</b> -->
+						</a>
+					</div>
+					<div id="collapse6" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="midSnack">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD006">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
+			<div id="accordion" class="my-3"  style="display:none">
+				<div class="card" id="hisDailyDiv">
+					<div class="card-header">
+						<a class="card-link" data-toggle="collapse" href="#collapse7">
+							<b>물</b>
+							<b class="float-right">1000ml</b>
+						</a>
+					</div>
+					<div id="collapse7" class="collapse hide"
+						data-parent="#accordion">
+						<div class="card-body" id="water">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>음식명</th>
+										<th>섭취량(g)</th>
+										<th>탄수화물 (g)</th>
+										<th>단백질 (g)</th>
+										<th>지방(g)</th>
+										<th colspan="2">칼로리(kcal)</th>
+									</tr>
+								</thead>
+								<tbody id="HD007">
+								<!-- 목록 뿌리기 -->
+								</tbody>
+							</table>
+						</div>					
+					</div>
+				</div>
+			</div>
+			
 			<hr />
 
 
 			<h3>운동</h3>
-			<div id="accordion" class="my-3">
+			<div id="accordion" class="my-3"  style="display:none">
 				<div class="card">
 					<div class="card-header">
-						<a class="card-link" data-toggle="collapse" href="#collapseOne">
-							<b>운동 - </b> <span>줄넘기</span> <span>달리기</span> <span>뛰기</span> <span>훌라후프</span>
-							<b class="float-right">1000kcal</b>
+						<a class="card-link" data-toggle="collapse" href="#collapse8">
+							<b>운동</b> <!-- <span>줄넘기</span> <span>달리기</span> <span>뛰기</span> <span>훌라후프</span>
+							<b class="float-right">1000kcal</b> -->
 						</a>
 					</div>
-					<div id="collapseOne" class="collapse hide"
+					<div id="collapse8" class="collapse hide"
 						data-parent="#accordion">
 						<div class="card-body">
 							<table class="table">
@@ -239,13 +417,8 @@ a:hover {
 										<th colspan="2">소모 칼로리</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>줄넘기</td>
-										<td>30분</td>
-										<td>1000Kcal</td>
-										<td><a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>
-									</tr>
+								<tbody id="exerciseBox">
+								<!-- 목록 뿌리기 -->
 								</tbody>
 							</table>
 						</div>
@@ -646,42 +819,81 @@ a:hover {
 					checkContent += "<a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>";
 			});
 			$("#checkListBox").html(checkContent);
-			
 
 			
 			//섭취 목록 뿌려주기
-			
-			/* var hisDailyList = data.hisDailyList;
-			var hisDailyContent = '';
+			var hisDailyList = data.hisDailyList;
 			hisDailyList.forEach(function(element){
-				hisDailyContent += "";
-			});  */
+				var hisDailyListContent = '';
+				console.log("음식 목록 테이블 추가 ",element);
+				hisDailyListContent += "<tr>";
+				hisDailyListContent +=	"<td>"+element.hd_foodName+"</td>";
+				hisDailyListContent +=	"<td>"+element.hd_eat+"</td>";
+				hisDailyListContent +=	"<td>"+element.hd_carbo+"</td>";
+				hisDailyListContent +=	"<td>"+element.hd_protein+"</td>";
+				hisDailyListContent +=	"<td>"+element.hd_fat+"</td>";
+				hisDailyListContent +=	"<td>"+element.hd_kcal+"</td>";
+				hisDailyListContent +=	"<td><a class='EatDelBtn' id="+element.hd_foodName+"><i class='fas fa-trash-alt float-right' ></i></a></td>";
+				hisDailyListContent +="</tr>";
+				
+				$("#"+element.hd_code).append(hisDailyListContent);
+				$("#"+element.hd_code).parents("#accordion").css("display","");
+
+			});
+
 			
-			//섭취 목록 헤더
-		/* 	var hisDailyHeader = '';
-			hisDailyContent += "<div class='card-header'>";
-			hisDailyContent += 	"<a class="card-link" data-toggle="collapse" href="#collapseOne">"
-			hisDailyContent += 		"<b>"+data.hisDailyList.c_name+" - </b>";
-												//<span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>";
-			hisDailyContent += 		"<b class='float-right'>"+dsfdd+"</b>";
-			hisDailyContent += 	"</a>"
-			hisDailyContent += "</div>";
-			
-			$("#hisDailyDiv").html(hisDailyContent); */
-			
-			
-			
+			//운동 목록 뿌려주기
+			var hisExerciseList = data.hisExerciseList;
+			hisExerciseList.forEach(function(element){
+				var hisExerciseListContent = '';
+				console.log("운동 목록 테이블",element);
+				hisExerciseListContent += "<tr>";
+				hisExerciseListContent +=	"<td>"+element.met_name+"</td>";
+				hisExerciseListContent +=	"<td>"+element.he_time+"</td>";
+				hisExerciseListContent +=	"<td>"+element.he_kcal+"</td>";
+				hisExerciseListContent +=	"<td><a class='ExeDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></td>";
+				hisExerciseListContent +="</tr>";
+				
+				$("#exerciseBox").append(hisExerciseListContent);
+				$("#exerciseBox").parents("#accordion").css("display","");
+
+			});
 			
 
 		},
 		error : function(e) {
 			console.log(e);
 		}
+	}); /*-----뿌려주기 ajax end-----*/
+	
+	
+	//섭취 목록 삭제
+ 	$(document).on("click",".EatDelBtn",function(){
+ 		var hd_code = ''; //삭제할 음식의 코드 분류
+ 		var hd_foodName = $(this).attr("id"); //삭제할 음식 명
+ 		
+		console.log($(this).prev().children().first().val());
+		var delElement = $(this);
+		$.ajax({
+			url : 'checkDel',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'ch_no' : $(this).prev().children().first().val()
+			},
+			success : function(data) {
+				console.log("체크리스트 삭제 성공 여부 : " + data);
+				if(data>0){
+					delElement.parent().remove();
+				}
+				
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
 	});
-	
-	
-	
-	
+
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)
