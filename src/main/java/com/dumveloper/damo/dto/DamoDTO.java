@@ -130,13 +130,13 @@ public class DamoDTO {
 	private int g_standard;//등급기준
 	
 	//지식fit 답변
-	private String kR_no;//답변번호
+	private String kr_no;//답변번호
 	//private int k_no; //지식fit 번호
 	//private String u_id; //회원 id
-	private char kR_chooseYN;//채낵여부
-	private Date kR_date;//작성일
-	private String kR_content;//내용
-	private char kR_blindYN;//블라인드 여부
+	private String kr_chooseYN;//채낵여부
+	private Date kr_date;//작성일
+	private String kr_content;//내용
+	private String kr_blindYN;//블라인드 여부
 	
 	//음식항목
 	private String food_name;
