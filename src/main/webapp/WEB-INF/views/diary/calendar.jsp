@@ -90,6 +90,7 @@
     var b = 0;
     var clickCnt = 0;
     var formattedDate = '';
+    var reformattedDate = '';
     //-------------------------------------------//
     
     //이동한 달의 목표 섭취 칼로리, 운동 칼로리 가져오기
@@ -105,14 +106,16 @@
 		//console.log("clickCnt:",clickCnt);
 		console.log("prev :",date.yyyymm());
 		formattedDate = date.yyyymm(); //YYYY-MM 형태로 이동한 달 가져오기
+		
+		
 		calendar.prev(); //이전달 이동
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
 		
-		formattedDate = formattedDate.toString().replace('-','년 ')+"월";
-		console.log(formattedDate);
-		$("#dateCal").text(formattedDate);
+		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
+		console.log(reformattedDate);
+		$("#dateCal").text(reformattedDate);
 		
 	});
 	
@@ -128,9 +131,9 @@
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
 		
-		formattedDate = formattedDate.toString().replace('-','년 ')+"월";
-		console.log(formattedDate);
-		$("#dateCal").text(formattedDate);
+		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
+		console.log(reformattedDate);
+		$("#dateCal").text(reformattedDate);
 		
 	}); 	
 	  
@@ -265,7 +268,7 @@
 	    function reqUpdate(obj){
 	    	console.log("reqUpate 값 : "+obj.val());
 	    	console.log("reqUpdate 아이디 : "+obj.attr("id"));
-	    	var reqUrl = "updateMD/"+obj.attr("id")+"/"+obj.val()+"/"+dateCal;
+	    	var reqUrl = "updateMD/"+obj.attr("id")+"/"+obj.val()+"/"+formattedDate;
 	    	console.log(reqUrl);
 	    	
 	    	$.ajax({
@@ -312,48 +315,64 @@ body {
 			<a href="./goupdate">회원정보 수정</a>
 			<a href="./diaryInsert">다이어리 추가</a>
 			<a href="./myPage">마이페이지 이동</a>
+			
+			
+			
 			<div class="row mb-3">
+			
 				<div class="col-3">
-
-					<input type="text" class="form-control" placeholder="목표를 입력하세요!"
-						aria-describedby="basic-addon3" id="goal" value="${monthContent}"
-						style="text-align: center; background-color: #F4F4E9"> <input
-						type="text" class="form-control-plainText" placeholder="남은 몸무게"
-						id="remainWeight" style="text-align: center">
+					<!-- 목표 입력 부분 -->
+					<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align: center; background-color: #F4F4E9"> 
+					<!-- ---- -->
+					<!-- 남은 몸무게 -->
+					<input type="text" class="form-control-plainText" placeholder="남은 몸무게" id="remainWeight" style="text-align: center">
+					<!-- ---------- -->				
 				</div>
+				<!-- 년월 표시 되는 부분 -->
 				<div class="col-6">
 					<h3 id="dateCal"></h3>
 				</div>
+				<!-- ----------------- -->
+				<!-- --------------prev, next 버튼----------- -->
 				<div class="col-3">
 
 					<button type="button" class="btn btn-secondary" id="prev">prev</button>
 					<button type="button" class="btn btn-secondary" id="next">next</button>
 				</div>
+				<!-- ------------------------- -->
 			</div>
+			
 			<div class="container"></div>
+			<!---------------------- 달력-------------------- -->
 			<div id='calendar' class=''></div>
+			<!--------------------------------------------------  -->
+			
+			<!-- 달력 하단 부분 -->
 			<div class="container mt-3" id="drawGoal">
 				<div class="row">
+				<!-- 목표 섭취 칼로리 부분 -->
 					<div class="col-2">
-						<span style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리
-							:</span>
+						<span style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리 : </span>
 					</div>
 					<div class="col-2" id="tarKcalInput">
 						<input type="number" class="form-control" placeholder="섭취 칼로리"
 							id="tarKcal" value="${monthTarKcal}"
 							style="text-align: center; background-color: #F4F4E9">
 					</div>
+					<!-- --------------------- -->
+					<!-- 목표 운동 칼로리 부분 -->
 					<div class="col-2 pd-0">
-						<span style="font-size: 15px; font-weight: bold;">목표 운동 칼로리
-							: </span>
+						<span style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 : </span>
 					</div>
 					<div class="col-2">
 						<input type="number" class="form-control" placeholder="운동 칼로리"
 							id="tarExe" value="${monthTarExe}"
 							style="text-align: center; background-color: #F4F4E9">
 					</div>
+					<!-- --------------------- -->
 				</div>
 			</div>
+			<!-- --------------------------------- -->
 		</div>
 	</div>
 

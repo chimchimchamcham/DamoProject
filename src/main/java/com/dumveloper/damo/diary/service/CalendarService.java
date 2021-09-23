@@ -103,6 +103,10 @@ public class CalendarService {
 			monthId = "C_CONTENT";
 		}
 		
+		logger.info("업데이트 하려는 컬럼 : {}",monthId);
+		logger.info("업데이트 데이터 값 : {}",changeDT);
+		logger.info("업데이트 요청 일자 : {}",changeMonth);
+		logger.info("업데이트 요청 id :{}",id);
 		
 		map.put("success",dao.updateMD(monthId,changeDT,changeMonth,id));
 		return map;

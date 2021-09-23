@@ -15,7 +15,7 @@
 	SELECT C.C_TARKCAL,C.C_TAREXE,C.C_DATE ,C.C_CONTENT
 	FROM USERINFO U ,CALENDER C 
 	WHERE U.U_ID=C.U_ID AND U.U_ID = #{param1} 
-	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param2}
+	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param2} ORDER BY C_DATE DESC
 </select>
 
 <select id="getWeight" resultType="damo">
