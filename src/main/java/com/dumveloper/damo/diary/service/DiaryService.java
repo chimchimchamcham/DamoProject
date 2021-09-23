@@ -372,5 +372,17 @@ public class DiaryService {
 		
 		return success;
 	}
+
+	public int EatDel(String hd_no, String hd_code, String hd_foodName) {
+		int sucess = dao.EatDel(hd_no,hd_code,hd_foodName);
+		logger.info("음식 삭제 : "+sucess);
+		return sucess;
+	}
+
+	public int ExeDel(String he_no, String met_name) {
+		int sucess = dao.ExeDel(he_no,met_name);
+		logger.info("운동 삭제 : "+sucess);
+		return sucess;
+	}
 	
 }

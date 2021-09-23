@@ -133,4 +133,12 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
    GROUP BY HD_CODE
 </select> -->
 
+<delete id="EatDel" parameterType="String">
+	DELETE FROM his_daily WHERE hd_no = #{param1} AND hd_code = #{param2} AND hd_foodname=#{param3}
+</delete>
+
+<delete id="ExeDel" parameterType="String">
+	DELETE FROM his_exercise WHERE he_no = #{param1} AND met_name = #{param2}
+</delete>
+
 </mapper>
