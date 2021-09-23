@@ -467,8 +467,8 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 
 
-		public ModelAndView myPage(HttpSession session) {
-			String u_id = (String) session.getAttribute("loginId");
+		public ModelAndView myPage(String u_id) {
+			//String u_id = (String) session.getAttribute("loginId");
 			
 			//회원정보 테이블 + 순위 + 질문수 + 답변수 + 채택률
 			DamoDTO dto = dao.myPageUserInfo(u_id);
