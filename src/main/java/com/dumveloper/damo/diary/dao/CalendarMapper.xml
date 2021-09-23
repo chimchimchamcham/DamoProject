@@ -22,8 +22,13 @@
 	 SELECT U.U_tarWeight,U.U_WEIGHT FROM USERINFO U WHERE U.U_ID=#{param1}
 </select>
 
-<update id="updateMD">
+<update id="updateMD"> <!-- 월 데이터 업데이트  -->
 	UPDATE CALENDER SET ${param1}=#{param2} WHERE U_ID=#{param4} AND TO_CHAR(C_DATE,'YYYY-MM')=#{param3}
 </update>
+
+<insert id="insertNewMD">
+	INSERT INTO CALENDER VALUES(#{},TO_DATE(#{},'YYYY/MM'),'default',0,0);
+</insert>
+
 
 </mapper>
