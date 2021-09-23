@@ -94,7 +94,12 @@ public class CalendarService {
 		return list;
 	}
 	public HashMap<String, Object> updateMD(String monthId, String changeDT, String changeMonth, String id) {
-		HashMap<String,Object>map = new HashMap<String,Object>();
+		
+		HashMap<String,Object>map = new HashMap<String,Object>(); //ajax로 보낼 HashMap 생성
+		
+		int success=0; //실패
+		
+		//업데이트할 칼럼 조회
 		if(monthId.equals("tarKcal")) {
 			monthId = "C_TARKCAL";
 		}else if(monthId.equals("tarExe")) {
@@ -108,7 +113,17 @@ public class CalendarService {
 		logger.info("업데이트 요청 일자 : {}",changeMonth);
 		logger.info("업데이트 요청 id :{}",id);
 		
-		map.put("success",dao.updateMD(monthId,changeDT,changeMonth,id));
+		//일단 해당 월 데이터가 있는지 조회
+		if(dao.getMonthData(id, changeMonth) !=null) { //월 데이터가 있는 경우
+			success=dao.updateMD(monthId,changeDT,changeMonth,id);//업데이트
+		}else { //월 데이터가 없는 경우
+			//일단 초기 데이터 만들기 
+			if(dao.insertNewMD(id,changeMonth)>0) {//초기 데이터 만드는걸 성공한 경우
+				success = dao.updateMD(monthId,changeDT,changeMonth,id); //업데이트
+			}
+		}
+		map.put("sucessYN",success);
+		
 		return map;
 	}
 	

@@ -89,8 +89,8 @@
     var a = 0;
     var b = 0;
     var clickCnt = 0;
-    var formattedDate = '';
-    var reformattedDate = '';
+    var formattedDate = ''; //이동한 월(2021-08)
+    var reformattedDate = '';//이동한 월(2021년 08월)
     //-------------------------------------------//
     
     //이동한 달의 목표 섭취 칼로리, 운동 칼로리 가져오기
@@ -216,7 +216,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else {
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
@@ -236,7 +236,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else{
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
@@ -258,7 +258,7 @@
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
 	    		alert("내용을 입력해주세요");
-	    	}else if($(this).val() != $(this).prop('defaultValue')){
+	    	}else{
 	    		console.log('update 요청');	
 	    		reqUpdate($(this));
 	    	}
@@ -320,27 +320,30 @@ body {
 			
 			<div class="row mb-3">
 			
-				<div class="col-3">
-					<!-- 목표 입력 부분 -->
-					<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align: center; background-color: #F4F4E9"> 
+				<div class="col-3 float-right">
+				<!-- col채우는 용도 -->
+				</div>
+				
+				<div class="col-6 d-flex align-items-center justify-content-center flex-column">
+					<div class="d-flex ">
+						<!-- --------------prev,년월,next 버튼----------- -->
+						<button type="button" class="btn m-1 btn-secondary" id="prev">prev</button>
+						<h3 class="m-1 text-center d-flex align-self-center" id="dateCal"></h3>
+						<button type="button" class="m-1 btn btn-secondary" id="next">next</button>
+					</div>
+					<!-- 목표 입력 부분 -->					 
+					<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align: center; background-color: #F4F4E9">
 					<!-- ---- -->
+				</div>
+				
+				<div class="col-sm-2 m-1 float-right">
 					<!-- 남은 몸무게 -->
-					<input type="text" class="form-control-plainText" placeholder="남은 몸무게" id="remainWeight" style="text-align: center">
-					<!-- ---------- -->				
+					<input type="text" class="float-right form-control-plainText" placeholder="남은 몸무게" id="remainWeight" style="text-align: center">
+					<!-- ---------- -->	
 				</div>
-				<!-- 년월 표시 되는 부분 -->
-				<div class="col-6">
-					<h3 id="dateCal"></h3>
-				</div>
-				<!-- ----------------- -->
-				<!-- --------------prev, next 버튼----------- -->
-				<div class="col-3">
-
-					<button type="button" class="btn btn-secondary" id="prev">prev</button>
-					<button type="button" class="btn btn-secondary" id="next">next</button>
-				</div>
-				<!-- ------------------------- -->
 			</div>
+			
+			
 			
 			<div class="container"></div>
 			<!---------------------- 달력-------------------- -->
@@ -351,24 +354,28 @@ body {
 			<div class="container mt-3" id="drawGoal">
 				<div class="row">
 				<!-- 목표 섭취 칼로리 부분 -->
-					<div class="col-2">
-						<span style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리 : </span>
+				<div class="col-sm-4 d-flex m-1">
+					<div class="d-flex mr-1">
+						<span class="align-self-center" style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리 : </span>
 					</div>
-					<div class="col-2" id="tarKcalInput">
+					<div id="tarKcalInput">
 						<input type="number" class="form-control" placeholder="섭취 칼로리"
 							id="tarKcal" value="${monthTarKcal}"
 							style="text-align: center; background-color: #F4F4E9">
 					</div>
+				</div>
 					<!-- --------------------- -->
 					<!-- 목표 운동 칼로리 부분 -->
-					<div class="col-2 pd-0">
-						<span style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 : </span>
+				<div class="col-sm-4 d-flex m-1">
+					<div class="d-flex pd-0 mr-1">
+						<span class="align-self-center" style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 :</span>
 					</div>
-					<div class="col-2">
+					<div class="">
 						<input type="number" class="form-control" placeholder="운동 칼로리"
 							id="tarExe" value="${monthTarExe}"
 							style="text-align: center; background-color: #F4F4E9">
 					</div>
+				</div>
 					<!-- --------------------- -->
 				</div>
 			</div>

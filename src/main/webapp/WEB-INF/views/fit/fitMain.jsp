@@ -18,6 +18,12 @@
 	<!-- 상세보기가 존재하지 않아 임시로 상세보기 링크 생성 -->
 	<div><a href="fitDetail">상세보기</a></div>
 	
+	<!-- 마이페이지  -->
+	<div><a href="myPage?u_id=test3">마이페이지</a></div>
+	
+	<!-- 타인프로필 -->
+	<div><a href="myPage?u_id=test1">타인프로필</a></div>
+	
     <div class="container mt-3">
         <div class="d-flex justify-content-between mb-3">
             <div class="p-2">많이본 Q&A</div>

@@ -133,21 +133,21 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 	</select>
 	
 	<select id="myFitList" resultType="damo">
-		SELECT k_no, k_code, k_title, k_content, k_solutionyn 
+		SELECT k_no, k_code, k_title, k_content, k_solutionyn, (SELECT c_name FROM code WHERE c_code = k_code) c_name 
 		FROM knowfit 
 		WHERE k_blindyn = 'N' AND u_id = #{param1}
 	</select>
 	
 	<select id="myAnsList" resultType="damo">
 		SELECT k.k_no, k.k_code, k.k_title, 
-       		   kr.kr_content, kr.kr_chooseyn  
+       		   kr.kr_content, kr.kr_chooseyn, (SELECT c_name FROM code WHERE c_code = k.k_code) c_name  
 		FROM knowfit k, knowfit_r kr 
 		WHERE k.k_no = kr.k_no AND k.k_blindyn = 'N' AND 
       		  kr.kr_blindyn = 'N' AND k.u_id = #{param1}
 	</select>
 	
 	<select id="myDirList" resultType="damo">
-		SELECT k.k_no, k.k_code, k.k_title, k.k_content, k.k_solutionyn 
+		SELECT k.k_no, k.k_code, k.k_title, k.k_content, k.k_solutionyn, (SELECT c_name FROM code WHERE c_code = k.k_code) c_name
 		FROM knowfit k, mydir m
 		WHERE k.k_no = m.k_no AND k.k_blindyn = 'N' AND m.u_id = #{param1}
 	</select>
