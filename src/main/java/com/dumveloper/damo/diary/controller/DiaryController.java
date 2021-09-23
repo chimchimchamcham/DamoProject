@@ -94,6 +94,12 @@ public class DiaryController {
 			logger.info("체크리스트 삭제 요청 : "+ch_no);
 			return service.checkDel(ch_no);
 		}
+	 
+	 @RequestMapping(value="/checkYN")
+		public @ResponseBody int checkYN(@RequestParam String ch_no, @RequestParam String checkYN) {
+			logger.info("체크리스트 체크여부 변경 : "+ch_no+"/ "+checkYN);
+			return service.checkYN(ch_no,checkYN);
+		}
 
 	 @RequestMapping(value="/submitList")
 	 public @ResponseBody HashMap<String,String>submitList(@RequestParam Map<String,String> param){

@@ -203,12 +203,12 @@ a:hover {
 								</thead>
 								<tbody>
 									<tr>
-										<td>John</td>
-										<td>Doe</td>
-										<td>john@example.com</td>
-										<td>John</td>
-										<td>Doe</td>
-										<td>john@example.com</td>
+										<td>바나나</td>
+										<td>20g</td>
+										<td>5g</td>
+										<td>30g</td>
+										<td>5g</td>
+										<td>200Kcal</td>
 									</tr>
 								</tbody>
 							</table>
@@ -225,33 +225,26 @@ a:hover {
 				<div class="card">
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapseOne">
-							<b>아침 - </b> <span>바나나</span> <span>사과</span> <span>계란</span> <span>우유</span>
+							<b>운동 - </b> <span>줄넘기</span> <span>달리기</span> <span>뛰기</span> <span>훌라후프</span>
 							<b class="float-right">1000kcal</b>
 						</a>
 					</div>
 					<div id="collapseOne" class="collapse hide"
 						data-parent="#accordion">
 						<div class="card-body">
-
 							<table class="table">
 								<thead>
 									<tr>
-										<th>음식명</th>
-										<th>섭취량(g)</th>
-										<th>탄수화물 (g)</th>
-										<th>단백질 (g)</th>
-										<th>지방(g)</th>
-										<th>칼로리(kcal)</th>
+										<th>운동명</th>
+										<th>운동시간</th>
+										<th>소모 칼로리</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>John</td>
-										<td>Doe</td>
-										<td>john@example.com</td>
-										<td>John</td>
-										<td>Doe</td>
-										<td>john@example.com</td>
+										<td>줄넘기</td>
+										<td>30분</td>
+										<td>1000Kcal</td>
 									</tr>
 								</tbody>
 							</table>
@@ -414,12 +407,52 @@ a:hover {
 			});
 		});
 	
+
 	 	/*체크박스 체크 시*/
-		 if($('input:checkbox[name="checkbox"]').is(":checked") ==  true){
-		 	
-		 }else{
-			 
-		 }
+	 	$(document).on("click","input:checkbox[name='checkbox']",function(){
+	 		console.log($(this).parents("label"),"체크리스트 체크");
+	 		
+	 		if($(this).is(":checked") ==  true){ //체크 되어 있을 경우
+	 			$(this).parents("label").css({"text-decoration":"line-through","color":"gray"});
+	 			console.log("체크리스트 Y");
+	 			$.ajax({
+					url : 'checkYN',
+					type : 'get',
+					dataType : 'json',
+					data : {
+						'ch_no' : $(this).val(),
+						'checkYN' : 'Y'
+					},
+					success : function(data) {
+						console.log("체크리스트 체크 상태 변경 : " + data);
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+			 }else{  //체크 취소
+				console.log("체크리스트 N",$(this).val());
+				$(this).parents("label").css({"text-decoration":"none","color":"black"});
+	 			$.ajax({
+					url : 'checkYN',
+					type : 'get',
+					dataType : 'json',
+					data : {
+						'ch_no' : $(this).val(),
+						'checkYN' : 'N'
+					},
+					success : function(data) {
+						console.log("체크리스트 체크 상태 변경 : " + data);
+					},
+					error : function(error) {
+						console.log(error);
+					}
+				});
+			 }
+	 		
+	 		
+	 	});
+		 
 		 
 	//값 업데이트 메서드
 	function update(obj) {
@@ -596,17 +629,33 @@ a:hover {
 			var checkContent = '';
 			ch_noList.forEach(function(element){
 				console.log(element);
-				checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;'>";
-				checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+element.cd_content+"</label>";
-				checkContent += "<a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>";
+				if(element.cd_checkYN == 'Y'){ //체크 되어 있을 경우
+					checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px; text-decoration:line-through; color:gray;'>";
+					checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox' checked>"+element.cd_content+"</label>";
+				}else{ //체크 안되어 있을 경우
+					checkContent += "<div class='checkbox pl-5 pt-4 pr-5'><label style='font-size: 18px;' >";
+					checkContent += "<input type='checkbox' value='"+element.ch_no+"' style='transform: scale(1.3); margin-right:5px' name='checkbox'>"+element.cd_content+"</label>";
+				}
+					checkContent += "<a class='CheckDelBtn'><i class='fas fa-trash-alt float-right' ></i></a></div>";
 			});
 			$("#checkListBox").html(checkContent);
+			
+			
+			//섭취 목록 뿌려주기
+			
+			
+			
+			
 			
 		},
 		error : function(e) {
 			console.log(e);
 		}
 	});
+	
+	
+	
+	
 	
 	/*==목표 섭취 그래프==*/
 	//초기 값(성공)

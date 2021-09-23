@@ -32,5 +32,9 @@ public interface DiaryDAO {
 
 	int checkDel(String ch_no); //체크리스트 삭제
 
+	int checkYN(String ch_no, String checkYN); //체크리스트 체크 여부 변경
+
+	ArrayList<DamoDTO> hisDailyList(String date, String id); //섭취 히스토리 가져오기
+
 
 }

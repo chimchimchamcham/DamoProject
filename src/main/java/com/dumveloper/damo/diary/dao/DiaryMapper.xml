@@ -70,4 +70,8 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 	DELETE FROM checklist_diary WHERE ch_no = #{param1}
 </delete>
 
+<update id="checkYN" parameterType="String">
+	UPDATE checklist_diary SET cd_checkYN = #{param2} WHERE ch_no = #{param1}
+</update>
+
 </mapper>
