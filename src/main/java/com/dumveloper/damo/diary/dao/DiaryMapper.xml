@@ -80,13 +80,33 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 </insert>
 
 <select id="checkHisDaily" parameterType="damo" resultType="damo">
-	SELECT HD_EAT,HD_CARBO,HD_PROTEIN,HD_FAT,HD_KCAL FROM HIS_DAILY 
-	WHERE HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName};
+	SELECT HD_EAT,HD_CARBO,HD_PROTEIN,HD_FAT,HD_KCAL, HD_FOODNAME  FROM HIS_DAILY
+	WHERE HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName}
 </select>
 
-<insert id="updateHisDaily" parameterType="damo">
+<update id="updateHisDaily" parameterType="damo">
 	UPDATE HIS_DAILY SET HD_EAT=#{hd_eat}, HD_CARBO=#{hd_carbo},HD_PROTEIN=#{hd_protein},HD_FAT=#{hd_fat} 
 	WHERE  HD_NO=#{hd_no} AND HD_CODE=#{hd_code} AND HD_FOODNAME = #{hd_foodName}
-</insert>
+</update>
+
+<select id="checkHisExe" parameterType="damo" resultType="damo">
+	SELECT HE_TIME,HE_KCAL,MET_NAME FROM HIS_EXERCISE WHERE HE_NO=#{he_no} AND MET_NAME=#{met_name}
+</select>
+
+<update id="updateHisExe" parameterType="damo">
+	UPDATE HIS_EXERCISE SET HE_TIME=#{he_time} ,HE_KCAL=#{he_kcal} WHERE HE_NO=#{he_no} AND MET_NAME=#{met_name}
+</update>
+
+<select id="searchDiary" resultType="damo">
+	SELECT D_RESULTEAT, D_RESULTEXE, D_RESULTCARBO, D_RESULTPROTEIN, D_RESULTFAT FROM DIARY WHERE D_NO=#{param1}
+</select>
+
+<update id="updateDiaryEat" parameterType="damo">
+	UPDATE DIARY SET D_RESULTEAT=#{d_resultEat}, D_RESULTCARBO=#{d_resultCarbo}, D_RESULTPROTEIN=#{d_resultProtein} ,D_RESULTFAT=#{d_resultFat} WHERE D_NO=#{d_no}
+</update>
+
+<update id="updateDiaryExe" parameterType="damo">
+	UPDATE DIARY SET D_RESULTEXE=#{d_resultExe} WHERE D_NO=#{d_no}
+</update>
 
 </mapper>

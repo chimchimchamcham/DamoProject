@@ -247,6 +247,7 @@ var content = '';
 
 //검색 버튼 클릭시 
 $("#goSearch").click(function(){
+	content ='';
 	$("#search_list").show();
 	
 	console.log("선택된 메뉴:",selectMenu);
@@ -289,8 +290,10 @@ $("#goSearch").click(function(){
     		content +='<li class="list-group-item" style="height: 30px; vertical-align: middle; padding:0; color:blue"><span class="empty">직접 입력</span></li>';
     		 
     		//초기화
-    		$("#search_ul").empty();
-            $("#search_ul").append(content);
+    		
+    		$("#search_ul li").remove();
+    		$("#search_ul").append(content);
+           /*  $("#search_ul").append(content); */
             reqUrl ='searchList/';
     	},
     	error:function(error){
@@ -323,6 +326,7 @@ var exeKcal;
 $("#search_ul").on("click","li",function(){
 	console.log($(this)[0].firstChild.className);
 	$("#search_list").hide(); //검색 결과 숨기기
+	$("#search_ul li").remove();
 	$("input[name=search_insert]").attr('readonly',true);
 	 
 	//직접 선택시 
@@ -382,7 +386,7 @@ $("#deleteSearch").click(function(){
 	//검색칸 초기화
 	$("input[name=search_insert]").attr('readonly',false);
 	$("input[name=search_insert]").val('');
-	
+	$("#search_ul li").remove();
 	//이름 초기화
 	$("#default_msg").text('선택해주세요!'); 
 	
@@ -507,8 +511,8 @@ $("#submitBtn").click(function(){
 		
 		if(changCnt >0){ //분량을 변경한 경우
 		 submitArr.hd_eat = gram;
-		 submitArr.hd_carbo = changeKcal;
-		 submitArr.hd_protein = changeCarbo;
+		 submitArr.hd_carbo = changeCarbo;
+		 submitArr.hd_protein = changeProtein;
 		 submitArr.hd_fat = changeFat;
 		 submitArr.hd_kcal = changeKcal;
 		}else{//변경하지 않은 경우

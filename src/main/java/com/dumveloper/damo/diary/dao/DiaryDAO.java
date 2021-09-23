@@ -36,9 +36,21 @@ public interface DiaryDAO {
 
 	int insertEat(DamoDTO dto);//음식 추가 
 
-	DamoDTO checkHisDaily(DamoDTO dto);
+	DamoDTO checkHisDaily(DamoDTO dto);//이미 추가한 섭취 이력이 있는지 조회
 
-	int updateHisDaily(DamoDTO dto);
+	int updateHisDaily(DamoDTO dto);//섭취 이력 업데이트
+
+	DamoDTO checkHisExe(DamoDTO dto); //이미 추가한 운동 이력이 있는지 조회
+
+	int updateHisExe(DamoDTO dto); //운동 이력 업데이트
+
+	DamoDTO searchDiary(int d_no); //일기 조회
+
+	int updateDiaryEat(DamoDTO dto); //섭취합계 변경
+
+	int updateDiaryExe(DamoDTO dto); //운동합계 변경
+	
+	
 
 
 }
