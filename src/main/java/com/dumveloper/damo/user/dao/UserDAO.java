@@ -15,6 +15,10 @@ public interface UserDAO {
 	//알람여부 바꾸기
 	void dbalarmupdate(String yn, String id);
 	
+	//신고 상태 바꾸기
+	void dbchangenotifystate(int notifyval, String state);
+	
+	
 	int update(DamoDTO dto);
 	int join(DamoDTO dto);
 	
@@ -48,6 +52,7 @@ public interface UserDAO {
 	ArrayList<DamoDTO> myFitList(String u_id);
 	ArrayList<DamoDTO> myAnsList(String u_id);
 	ArrayList<DamoDTO> myDirList(String u_id);
+	
 	
 	
 

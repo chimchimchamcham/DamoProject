@@ -20,6 +20,9 @@
 	tbody{
 		text-align: center;
 	}
+	#notifymyModal div.modal-content{
+		min-height: 458px;
+	}
 	
     </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -145,7 +148,7 @@
           <h6 class="modal-title">신고 상세보기</h6>
           <button type="button" class="close text-light" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body justify-content-center row d-flex m-5" style="font-size: 10px; font-weight: 900;">
+        <div class="modal-body justify-content-center row d-flex m-5" style="font-size: 15px; font-weight: 900;">
 
         </div>
       </div>
@@ -254,11 +257,13 @@ $(document).on('click',".notifybody tr",function(){
 	//신고 팝업 그리기
  function notifypoplist(list,notify_state){
 		console.log(list);
+		
    	var content = "";
-
-	     	content +=  "<div class='col-12 row text-left'>";
-  	    	content +=   "<div class='col-2 m-1 mb-3 text-left'>신고번호 </div><div class='col-1 mb-3 m-1'>"+list[0].n_no+"</div>";
-  	    	content +=   "<div class='col-2 m-1 mb-3 text-center'>신고 글 번호</div><a href="+list[0].n_notifiedno+" class='noifyno col-1 mb-3 m-1 text-center'>"+list[0].n_notifiedno+"</a>";
+   	var notifyval = list[0].n_no;
+   	
+   			content +="<div class='row col-12 p-0 my-2'>"
+  	    	content +=   "<div class='col-2 p-0'>신고번호 </div><div  class='col-1'>"+list[0].n_no+"</div>";
+  	    	content +=   "<div class='col-3 text-center'>신고글 번호</div><a href="+list[0].n_notifiedno+" class='text-dark noifyno col-1'>"+list[0].n_notifiedno+"</a>";
   	    	
 	  	      var date = new Date(list[0].n_dt);//등록날짜
 	
@@ -267,25 +272,87 @@ $(document).on('click',".notifybody tr",function(){
 		      let startday = date.getDate();
 		      let notifyday = startyear+"/"+(startmonth+1)+"/"+startday;
   	    	
-  	    	content +=   "<div class='col-2 m-1 mb-3 text-right'>신고날짜</div><div class='col-3 mb-3 m-1 text-right'>"+notifyday+"</div>";
-  	    	content +=   "<div class='col-2 my-3 m-1 text-left'>대분류 코드 </div> <div class='col-4 my-3 m-1'>"+list[0].n1_name+"</div>";
-  	    	content +=   "<div class='col-2 my-3 m-1 text-left'>중분류 코드</div> <div class='col-2 my-3 m-1'>"+list[0].n2_name+"</div>";
-  	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고받은 아이디</div> <div id="+list[0].n_receiveid+" class='receid col-4 mt-3 m-1'>"+list[0].n_receiveid+"</div>";
-  	    	content +=   "<div class='col-2 mt-3 m-1 text-left'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-2 mt-3 m-1'>"+list[0].n_sendid+"</a>";
-  	    	content +=	 "<div class='col-12 row'>";
-  	    	content +=       "<textarea class='col-12 .form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
+  	    	content +=   "<div class='col-2'>신고날짜</div><div class='col-3'>"+notifyday+"</div>";
+  	    	content +="</div>"
+  	    	//다음줄
+  	    	content +="<div class='row col-12 p-0'>"
+  	    	content +=   "<div class='col-2 p-0'>대분류 코드 </div> <div class='col-5'>"+list[0].n1_name;
+  	    	
+	    		if (notify_state!='처리완료') {//처리완료 이 면
+		  	    	content +=   "<select name='notifyscope' id='notifyscope' class='float-right' style='width: 11rem' >";
+		   	    	content +=     	"<option value=''>선택</option>";
+		   	    	content +=     	"<option value='HN001'>접수중</option>";
+		   	    	content +=     	"<option value='HN002'>처리중</option>";
+		   	    	content += 	 "</select>";
+	    		}
+
+   	    	content +=	 "</div>";
+  	    	content +=   "<div class='col-2'>중분류 코드</div> <div class='col-3'>"+list[0].n2_name+"</div>";
+  	    	content +="</div>"
+  	    	//다음줄
+  	    	
+  	    	content +="<div class='row col-12 p-0'>"
+  	    	content +=   "<div class='col-2 p-0'>신고받은 아이디</div> <div id="+list[0].n_receiveid+" class='receid col-5'>"+list[0].n_receiveid+"</div>";
+  	    	content +=   "<div class='col-2 pr-0'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-3 text-dark'>"+list[0].n_sendid+"</a>";
+  	    	content +="</div>"
+  	    	content +=	 "<div class='col-12 row p-0'>";
+  	    	content +=       "<textarea class='col-12 form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
   	    	content +=   "</div>";
-	 	    	if (notify_state!='처리완료') {
-	 	    		content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
-	 	    		content +=   	`<button type="button" class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
+	 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
+	 	    		content +=   	`<button type="button"  class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
 	 	    		content +=	"</div>";
-	 	    	}
 	        content +=  "</div>";	      
 
 	   $(".modal-body").empty();
 	   $("#notifymyModal .modal-body").append(content);
-     }
+	 	    		if (notify_state!='처리완료'&&notify_state!='접수중') {//처리중
+	 	    			$('div.nopopbtn').empty();
+	 	    			$('div.nopopbtn').append(`<button type="button" class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`);
+	 	    		}else{//접수중
+	 	    			$('div.nopopbtn').empty();
+	 	    			$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
+	 	    		}
+		//동적으로 추가한 notifyscope 의 옵션 value값이 바뀌면
+		 var notifystatechange;
+		 $(document).on('change','#notifyscope',function(){
+			 	console.log($(this).val());
+			 	notifystatechange = $(this).val();
+			 	var notify_jqname =  "#"+notifyval+"\t"+'td.state';
+			 	console.log("notify_jqname:",notify_jqname);
+				if (notifystatechange!=undefined&&notifystatechange!='') {
+		 			var url = "./check/changenotify/"+notifyval+"/"+notifystatechange;
+		 			
+		 			 $.ajax({
+		 	 	 	      url : url,
+		 	 	 	      type : 'get',
+		 	 	 	      data : {},
+		 	 	 	      dataType : 'text',
+		 	 	 	      success : function(data){
+		 	 	 	       console.log(data);
+		 	 	 	       
+		 	 	 	       
+		 	 	 	       if (notifystatechange=='HN001') {//접수중
 
+								$(notify_jqname).text('접수중');
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' class='notifytoblackbtn btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>");
+			 	    			
+		 	 	 	       
+							}else if(notifystatechange=='HN002'){//처리중
+
+								$(notify_jqname).text('처리중');
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
+							}
+		 	 	 	       
+		 	 	 	       
+		 	 	 	      },error:function(request,status,error){
+		 	 	 	    		console.log(error);
+							}
+		 			 });
+		  			}
+				});
+			}
 
 	
 	
@@ -350,7 +417,7 @@ $(document).on('click',".notifybody tr",function(){
 	   	    	content +=       "<textarea class='blackcause col-12 .form-control py-4' style='resize: none'; height:100px placehorder='여기에다 이유를 써주세요'></textarea>";
 	   	    	content +=   "</div>";
 		   	    content +=   "<div class='col-12 row d-flex justify-content-end mt-3'>";
-				content +=   	"<button type='button' class='register btn text-light btn-danger'>블랙리스트 등록</button>";
+				content +=   	"<button type='button' class='register btn text-light btn-dark'>등록</button>";
 				content +=	"</div>";	
 	 	        content +=  "</div>";
 	 	 	   $(".modal-body").empty();
@@ -621,7 +688,7 @@ function userlistCall(page){
    function notifylistPrint(list){
    	   var content = "";
    	   for(var i = 0; i<list.length; i++){
-   	      content += "<tr>";
+   	      content += "<tr id="+list[i].n_no+">";
    	      content += "<td class='n_no'>"+list[i].n_no+"</td>";
    	      content += "<td>"+list[i].n_receiveid+"</td>";
    	      content += "<td>"+list[i].n_sendid+"</td>";
