@@ -116,14 +116,14 @@
                             </div> -->
                             <c:forEach items="${myFitList }" var="myFit">
                             	<div class="container shadow items 
-                            		<c:if test="${myFit.k_solutionYN eq 'Y'}"> solution</c:if>">
+                            		<c:if test="${myFit.k_solutionYN eq 'Y'}"> solution</c:if>" onclick="location.href='fitDetail?k_no=${myFit.k_no}'">
 	                                <div class="itemsTop container pt-3">
 	                                    <span class=" 
 	                                    	<c:if test="${myFit.k_solutionYN eq 'Y'}"> text-success</c:if>
 	                                    	<c:if test="${myFit.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
 	                                    </span>
 	                                    <span class="title">${myFit.k_title }</span>
-	                                    <span class="category text-secondary float-right">${myFit.k_code }</span>
+	                                    <span class="category text-secondary float-right">${myFit.c_name }</span>
 	                                </div>
 	                                <div class="itemsBottom container pt-2">
 	                                    <p class="text-secondary">${myFit.k_content }</p>
@@ -134,16 +134,16 @@
                         <div id="myFitAnswer" class="container tab-pane fade overflow-auto shadow"><br>
                         	<c:forEach items="${myAnsList }" var="myAns">
                         		<div class="container shadow items 
-                            		<c:if test="${myAns.kR_chooseYN eq 'Y'}"> solution</c:if>">
+                            		<c:if test="${myAns.kR_chooseYN eq 'Y'}"> solution</c:if>" onclick="location.href='fitDetail?k_no=${myAns.k_no}'">
 	                                <div class="itemsTop container pt-3">
 	                                    <span class="text-secondary">Q. </span>
 	                                    <span class="title text-secondary">${myAns.k_title }</span>
-	                                    <span class="category text-secondary float-right">${myAns.k_code }</span>
+	                                    <span class="category text-secondary float-right">${myAns.c_name}</span>
 	                                </div>
 	                                <div class="itemsBottom container pt-2">
 	                                    <span class=" 
 	                                    	<c:if test="${myAns.kR_chooseYN eq 'Y'}"> text-success</c:if>
-	                                    	<c:if test="${myAns.kR_chooseYN ne 'Y'}"> text-primary</c:if>">Q. 
+	                                    	<c:if test="${myAns.kR_chooseYN ne 'Y'}"> text-primary</c:if>">A. 
 	                                    </span>
 	                                    <span>${myAns.kR_content }</span>
 	                                </div>
@@ -151,7 +151,22 @@
                         	</c:forEach>
                         </div>
                         <div id="myFitDictionary" class="container tab-pane fade overflow-auto shadow"><br>
-                        
+                        	 <c:forEach items="${myDirList }" var="myDir">
+                            	<div class="container shadow items 
+                            		<c:if test="${myDir.k_solutionYN eq 'Y'}"> solution</c:if>" onclick="location.href='fitDetail?k_no=${myDir.k_no}'">
+	                                <div class="itemsTop container pt-3">
+	                                    <span class=" 
+	                                    	<c:if test="${myDir.k_solutionYN eq 'Y'}"> text-success</c:if>
+	                                    	<c:if test="${myDir.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
+	                                    </span>
+	                                    <span class="title">${myDir.k_title }</span>
+	                                    <span class="category text-secondary float-right">${myDir.c_name }</span>
+	                                </div>
+	                                <div class="itemsBottom container pt-2">
+	                                    <p class="text-secondary">${myDir.k_content }</p>
+	                                </div>
+	                            </div>
+                            </c:forEach> 
                         </div>
                     </div>
                 </div>
@@ -194,7 +209,6 @@
     #profileTopGradeImg{
         width:50px;
         height:50px;
-        border:1px solid;
         position:absolute;
         top:340px;
         left:105px;
@@ -258,6 +272,7 @@
     /*완료 답변은 초록색으로,,,*/
     .solution{
         border-left: 7px solid #5cb85c;
+        background-color: rgba(92, 184, 92, 0.1);
     }
     .category{
         font-size:1rem;
