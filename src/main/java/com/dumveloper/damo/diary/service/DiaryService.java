@@ -26,50 +26,87 @@ public class DiaryService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info("일기 상세보기" + date + "/" + id);
 
-		// 일기 값 불러오기
 		DamoDTO dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
-		ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
-		ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
-		ArrayList<DamoDTO> hisExerciseList = dao.hisExerciseList(date, id); //운동 히스토리 테이블 값 가져옴
-		
-		/* ArrayList<HashMap<String, Object>> totalKcal = dao.totalKcal(date, id); */  //c_dode별 칼로리 합산
 		logger.info("dto : {}" + dto + "/ date : " + date + "/ id: " + id);
 
 		// diary 테이블에 값이 없을 경우(캘린더 값 가져오고 diary에 인서트)
-		if (dto == null) {
-			String date2 = date.substring(0, date.lastIndexOf("-"));
-			dto = dao.diaryStartData(date2, id);
-			dto.setD_weight(dto.getU_weight());
-			dto.setD_tarExe(dto.getC_tarExe());
-			dto.setD_tarKcal(dto.getC_tarKcal());
+	      if (dto == null) {
+	          String date2 = date.substring(0, date.lastIndexOf("-"));
+	          dto = dao.diaryStartData(date2, id);
+	          dto.setD_weight(dto.getU_weight());
+	          dto.setD_tarExe(dto.getC_tarExe());
+	          dto.setD_tarKcal(dto.getC_tarKcal());
 
-			logger.info("초기 값 dto: {}" + dto + "date" + dto.getC_date() + "/ 몸무게 : " + dto.getU_weight());
+	          logger.info("초기 값 dto: {}" + dto + "date" + dto.getC_date() + "/ 몸무게 : " + dto.getU_weight());
 
-			// 권장 탄단지 계산 (밸런스)
-			int StandardWeight = (int) ((dto.getU_height() - 100) * 0.9);// 표준체중
-			int Kcal = StandardWeight * 30;// 권장섭취 칼로리
-			logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
+	          // 권장 탄단지 계산 (밸런스)
+	          dto.setD_date(date);
+	          dto.setD_carbo(calculateTDG(id).getD_carbo());
+	          dto.setD_protein(calculateTDG(id).getD_protein());
+	          dto.setD_fat(calculateTDG(id).getD_fat());
 
-			int carbo = Kcal / 2; // 권장 탄수화물
-			int protein = Kcal / 1; // 권장 단백질
-			int fat = Kcal / 1; // 권장 지방
-			logger.info("권장 탄수화물 : " + carbo + " / 권장 단백질 : " + protein + "/ 권장 지방 : " + fat);
-
-			dto.setD_date(date);
-			dto.setD_carbo(carbo);
-			dto.setD_protein(protein);
-			dto.setD_fat(fat);
-
-			int success = dao.diaryInsert(dto);
-			logger.info("일기 insert 성공 여부 : " + success);
+	          int success = dao.diaryInsert(dto);
+	          logger.info("일기 insert 성공 여부 : " + success);
+	       }
+	      else {
+			// 일기 값 불러오기
+			int result = calculateResult(date, id,dto.getD_tarKcal(), dto.getD_tarExe());
+			logger.info("계산된 값 업데이트 여부 : "+result);
+			
+			dto = dao.diaryDetail(date, id); //업데이트 후 diary테이블 값 가져옴
+			ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
+			ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
+			ArrayList<DamoDTO> hisExerciseList = dao.hisExerciseList(date, id); //운동 히스토리 테이블 값 가져옴
+			
+			map.put("ch_noList", ch_noList);
+			map.put("hisDailyList", hisDailyList);
+			map.put("hisExerciseList", hisExerciseList);
 		}
 
 		map.put("dto", dto);
-		map.put("ch_noList", ch_noList);
-		map.put("hisDailyList", hisDailyList);
-		map.put("hisExerciseList", hisExerciseList);
 		return map;
 	}
+
+	private DamoDTO calculateTDG(String id) {
+		DamoDTO dto = new DamoDTO();
+		int height = dao.getU_height(id); //키 가져오기
+		 int StandardWeight = (int) ((height - 100) * 0.9);// 표준체중
+         int Kcal = StandardWeight * 30;// 권장섭취 칼로리
+         logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
+
+         int carbo = Kcal / 2; // 권장 탄수화물
+         int protein = Kcal / 1; // 권장 단백질
+         int fat = Kcal / 1; // 권장 지방
+         logger.info("권장 탄수화물 : " + carbo + " / 권장 단백질 : " + protein + "/ 권장 지방 : " + fat);
+         
+         dto.setD_carbo(carbo);
+         dto.setD_protein(protein);
+         dto.setD_fat(fat);
+         
+         return dto;
+	}
+
+
+	//총 운동, 섭취 칼로리 계산 / 업데이트
+	private int calculateResult(String date, String id, int tarKcal, int tarExe) {
+		DamoDTO dto = dao.calculateResult(date,id); //히스토리 테이블 총 값 계산
+		logger.info("계산하기 : "+dto);
+		logger.info("getD_resultEat : "+dto.getD_resultEat()+"/ tarKcal : "+tarKcal);
+		logger.info("getD_resultExe : "+dto.getD_resultExe()+"/ tarExe : "+tarExe);
+		if(dto.getD_resultEat()<tarKcal && dto.getD_resultExe()>tarExe) { //목표 성공
+			dto.setD_successUpdate('Y');
+		}else { //목표 실패
+			dto.setD_successUpdate('N');
+		}
+		logger.info("목표 성공 : "+dto.getD_successUpdate());
+		
+		int result=0;
+		result = dao.resultUpdate(dto); //계산된 값 업데이트
+		return result;
+	}
+	
+	//권장 탄단지 계산
+	
 
 	public int memoUpdate(String d_no, String content) {
 		int success = dao.memoUpdate(d_no, content);
@@ -412,5 +449,5 @@ public class DiaryService {
 		logger.info("운동 삭제 : "+sucess);
 		return sucess;
 	}
-	
+
 }
