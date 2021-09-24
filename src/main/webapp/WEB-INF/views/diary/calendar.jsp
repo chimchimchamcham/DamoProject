@@ -20,6 +20,7 @@
   document.addEventListener('DOMContentLoaded', function() {
 	var loginId = "${sessionScope.loginId}"; //로그인한 아이디 가져오기
     var calendarEl = document.getElementById('calendar');
+	var isNowMonth = true;
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
      headerToolbar:false,
@@ -27,37 +28,37 @@
       navLinks: false, //can click day/week names to navigate views
       editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: false, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
-      events: [
-    	  <c:if test="${list ne ''}">
-    	  <c:forEach items="${list}" var="dto">
-    		{
-    			title:'${dto.d_resultEat}kcal',
-    			start:'${dto.d_date}',
-    			backgroundColor:'green',
-    	        borderColor:'green'
-    		},
-    		{
-        		title:'${dto.d_resultExe}kcal',
-        		start:'${dto.d_date}',
-        		backgroundColor:'#E7C6B4',
-        	    borderColor:'#E7C6B4'
-        	},
-    		{
-    			title:'${dto.d_weight}kg',
-    			start:'${dto.d_date}',
-    			color:<c:choose><c:when test='${dto.d_success eq "true"}'>'skyblue'</c:when><c:when test='${dto.d_success eq "false"}'>'pink'</c:when></c:choose>,
-    			display:'background'
-    		},
-    		
-    	</c:forEach> 
-    	</c:if>
-    	  
-    	  	]
+     events:[	 
+    <c:if test="${list ne ''}">
+	  <c:forEach items="${list}" var="dto">
+	 
+		{
+			title:'${dto.d_resultEat}kcal',
+			start:'${dto.d_date}',
+			backgroundColor:'green',
+	        borderColor:'green'
+		},
+		{
+    		title:'${dto.d_resultExe}kcal',
+    		start:'${dto.d_date}',
+    		backgroundColor:'#E7C6B4',
+    	    borderColor:'#E7C6B4'
+    	},
+		{
+			title:'${dto.d_weight}kg',
+			start:'${dto.d_date}',
+			color:<c:choose><c:when test='${dto.d_success eq "true"}'>'skyblue'</c:when><c:when test='${dto.d_success eq "false"}'>'pink'</c:when></c:choose>,
+			display:'background'
+		},
+
+	</c:forEach> 
+	</c:if>
+	]	
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
     	 if(loginId == null || loginId == ''){
-    		 
+    		alert("로그인을 하셔야 이용하실 수 있는 서비스 입니다."); 
     	 }else{
 	    	  if( $("#goal").val() == ''|| $("#goal").val() == null){
 	    		  alert("목표를 입력해주세요!");
@@ -112,6 +113,8 @@
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
+		//이동한 달의 이벤트 가져오기
+		getMonthEvent(loginId,formattedDate);
 		
 		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
 		console.log(reformattedDate);
@@ -130,6 +133,8 @@
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
+		//이동한 달의 이벤트 가져오기
+		getMonthEvent(loginId,formattedDate);
 		
 		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
 		console.log(reformattedDate);
@@ -192,7 +197,7 @@
 				}
 			});
 	    }
-	    
+	    //----------------------------------------------------------------//
 	    //달 가져오기
 	    var dateCal = date.yyyymm().toString();
 	    console.log(dateCal);
@@ -285,8 +290,28 @@
 	    }
 	  //----------------------------------------------//  	
 	  
-	  
-	  
+	  /*
+	  var requestUrl = 'getMonthEvent/'+loginId+'/'+'2021-08';
+	  console.log(requestUrl);
+	  //해당 월 이벤트 가져오기
+	  function getMonthEvent(){
+		  var arr=[];
+		  $.ajax({
+			 url:requestUrl,
+			 type:'get',
+			 dataType:'json',
+			 success:function(data){
+				console.log(data.list);
+				arr = data.list;
+			 },
+			 error:function(error){
+				 console.log(error);
+			 }
+			 
+		  });
+		  return arr;
+	  }
+	 */
   });	
 </script>
 <style>
@@ -400,6 +425,8 @@ if(minusWeight<0){
 	$("#remainWeight").val(resultWeight);
 	
 //-------------------------------------------//
+
+
 
 
 </script>

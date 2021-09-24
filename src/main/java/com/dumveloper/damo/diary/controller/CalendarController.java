@@ -1,6 +1,8 @@
 package com.dumveloper.damo.diary.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -55,7 +57,16 @@ public class CalendarController {
 		String id= (String)session.getAttribute("loginId"); 
 		return service.updateMD(monthId,changeDT,changeMonth,id);
 	 }
-	 
-	 
-	
+	 /*
+	 @RequestMapping(value="getMonthEvent/{loginId}/{month}")
+	 public HashMap<String,ArrayList<Map<String,String>>>getMonthEvent(@PathVariable String loginId,@PathVariable String month){
+		 
+		 logger.info("-------월 이벤트 요청--------");
+		 logger.info("요청 아이디 : {}",loginId);
+		 logger.info("요청한 달 : {}",month);
+		 logger.info("----------------------------");
+		 
+		 return  service.getMonthEvent(loginId,month);
+	 }
+	*/
 }

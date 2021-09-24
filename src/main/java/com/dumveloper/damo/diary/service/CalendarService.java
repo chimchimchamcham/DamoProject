@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,36 +23,38 @@ public class CalendarService {
    @Autowired CalendarDAO dao;
    
    public ModelAndView list(String id) {
-		LocalDate now = LocalDate.now();
-		logger.info("오늘 날짜 출력:{}",now);
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM");
-		String formatedNow = now.format(format);
-		logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
-		
-		ModelAndView mav = new ModelAndView();
-		
-		if(id != null) {
-			ArrayList<DamoDTO>list = dao.list(id);
-			logger.info("작성 일기 갯수 : {}",list.size());
-			
-			ArrayList<String> monthData = getMonthData(id, formatedNow);
-			
-			DamoDTO weightData = dao.getWeight(id);
-			int tarWeight = weightData.getU_tarWeight();
-			int weight = weightData.getU_weight();
-			
-			mav.addObject("list",list);
-			mav.addObject("monthTarExe",monthData.get(0));
-			mav.addObject("monthTarKcal",monthData.get(1));
-			mav.addObject("monthContent",monthData.get(2));
-			mav.addObject("weight", weight);
-			mav.addObject("tarWeight", tarWeight);
-			
-		}
-		
-		mav.setViewName("diary/calendar");
-		return mav;
-	}
+	      LocalDate now = LocalDate.now();
+	      logger.info("오늘 날짜 출력:{}",now);
+	      DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM");
+	      String formatedNow = now.format(format);
+	      logger.info("오늘 날짜 기준 달 출력 : {}",formatedNow);
+	      
+	      ModelAndView mav = new ModelAndView();
+	      
+	      if(id != null) {
+	         ArrayList<DamoDTO>list = dao.list(id);
+	         logger.info("작성 일기 갯수 : {}",list.size());
+	         
+	         ArrayList<String> monthData = getMonthData(id, formatedNow);
+	         
+	         DamoDTO weightData = dao.getWeight(id);
+	         int tarWeight = weightData.getU_tarWeight();
+	         int weight = weightData.getU_weight();
+	         
+	         mav.addObject("list",list);
+	         mav.addObject("monthTarExe",monthData.get(0));
+	         mav.addObject("monthTarKcal",monthData.get(1));
+	         mav.addObject("monthContent",monthData.get(2));
+	         mav.addObject("weight", weight);
+	         mav.addObject("tarWeight", tarWeight);
+	         
+	      }
+	      
+	      mav.setViewName("diary/calendar");
+	      return mav;
+	   }
+	   
+
 	
 	//달 변경시 Ajax로 한달 목표 섭취, 운동 칼로리 와 목표 던져주는 메서드
 	public HashMap<String, String> getMonthDByAjax(String id,String formattedDate) {
@@ -126,5 +129,73 @@ public class CalendarService {
 		
 		return map;
 	}
-	
+
+/*	public HashMap<String,ArrayList<Map<String,String>>> getMonthEvent(String loginId, String month) {
+		//해당월의 각 날짜에 있는 값들을 다 가져온 list;
+		ArrayList<DamoDTO> list = dao.list(loginId,month);
+		
+		logger.info("-------"+month+"요청 결과--------");
+		logger.info("총 갯수 : {}",list.size());
+		logger.info("------------------------------------");
+		
+		String date;
+		String weight;
+		String resultEat;
+		String resultExe;
+		boolean success;
+		
+		DamoDTO eventDTO = new DamoDTO();//DB에서 가져온 배열에서 하나씩 가져와 담을 DTO
+		
+		ArrayList<Map<String,String>> eventList = new ArrayList<Map<String,String>>();
+		
+		if(list.size()>0) {
+		
+		for(int i=0;i<list.size();i++) {
+			
+			eventDTO = list.get(i);
+			
+			date = eventDTO.getD_date();
+			weight = Integer.toString(eventDTO.getD_weight())+"kg";
+			resultEat = Integer.toString(eventDTO.getD_resultEat())+"kcal";
+			resultExe = Integer.toString(eventDTO.getD_resultExe())+"kcal";
+			success = eventDTO.isD_success();
+			
+			Map<String,String> eatMap= new HashMap<String,String>();
+			Map<String,String> exeMap = new HashMap<String,String>();
+			Map<String,String> weightMap = new HashMap<String,String>();
+			
+			//섭취 이벤트
+			eatMap.put("title", resultEat);
+			eatMap.put("start",date);
+			eatMap.put("backgroundColor", "green");
+			eatMap.put("borderColor", "green");
+			
+			//운동 이벤트
+			exeMap.put("title", resultExe);
+			exeMap.put("start",date);
+			exeMap.put("backgroundColor", "#E7C6B4");
+			exeMap.put("borderColor", "#E7C6B4");
+			
+			//몸무게 이벤트
+			weightMap.put("title", weight);
+			weightMap.put("start", date);
+			if(success) {
+				weightMap.put("color", "skyblue");
+			}else {
+				weightMap.put("color", "pink");
+			}
+			weightMap.put("display", "background");
+			
+			eventList.add(eatMap);
+			eventList.add(exeMap);
+			eventList.add(weightMap);
+		}
+		}
+		
+		HashMap<String, ArrayList<Map<String,String>>>  eventMap = new HashMap<String, ArrayList<Map<String,String>>>();
+		eventMap.put("list", eventList);
+		
+		return eventMap;
+	}
+	*/
 }
