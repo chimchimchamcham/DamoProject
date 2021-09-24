@@ -917,10 +917,5 @@ public class DamoDTO {
 	public void setD_dateDay(int d_dateDay) {
 		this.d_dateDay = d_dateDay;
 	}
-	public Date getM_date() {
-		return m_date;
-	}
-	public void setM_date(Date m_date) {
-		this.m_date = m_date;
-	}
+
 }
