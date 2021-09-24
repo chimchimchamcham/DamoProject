@@ -1,19 +1,14 @@
 package com.dumveloper.damo.diary.service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
-import org.w3c.dom.CDATASection;
 
 import com.dumveloper.damo.diary.dao.DiaryDAO;
 import com.dumveloper.damo.dto.DamoDTO;
@@ -147,12 +142,16 @@ public class DiaryService {
 		
 		HashMap<String, String> map = new HashMap<String,String>();
 		int success = 0;
-		DamoDTO dto = new DamoDTO();
+		
+		DamoDTO dto = new DamoDTO(); //추가할 거 담을 DTO
+		
 		String checker="fail";
 		boolean HisDailyYN = true;
 		String searchResult ="";
+		
 		//음식등록
-		if(param.get("selectMenu").equals("foodlist")){
+		if(param.get("selectMenu").equals("foodlist") || param.get("selectMenu").equals("water")){
+			
 			String hd_no = param.get("hd_no");
 			String hd_code = param.get("hd_code");
 			int hd_eat = Integer.parseInt(param.get("hd_eat"));
@@ -176,6 +175,7 @@ public class DiaryService {
 			dto.setHd_fat(hd_fat);
 			dto.setHd_kcal(hd_kcal);
 			
+			//일단 등록할 음식이 이미 있는지 확인
 			searchResult =  checkHisDaily(dto,HisDailyYN);
 			
 			if(searchResult.equals("none")){//전에 섭취한 기록이 없는 경우 - 항목 insert
@@ -243,7 +243,7 @@ public class DiaryService {
 		String searchResult = "none";
 		
 		if(HisDailyYN) {//섭취의 경우
-			logger.info("----------------------------------------------");
+			logger.info("--------------------추가 할 것--------------------------");
 			logger.info("추가로 섭취한 항목의 음식 이름:{}",dto.getHd_foodName());
 			logger.info("추가로 섭취한 항목의 음식양:{}",dto.getHd_eat());
 			logger.info("추가로 섭취한 항목의 칼로리양:{}",dto.getHd_kcal());
@@ -258,19 +258,38 @@ public class DiaryService {
 			if(resultDTO != null){ //이전 항목이 존재하는 경우
 				logger.info("이전 항목 존재");
 				searchResult="exist_update_fail";//이전 항목 존재->업데이트 실패
+				
+				logger.info("---------------------기존 것-------------------------");
+				logger.info("기존에 섭취한 항목의 음식 이름:{}",resultDTO.getHd_foodName());
+				logger.info("기존에 섭취한 항목의 음식양:{}",resultDTO.getHd_eat());
+				logger.info("기존에 섭취한 항목의 칼로리양:{}",resultDTO.getHd_kcal());
+				logger.info("기존에 섭취한 항목의 탄수화물 양:{}",resultDTO.getHd_carbo());
+				logger.info("기존에 섭취한 항목의 단백질 양:{}",resultDTO.getHd_protein());
+				logger.info("기존에 섭취한 항목의 지방 양:{}",resultDTO.getHd_fat());
+				logger.info("기존에 섭취한 항목의 분류 코드:{}",resultDTO.getHd_code());
+				logger.info("기존에 섭취한 항목의 일기 번호:{}",resultDTO.getHd_no());
+				logger.info("----------------------------------------------");
+				
 				//추가하려는 값과 더하기
-				int addCarbo = dto.getHd_carbo()+resultDTO.getHd_carbo();
+				int addCarbo = dto.getHd_carbo()+resultDTO.getHd_carbo(); //추가할 값 + 기존에 있던 값
 				int addProtein = dto.getHd_protein()+resultDTO.getHd_protein();
 				int addFat = dto.getHd_fat()+resultDTO.getHd_fat();
 				int addKcal = dto.getHd_kcal()+resultDTO.getHd_kcal();
 				int addEat = dto.getHd_eat()+resultDTO.getHd_eat();
 				
-				System.out.println("추가 섭취 칼로리:"+dto.getHd_kcal()+" / 이전 섭취 칼로리 : "+resultDTO.getHd_kcal());
+				logger.info("-----------최종합계--------------");
+				logger.info("최종 탄수화물 : {}",addCarbo);
+				logger.info("최종 단백질 : {}",addProtein);
+				logger.info("최종 지방 : {}",addFat);
+				logger.info("최종 칼로리 : {}",addKcal);
+				logger.info("최종 먹은 량 : {}",addEat);
+				logger.info("------------------------------");
 				
 				addDTO.setHd_carbo(addCarbo);
 				addDTO.setHd_protein(addProtein);
 				addDTO.setHd_fat(addFat);
 				addDTO.setHd_kcal(addKcal);
+				
 				addDTO.setHd_foodName(dto.getHd_foodName());
 				addDTO.setHd_no(dto.getHd_no());
 				addDTO.setHd_code(dto.getHd_code());
@@ -319,7 +338,7 @@ public class DiaryService {
 		
 		int success;
 		
-		DamoDTO setDto = new DamoDTO();
+		DamoDTO setDto = new DamoDTO(); //더해준 값을 넣어줄 DTO
 		
 		//일기에서 섭취 칼로리 합계, 운동 칼로리 합계, 탄단지 가져오기
 		if(HisDailyYN) {
@@ -336,18 +355,27 @@ public class DiaryService {
 			
 			int d_resulteat = getDTO.getD_resultEat();
 			int d_resultcarbo = getDTO.getD_resultCarbo();
-			int d_resultprotein = getDTO.getD_protein();
+			int d_resultprotein = getDTO.getD_resultProtein();
 			int d_resultfat = getDTO.getD_resultFat();
 			
-			System.out.println("기존 입력된 섭취 열량 : "+d_resulteat+" / 기존 입력된 섭취 탄수화물 : "+d_resultcarbo);
-			System.out.println("기존 입력된 섭취 단백질 : "+d_resultprotein+" / 기존 입력된 섭취 지방 : "+d_resultfat);
+			logger.info("---------------기존 diary 데이터---------------");
+			logger.info("이전 diary 섭취 총량 : {}",d_resulteat);
+			logger.info("이전 diary 탄수화물 총량 : {}",d_resultcarbo);
+			logger.info("이전 diary 탄수화물 총량 : {}",d_resultprotein);
+			logger.info("이전 diary 지방 총량 : {}",d_resultfat);
+			logger.info("-----------------------------------------------");
 			
 			hd_kcal = dto.getHd_kcal()+d_resulteat;
 			hd_carbo = dto.getHd_carbo()+d_resultcarbo;
 			hd_protein = dto.getHd_protein()+d_resultprotein;
 			hd_fat = dto.getHd_fat()+d_resultfat;
 			
-			System.out.println("합친 섭취 데이터 - 칼로리 : "+hd_kcal+" / 단백질 : "+hd_protein+" / 탄수화물 : "+hd_carbo+" / 지방 : "+hd_fat);
+			logger.info("---------------합친 diary 데이터---------------");
+			logger.info("합친 diary 섭취 열량 총량 : {}",hd_kcal);
+			logger.info("합친 diary 탄수화물 총량 : {}",hd_carbo);
+			logger.info("합친 diary 단백질 총량 : {}",hd_protein);
+			logger.info("합친 diary 지방 총량 : {}",hd_fat);
+			logger.info("-----------------------------------------------");
 			
 			setDto.setD_resultEat(hd_kcal);
 			setDto.setD_resultCarbo(hd_carbo);

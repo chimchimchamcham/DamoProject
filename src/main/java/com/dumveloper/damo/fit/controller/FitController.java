@@ -207,4 +207,42 @@ public class FitController {
 		return fitservice.fitAnsUpdate(params, imgNos, files, rAttr);
 	}
 
+	@RequestMapping(value = "/chooseFitAns", method = RequestMethod.GET)
+	public ModelAndView chooseFitAns(@RequestParam String kr_no, @RequestParam String k_no) {
+
+		logger.info("지식핏 답변채택 접속");
+		logger.info("k_no : {}", k_no);
+		logger.info("kr_no : {}", kr_no);
+
+		return fitservice.chooseFitAns(k_no,kr_no);
+	
+	}
+	
+	@RequestMapping(value = "/chkDir", method = RequestMethod.GET)
+	public @ResponseBody String chkDir(@RequestParam String k_no, @RequestParam String u_id) {
+
+		logger.info("지식핏 사전확인 접속");
+		logger.info("k_no : {}", k_no);
+		logger.info("u_id : {}", u_id);
+
+		return fitservice.chkDir(k_no,u_id);		
+	}
+	
+	@RequestMapping(value = "/addDir", method = RequestMethod.GET)
+	public @ResponseBody String addDir(@RequestParam String k_no, @RequestParam String u_id) {
+
+		logger.info("지식핏 사전추가 접속");
+		logger.info("k_no : {}", k_no);		
+
+		return fitservice.addDir(k_no,u_id);	
+	}
+	
+	@RequestMapping(value = "/delDir", method = RequestMethod.GET)
+	public @ResponseBody String delDir(@RequestParam String k_no, @RequestParam String u_id) {
+
+		logger.info("지식핏 사전제거 접속");
+		logger.info("k_no : {}", k_no);		
+
+		return fitservice.delDir(k_no,u_id);	
+	}
 }
