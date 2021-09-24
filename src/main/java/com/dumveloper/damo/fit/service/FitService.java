@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.dumveloper.damo.dto.DamoDTO;
 import com.dumveloper.damo.fit.dao.FitDAO;
 
@@ -75,6 +71,7 @@ public class FitService {
 		int success = fitdao.fitWrite(dto);
 		logger.info("success : {}",success);
 		logger.info("ki_no : {}",dto.getKi_no());
+		logger.info("k_no : {}",dto.getK_no());
 		
 		//(2) 이미지 저장
 		
@@ -125,7 +122,7 @@ public class FitService {
 		//ModelAndView
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/fitMain");
+		mav.setViewName("redirect:/fitDetail?k_no="+dto.getK_no());
 		rAttr.addFlashAttribute("msg", "작성이 완료되었습니다");
 		return mav;
 	}
@@ -536,6 +533,43 @@ public String addDir(String k_no, String u_id) {
 			ch = "+";
 		}
 		return ch;
+	}
+
+	public ModelAndView serchlist(String content) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		ArrayList<DamoDTO> title = fitdao.serchtitle(content);
+		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content);
+		mav.addObject("title",title);
+		mav.addObject("maincontent",maincontent);
+		mav.setViewName("./fit/search");
+		
+		return mav;
+	}
+
+	public String fitNotify(HashMap<String, String> params) {
+		DamoDTO dto = new DamoDTO();
+		String n1_code = params.get("n1_code");
+		dto.setN1_code(n1_code);
+		String n2_code = params.get("n2_code");
+		dto.setN2_code(n2_code);
+		String n_sendid = params.get("n_sendid");
+		dto.setN_sendid(n_sendid);
+		String n_receiveid = params.get("n_receiveid");
+		dto.setN_receiveid(n_receiveid);
+		String n_content = params.get("n_content");
+		dto.setN_content(n_content);
+		int n_notifiedno = Integer.parseInt(params.get("n_notifiedno"));
+		dto.setN_notifiedno(n_notifiedno);
+		
+		int success = fitdao.fitNotify(dto);
+		String msg = "failed";
+		if(success>0) {
+			msg="success";
+		}
+
+		return msg;
 	}
 
 }

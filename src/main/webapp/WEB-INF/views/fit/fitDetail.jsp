@@ -32,15 +32,24 @@
 				</div>
 
 				<!-- Modal body -->
-				<div class="modal-body p" id="modalBody">
+				<div class="modal-body p" id="nModalBody">
 					<div class="row">
-						<div id="n1_code"
-							class="mr-1 pt-2 text-secondary font-weight-bold float-left col-md-4"></div>
-						<div id="n2_code" class="container form-group col-md-4">
+						<!-- <div id="n1_code"
+							class="container col-md-4"></div>
+						<div id="ntfTitle" class="container col-md-3"></div>
+						<div id="n2_code" class="container form-group col-md-5">
 							<select name="n2_code" class="form-control">
 								<option></option>
 							</select>
-						</div>
+						</div> -->
+						<span id="n1_code"
+							class="container pr-0 mr-0 col-md-4" ></span>
+						<span id="ntfTitle" class="container pl-0 pr-0 ml-0 col-md-4" style="text-align:left"></span>
+						<span id="n2_code" class="container pl-0 form-group col-md-4">
+							<select name="n2_code" class="form-control " style="width:150px">
+								<option></option>
+							</select>
+						</span>
 					</div>
 					<div id="contentWrap">
 						<textarea id="ntf_content" placeholder="신고 내용을 입력하세요."></textarea>
@@ -373,7 +382,7 @@
 
 						<c:if test="${ans.u_id ne sessionId and sessionId ne null}">
 							<a class="notify float-right ml-3 mt-1" data-toggle="modal"
-								data-target="#notify" title="${ans.kR_no},${ans.u_id}"
+								data-target="#notify" title="${ans.kR_no},${ans.u_id},${ans.u_nick}"
 								onclick="notify(this);">신고</a>
 							<!-- <a href="#" class="notify float-right ml-3 mt-1">신고</a> -->
 						</c:if>
@@ -604,6 +613,16 @@ a.notify, a.del {
 	color: #D8D8D8;
 }
 
+#n1_code {
+	height: 10px;
+}
+
+#ntfTitle {
+	white-space: nowrap;
+	width: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 말줄임 적용 */
+}
 /*  */
 #fitTitle {
 	border: 1px solid #D8D8D8;
@@ -708,6 +727,7 @@ a.notify, a.del {
 	var loginNick = "${sessionScope.loginNick}";
 	var writerId = "${bean.u_id}";
 	var kNo = "${bean.k_no}";
+	var title = "${bean.k_title}";
 	var flag = '<c:out value="${loop_flag}"/>';//글 작성자가 아니고, 답변한 유저이면 true
 	//console.log(loginId);
 	//console.log(typeof(loginId));
@@ -716,7 +736,7 @@ a.notify, a.del {
 	var formName = document.fitAnsWrite;
 	var ansNo;
 	var ntfId;
-	var ntfNo;
+	var ntfNo;	
 	//사진 추가 등록시 번호를 부여하는 변수
 	var uploadNo = 1;
 	//답변/수정 구분
@@ -746,12 +766,10 @@ a.notify, a.del {
 				"u_id" : loginId
 			},
 			dataType : "text",
-			async : false,
 			success : function(data) {
 				console.log(data);
 				if (data == '+') {
 					$("#dir").parent().next().html('+');
-
 				} else if (data == '-') {
 					$("#dir").parent().next().html('-');
 				}
@@ -946,76 +964,77 @@ a.notify, a.del {
 		myAnswer.css({
 			"display" : "none"
 		});//답변 숨기기
-		
+
 	}
-		
-	function notify(e){//신고를 눌렀을 경우
-			//console.log($(e).attr("title"));
-			var qna = $(e).attr("title");
-			var option = '<option value="" >신고분류 선택 </option>';
-			$("#n2_code").children().empty();
-			if(qna == 'qNotify'){
-				ntfNo = kNo;
-				ntfId = writerId;
-				$("#n1_code").html("신고할 지식fit");
-				$("#n1_code").attr("name", 'KNOWFIT');
-				option += '<option value="KNOWFIT_001" >음란/선정성 게시글 </option>';
-				option += '<option value="KNOWFIT_002" >도배/욕설 게시글 </option>';
-				option += '<option value="KNOWFIT_003" >권리침해(사생활침해/명예훼손/괴롭힘) 게시글 </option>';
-				option += '<option value="KNOWFIT_004" >광고/홍보성 게시글 </option>';
-				option += '<option value="KNOWFIT_005" >불법 정보(도박/사행성) 게시글 </option>';
-				option += '<option value="KNOWFIT_006" >분란 유도 게시글 </option>';
-				option += '<option value="KNOWFIT_007" >불법 촬영물 등 유통 게시글 </option>';
-				option += '<option value="KNOWFIT_008" >기타 </option>';
-				
-			}else{
-				//console.log(qna.split(',')[0]);
-				//console.log(qna.split(',')[1]	);
-				ntfNo = qna.split(',')[0];
-				ntfId = qna.split(',')[1];
-				$("#n1_code").html("신고할 답변");
-				$("#n1_code").attr("name", 'KNOWFIT_R');
-				option += '<option value="KNOWFIT_R_001" >음란/선정성 답변 </option>';
-				option += '<option value="KNOWFIT_R_002" >도배/욕설 답변 </option>';
-				option += '<option value="KNOWFIT_R_003" >권리침해(사생활침해/명예훼손/괴롭힘) 답변 </option>';
-				option += '<option value="KNOWFIT_R_004" >광고/홍보성 답변 </option>';
-				option += '<option value="KNOWFIT_R_005" >불법 정보(도박/사행성) 답변 </option>';
-				option += '<option value="KNOWFIT_R_006" >분란 유도 답변 </option>';
-				option += '<option value="KNOWFIT_R_007" >불법 촬영물 등 유통 답변 </option>';
-				option += '<option value="KNOWFIT_R_008" >기타 </option>';			
-				
-			}
-			$("#n2_code").children().append(option);
+
+	function notify(e) {//신고를 눌렀을 경우
+		//console.log($(e).attr("title"));
+		var qna = $(e).attr("title");
+		var option = '<option value="" >신고분류 선택 </option>';
+		$("#n2_code").children().empty();
+		$("#ntf_content").val('');
+		if (qna == 'qNotify') {
+			ntfNo = kNo;
+			ntfId = writerId;
+			$("#n1_code").html('신고할 지식fit');
+			$("#ntfTitle").html(title);
+			$("#n1_code").attr("name", 'KNOWFIT');
+			option += '<option value="KNOWFIT_001" >음란/선정성 게시글 </option>';
+			option += '<option value="KNOWFIT_002" >도배/욕설 게시글 </option>';
+			option += '<option value="KNOWFIT_003" >권리침해(사생활침해/명예훼손/괴롭힘) 게시글 </option>';
+			option += '<option value="KNOWFIT_004" >광고/홍보성 게시글 </option>';
+			option += '<option value="KNOWFIT_005" >불법 정보(도박/사행성) 게시글 </option>';
+			option += '<option value="KNOWFIT_006" >분란 유도 게시글 </option>';
+			option += '<option value="KNOWFIT_007" >불법 촬영물 등 유통 게시글 </option>';
+			option += '<option value="KNOWFIT_008" >기타 </option>';
+
+		} else {
+			//console.log(qna.split(',')[0]);
+			//console.log(qna.split(',')[1]	);
+			ntfNo = qna.split(',')[0];
+			ntfId = qna.split(',')[1];
 			
-	}
-		
-		function regNotify(){//신고 등록 눌렀을 때
-			$.ajax({
-				url : 'regNotify',
-				method : 'GET',
-				data : {
-					"n1_code" : $("#n1_code").attr("name"),
-					"n2_code" : $("#n2_code option:selected").attr("name"),
-					"n_sendid" : loginId,
-					"n_receiveid" : ntfId,
-					"n_content" : $("#ntf_content").val(),
-					"n_notifiedno" : ntfNo
-				},
-				success : function(data) {
-					console.log(data);
-					if (data != 'failed') {
-						$("#dir").parent().next().html('-');
+			$("#n1_code").html("신고할 답변");
+			$("#ntfTitle").html(qna.split(',')[2]+"님의 답변");
+			$("#n1_code").attr("name", 'KNOWFIT_R');
+			option += '<option value="KNOWFIT_R_001" >음란/선정성 답변 </option>';
+			option += '<option value="KNOWFIT_R_002" >도배/욕설 답변 </option>';
+			option += '<option value="KNOWFIT_R_003" >권리침해(사생활침해/명예훼손/괴롭힘) 답변 </option>';
+			option += '<option value="KNOWFIT_R_004" >광고/홍보성 답변 </option>';
+			option += '<option value="KNOWFIT_R_005" >불법 정보(도박/사행성) 답변 </option>';
+			option += '<option value="KNOWFIT_R_006" >분란 유도 답변 </option>';
+			option += '<option value="KNOWFIT_R_007" >불법 촬영물 등 유통 답변 </option>';
+			option += '<option value="KNOWFIT_R_008" >기타 </option>';
 
-					}
-					alert(data);
-
-				},
-				error : function(e) {
-					console.log(e);
-				}
-			});
 		}
-		
+		$("#n2_code").children().append(option);
+
+	}
+
+	function regNotify() {//신고 등록 눌렀을 때
+		$.ajax({
+			url : 'fitNotify',
+			method : 'GET',
+			data : {
+				"n1_code" : $("#n1_code").attr("name"),
+				"n2_code" : $("#n2_code option:selected").val(),
+				"n_sendid" : loginId,
+				"n_receiveid" : ntfId,
+				"n_content" : $("#ntf_content").val(),
+				"n_notifiedno" : ntfNo
+			},
+			success : function(data) {
+				console.log(data);
+				if (data != 'failed') {
+					alert(data);
+				}
+
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
 
 	//session.loginId
 	/* $.ajax({
@@ -1079,7 +1098,6 @@ a.notify, a.del {
 			});
 		}
 	});
-	
 
 	//등록취소를 눌렀을 때 지식핏 목록으로 이동
 	$("#cancel").on("click", function() {
