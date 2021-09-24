@@ -40,19 +40,10 @@ public class DiaryService {
 	          logger.info("초기 값 dto: {}" + dto + "date" + dto.getC_date() + "/ 몸무게 : " + dto.getU_weight());
 
 	          // 권장 탄단지 계산 (밸런스)
-	          int StandardWeight = (int) ((dto.getU_height() - 100) * 0.9);// 표준체중
-	          int Kcal = StandardWeight * 30;// 권장섭취 칼로리
-	          logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
-
-	          int carbo = Kcal / 2; // 권장 탄수화물
-	          int protein = Kcal / 1; // 권장 단백질
-	          int fat = Kcal / 1; // 권장 지방
-	          logger.info("권장 탄수화물 : " + carbo + " / 권장 단백질 : " + protein + "/ 권장 지방 : " + fat);
-
 	          dto.setD_date(date);
-	          dto.setD_carbo(carbo);
-	          dto.setD_protein(protein);
-	          dto.setD_fat(fat);
+	          dto.setD_carbo(calculateTDG(id).getD_carbo());
+	          dto.setD_protein(calculateTDG(id).getD_protein());
+	          dto.setD_fat(calculateTDG(id).getD_fat());
 
 	          int success = dao.diaryInsert(dto);
 	          logger.info("일기 insert 성공 여부 : " + success);
@@ -74,6 +65,25 @@ public class DiaryService {
 
 		map.put("dto", dto);
 		return map;
+	}
+
+	private DamoDTO calculateTDG(String id) {
+		DamoDTO dto = new DamoDTO();
+		int height = dao.getU_height(id); //키 가져오기
+		 int StandardWeight = (int) ((height - 100) * 0.9);// 표준체중
+         int Kcal = StandardWeight * 30;// 권장섭취 칼로리
+         logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
+
+         int carbo = Kcal / 2; // 권장 탄수화물
+         int protein = Kcal / 1; // 권장 단백질
+         int fat = Kcal / 1; // 권장 지방
+         logger.info("권장 탄수화물 : " + carbo + " / 권장 단백질 : " + protein + "/ 권장 지방 : " + fat);
+         
+         dto.setD_carbo(carbo);
+         dto.setD_protein(protein);
+         dto.setD_fat(fat);
+         
+         return dto;
 	}
 
 

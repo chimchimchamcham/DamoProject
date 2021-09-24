@@ -153,4 +153,8 @@ GROUP BY d.d_no
 	WHERE D_NO=#{d_no}
 </update>
 
+<select id="getU_height" resultType="int">
+	SELECT u_height FROM userinfo WHERE u_id = #{param1}
+</select>
+
 </mapper>
