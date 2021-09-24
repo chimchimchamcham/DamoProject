@@ -157,5 +157,17 @@
 	<update id="upFitAns" parameterType="String">
 		UPDATE knowfit SET k_solutionYN = 'Y' WHERE k_no = #{k_no}
 	</update>
+	
+	<select id="chkDir" resultType="damo">
+		SELECT * FROM Mydir WHERE k_no = #{param1} AND u_id = #{param2}		
+	</select>
 
+<insert id="addDir">
+		INSERT INTO Mydir VALUES(#{param1},#{param2},sysdate)
+	</insert>
+	
+	<delete id="delDir">
+		DELETE FROM Mydir WHERE k_no = #{param1} AND u_id = #{param2}
+	</delete>
+	
 </mapper>

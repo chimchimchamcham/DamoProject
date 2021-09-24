@@ -60,4 +60,10 @@ public interface FitDAO {
 
 	void upFitAns(String k_no);
 
+	DamoDTO chkDir(String k_no, String u_id);
+
+	int delDir(String k_no, String u_id);
+
+	int addDir(String k_no, String u_id);
+
 }

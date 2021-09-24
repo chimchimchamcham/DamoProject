@@ -259,32 +259,35 @@ public class FitService {
 	}
 
 	public ModelAndView fitDetail(String k_no) {
-		ModelAndView mav = new ModelAndView();		
+		ModelAndView mav = new ModelAndView();
 		fitdao.upView(k_no);
-		DamoDTO dto = fitdao.fitDetail(k_no);		
+		DamoDTO dto = fitdao.fitDetail(k_no);
 		mav.addObject("bean", dto);
+		HashMap<String, ArrayList<DamoDTO>> map = new HashMap<>();
 		
-		//질문 사진과 링크 불러오기
-		ArrayList<DamoDTO> photoList = fitdao.fitImgLinkList(k_no,"Y");
-		logger.info("photoList : {}",photoList);
+		// 질문 사진과 링크 불러오기
+		ArrayList<DamoDTO> photoList = fitdao.fitImgLinkList(k_no, "Y");
+		logger.info("photoList : {}", photoList);
 		mav.addObject("qPhoto", photoList);
-		
-		if(dto.getK_replyCnt() > 0) {
+
+		if (dto.getK_replyCnt() > 0) {
 			logger.info("답변 상세보기");
-			ArrayList<DamoDTO> list = fitdao.fitAnsDetail(k_no);		
+			ArrayList<DamoDTO> list = fitdao.fitAnsDetail(k_no);//답변들 저장
 			mav.addObject("answer", list);
+			//photoList.clear();하면 안됨... map.put()이 값 복사가 아니라 주소복사인가...?
+			//
 			
-			//답변 사진과 링크 불러오기
+			// 답변 사진과 링크 불러오기
 			for (DamoDTO ansArr : list) {
-				photoList.clear();
-				photoList = fitdao.fitImgLinkList(ansArr.getkR_no(),"N");
-				logger.info(ansArr.getkR_no()+"photoList : {}",photoList);
-				mav.addObject("aPhoto", photoList);
+				// ansArr.getkR_cmtCnt();
+				photoList = fitdao.fitImgLinkList(ansArr.getkR_no(), "N");//답변 하나에 해당하는 이미지와 링크 불러옴
+				map.put(ansArr.getkR_no(), photoList);
 			}
-		}		
+			
+		}
+		mav.addObject("aPhoto", map);
 		
-		String page = "fit/fitDetail";
-		mav.setViewName(page);	
+		mav.setViewName("fit/fitDetail");
 		
 		return mav;
 	}
@@ -392,103 +395,103 @@ public class FitService {
 			RedirectAttributes rAttr) {
 
 		// (1) 일반 변경
-		DamoDTO dto = new DamoDTO();
-		String k_no = params.get("k_no");	
-		String kr_no = params.get("kr_no");		
-		String k_content = params.get("k_content");		
+				DamoDTO dto = new DamoDTO();
+				String k_no = params.get("k_no");
+				String kr_no = params.get("kr_no");
+				String k_content = params.get("k_content");
 
-		dto.setK_no(Integer.parseInt(k_no));
-		dto.setkR_no(kr_no);		
-		dto.setkR_content(k_content);		
+				dto.setK_no(Integer.parseInt(k_no));
+				dto.setkR_no(kr_no);
+				dto.setkR_content(k_content);
 
-		int success = fitdao.knowfitRUpdate(dto);
-		logger.info("success : {}", success);
+				int success = fitdao.knowfitRUpdate(dto);
+				logger.info("success : {}", success);
 
-		// (2) 사진 변경
-		// 사진 불러오기
-		ArrayList<String> photoList = fitdao.fitImgList(kr_no, "Y", "N");
-		logger.info("photoList : {}", photoList);
+				// (2) 사진 변경
+				// 사진 불러오기
+				ArrayList<String> photoList = fitdao.fitImgList(kr_no, "Y", "N");
+				logger.info("photoList : {}", photoList);
 
-		// 삭제처리
-		for (String photo : photoList) {
-			logger.info("photo : {}", photo);
+				// 삭제처리
+				for (String photo : photoList) {
+					logger.info("photo : {}", photo);
 
-			boolean deleteYN = true; // 삭제여부를 Y로 세팅해둔다.
+					boolean deleteYN = true; // 삭제여부를 Y로 세팅해둔다.
 
-			for (String imgNo : imgNos) {
-				if (photo.equals(imgNo)) {
-					deleteYN = false; // 같은 파일명이 존재해면 삭제하지 않는다.
-					break;
+					for (String imgNo : imgNos) {
+						if (photo.equals(imgNo)) {
+							deleteYN = false; // 같은 파일명이 존재해면 삭제하지 않는다.
+							break;
+						}
+					}
+
+					if (deleteYN) {
+						// 같은 파일명이 존재하지 않으면 삭제처리한다.
+						success = fitdao.knowfitImgDelete(kr_no, photo, "Y", "N");
+					}
 				}
-			}
 
-			if (deleteYN) {
-				// 같은 파일명이 존재하지 않으면 삭제처리한다.
-				success = fitdao.knowfitImgDelete(kr_no, photo, "Y", "N");
-			}
-		}
+				// 업로드처리
+				String root = "C:/upload/"; // 이미지를 저장할 경로
 
-		// 업로드처리
-		String root = "C:/upload/"; // 이미지를 저장할 경로
+				// List<MultipartFile> files
+				if (files.size() > 0) {
+					for (MultipartFile mf : files) { // 파일들을 하나씩 업로드 한다
 
-		// List<MultipartFile> files
-		if (files.size() > 0) {
-			for (MultipartFile mf : files) { // 파일들을 하나씩 업로드 한다
+						String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+						long fileSize = mf.getSize(); // 파일 사이즈
 
-				String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-				long fileSize = mf.getSize(); // 파일 사이즈
+						logger.info("originFileName : " + originFileName);
+						logger.info("fileSize : " + fileSize);
 
-				logger.info("originFileName : " + originFileName);
-				logger.info("fileSize : " + fileSize);
+						String newFileName = System.currentTimeMillis()
+								+ originFileName.substring(originFileName.lastIndexOf("."));
 
-				String newFileName = System.currentTimeMillis()
-						+ originFileName.substring(originFileName.lastIndexOf("."));
-				
-				try {
-					mf.transferTo(new File(root + newFileName)); // 파일을 업로드!! 간단
-					int imgUploadSuccess = fitdao.upload(Integer.parseInt(kr_no), newFileName, "Y", "N");// 파일명을 DB에 저장
-					logger.info("imgUploadSuccess : {}", imgUploadSuccess);
-				} catch (IOException e) {
-					e.printStackTrace();
+						try {
+							mf.transferTo(new File(root + newFileName)); // 파일을 업로드!! 간단
+							int imgUploadSuccess = fitdao.upload(Integer.parseInt(kr_no), newFileName, "Y", "N");// 파일명을 DB에 저장
+							logger.info("imgUploadSuccess : {}", imgUploadSuccess);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 				}
-			}
-		}
-		// (3) URL 변경
-		String url = params.get("url");
-		// knowfit_img 에서 url이 존재하는지 확인
-		ArrayList<String> urlList = fitdao.fitImgList(kr_no, "N", "N");
-		if (url.equals("") || url == null) {
-			success = fitdao.knowfitUrlDelete(kr_no, "N", "N");
-			logger.info("success1 : {}", success);
-		} else { // url이 존재할 경우
-			if (urlList.size() == 0) {
-				// DB에 url이 존재하지 않을 경우 insert
-				success = fitdao.knowfitImgInsert(kr_no, url, "N", "N");
-				logger.info("success2 : {}", success);
-			} else if (urlList.size() > 0 && !url.equals(urlList.get(0))) {
-				// DB에 url이 존재하지만 일치하지 않을 경우
-				success = fitdao.knowfitimgUpdate(kr_no, url, "N", "N");
-				logger.info("success3 : {}", success);
-			} else if (urlList.size() > 0 && url.equals(urlList.get(0))) {
-				// DB에 url이 존재gkrh 일치할 경우
-				logger.info("DB데이터와 동일");
-			}
+				// (3) URL 변경
+				String url = params.get("url");
+				// knowfit_img 에서 url이 존재하는지 확인
+				ArrayList<String> urlList = fitdao.fitImgList(kr_no, "N", "N");
+				if (url.equals("") || url == null) {
+					success = fitdao.knowfitUrlDelete(kr_no, "N", "N");
+					logger.info("success1 : {}", success);
+				} else { // url이 존재할 경우
+					if (urlList.size() == 0) {
+						// DB에 url이 존재하지 않을 경우 insert
+						success = fitdao.knowfitImgInsert(kr_no, url, "N", "N");
+						logger.info("success2 : {}", success);
+					} else if (urlList.size() > 0 && !url.equals(urlList.get(0))) {
+						// DB에 url이 존재하지만 일치하지 않을 경우
+						success = fitdao.knowfitimgUpdate(kr_no, url, "N", "N");
+						logger.info("success3 : {}", success);
+					} else if (urlList.size() > 0 && url.equals(urlList.get(0))) {
+						// DB에 url이 존재gkrh 일치할 경우
+						logger.info("DB데이터와 동일");
+					}
 
-		}
+				}
 
-		ModelAndView mav = new ModelAndView();
-		// 상세보기가 구현되지 않았으므로 메인으로 이동처리
-		// mav.setViewName("fitDetail?k_no="+k_no);
-		rAttr.addFlashAttribute("msg", "수정이 완료되었습니다");
-		mav.setViewName("redirect:/fitDetail?k_no=" + dto.getK_no());
-		return mav;
+				ModelAndView mav = new ModelAndView();
+				// 상세보기가 구현되지 않았으므로 메인으로 이동처리
+				// mav.setViewName("fitDetail?k_no="+k_no);
+				rAttr.addFlashAttribute("msg", "수정이 완료되었습니다");
+				mav.setViewName("redirect:/fitDetail?k_no=" + dto.getK_no());
+				return mav;
 	}
 
 	public ModelAndView chooseFitAns(String k_no, String kr_no) {
 		ModelAndView mav = new ModelAndView();
 		String chk = fitdao.chkChoose(k_no);
 		logger.info("" + chk);
-		//logger.info("" + chk.equals("N"));
+		// logger.info("" + chk.equals("N"));
 		if (chk.equals("N")) {
 			fitdao.chooseFitAns(kr_no);
 			fitdao.upFitAns(k_no);
@@ -496,7 +499,43 @@ public class FitService {
 
 		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
 
-		return mav;		
+		return mav;	
+	}
+
+public String addDir(String k_no, String u_id) {
+		
+		int success = fitdao.addDir(k_no, u_id);
+		logger.info("success : {}",success);
+		String msg = "failed";
+		
+		if(success>0) {
+			msg = "add success";
+		}
+		return msg;
+	}
+
+	public String delDir(String k_no, String u_id) {
+		
+		int success = fitdao.delDir(k_no, u_id);
+		logger.info("success : {}",success);
+		String msg = "failed";
+		
+		if(success>0) {
+			msg = "delete success";
+		}
+		return msg;
+	}
+
+	public String chkDir(String k_no, String u_id) {
+		DamoDTO dto = new DamoDTO();
+		dto = fitdao.chkDir(k_no, u_id);
+		String ch;
+		if(dto != null) {
+			ch = "-";
+		}else{
+			ch = "+";
+		}
+		return ch;
 	}
 
 }

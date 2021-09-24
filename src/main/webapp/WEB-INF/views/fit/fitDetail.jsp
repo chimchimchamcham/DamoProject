@@ -20,26 +20,29 @@
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 
+	<!-- 질문 글 -->
 	<div id="fitQuestion" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
-
 		<div class="">
 			<span id="q">Q.</span> <span class="titleTxt">${bean.k_title }</span>
 			<span id="category">${bean.c_name }</span>
 
 			<c:set var="fitId" value="${bean.u_id}" />
 			<c:set var="sessionId" value="${sessionScope.loginId}" />
+
+			<c:if test="${bean.k_solutionYN eq 'N' }">
+				<c:if test="${fitId eq sessionId }">
+					<div class="d-inline-flex float-right">
+						<a href="fitUpdateForm?k_no=${bean.k_no }" id="qUpd"
+							class="upd float-right mr-1 mt-1">수정</a> |<a
+							href="fitDelete?k_no=${bean.k_no }" id="qDel"
+							class="del float-right ml-1 mt-1">삭제</a>
+					</div>
+				</c:if>
+			</c:if>
 			<!-- 유저와 글 작성자가 다를 경우 -->
 			<c:if test="${fitId ne sessionId }">
 				<div class="d-inline-flex float-right">
 					<a href="#" class="notify float-right ml-3 mt-1">신고</a>
-				</div>
-			</c:if>
-			<c:if test="${fitId eq sessionId }">
-				<div class="d-inline-flex float-right">
-					<a href="fitUpdateForm?k_no=${bean.k_no }" id="qUpd"
-						class="upd float-right mr-1 mt-1">수정</a> |<a
-						href="fitDelete?k_no=${bean.k_no }" id="qDel"
-						class="del float-right ml-1 mt-1">삭제</a>
 				</div>
 			</c:if>
 		</div>
@@ -49,8 +52,10 @@
 		<div id="qPhoto">
 			<c:forEach items="${qPhoto }" var="photo">
 				<c:if test="${photo.ki_imgYN eq 'Y' }">
-					<img class="qImag" src="/photo/${ photo.ki_name}"
-						alt="${ photo.ki_name}">
+					<div class="imagWrap">
+						<img class="qImag" src="/photo/${ photo.ki_name}"
+							alt="${ photo.ki_name}">
+					</div>
 				</c:if>
 			</c:forEach>
 		</div>
@@ -68,43 +73,71 @@
 			</c:if>
 		</c:forEach>
 
-
-		<div class="userInfo">
+		<div class="userInfo container mt-4 mb-3">
 			<a href="#">${bean.u_id }</a> <img class="userGrade"
 				src="resources/img/${bean.g_fileName }.png"
 				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
-			<div class="d-inline-flex float-right">
-				<button type="button" class="btn btn-primary float-right ml-3 mt-1">
-					추가</button>
-			</div>
+			<!-- <div class="d-inline-flex float-right"> -->
+			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
+				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
+						onclick="href">추가</button> -->
+				<span class="float-right ml-3 mt-1" onclick="dirAddDel()"><a><img
+						id="dir" src="resources/img/dir.png" alt="dir"></a><span></span></span>
+			</c:if>
+			<!-- </div> -->
 		</div>
 
 	</div>
 
-	<!-- 유저와 글 작성자가 다를 경우 -->
+	<!-- 중간 상자 -->
+	<!-- 기본은 답변하기가 출력 -->
 	<c:set var="loop_flag" value="false" />
-	<c:if test="${fitId eq sessionId and bean.k_solutionYN eq 'Y'}">
-		<c:set var="loop_flag" value="true" />
-	</c:if>
-	<c:if test="${fitId eq sessionId and bean.k_solutionYN eq 'N'}">
-		<c:set var="loop_flag" value="change" />
-	</c:if>
-	<c:if test="${fitId ne sessionId }">
-		<c:if test="${bean.k_replyCnt ne '0' }">
-			<!-- 답변을 작성한 유저인지 확인 -->
-			<c:forEach items="${answer}" var="ans">
-				<c:if test="${ans.u_id eq sessionId and ans.kR_blindYN eq 'N'}">
-					<c:set var="loop_flag" value="true" />
-				</c:if>
-			</c:forEach>
-		</c:if>
-		<c:if test="${bean.k_replyCnt eq '0' }">
-			<c:set var="loop_flag" value="false" />
-		</c:if>
-		<%-- <c:if test="${loop_flag eq 'false'}">
-			
-		</c:if> --%>
-	</c:if>
+	<c:choose>
+
+		<c:when test="${bean.k_solutionYN eq 'N'}">
+			<c:choose>
+
+				<c:when test="${fitId eq sessionId}">
+					<c:choose>
+
+						<c:when test="${bean.k_replyCnt ne '0'}">
+
+							<c:set var="loop_flag" value="change" />
+						</c:when>
+
+						<c:otherwise>
+
+							<c:set var="loop_flag" value="true" />
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${sessionId eq null}">
+
+							<c:set var="loop_flag" value="del" />
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${answer}" var="ans">
+								<c:if test="${ans.u_id eq sessionId and ans.kR_blindYN eq 'N'}">
+
+									<c:set var="loop_flag" value="true" />
+								</c:if>
+							</c:forEach>
+
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+
+		<c:otherwise>
+
+			<c:set var="loop_flag" value="true" />
+		</c:otherwise>
+	</c:choose>
+
 	<div id="goAnsForm" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
 		<div class="row">
 			<div id="title" class="col-md-8">
@@ -201,8 +234,17 @@
 					<!-- 에러처리를 위해 0을 기본으로 집어넣음 -->
 					<input type="hidden" name="imgNo" value="0">
 
+					<!-- id를 부여하기 위해 임시로 input type file을 저장해 놓는 곳 -->
+					<div id="fileTemp"></div>
+
+					<!-- 업로드할 input type file을 저장하는 곳 -->
+					<div id="uploadFile"></div>
+
 					<!-- 동영상 url추출 저장 -->
 					<input type="hidden" name="url" id="iframeUrl">
+
+					<!-- 동영상 url추출 저장 -->
+					<input type="hidden" name="url" id="iframeUrl" value="">
 
 					<!-- 빈칸-->
 					<div id="emptyWrap"></div>
@@ -210,8 +252,7 @@
 			</form>
 		</div>
 	</div>
-	<%-- 	</c:if>
-	</c:if> --%>
+
 
 	<!-- 답변이 있을 때  -->
 	<c:if test="${bean.k_replyCnt != 0 }">
@@ -228,36 +269,47 @@
 					<div class="title">
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
 							alt="${bean.g_fileName }"> <span class="titleTxt"><a
-							href="#"> ${ans.u_nick }</a>님의 답변</span> <a href="#"
-							class="notify float-right ml-3 mt-1">신고</a>
+							href="#"> ${ans.u_nick }</a>님의 답변</span>
+						<!-- <a href="#"	class="notify float-right ml-3 mt-1">신고</a> -->
 					</div>
 					<!-- 답변 내용 -->
 					<div class="aContent ">${ans.kR_content }</div>
+
 					<br>
 					<div class="aPhoto">
-						<c:forEach items="${ aPhoto}" var="photo">
-							<c:if
-								test="${ans.kR_no eq photo.ki_no &&  photo.ki_imgYN eq 'Y'}">
-								<img class="aImag" src="upload/${ photo.ki_name}"
-									alt="${ photo.ki_name}">
+						<c:forEach items="${ aPhoto }" var="photo">
+							<c:if test="${photo.key eq ans.kR_no}">
+								<c:forEach items="${photo.value}" var="item">
+									<c:if test="${item.ki_imgYN eq 'Y'}">
+										<div class="imageWrap">
+											<img class="aImag imageWrap" src="/photo/${ item.ki_name}"
+												alt="${ item.ki_name}">
+										</div>
+									</c:if>
+								</c:forEach>
 							</c:if>
 						</c:forEach>
 					</div>
-					<div id="aVideo">
-						<c:forEach items="${aPhoto }" var="link">
-							<c:if test="${ans.kR_no eq photo.ki_no && link.ki_imgYN eq 'N' }">
-							${link.ki_name }
-								<iframe id="video"
-									src="https://www.youtube.com/embed/${link.ki_name }"
-									title="YouTube video player" frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen></iframe>
+					<br>
+					<div class="aVideo">
+						<c:forEach items="${ aPhoto }" var="link">
+							<c:if test="${link.key eq ans.kR_no}">
+								<c:forEach items="${link.value}" var="item">
+									<c:if test="${item.ki_imgYN eq 'N'}">
+										<iframe width="560" height="315"
+											src="https://www.youtube.com/embed/${item.ki_name }"
+											title="YouTube video player" frameborder="0"
+											alt="${item.ki_name }"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen></iframe>
+									</c:if>
+								</c:forEach>
 							</c:if>
 						</c:forEach>
 					</div>
 					<div>${ans.kR_date }
-						<button type="button"
-							class="btn btn-primary float-right ml-3 mt-1">댓글</button>
+						<!-- <button type="button"
+							class="btn btn-primary float-right ml-3 mt-1">댓글</button> -->
 					</div>
 				</div>
 			</c:if>
@@ -273,8 +325,12 @@
 							href="#"> ${ans.u_nick }</a>님의 답변</span>
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
-							<button type="button" class="btn btn-primary" name="${ans.kR_no}"
-								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'">채택하기</button>
+							<a
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'">
+								<span class="container fitChoose"> <img class="fitChoose"
+									alt="fitChoose" src="resources/img/fitChoose.png">채택하기
+							</span>
+							</a>
 						</c:if>
 
 						<c:if test="${ans.u_id ne sessionId}">
@@ -292,29 +348,40 @@
 					<div class="aContent container mt-1">${ans.kR_content }</div>
 					<br>
 					<div class="aPhoto">
-						<c:forEach items="${ aPhoto}" var="photo">
-							<c:if
-								test="${ans.kR_no eq photo.ki_no &&  photo.ki_imgYN eq 'Y'}">
-								<img class="aImag" src="/photo/${ photo.ki_name}"
-									alt="${ photo.ki_name}">
+						<c:forEach items="${ aPhoto }" var="photo">
+							<c:if test="${photo.key eq ans.kR_no}">
+								<c:forEach items="${photo.value}" var="item">
+									<c:if test="${item.ki_imgYN eq 'Y'}">
+										<div class="imageWrap">
+											<img class="aImag " src="/photo/${ item.ki_name}"
+												alt="${ item.ki_name}">
+										</div>
+									</c:if>
+								</c:forEach>
 							</c:if>
 						</c:forEach>
 					</div>
-					<div id="aVideo">
-						<c:forEach items="${aPhoto }" var="link">
-							<c:if test="${ans.kR_no eq photo.ki_no && link.ki_imgYN eq 'N' }">
-								<iframe id="video"
-									src="https://www.youtube.com/embed/${link.ki_name }"
-									title="YouTube video player" frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen></iframe>
+					<br>
+					<div class="aVideo">
+						<c:forEach items="${ aPhoto }" var="link">
+							<c:if test="${link.key eq ans.kR_no}">
+								<c:forEach items="${link.value}" var="item">
+									<c:if test="${item.ki_imgYN eq 'N'}">
+										<iframe width="560" height="315"
+											src="https://www.youtube.com/embed/${item.ki_name }"
+											title="YouTube video player" frameborder="0"
+											alt="${item.ki_name }"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+											allowfullscreen></iframe>
+									</c:if>
+								</c:forEach>
 							</c:if>
 						</c:forEach>
 					</div>
 					<div class="container mt-2">
 						${ans.kR_date }
-						<button type="button"
-							class="btn btn-primary float-right ml-3 mt-1">댓글</button>${ans.kR_cmtCnt }
+						<!-- <button type="button"
+							class="btn btn-primary float-right ml-3 mt-1">댓글</button> -->
 					</div>
 				</div>
 			</c:if>
@@ -381,6 +448,14 @@
 	vertical-align: middle;
 }
 
+.fitChoose {
+	font-size: 1.3rem;
+	font-weight: 700;
+	color: #0275d8;
+	width: 40px;
+	height: 30px;
+}
+
 #inputTitle {
 	border: none;
 	border-bottom: 2px solid #0275d8;
@@ -420,6 +495,11 @@
 
 #modalContent {
 	position: relative;
+}
+
+#dir {
+	width: 50px;
+	height: 50px;
 }
 
 /* .userInfo{
@@ -486,10 +566,6 @@ a.notify, a.del {
 	border-radius: 0px;
 }
 
-#photo {
-	display: none;
-}
-
 #linkSearch {
 	position: absolute;
 	top: 88px;
@@ -517,14 +593,14 @@ a.notify, a.del {
 	position: relative;
 }
 
-.imgWrap {
+.imageWrap {
 	width: 440px;
 	height: 300px;
 	margin: 5px;
 	position: relative;
 }
 
-.closeImgWrap {
+.closeImageWrap {
 	position: absolute;
 	top: 10px;
 	left: 410px;
@@ -568,6 +644,10 @@ a.notify, a.del {
 	left: 30px;
 	color: gray;
 }
+
+#uploadFile {
+	display: none;
+}
 </style>
 <script type="text/javascript">
 	//console.log(${bean.k_solutionYN});
@@ -582,6 +662,10 @@ a.notify, a.del {
 	var content;
 	var formName = document.fitAnsWrite;
 	var ansNo;
+	//사진 추가 등록시 번호를 부여하는 변수
+	var uploadNo = 1;
+	//답변/수정 구분
+	var ansOrUp = 0;
 
 	//답변 채택 시 색 변환
 	if ($("#choosedAns").length != 0) {
@@ -594,6 +678,85 @@ a.notify, a.del {
 	}
 
 	hideAnsForm();
+	if (loginId != writerId && loginId != '') {
+		chkDir();
+	}
+		
+	function chkDir() {
+		$.ajax({
+			url : 'chkDir',
+			method : 'GET',
+			data : {
+				"k_no" : kNo,
+				"u_id" : loginId
+			},
+			dataType: "text",
+			async: false,
+			success : function(data) {
+				console.log(data);
+				if(data=='+'){
+					$("#dir").parent().next().html('+');				
+					
+				}else if(data=='-'){
+					$("#dir").parent().next().html('-');
+				}
+			},
+			error : function(e) {
+				console.log(e);
+			}
+
+		});
+	}
+	
+	function dirAddDel(){
+		var dir = $("#dir").parent().next().html();
+		//console.log(dir);
+		//console.log(typeof(dir));
+		if(dir == '+'){
+			$.ajax({
+				url : 'addDir',
+				method : 'GET',
+				data : {
+					"k_no" : kNo,
+					"u_id" : loginId
+				},				
+				success : function(data) {
+					console.log(data);
+					if(data!='failed'){
+						$("#dir").parent().next().html('-');
+						
+					}
+						alert(data);
+					
+					
+					
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}else if(dir == '-'){
+			$.ajax({
+				url : 'delDir',
+				method : 'GET',
+				data : {
+					"k_no" : kNo,
+					"u_id" : loginId
+				},						
+				success : function(data) {
+					console.log(data);
+					if(data!='failed'){
+						$("#dir").parent().next().html('+');						
+					}
+					alert(data);
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}
+	}
+	
 
 	//flag 값에 따라 답변하기 변화
 	function hideAnsForm() {
@@ -611,6 +774,9 @@ a.notify, a.del {
 			$("#right").css({
 				"display" : "none"
 			});
+		} else if (flag == 'del') {
+			/* $("#goAnsForm h3").html("답변을 채택해 주세요!"); */
+			$("#title").html('<h3 class="titleTxt">답변해 주세요!</h3>');
 		}
 	}
 
@@ -651,6 +817,7 @@ a.notify, a.del {
 	//취소 버튼을 눌렀을 경우
 	function closeAnsForm() {
 		if (flag == 'true') {//수정취소
+			ansOrUp = 0;
 			hideAnsForm();//답변해주세요 숨기기
 			myAnswer.css({
 				"display" : "block"
@@ -668,6 +835,7 @@ a.notify, a.del {
 
 	function ansUpdate() {
 		if (chkForm()) {
+			ansOrUp = 0;
 			formName.action = "fitAnsUpdate?kr_no=" + ansNo + "&k_no=" + kNo;
 			formName.method = "post";
 			formName.enctype = "multipart/form-data"
@@ -689,11 +857,12 @@ a.notify, a.del {
 
 	//수정 버튼을 눌렀을 경우
 	function updateAns(e) {
+		ansOrUp = 1;
 		$("#goAnsForm").css({
 			"display" : "block"
 		});//답변하기 div 나타내기
 		openAnsForm();//답변 작성 form 나타내기
-		myAnswer = $(e).parents("div");//작성한 답변 div 변수에 저장
+		myAnswer = $(e).parents("div");//작성한 답변div 변수에 저장
 		//console.log($(e).attr("data-no"));
 		ansNo = $(e).attr("data-no");//답변번호 가져오기
 		//console.log(myAnswer.find(".aContent").html());
@@ -704,17 +873,21 @@ a.notify, a.del {
 		//console.log(myAnswer.find(".aPhoto img").next().next().next().attr("alt"));
 		//console.log(myAnswer.find(".aPhoto img").next().next().next().next().attr("alt"));
 		//console.log(myAnswer.find(".aPhoto img").next().next().next().next());
+		var link = myAnswer.find(".aVideo iframe").attr("alt");
+		//console.log(link.attr("alt"));
+		$("#iframeUrl").attr("value", link);
+		console.log($("#iframeUrl").attr("value"));
 		var img = myAnswer.find(".aPhoto img");
-		while (img.length != 0) {
+		while (img.length != 0) {//이미지 옮기기
 			//console.log(img.attr("alt"));
-			content += '<div class="imgWrap">';
+			content += '<div class="imageWrap">';
 			content += '        <img src="/photo/' + img.attr("alt")
 					+ '" width="400px" height="300px"> <!-- 이미지 4장까지 -->';
-			content += '        <a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+			content += '        <a href="#" class="closeImageWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
 			content += '        <input type="hidden" name="imgNo" value="'
 					+ img.attr("alt") + '">';
 			content += '	</div>';
-			img = img.next();
+			img = img.parent().next().find("img");
 		}
 		$("#imageWrap").empty().html(content);
 
@@ -747,8 +920,24 @@ a.notify, a.del {
 	//내용 글자수 카운트
 	var textCount = 0;
 
+	//x를 클릭 했을 때 이미지 삭제하기
+	$(document).on("click", ".closeImageWrap", function() {
+		$(this).parent().remove();
+		changeImgIcon();
+
+		var imgNo = $(this).parent().find("input[type='hidden']").val();
+		deleteInputTyleFile(imgNo);
+	});
+
 	//x를 클릭 했을 때 동영상 삭제하기
-	$(document).on("click", ".closeImgWrap", function() {
+	$(document).on("click", ".closeIframeWrap", function() {
+		$(this).parent().remove();
+		$("#iframeUrl").val("");
+		$("#linkRegister").attr("src", "resources/img/link.png");
+	});
+
+	//x를 클릭 했을 때 동영상 삭제하기
+	$(document).on("click", ".closeImageWrap", function() {
 		$(this).parent().remove();
 		changeImgIcon();
 	});
@@ -780,15 +969,27 @@ a.notify, a.del {
 	});
 
 	//모달 닫기 버튼 클릭시 링크에 있는 주소 일부를 추출해서 iframe으로 만들어 주기
-	$("#checkBtn").on("click",	function() {
-		var url = $("#link").val();
-		console.log(url);
+	$("#checkBtn")
+			.on(
+					"click",
+					function() {
+						var url = $("#link").val();
+						console.log(url);
 
 						if (url == '') {
 							$("#movieWrap").empty();
 							$("#iframeUrl").val('');
 						} else {
-							url = url.split('embed/')[1].split('"')[0];
+							if (url.includes('iframe')) {
+								url = url.split('embed/')[1].split('"')[0];
+								console.log(url);
+							} else if (url.includes('watch')) {
+								url = url.split('=')[1].split('&')[0];
+								console.log(url);
+							} else {
+								url = url.split('/').reverse()[0];
+								console.log(url);
+							}
 
 							var content = "";
 							content += '<div class="iframeWrap">';
@@ -838,57 +1039,91 @@ a.notify, a.del {
 					"change",
 					function(e) {
 						console.log('썸네일 등록');
+						if (ansOrUp == 0) {
+							//기존의 썸네일을 삭제
+							$("#imageWrap").empty();
 
-						//기존의 썸네일을 삭제
-						$("#imageWrap").empty();
+							//썸네일 등록
+							var files = e.target.files;
+							console.log(e.target.files);
+							console.log(e.target.files.length);
 
-						//썸네일 등록
-						var files = e.target.files;
-						console.log(e.target.files);
-						console.log(e.target.files.length);
+							if (e.target.files.length >= 4) {
+								alert("최대 4장까지만 업로드 가능합니다.");
+								$("#photo").val("");
+							} else {
+								//유사배열을 배열로 변환
+								var filesArr = Array.prototype.slice
+										.call(files);
 
-						if (e.target.files.length >= 5) {
-							alert("최대 4장까지만 업로드 가능합니다.");
-							$("#photo").val("");
-						} else {
-							//유사배열을 배열로 변환
-							var filesArr = Array.prototype.slice.call(files);
+								filesArr
+										.forEach(function(file, index) {
 
-							filesArr
-									.forEach(function(file, index) {
+											var reader = new FileReader();
 
-										var reader = new FileReader();
+											//파일이름
+											console.log('file.name', file.name);
+											console.log('file', file);
 
-										//파일이름
-										console.log('file.name', file.name);
-										console.log('file', file);
+											var result = '';
+											reader.onload = function(e) {
 
-										var result = '';
-										reader.onload = function(e) {
+												console.log('e.target.result',
+														e.target.result);
 
-											console.log('e.target.result',
-													e.target.result);
+												var content = '';
+												content += '<div class="imageWrap">';
+												content += '<img src="'+e.target.result+'" width="400px" height="300px">';
+												content += '<a href="#" class="closeImageWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+												content += '<input type="hidden" name="imgNo" value="'
+														+ (index + 1) + '">';
+												content += '</div>';
 
-											var content = '';
-											content += '<div class="imgWrap">';
-											content += '<img src="'+e.target.result+'" width="400px" height="300px">';
-											content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
-											content += '<input type="hidden" name="imgNo" value="'
-													+ (index + 1) + '">';
-											content += '</div>';
+												$("#imageWrap").append(content);
+											};
 
-											$("#imageWrap").append(content);
-										};
+											console.log('file', file);
+											reader.readAsDataURL(file);
 
-										console.log('file', file);
-										reader.readAsDataURL(file);
+										});
 
-									});
+								//아이콘을 초록색으로 변경
+								$("#photoRegister").attr("src",
+										"resources/img/image_green.png");
+							}//end else
 
-							//아이콘을 초록색으로 변경
-							$("#photoRegister").attr("src",
-									"resources/img/image_green.png");
-						}//end else
+						} else if (ansOrUp == 1) {
+							//imageWrap에 자식요소가 4개 이상 있을 경우 업로드 막기
+							if ($("#imageWrap").children().length >= 4) {
+								alert("최대 4장까지만 업로드 가능합니다.");
+								$("#photo").val("");
+							} else {
+								var reader = new FileReader();
+
+								reader.onload = function(e) {
+
+									var content = '';
+									content += '<div class="imageWrap">';
+									content += '<img src="'+e.target.result+'" width="400px" height="300px">';
+									content += '<a href="#" class="closeImageWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+									content += '<input type="hidden" name="imgNo" value="'+uploadNo+'">';
+									content += '</div>';
+
+									$("#imageWrap").append(content);
+
+									//file 객체 복사 함수
+									copyInputTypeFile(uploadNo);
+
+								};
+
+								reader.readAsDataURL(e.target.files[0]);
+
+								//changeImgIcon()를 사용해면 length가 0이 되는 버그가 있어 강제로 초록색을 변경
+								$("#photoRegister").attr("src",
+										"resources/img/image_green.png");
+
+							}//end else
+						}
 
 					});
 
@@ -915,6 +1150,35 @@ a.notify, a.del {
 		} else {
 			$("#photoRegister").attr("src", "resources/img/image.png");
 		}
+	}
+	//등록한 input type file을 임시 div #fileTemp에 저장하고 id를 부여한 뒤, #uploadFile에 복사본 저장 -> #photo value 비우기
+	function copyInputTypeFile(idNo) {
+		console.log("copyImputTypeFile 실행");
+
+		//#photo를 #fileTemp에 복사
+		$("#fileTemp").append($("#photo").clone());
+		//uploadNo로 id를 부여 (나중에 삭제할 때 이 번호를사용)
+		$("#fileTemp #photo").attr("id", idNo);
+		//uploadNo로 name을 file로 부여
+		$("#fileTemp #" + idNo).attr("name", "file");
+		//#fileTemp -> #uploadFile로 이동
+		$("#uploadFile").append($("#fileTemp #" + idNo));
+		console.log("#uploadFile length", $("#uploadFile").children().length);
+		//#fileTemp 비우기
+		$("#fileTemp").empty();
+		//#photo val 비우기
+		$("#photo").val("");
+		//uploadNo +1하기
+		uploadNo++;
+		console.log('uploadNo', uploadNo);
+	}
+
+	//x버튼을 클릭 했을 때 #uploadFile에 있는 file삭제
+	function deleteInputTyleFile(imgNo) {
+		console.log("deleteImputTypeFile 실행");
+		console.log("imgNo : ", imgNo);
+
+		$("uploadFile #" + imgNo).remove();
 	}
 </script>
 </html>
