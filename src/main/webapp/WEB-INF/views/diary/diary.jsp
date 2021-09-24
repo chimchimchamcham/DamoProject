@@ -644,7 +644,7 @@ a:hover {
 			},
 			success : function(data) {
 				console.log("업데이트 성공 여부 : " + data);
-				if(obj.attr('id') == 'd_tarExe' || obj.attr('id') == 'd_tarKcal') {
+				if(obj.attr('id') == 'd_tarExe' || obj.attr('id') == 'd_tarKcal' || obj.attr('id') == 'd_weight') {
 					window.location.reload();
 					window.scrollTo(0,0);
 				}
@@ -784,21 +784,24 @@ a:hover {
 			
 			//탄단지 섭취 비율 계산 (밸런스)
 			//탄수화물
-			carboPercent = JSON.parse(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
+			
+			carboPercent = Number(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
 			document.getElementById("carboPercent").innerText = carboPercent+'%';
-			document.getElementById("carboPercent").style.width = carboPercent+'%';
+			document.getElementById("carboPercent").style.width ="0%";
 			//단백질
-			proteinPercent = JSON.parse(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
+			proteinPercent = Number(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
 			document.getElementById("proteinPercent").innerText = proteinPercent+'%';
-			document.getElementById("proteinPercent").style.width = proteinPercent+'%';
+			document.getElementById("proteinPercent").style.width ="0%";
 			//지방
-			fatPercent = JSON.parse(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
+			fatPercent = Number(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
 			document.getElementById("fatPercent").innerText = fatPercent+'%';
-			document.getElementById("fatPercent").style.width = fatPercent+'%';
+			document.getElementById("fatPercent").style.width ="0%";
 
+			console.log(carboPercent,proteinPercent,fatPercent);
 			progressBarAnimate(); //탄단지 그래프 그리기
 
 			d_no = data.dto.d_no;
+			console.log("d_no",d_no);
 			
 
 			//체크리스트 뿌리기
@@ -990,15 +993,15 @@ a:hover {
 	/*==탄단지 그래프==*/
 	function progressBarAnimate(){
 		$("#carboPercent").animate({
-			width : carboPercent
+			width : carboPercent+"%"
 		}, 1000);
 		
 		$("#proteinPercent").animate({
-			width : proteinPercent
+			width : proteinPercent+"%"
 		}, 1000);
 		
 		$("#fatPercent").animate({
-			width : fatPercent
+			width : fatPercent+"%"
 		}, 1000);
 	}
 

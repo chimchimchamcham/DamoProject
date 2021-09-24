@@ -142,14 +142,15 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 </delete>
 
 <select id="calculateResult" parameterType="String"  resultType="damo">
-	SELECT hd.hd_no , SUM(hd.hd_kcal)as d_resultEat, SUM(he.he_kcal)as d_resultExe, SUM(hd.hd_carbo)as d_resultCarbo, SUM(hd.hd_protein)as d_resultProtein,SUM(hd.hd_fat)as d_resultFat
-		FROM his_daily hd, his_exercise he
-	WHERE hd.hd_no = he.he_no AND hd.hd_no=(SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
-	GROUP BY hd.hd_no
+	SELECT d.d_no , NVL(SUM(hd.hd_kcal),0) as d_resultEat, NVL(SUM(he.he_kcal),0) as d_resultExe,  NVL(SUM(hd.hd_carbo),0)as d_resultCarbo,  NVL(SUM(hd.hd_protein),0)as d_resultProtein, NVL(SUM(hd.hd_fat),0)as d_resultFat
+		FROM diary d, his_daily hd, his_exercise he
+	WHERE d.d_no = hd.hd_no(+) AND d.d_no = he.he_no(+) AND d.d_no=(SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+GROUP BY d.d_no
 </select>
 
 <update id="resultUpdate" parameterType="damo">
-	UPDATE diary SET d_resulteat = #{d_resultEat}, d_resultexe = #{d_resultExe}, d_carbo = #{d_carbo}, d_protein = #{d_protein}, d_fat = #{d_fat} WHERE D_NO=#{hd_no}
+	UPDATE diary SET d_resultEat = #{d_resultEat}, d_resultExe = #{d_resultExe}, d_resultCarbo = #{d_resultCarbo}, d_resultProtein = #{d_resultProtein}, d_resultFat = #{d_resultFat}, d_success = #{d_successUpdate}
+	WHERE D_NO=#{d_no}
 </update>
 
 </mapper>

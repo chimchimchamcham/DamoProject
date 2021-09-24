@@ -58,6 +58,8 @@ public class DamoDTO {
 	private boolean d_success; //성공 여부
 	private String d_code; //분류 코드
 	
+	private char d_successUpdate; //성공 여부(업데이트용)
+	
 	//체크리스트
 	private int ch_no; //체크리스트 고유 번호
 	private int cd_no; //체크리스트 글 번호
@@ -836,6 +838,12 @@ public class DamoDTO {
 	}
 	public void setHe_kcal(int he_kcal) {
 		this.he_kcal = he_kcal;
+	}
+	public char getD_successUpdate() {
+		return d_successUpdate;
+	}
+	public void setD_successUpdate(char c) {
+		this.d_successUpdate = c;
 	}
 	
 }
