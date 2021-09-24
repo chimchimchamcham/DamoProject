@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- mapper에 대한 선언문 -->
-<!DOCTYPE mapper PUBLIC
-   "-//mybatis.org//DTD Mapper 3.0//EN"
-   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
->
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dumveloper.damo.fit.dao.StatisticsDAO">
+	<select id="myChart">
+		SELECT d.u_id, d.d_date, d.d_weight, d.d_resulteat, d.d_resultexe, d.d_tarkcal, d.d_tarexe,
+        	TO_NUMBER(TO_CHAR(d.d_date, 'dd')) d_dateDay
+		FROM diary d 
+		WHERE u_id = #{param1} AND TO_CHAR(d.d_date, 'YYYYMM') = #{param2}
+		ORDER BY d.d_date;
+	</select>
 </mapper>
