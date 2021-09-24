@@ -16,44 +16,126 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
+<style>
+.blackText{
+	color:black;
+
+}
+#calendar a{
+	color:#666767;
+}
+#calendar a:hover{
+	color:#black;
+}
+.fc .fc-bg-event .fc-event-title {
+    font-style: normal;
+    color:black;
+    
+   }
+</style>
+
 <script>  
   document.addEventListener('DOMContentLoaded', function() {
 	var loginId = "${sessionScope.loginId}"; //로그인한 아이디 가져오기
+	
     var calendarEl = document.getElementById('calendar');
-	var isNowMonth = true;
 	
     var calendar = new FullCalendar.Calendar(calendarEl, {
      headerToolbar:false,
+     contentHeight:600,
+     eventDisplay:'inverse-background', //list-item : 동그라미 형태로 이벤트 표시,
+     //aspectRatio:2, 세로 비율을 바꾸는거같음
       //initialDate: '2020-09-15', //초기에 어떤 날짜를 보여줄지 설정 설정안하면 현재 날짜로
-      navLinks: false, //can click day/week names to navigate views
-      editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
+     navLinks: false, //can click day/week names to navigate views
+     editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: false, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
-     events:[	 
-    <c:if test="${list ne ''}">
-	  <c:forEach items="${list}" var="dto">
-	 
-		{
-			title:'${dto.d_resultEat}kcal',
-			start:'${dto.d_date}',
-			backgroundColor:'green',
-	        borderColor:'green'
-		},
-		{
-    		title:'${dto.d_resultExe}kcal',
-    		start:'${dto.d_date}',
-    		backgroundColor:'#E7C6B4',
-    	    borderColor:'#E7C6B4'
-    	},
-		{
-			title:'${dto.d_weight}kg',
-			start:'${dto.d_date}',
-			color:<c:choose><c:when test='${dto.d_success eq "true"}'>'skyblue'</c:when><c:when test='${dto.d_success eq "false"}'>'pink'</c:when></c:choose>,
-			display:'background'
-		},
-
-	</c:forEach> 
-	</c:if>
-	]	
+     showNonCurrentDates:false,
+     eventTextColor:'#000000',
+	 events:function(info,successCallback,failureCallback){
+	    	 $.ajax({
+		    	url:'getMonthEvent',
+		    	type:'POST',
+		    	dataType:'JSON',
+		    	success : function(data){
+		    		var arr=[];
+		    		var color;
+		    		console.log(data);
+		    		console.log("목표 : ",data.monthContent);
+		    		console.log("목표 섭취 칼로리 : ",data.monthTarKcal);
+		    		console.log("목표 몸무게 : ",data.tarWeight);
+		    		console.log("현재 몸무게 : ",data.weight);
+		    		
+		    		//현재 몸무게 - 목표 몸무게 비교
+		    		var minus = data.weight-data.tarWeight;
+		    		console.log(data.weight-data.tarWeight);
+		    		if(minus<0){
+		    			resultWeight="목표 달성 성공!!!";
+		    		}else{
+		    			resultWeight="남은 몸무게 : "+minus;
+		    		}
+		    			$("#remainWeight").text(resultWeight);
+		    		
+		    		//목표 섭취 칼로리, 목표 운동 칼로리, 목표 집어넣기
+		    		$("#tarKcal").val(data.monthTarKcal);
+					$("#tarExe").val(data.monthTarExe);
+					$("#goal").val(data.monthContent); 	
+		    		
+		    		data.list.forEach(function(elem){
+		    			var d_date=elem.d_date;
+		    		/* 	
+		    			console.log("-------날짜 : "+elem.d_date+"--------");
+		    			console.log("몸무게 : ",elem.d_weight);
+		    			console.log("섭취 칼로리 : ",elem.d_resultEat);
+		    			console.log("운동 칼로리 : ",elem.d_resultExe);
+		    			console.log("성공 여부 : ",elem.d_success); */
+		    			
+		    			
+		    			if(elem.d_success){
+		    				color='skyblue';
+		    			}else{
+		    				color='pink';
+		    			}
+		    			arr.push({
+		    				title:elem.d_resultEat+'kcal',
+		        			start:elem.d_date,
+		        			backgroundColor:'green',
+		        	        borderColor:'green',
+		        	        display:'list-item',
+		        	        textColor:'black'
+		    			});
+		    			
+		    			arr.push({
+		    				title:elem.d_resultExe+'kcal',
+		        			start:elem.d_date,
+		        			backgroundColor:'pink',
+		        	        borderColor:'pink',
+		        	        display:'list-item'
+		    			});
+		    			arr.push({
+		    				title:elem.d_weight+"kg", 
+		    				start:elem.d_date,
+		    				backgroundColor:color,
+		    				display:'background'
+		    			});
+		    		/* 	arr.push({
+		    				title:elem.d_weight+"kg",
+		    				start:elem.d_date,
+		    				display:'background'
+		    			}) */
+		    			
+		    			
+		    	console.log("-----------------------");
+		    		})
+		    		
+		    		console.log("event : ",arr);
+		    		console.log("successCallback:",successCallback(arr));
+		    	},
+		    	error: function(error){
+		    		console.log(error);	
+		    	}
+	    	
+	    	});
+		}
       ,dateClick:function(date){
     	 //console.log('Date:',date.dateStr);
     	  //console.log('Resource ID:',date.dateStr);
@@ -70,7 +152,7 @@
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
       	}
-      }
+      },eventClassNames:'black'
       
  	 });
     calendar.render();
@@ -312,6 +394,9 @@
 		  return arr;
 	  }
 	 */
+	 
+	 
+	 
   });	
 </script>
 <style>
@@ -337,70 +422,77 @@ body {
 	<div class='p-3 mb-5 bg-white rounded'>
 
 		<div class='container pb-3'>
-			<a href="./goupdate">회원정보 수정</a>
-			<a href="./diaryInsert">다이어리 추가</a>
+			<a href="./goupdate">회원정보 수정</a> <a href="./diaryInsert">다이어리 추가</a>
 			<a href="./myPage">마이페이지 이동</a>
-			
-			
-			
+
+
+
 			<div class="row mb-3">
-			
+
 				<div class="col-3 float-right">
-				<!-- col채우는 용도 -->
+					<!-- col채우는 용도 -->
 				</div>
-				
-				<div class="col-6 d-flex align-items-center justify-content-center flex-column">
+
+				<div
+					class="col-6 d-flex align-items-center justify-content-center flex-column">
 					<div class="d-flex ">
 						<!-- --------------prev,년월,next 버튼----------- -->
-						<button type="button" class="btn m-1 btn-secondary" id="prev">prev</button>
+						<button type="button" class="btn m-1 btn-secondary" id="prev"><</button>
 						<h3 class="m-1 text-center d-flex align-self-center" id="dateCal"></h3>
-						<button type="button" class="m-1 btn btn-secondary" id="next">next</button>
+						<button type="button" class="m-1 btn btn-secondary" id="next">></button>
 					</div>
-					<!-- 목표 입력 부분 -->					 
-					<input type="text" class="form-control" placeholder="목표를 입력하세요!" aria-describedby="basic-addon3" id="goal" value="${monthContent}" style="text-align: center; background-color: #F4F4E9">
+					<!-- 목표 입력 부분 -->
+					<input type="text" class="form-control" placeholder="목표를 입력하세요!"
+						aria-describedby="basic-addon3" id="goal"
+						value="<%-- ${monthContent} --%>"
+						style="text-align: center; background-color: #F4F4E9">
 					<!-- ---- -->
 				</div>
-				
+
 				<div class="col-sm-2 m-1 float-right">
 					<!-- 남은 몸무게 -->
-					<input type="text" class="float-right form-control-plainText" placeholder="남은 몸무게" id="remainWeight" style="text-align: center">
-					<!-- ---------- -->	
+					<span id="remainWeight" style="text-align: center">
+					
+					</span>
+					<!-- ---------- -->
 				</div>
 			</div>
-			
-			
-			
+
+
+
 			<div class="container"></div>
 			<!---------------------- 달력-------------------- -->
 			<div id='calendar' class=''></div>
 			<!--------------------------------------------------  -->
-			
+
 			<!-- 달력 하단 부분 -->
 			<div class="container mt-3" id="drawGoal">
 				<div class="row">
-				<!-- 목표 섭취 칼로리 부분 -->
-				<div class="col-sm-4 d-flex m-1">
-					<div class="d-flex mr-1">
-						<span class="align-self-center" style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리 : </span>
+					<!-- 목표 섭취 칼로리 부분 -->
+					<div class="col-sm-4 d-flex m-1">
+						<div class="d-flex mr-1">
+							<span class="align-self-center"
+								style="font-size: 15px; font-weight: bold;">목표 섭취 칼로리 : </span>
+						</div>
+						<div id="tarKcalInput">
+							<input type="text" class="form-control" placeholder="섭취 칼로리"
+								id="tarKcal" value="<%-- ${monthTarKcal} --%>"
+								style="text-align: center; background-color: #F4F4E9">
+						</div>
 					</div>
-					<div id="tarKcalInput">
-						<input type="number" class="form-control" placeholder="섭취 칼로리"
-							id="tarKcal" value="${monthTarKcal}"
-							style="text-align: center; background-color: #F4F4E9">
-					</div>
-				</div>
 					<!-- --------------------- -->
 					<!-- 목표 운동 칼로리 부분 -->
-				<div class="col-sm-4 d-flex m-1">
-					<div class="d-flex pd-0 mr-1">
-						<span class="align-self-center" style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 :</span>
+					<div class="col-sm-4 d-flex m-1">
+						<div class="d-flex pd-0 mr-1">
+							<span class="align-self-center"
+								style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 :</span>
+						</div>
+						<div class="">
+							<input type="text" class="form-control" placeholder="운동 칼로리"
+								id="tarExe" value="<%-- ${monthTarExe} --%>"
+								style="text-align: center; background-color: #F4F4E9">
+						</div>
 					</div>
-					<div class="">
-						<input type="number" class="form-control" placeholder="운동 칼로리"
-							id="tarExe" value="${monthTarExe}"
-							style="text-align: center; background-color: #F4F4E9">
-					</div>
-				</div>
 					<!-- --------------------- -->
 				</div>
 			</div>
@@ -412,8 +504,10 @@ body {
 <script>
 
 //몸무게 가져오기
-var weight = "${weight}";
-var tarWeight = "${tarWeight}";
+
+/* var weight = "${weight}";
+var tarWeight = "${tarWeight}"; */
+/*
 var minusWeight = weight-tarWeight;
 var resultWeight = '';
 
@@ -423,7 +517,7 @@ if(minusWeight<0){
 	resultWeight="남은 몸무게 : "+minusWeight;
 }
 	$("#remainWeight").val(resultWeight);
-	
+*/	
 //-------------------------------------------//
 
 
