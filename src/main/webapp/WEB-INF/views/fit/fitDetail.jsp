@@ -32,16 +32,24 @@
 				</div>
 
 				<!-- Modal body -->
-				<div class="modal-body p" id="modalBody">
+				<div class="modal-body p" id="nModalBody">
 					<div class="row">
-						<div id="n1_code"
-							class="mr-1 pt-2 text-secondary font-weight float-left col-md-4"></div>
-						<div id="ntfTitle" class="container col-md-4"></div>
-						<div id="n2_code" class="container form-group col-md-4">
+						<!-- <div id="n1_code"
+							class="container col-md-4"></div>
+						<div id="ntfTitle" class="container col-md-3"></div>
+						<div id="n2_code" class="container form-group col-md-5">
 							<select name="n2_code" class="form-control">
 								<option></option>
 							</select>
-						</div>
+						</div> -->
+						<span id="n1_code"
+							class="container pr-0 mr-0 col-md-4" ></span>
+						<span id="ntfTitle" class="container pl-0 pr-0 ml-0 col-md-4" style="text-align:left"></span>
+						<span id="n2_code" class="container pl-0 form-group col-md-4">
+							<select name="n2_code" class="form-control " style="width:150px">
+								<option></option>
+							</select>
+						</span>
 					</div>
 					<div id="contentWrap">
 						<textarea id="ntf_content" placeholder="신고 내용을 입력하세요."></textarea>
@@ -374,7 +382,7 @@
 
 						<c:if test="${ans.u_id ne sessionId and sessionId ne null}">
 							<a class="notify float-right ml-3 mt-1" data-toggle="modal"
-								data-target="#notify" title="${ans.kR_no},${ans.u_id}"
+								data-target="#notify" title="${ans.kR_no},${ans.u_id},${ans.u_nick}"
 								onclick="notify(this);">신고</a>
 							<!-- <a href="#" class="notify float-right ml-3 mt-1">신고</a> -->
 						</c:if>
@@ -728,7 +736,7 @@ a.notify, a.del {
 	var formName = document.fitAnsWrite;
 	var ansNo;
 	var ntfId;
-	var ntfNo;
+	var ntfNo;	
 	//사진 추가 등록시 번호를 부여하는 변수
 	var uploadNo = 1;
 	//답변/수정 구분
@@ -985,7 +993,9 @@ a.notify, a.del {
 			//console.log(qna.split(',')[1]	);
 			ntfNo = qna.split(',')[0];
 			ntfId = qna.split(',')[1];
+			
 			$("#n1_code").html("신고할 답변");
+			$("#ntfTitle").html(qna.split(',')[2]+"님의 답변");
 			$("#n1_code").attr("name", 'KNOWFIT_R');
 			option += '<option value="KNOWFIT_R_001" >음란/선정성 답변 </option>';
 			option += '<option value="KNOWFIT_R_002" >도배/욕설 답변 </option>';
