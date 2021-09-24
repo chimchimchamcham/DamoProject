@@ -18,7 +18,7 @@ import com.dumveloper.damo.user.service.UserService;
 
 @RestController
 @RequestMapping(value = "/check")// /rest로 요청이오면 이컨트롤러로 와라
-public class RestJoinCheck {
+public class RestCheck {
 	
 		Logger logger = LoggerFactory.getLogger(this.getClass());
 		@Autowired UserService service;
@@ -72,7 +72,7 @@ public class RestJoinCheck {
 		return ala;
 	}
 			
-	
+	//유저테이블 +페이징
 	@RequestMapping(value = "/usertable/{page}")
 	public HashMap<String, Object> usertable(@PathVariable int page) {
 		

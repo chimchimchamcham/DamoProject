@@ -304,7 +304,7 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 			int page = 1;
 			int end = page * pagePerNum;
 			int start = end - pagePerNum+1;
-			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
+			logger.info("userlist:"+page+"/"+pagePerNum+"/"+end+"/"+start);
 			
 			
 			ModelAndView mav = new ModelAndView();
@@ -335,16 +335,16 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 		
 		//관리자 페이지 ajax
-		public HashMap<String, Object> noset_view_userlist(int page) {//유저리스트
+		public HashMap<String, Object> noset_view_userlist(int page) {//유저리스트  1
+			
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			int pagePerNum=10;//1. 10
+			int chagepage = page;//1. 1
+			int end = chagepage * pagePerNum;//1. 10
+			int start = end-pagePerNum+1;//1. 10-10+1
+			logger.info("user:"+page+"/"+pagePerNum+"/"+end+"/"+start);
 			
-			int pagePerNum=10;//10
-			int chagepage = page;//2
-			int end = chagepage * pagePerNum;//20
-			int start = end-pagePerNum+1;//20-10+1
-			logger.info(page+"/"+pagePerNum+"/"+end+"/"+start);
-			
-			ArrayList<DamoDTO> userlist = dao.dbuser(start,end);
+			ArrayList<DamoDTO> userlist = dao.dbuser(start,end);//1. 1,10
 			
 			//2 데이터 총 갯수 -> 만들수있는 페이지 수
 			int totalCnt = dao.userallCount();
@@ -356,11 +356,12 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 			
 			
 			//총갯수
-			int pages = (int) (totalCnt%pagePerNum>0
+			int pages = (int) (totalCnt%pagePerNum>0 //1. 17%1>0
 					? Math.floor(totalCnt/pagePerNum)+1:Math.floor(totalCnt/pagePerNum));
+			//1. true:17/1+1 false: 17/1
 
 			
-			page = page > pages ? pages:page;
+			page = page > pages ? pages:page; //1.
 			
 			map.put("currPage", page);
 			map.put("pages", pages);
@@ -501,6 +502,14 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 			logger.info("notify:{},{}",notifyval,state);
 			dao.dbchangenotifystate(notifyval,state);
 			
+		}
+
+
+		public HashMap<String, Object> alarmList(String loginId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			DamoDTO dto = new DamoDTO();
+			
+			return map;
 		}
 
 

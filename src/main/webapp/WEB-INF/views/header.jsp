@@ -28,74 +28,7 @@
 						<!-- 로그인 되어있고 일반 회원일 경우 -->
 						<c:if test="${loginManager eq 'N'}">
 							<!-- 알람 -->
-							<li class="nav-item dropdown no-arrow mx-1 active"><a
-							class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-bell fa-fw mr-0"></i>
-
-								<!-- 알람 갯수 --> <span class="badge badge-danger badge-counter"
-								style="margin-left: -10px; font-size: 10px;">3</span>
-								
-								<!-- 알람 목록 -->
-						</a> 
-							<div
-								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="alertsDropdown">
-								<h6 class="dropdown-header">
-									<b>알람</b> 3
-								</h6>
-								<div class="card-body p-1 mt-0">
-									<div class="custom-scrollbar-css p-1"
-										style="border: 0px; height: 300px; width: 450px;">
-
-										<!-- 중요알람 (운영자 알람)-->
-										<div
-											class="alert alert-danger alert-dismissible fade show ml-1 mr-1">
-											<button type="button" class="close" data-dismiss="alert">&times;</button>
-											<strong>Danger!</strong> This alert box could indicate a
-											dangerous or potentially negative action.
-										</div>
-
-										<!-- 일반알람-->
-										<a class="dropdown-item d-flex align-items-center p-2"
-											href="fitMain">
-											<div>
-												<div class="small text-gray-500">December 12, 2019</div>
-												<span class="font-weight-bold">A new monthly report
-													is ready to download!</span>
-											</div>
-										</a> <a class="dropdown-item d-flex align-items-center p-2"
-											href="#">
-											<div>
-												<div class="small text-gray-500">December 12, 2019</div>
-												<span class="font-weight-bold">A new monthly report
-													is ready to download!</span>
-											</div>
-										</a> <a class="dropdown-item d-flex align-items-center p-2"
-											href="#">
-											<div>
-												<div class="small text-gray-500">December 12, 2019</div>
-												<span class="font-weight-bold">A new monthly report
-													is ready to download!</span>
-											</div>
-										</a> <a class="dropdown-item d-flex align-items-center p-2"
-											href="#">
-											<div>
-												<div class="small text-gray-500">December 12, 2019</div>
-												<span class="font-weight-bold">A new monthly report
-													is ready to download!</span>
-											</div>
-										</a> <a class="dropdown-item d-flex align-items-center p-2"
-											href="#">
-											<div>
-												<div class="small text-gray-500">December 12, 2019</div>
-												<span class="font-weight-bold">A new monthly report
-													is ready to download!</span>
-											</div>
-										</a>
-									</div>
-								</div>
-							</div></li>
+							<jsp:include page="alarm.jsp"></jsp:include>
 						</c:if>
 
 						<!-- 회원 정보 -->
@@ -162,7 +95,7 @@
 						<li class="nav-item" style="margin-left: 40px;"><a
 							class="nav-link" href="calendar">캘린더</a></li>	
 						<li class="nav-item" style="margin-left: 40px;"><a
-							class="nav-link" href="javascript:void(0)">통계 그래프</a></li>
+							class="nav-link" href="statistics">통계 그래프</a></li>
 						</c:if>
 						<li class="nav-item dropdown justify-content-center"><a
 							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
@@ -244,6 +177,27 @@
 	var loginFile="${sessionScope.loginFile}";
 	var loginNick="${sessionScope.loginNick}";
 	var loginManager="${sessionScope.loginManager}";
+	
+	
+	$('input#search').keypress(function(e){
+		if (e.keyCode == 13) {
+			if ($('input#search').val()!=null && $('input#search').val()!='') {	
+				var content = $('input#search').val();
+				location.href ='./'+'search'+'/'+content;
+			}else{
+				
+			}
+		}
+	});
+	
+	$('i.fa-search').click(function(){
+			if ($('input#search').val()!=null && $('input#search').val()!='') {
+				var content = $('input#search').val();
+				location.href ='./'+'search'+'/'+content;
+		}else{
+			
+		}
+	});
 </script>
 
 </html>

@@ -199,19 +199,19 @@ $(document).ready(function(){
 
 	userlistCall(currPage);
 	
-	$("ul.userpage").change(function(){
+	$("ul .userpage").change(function(){
 		   //유저 페이징 초기화
 		   $(".userpage").twbsPagination('destory');
-		   userlistCall(currPage);
+		   userlistCall(currPage);//1
 		});
 	
-	$("ul.notifypage").change(function(){
+	$("ul .notifypage").change(function(){
 		   //유저 페이징 초기화
 		   $(".notifypage").twbsPagination('destory');
 		   notifylistCall(currPage);
 		});
 	
-	$("ul.blackpage").change(function(){
+	$("ul .blackpage").change(function(){
 		   //유저 페이징 초기화
 		   $(".blackpage").twbsPagination('destory');
 		   blacklistCall(currPage);
@@ -263,7 +263,12 @@ $(document).on('click',".notifybody tr",function(){
    	
    			content +="<div class='row col-12 p-0 my-2'>"
   	    	content +=   "<div class='col-2 p-0'>신고번호 </div><div  class='col-1'>"+list[0].n_no+"</div>";
-  	    	content +=   "<div class='col-3 text-center'>신고글 번호</div><a href="+list[0].n_notifiedno+" class='text-dark noifyno col-1'>"+list[0].n_notifiedno+"</a>";
+  	    	
+  	    	
+  	    	var knowfitpage = 'fitDetail?k_no='+list[0].n_notifiedno;
+  	    	
+  	    	
+  	    	content +=   "<div class='col-3 text-center'>신고글 번호</div><a href="+knowfitpage+" class='text-dark noifyno col-1'>"+list[0].n_notifiedno+"</a>";
   	    	
 	  	      var date = new Date(list[0].n_dt);//등록날짜
 	
@@ -291,9 +296,12 @@ $(document).on('click',".notifybody tr",function(){
   	    	content +="</div>"
   	    	//다음줄
   	    	
+  	    	var repage = 'myPage?u_id='+list[0].n_receiveid;
+  	    	var sepage = 'myPage?u_id='+list[0].n_sendid;
+  	    	
   	    	content +="<div class='row col-12 p-0'>"
-  	    	content +=   "<div class='col-2 p-0'>신고받은 아이디</div> <div id="+list[0].n_receiveid+" class='receid col-5'>"+list[0].n_receiveid+"</div>";
-  	    	content +=   "<div class='col-2 pr-0'>신고한 아이디</div> <a href="+list[0].n_sendid+" class='col-3 text-dark'>"+list[0].n_sendid+"</a>";
+  	    	content +=   "<div class='col-2 p-0'>신고받은 아이디</div> <a href="+repage+" class='receid col-5 text-dark'>"+list[0].n_receiveid+"</a>";
+  	    	content +=   "<div class='col-2 pr-0'>신고한 아이디</div> <a href="+sepage+" class='col-3 text-dark'>"+list[0].n_sendid+"</a>";
   	    	content +="</div>"
   	    	content +=	 "<div class='col-12 row p-0'>";
   	    	content +=       "<textarea class='col-12 form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
@@ -490,9 +498,10 @@ $(document).on('click',".notifybody tr",function(){
   function blackpoplist(list){
  		console.log(list);
     	var content = "";
+    	var mypage = 'myPage?u_id='+list[0].u_id;
  	   for(var i = 0; i<list.length; i++){
  	     	content +=  "<div class='col-12 row text-left'>";
-   	    	content +=   "<div class='my-3 mr-1 text-right'>ID</div><div class='my-3  text-left'>"+list[0].u_id+"</div>";
+   	    	content +=   "<div class='my-3 mr-1 text-right'>ID</div><a href= \' "+mypage+" \' class='my-3  text-left'>"+list[0].u_id+"</a>";
    	    	content +=   "<div class='col-3 my-3 text-right'>종류</div><div class='my-3  text-right'>"+list[0].c_name+"</div>";
    	    	content +=   "<div class='col-4 my-3 text-right'>관리자ID</div><div class='my-3  text-right'>"+list[0].b_adminid+"</div>";
 	   	     
@@ -526,13 +535,13 @@ $(document).on('click',".notifybody tr",function(){
       }
 
 	
-
-
+//5555
+	//회원목록 상단 버튼 클릭시 
     $(document).on('click','.list-group-item',function(){
         $('.list-group-item').removeClass('active');
         $(this).addClass('active');
         
-          if($(this).hasClass('userlist')){//유저리스트
+          if($(this).hasClass('userlist')){
             console.log('userlist');
 
             $('.usertable').removeClass('display-none');
@@ -546,7 +555,7 @@ $(document).on('click',".notifybody tr",function(){
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
-     		    	 userlistCall(data.pages);
+     		    	 userlistCall(data.currPage);
      		      },
      		      error : function(error){
      		         console.log(error);
@@ -566,7 +575,7 @@ $(document).on('click',".notifybody tr",function(){
    		      dataType : 'json',
    		      success : function(data){
    		    	 console.log(data);
-   		    	 notifylistCall(data.pages);
+   		    	 notifylistCall(data.currPage);
    		      },
    		      error : function(error){
    		         console.log(error);
@@ -585,7 +594,7 @@ $(document).on('click',".notifybody tr",function(){
      		      dataType : 'json',
      		      success : function(data){
      		    	 console.log(data);
-     		    	 blacklistCall(data.pages);
+     		    	 blacklistCall(data.currPage);
      		      },
      		      error : function(error){
      		         console.log(error);
@@ -596,7 +605,7 @@ $(document).on('click',".notifybody tr",function(){
 
     
     //유저리스트 페이징 처리
-function userlistCall(page){
+function userlistCall(page){//1
        
      	   //페이징 초기화
      	   $(".userbody").empty();
@@ -637,7 +646,10 @@ function userlistCall(page){
     	   for(var i = 0; i<list.length; i++){
     	      content += "<tr>";
     	      content += "<td>"+list[i].u_id+"</td>";
-    	      content += "<td>"+list[i].u_nick+"</td>";
+    	      
+    	      var userpage = "myPage?u_id="+list[i].u_id;
+    	      
+    	      content += "<td><a class='text-dark' href='"+userpage+"'>"+list[i].u_nick+"</td>";
     	      content += "<td>"+list[i].u_name+"</td>";
     	      content += "<td>"+list[i].u_email+"</td>";
     	      content += "</tr>";
