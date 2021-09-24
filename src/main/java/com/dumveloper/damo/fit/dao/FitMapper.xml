@@ -171,11 +171,11 @@
 	</delete>
 	
 	<select id="serchtitle" resultType="damo">
-		SELECT K_title FROM KnowFit where K_title LIKE '%'||#{param1}||'%'
+		SELECT k_no,k_title,k_content FROM KnowFit where k_title LIKE '%'||#{param1}||'%'
 	</select>
 	
 	<select id="serchcontent" resultType="damo">
-		SELECT k_content FROM KnowFit where K_content LIKE '%'||#{param1}||'%'
+		SELECT k_no,k_title,k_content FROM KnowFit where k_content LIKE '%'||#{param1}||'%'
 	</select>
 	
 	<insert id="fitNotify">

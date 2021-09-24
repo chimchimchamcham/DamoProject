@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,13 +27,22 @@
 			<h6 class="col-12 mt-3">제목 cnt건</h6>
 			<div class="card-group row">
 				<div class="card col-12">
-				
-					<div class="card-body">					
-						<div class="card-title d-flex flex-row"><h3 class="">Q</h3><div class="align-self-center">.제 자세 좀 봐주세요</div></div>
-						<div class="card-text">스쿼트 하는데 너무 무릎이 아파서요.. 자세 교정 좀 부탁드립니다!</div>
-						<hr>
-					</div>
-	
+				<c:choose>
+					<c:when test="${title ne null }">
+						<c:forEach items="${title}" var="link">
+							<div class="card-body">					
+								<div class="card-title d-flex flex-row"><h3 class="${link.k_no}">Q</h3><div class="align-self-center">${link.k_title}</div></div>
+								<div class="card-text">${link.k_content}</div>
+								<hr>
+							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+							<div class="card-body">					
+								<div class="card-text">검색한 결과가 없습니다</div>
+							</div>
+	   				</c:otherwise>
+				</c:choose>	
 				</div>
 			</div>
 		</div>
@@ -41,12 +51,22 @@
 			<h6 class="col-12 mt-5">내용 cnt건</h6>
 			<div class="card-group row">
 				<div class="card col-12">
-					<div class="card-body">					
-						<div class="card-title d-flex flex-row"><h3 class="">Q</h3><div class="align-self-center">.제 자세 좀 봐주세요</div></div>
-						<div class="card-text">스쿼트 하는데 너무 무릎이 아파서요.. 자세 교정 좀 부탁드립니다!</div>
-						<hr>
-					</div>
-
+				<c:choose>
+					<c:when test="${maincontent ne null}">
+						<c:forEach items="${maincontent}" var="link">
+							<div class="card-body">					
+								<div class="card-title d-flex flex-row"><h3 class="${link.k_no}">Q</h3><div class="align-self-center">${link.k_title}</div></div>
+								<div class="card-text">${link.k_content}</div>
+								<hr>
+							</div>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+							<div class="card-body">					
+								<div class="card-text">검색한 결과가 없습니다</div>
+							</div>
+	   				</c:otherwise>
+				</c:choose>	
 				</div>
 			</div>
 		</div>
