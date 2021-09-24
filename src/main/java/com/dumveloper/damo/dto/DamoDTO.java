@@ -170,6 +170,70 @@ public class DamoDTO {
 	//내 사전
 	private Date m_date;//등록날짜
 	
+	//알람
+	private int a_no;//알람 번호
+	private String a_code; //알람 코드 분류
+	private String a_sendId; //알람 보낸 아이디
+	private String a_content; //알람 내용
+	private Date a_date;//알람 보낸 날짜
+	private String a_readYN;//알람 읽음 여부
+	private String a_path;//알람 경로
+	private String a_impoYN;//중요 여부
+	
+	public Date getM_date() {
+		return m_date;
+	}
+	public void setM_date(Date m_date) {
+		this.m_date = m_date;
+	}
+	public int getA_no() {
+		return a_no;
+	}
+	public void setA_no(int a_no) {
+		this.a_no = a_no;
+	}
+	public String getA_code() {
+		return a_code;
+	}
+	public void setA_code(String a_code) {
+		this.a_code = a_code;
+	}
+	public String getA_sendId() {
+		return a_sendId;
+	}
+	public void setA_sendId(String a_sendId) {
+		this.a_sendId = a_sendId;
+	}
+	public String getA_content() {
+		return a_content;
+	}
+	public void setA_content(String a_content) {
+		this.a_content = a_content;
+	}
+	public Date getA_date() {
+		return a_date;
+	}
+	public void setA_date(Date a_date) {
+		this.a_date = a_date;
+	}
+	public String getA_readYN() {
+		return a_readYN;
+	}
+	public void setA_readYN(String a_readYN) {
+		this.a_readYN = a_readYN;
+	}
+	public String getA_path() {
+		return a_path;
+	}
+	public void setA_path(String a_path) {
+		this.a_path = a_path;
+	}
+	public String getA_impoYN() {
+		return a_impoYN;
+	}
+	public void setA_impoYN(String a_impoYN) {
+		this.a_impoYN = a_impoYN;
+	}
 	public int getFitcnt() {
 		return fitcnt;
 	}

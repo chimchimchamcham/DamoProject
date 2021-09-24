@@ -504,6 +504,14 @@ public ModelAndView fileupload(MultipartFile file, HttpSession session) {
 		}
 
 
+		public HashMap<String, Object> alarmList(String loginId) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			DamoDTO dto = new DamoDTO();
+			
+			return map;
+		}
+
+
 
 
 
