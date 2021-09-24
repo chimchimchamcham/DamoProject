@@ -250,7 +250,7 @@
 		if (e.keyCode == 13) {
 			if ($('input#search').val()!=null && $('input#search').val()!='') {	
 				var content = $('input#search').val();
-				location.href ='/'+'search'+'/'+content;
+				location.href ='./'+'search'+'/'+content;
 			}else{
 				
 			}

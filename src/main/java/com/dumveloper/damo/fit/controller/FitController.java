@@ -243,8 +243,14 @@ public class FitController {
 	public ModelAndView search(@PathVariable String content) {
 		logger.info("지식핏 검색 접속");
 		logger.info("content: {}", content);		
-		
+		if(content != null) {
 		return fitservice.serchlist(content);	
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("maincontent","검색결과가 없습니다");
+		mav.setViewName("./fit/search");
+		
+		return mav;
 	}
 		
 	
