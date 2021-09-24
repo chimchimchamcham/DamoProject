@@ -538,4 +538,28 @@ public String addDir(String k_no, String u_id) {
 		return ch;
 	}
 
+	public String fitNotify(HashMap<String, String> params) {
+		DamoDTO dto = new DamoDTO();
+		String n1_code = params.get("n1_code");
+		dto.setN1_code(n1_code);
+		String n2_code = params.get("n2_code");
+		dto.setN2_code(n2_code);
+		String n_sendid = params.get("n_sendid");
+		dto.setN_sendid(n_sendid);
+		String n_receiveid = params.get("n_receiveid");
+		dto.setN_receiveid(n_receiveid);
+		String n_content = params.get("n_content");
+		dto.setN_content(n_content);
+		int n_notifiedno = Integer.parseInt(params.get("n_notifiedno"));
+		dto.setN_notifiedno(n_notifiedno);
+		
+		int success = fitdao.fitNotify(dto);
+		String msg = "failed";
+		if(success>0) {
+			msg="success";
+		}
+
+		return msg;
+	}
+
 }

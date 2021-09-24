@@ -170,4 +170,8 @@
 		DELETE FROM Mydir WHERE k_no = #{param1} AND u_id = #{param2}
 	</delete>
 	
+	<insert id="fitNotify">
+		INSERT INTO Notify VALUES(n_no_seq.NEXTVAL,#{n_receiveid},#{n_sendid},#{n_content},sysdate,#{n1_code},#{n2_code},#{n_notifiedno})
+	</insert>
+	
 </mapper>

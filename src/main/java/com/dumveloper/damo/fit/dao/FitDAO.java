@@ -66,4 +66,6 @@ public interface FitDAO {
 
 	int addDir(String k_no, String u_id);
 
+	int fitNotify(DamoDTO dto);
+
 }
