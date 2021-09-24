@@ -16,7 +16,7 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	FROM USERINFO U ,CALENDER C 
 	WHERE U.U_ID=C.U_ID AND U.U_ID = #{param2}
 	AND TO_CHAR(C.C_DATE,'YYYY-MM') = #{param1}
-	ORDER BY c.c_date DESC;
+	ORDER BY c.c_date DESC
 </select>
 
 <insert id="diaryInsert" 
@@ -140,5 +140,16 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 <delete id="ExeDel" parameterType="String">
 	DELETE FROM his_exercise WHERE he_no = #{param1} AND met_name = #{param2}
 </delete>
+
+<select id="calculateResult" parameterType="String"  resultType="damo">
+	SELECT hd.hd_no , SUM(hd.hd_kcal)as d_resultEat, SUM(he.he_kcal)as d_resultExe, SUM(hd.hd_carbo)as d_resultCarbo, SUM(hd.hd_protein)as d_resultProtein,SUM(hd.hd_fat)as d_resultFat
+		FROM his_daily hd, his_exercise he
+	WHERE hd.hd_no = he.he_no AND hd.hd_no=(SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
+	GROUP BY hd.hd_no
+</select>
+
+<update id="resultUpdate" parameterType="damo">
+	UPDATE diary SET d_resulteat = #{d_resultEat}, d_resultexe = #{d_resultExe}, d_carbo = #{d_carbo}, d_protein = #{d_protein}, d_fat = #{d_fat} WHERE D_NO=#{hd_no}
+</update>
 
 </mapper>

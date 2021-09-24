@@ -31,13 +31,8 @@ public class DiaryService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info("일기 상세보기" + date + "/" + id);
 
-		// 일기 값 불러오기
 		DamoDTO dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
-		ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
-		ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
-		ArrayList<DamoDTO> hisExerciseList = dao.hisExerciseList(date, id); //운동 히스토리 테이블 값 가져옴
-		
-		/* ArrayList<HashMap<String, Object>> totalKcal = dao.totalKcal(date, id); */  //c_dode별 칼로리 합산
+
 		logger.info("dto : {}" + dto + "/ date : " + date + "/ id: " + id);
 
 		// diary 테이블에 값이 없을 경우(캘린더 값 가져오고 diary에 인서트)
@@ -51,8 +46,8 @@ public class DiaryService {
 			logger.info("초기 값 dto: {}" + dto + "date" + dto.getC_date() + "/ 몸무게 : " + dto.getU_weight());
 
 			// 권장 탄단지 계산 (밸런스)
-			int StandardWeight = (int) ((dto.getU_height() - 100) * 0.9);// 표준체중
-			int Kcal = StandardWeight * 30;// 권장섭취 칼로리
+			int StandardWeight = (int) ((dto.getU_height() - 100) * 0.9); //표준체중
+			int Kcal = StandardWeight * 30; //권장섭취 칼로리
 			logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
 
 			int carbo = Kcal / 2; // 권장 탄수화물
@@ -67,13 +62,34 @@ public class DiaryService {
 
 			int success = dao.diaryInsert(dto);
 			logger.info("일기 insert 성공 여부 : " + success);
+		}else {
+			// 일기 값 불러오기
+			int result = calculateResult(date, id);
+			logger.info("계산된 값 업데이트 여부 : "+result);
+			
+			dto = dao.diaryDetail(date, id); //diary테이블 값 가져옴
+			ArrayList<DamoDTO> ch_noList = dao.checklistDetail(date, id); //checklist 테이블 값 가져옴
+			ArrayList<DamoDTO> hisDailyList = dao.hisDailyList(date, id); //섭취 히스토리 테이블 값 가져옴
+			ArrayList<DamoDTO> hisExerciseList = dao.hisExerciseList(date, id); //운동 히스토리 테이블 값 가져옴
+			
+			map.put("ch_noList", ch_noList);
+			map.put("hisDailyList", hisDailyList);
+			map.put("hisExerciseList", hisExerciseList);
 		}
 
 		map.put("dto", dto);
-		map.put("ch_noList", ch_noList);
-		map.put("hisDailyList", hisDailyList);
-		map.put("hisExerciseList", hisExerciseList);
 		return map;
+	}
+
+	//총 운동, 섭취 칼로리 계산 / 업데이트
+	private int calculateResult(String date, String id) {
+		DamoDTO dto = dao.calculateResult(date,id); //히스토리 테이블 총 값 계산
+		logger.info("계산하기 : "+dto);
+		int result=0;
+		if(dto!=null) {
+			result = dao.resultUpdate(dto); //계산된 값 업데이트
+		}
+		return result;
 	}
 
 	public int memoUpdate(String d_no, String content) {
@@ -384,5 +400,5 @@ public class DiaryService {
 		logger.info("운동 삭제 : "+sucess);
 		return sucess;
 	}
-	
+
 }
