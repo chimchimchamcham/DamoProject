@@ -165,6 +165,9 @@ public class DamoDTO {
 	private int he_time; //운동 시간
 	private int he_kcal; //운동 소모 칼로리
 	
+	//내 사전
+	private Date m_date;//등록날짜
+	
 	public int getFitcnt() {
 		return fitcnt;
 	}
