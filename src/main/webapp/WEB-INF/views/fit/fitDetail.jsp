@@ -74,8 +74,14 @@
 		</c:forEach>
 
 		<div class="userInfo container mt-4 mb-3">
-			<a href="#">${bean.u_id }</a> <img class="userGrade"
-				src="resources/img/${bean.g_fileName }.png"
+			<c:choose>
+				<c:when test="${sessionId ne bean.u_id }">
+					<a href="myPage?u_id=${bean.u_id }">${bean.u_nick }</a>
+				</c:when>
+				<c:otherwise>${bean.u_nick }</c:otherwise>
+			</c:choose>
+
+			<img class="userGrade" src="resources/img/${bean.g_fileName }.png"
 				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
 			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
@@ -268,8 +274,17 @@
 					<!-- 답변자 정보 -->
 					<div class="title">
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
-							alt="${bean.g_fileName }"> <span class="titleTxt"><a
-							href="#"> ${ans.u_nick }</a>님의 답변</span>
+							alt="${bean.g_fileName }">
+						<c:choose>
+							<c:when test="${sessionId ne ans.u_id }">
+								<span class="titleTxt"><a href="myPage?u_id=${ans.u_id }">${ans.u_nick }</a>님의
+									답변</span>
+							</c:when>
+							<c:otherwise>
+								<span class="titleTxt">${ans.u_nick }님의 답변</span>
+							</c:otherwise>
+						</c:choose>
+
 						<!-- <a href="#"	class="notify float-right ml-3 mt-1">신고</a> -->
 					</div>
 					<!-- 답변 내용 -->
@@ -321,8 +336,16 @@
 					<div class="hhh">
 
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
-							alt="${bean.g_fileName }"> <span class="titleTxt ml-2"><a
-							href="#"> ${ans.u_nick }</a>님의 답변</span>
+							alt="${bean.g_fileName }">
+						<c:choose>
+							<c:when test="${sessionId ne ans.u_id }">
+								<span class="titleTxt"><a href="myPage?u_id=${ans.u_id }">${ans.u_nick }</a>님의
+									답변</span>
+							</c:when>
+							<c:otherwise>
+								<span class="titleTxt">${ans.u_nick }님의 답변</span>
+							</c:otherwise>
+						</c:choose>
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
@@ -681,7 +704,7 @@ a.notify, a.del {
 	if (loginId != writerId && loginId != '') {
 		chkDir();
 	}
-		
+
 	function chkDir() {
 		$.ajax({
 			url : 'chkDir',
@@ -690,14 +713,14 @@ a.notify, a.del {
 				"k_no" : kNo,
 				"u_id" : loginId
 			},
-			dataType: "text",
-			async: false,
+			dataType : "text",
+			async : false,
 			success : function(data) {
 				console.log(data);
-				if(data=='+'){
-					$("#dir").parent().next().html('+');				
-					
-				}else if(data=='-'){
+				if (data == '+') {
+					$("#dir").parent().next().html('+');
+
+				} else if (data == '-') {
 					$("#dir").parent().next().html('-');
 				}
 			},
@@ -707,46 +730,44 @@ a.notify, a.del {
 
 		});
 	}
-	
-	function dirAddDel(){
+
+	function dirAddDel() {
 		var dir = $("#dir").parent().next().html();
 		//console.log(dir);
 		//console.log(typeof(dir));
-		if(dir == '+'){
+		if (dir == '+') {
 			$.ajax({
 				url : 'addDir',
 				method : 'GET',
 				data : {
 					"k_no" : kNo,
 					"u_id" : loginId
-				},				
+				},
 				success : function(data) {
 					console.log(data);
-					if(data!='failed'){
+					if (data != 'failed') {
 						$("#dir").parent().next().html('-');
-						
+
 					}
-						alert(data);
-					
-					
-					
+					alert(data);
+
 				},
 				error : function(e) {
 					console.log(e);
 				}
 			});
-		}else if(dir == '-'){
+		} else if (dir == '-') {
 			$.ajax({
 				url : 'delDir',
 				method : 'GET',
 				data : {
 					"k_no" : kNo,
 					"u_id" : loginId
-				},						
+				},
 				success : function(data) {
 					console.log(data);
-					if(data!='failed'){
-						$("#dir").parent().next().html('+');						
+					if (data != 'failed') {
+						$("#dir").parent().next().html('+');
 					}
 					alert(data);
 				},
@@ -756,7 +777,6 @@ a.notify, a.del {
 			});
 		}
 	}
-	
 
 	//flag 값에 따라 답변하기 변화
 	function hideAnsForm() {

@@ -117,7 +117,7 @@
 
 								<!-- 회원만 나타나는 메뉴 -->
 								<c:if test="${loginManager ne 'Y'}">
-									<a class="dropdown-item" href="logout"> <i
+									<a class="dropdown-item" href="myPage?u_id=${loginId }"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> 마이 페이지
 									</a>
 								<div class="dropdown-divider"></div>
