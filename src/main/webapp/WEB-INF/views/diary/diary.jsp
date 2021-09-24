@@ -53,11 +53,6 @@ a:hover {
 	color:gray;
 }
 
-.CheckDelBtn:hover{
-	opacity: 0.5;
-	cursor: pointer;
-}
-
 </style>
 </head>
 <body>
@@ -65,16 +60,13 @@ a:hover {
 	<div class="container mt-5">
 
 		<!-- 날짜 나타남 -->
-		<div class="col-md-3" style="float: none; margin: 0 auto;">
-			<button type="button" class="btn btn-light rounded-circle mr-3"
-				onclick="preMonth()">
-				<i class="fas fa-chevron-left "></i>
-			</button>
-			<span id="date" style="font-size: 20px;"></span>
-			<button type="button" class="btn btn-light rounded-circle ml-3"
-				onclick="nextMonth()">
-				<i class="fas fa-chevron-right"></i>
-			</button>
+		<div class="row m-auto pb-3" >
+		<div class="col-sm-5 float-left p-0">
+			<a  href="calendar"><i class="fas fa-chevron-left mr-3 mt-2" style="color:#0275d8;"></i><b>캘린더 가기</b></a>
+		</div>
+		<div class="col-sm-7 m-auto">
+			<span id="date" style="font-size: 24px; font-weight: bold;"></span>
+		</div>
 		</div>
 
 		<!-- 몸무게 입력 -->
@@ -88,7 +80,7 @@ a:hover {
 
 			<!-- 섭취 그래프 -->
 			<div class="col mt-4 col-sm-3.2">
-				<p>섭취 그래프</p>
+				<p><b>섭취 그래프</b></p>
 				<div class="circle1" id="KcalCircle">
 					<strong class="circle_strong"></strong>
 				</div>
@@ -105,7 +97,7 @@ a:hover {
 
 			<!-- 운동 그래프 -->
 			<div class="col mt-4 col-sm-3.2">
-				<p>운동 그래프</p>
+				<p><b>운동 그래프</b></p>
 				<div class="circle2" id="ExeCircle">
 					<strong class="circle_strong"></strong>
 				</div>
@@ -124,12 +116,12 @@ a:hover {
 
 				<!-- 저탄고지, 밸런스 셀렉트 -->
 				<div class="row my-3 mr-1 ">
-					<span>탄단지 섭취 그래프</span>
-					<select class="form-control form-control-sm"
+					<span><b>탄단지 섭취 그래프</b></span>
+					<!-- <select class="form-control form-control-sm"
 						style="width: 90px; margin-left:120px;">
 						<option>밸런스</option>
 						<option>저탄고지</option>
-					</select>
+					</select> -->
 				</div>
 
 				<div class="row my-3 mr-1 pt-3">탄수화물 (g)</div>
@@ -641,7 +633,6 @@ a:hover {
 		}else if (obj.attr('id') == 'd_tarExe') { //목표 운동 칼로리 업데이트
 			url = 'exeTarKcalUpdate';
 		}
-		
 
 		$.ajax({
 			url : url,
@@ -653,6 +644,10 @@ a:hover {
 			},
 			success : function(data) {
 				console.log("업데이트 성공 여부 : " + data);
+				if(obj.attr('id') == 'd_tarExe' || obj.attr('id') == 'd_tarKcal' || obj.attr('id') == 'd_weight') {
+					window.location.reload();
+					window.scrollTo(0,0);
+				}
 			},
 			error : function(error) {
 				console.log(error);
@@ -763,6 +758,7 @@ a:hover {
 			document.getElementById("d_tarKcal").value = d_tarKcal;
 			document.getElementById("d_tarExe").value = d_tarExe;
 			
+			
 			u_weight=data.dto.d_weight;
 			
 			//목표 섭취,운동 달성률 계산
@@ -770,9 +766,8 @@ a:hover {
 			d_tarExePercent = Math.floor((data.dto.d_resultExe/data.dto.d_tarExe)*100);
 			console.log("섭취 칼로리 달성률: ",d_tarKcalPercent,"운동 칼로리 달성률 : ",d_tarExePercent);
 			
-			tarKcalPercent = (data.dto.d_resultEat/data.dto.d_tarKcal);
-			tarExePercent = (data.dto.d_resultExe/data.dto.d_tarExe);
-			console.log("섭취 칼로리 달성률: ",tarKcalPercent,"률 : ",tarExePercent);
+			tarKcalCircle(d_tarKcalPercent); //섭취 그래프 그리기
+			tarExeCircle(d_tarExePercent); //운동 그래프 그리기
 			
 			//메모 뿌려주기
 			document.getElementById("memoContent").value = data.dto.d_memo;
@@ -789,19 +784,24 @@ a:hover {
 			
 			//탄단지 섭취 비율 계산 (밸런스)
 			//탄수화물
-			carboPercent = JSON.parse(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
+			
+			carboPercent = Number(Math.floor((data.dto.d_resultCarbo/data.dto.d_carbo)*100));
 			document.getElementById("carboPercent").innerText = carboPercent+'%';
-			document.getElementById("carboPercent").style.width = carboPercent+'%';
+			document.getElementById("carboPercent").style.width ="0%";
 			//단백질
-			proteinPercent = JSON.parse(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
+			proteinPercent = Number(Math.floor((data.dto.d_resultProtein/data.dto.d_protein)*100));
 			document.getElementById("proteinPercent").innerText = proteinPercent+'%';
-			document.getElementById("proteinPercent").style.width = proteinPercent+'%';
+			document.getElementById("proteinPercent").style.width ="0%";
 			//지방
-			fatPercent = JSON.parse(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
+			fatPercent = Number(Math.floor((data.dto.d_resultFat/data.dto.d_fat)*100));
 			document.getElementById("fatPercent").innerText = fatPercent+'%';
-			document.getElementById("fatPercent").style.width = fatPercent+'%';
+			document.getElementById("fatPercent").style.width ="0%";
+
+			console.log(carboPercent,proteinPercent,fatPercent);
+			progressBarAnimate(); //탄단지 그래프 그리기
 
 			d_no = data.dto.d_no;
+			console.log("d_no",d_no);
 			
 
 			//체크리스트 뿌리기
@@ -887,6 +887,8 @@ a:hover {
 				console.log("음식 삭제 성공 여부 : " + data);
 				if(data>0){
 					EatDelElement.parents("tr").remove();
+					window.location.reload();
+					window.scrollTo(0,0);
 				}
 				
 			},
@@ -915,6 +917,8 @@ a:hover {
 				console.log("운동 삭제 성공 여부 : " + data);
 				if(data>0){
 					ExeDelElement.parents("tr").remove();
+					window.location.reload();
+					window.scrollTo(0,0);
 				}
 				
 			},
@@ -926,117 +930,85 @@ a:hover {
 
 	
 	/*==목표 섭취 그래프==*/
-	//초기 값(성공)
-	$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : tarKcalPercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
-		size : 230, //도넛의 크기를 결정해줍니다.
-		startAngle : 1.5 * 3.14,
-		fill : {
-			gradient : [ "#0275d8", "#5bc0de" ]
-		//도넛의 색을 결정해줍니다.
+	function tarKcalCircle(obj){
+		console.log(obj);
+		if(obj>100){ //실패 시 
+			$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
+				value : obj*0.01, //진행된 수를 넣어주세요. 1이 100기준입니다.
+				size : 230, //도넛의 크기를 결정해줍니다.
+				startAngle : 1.5 * 3.14,
+				fill : {
+					gradient : [ "#ff4b1f", "#ff9068" ]
+				//도넛의 색을 결정해줍니다.
+				}
+			}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
+				$(this).find('strong').html(obj + '%' + '<br/>실패');
+			});
+		}else{//성공 시
+			$('.circle1').circleProgress({ //들어갈 div class명을 넣어주세요
+				value : obj*0.01,  //진행된 수를 넣어주세요. 1이 100기준입니다.
+				size : 230, //도넛의 크기를 결정해줍니다.
+				startAngle : 1.5 * 3.14,
+				fill : {
+					gradient : [ "#0275d8", "#5bc0de" ]
+				//도넛의 색을 결정해줍니다.
+				}
+			}).on('circle-animation-progress', function(event, progress) {
+				$(this).find('strong').html(obj + '%' + '<br/>성공');
+			});
 		}
-	}).on('circle-animation-progress', function(event, progress) {
-		$(this).find('strong').html(d_tarKcalPercent + '%' + '<br/>성공');
-	});
-	
-	//목표 섭취 달성 실패
-	$('.circle1_2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : tarKcalPercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
-		size : 230, //도넛의 크기를 결정해줍니다.
-		startAngle : 1.5 * 3.14,
-		fill : {
-			gradient : [ "#ff4b1f", "#ff9068" ]
-		//도넛의 색을 결정해줍니다.
-		}
-	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
-		$(this).find('strong').html(d_tarKcalPercent + '%' + '<br/>실패');
-	});
-		
-	//섭취 목표 실패 시
-	if(d_tarKcalPercent>100){
-		document.getElementById('KcalCircle').className = 'circle1_2';
-	}else{//섭취 목표 성공 시
-		document.getElementById('KcalCircle').className = 'circle1';
 	}
 
 	
 	/*==목표 운동 그래프==*/
-	//초기 값(실패)
-	$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : tarExePercent, //진행된 수를 넣어주세요. 1이 100기준입니다.
-		size : 230, //도넛의 크기를 결정해줍니다.
-		startAngle : 1.5 * 3.14,
-		fill : {
-			gradient : [ "#ff4b1f", "#ff9068" ]
-		//도넛의 색을 결정해줍니다.
+	function tarExeCircle(obj){
+		console.log(obj);
+		if(obj>100){ //성공 시
+			$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
+				value : obj*0.01,  //진행된 수를 넣어주세요. 1이 100기준입니다.
+				size : 230, //도넛의 크기를 결정해줍니다.
+				startAngle : 1.5 * 3.14,
+				fill : {
+					gradient : [ "#0275d8", "#5bc0de" ]
+				//도넛의 색을 결정해줍니다.
+				}
+			}).on('circle-animation-progress', function(event, progress) {
+				$(this).find('strong').html(obj + '%' + '<br/>성공');
+			});
+		}else{  //실패 시
+			$('.circle2').circleProgress({ //들어갈 div class명을 넣어주세요
+				value : obj*0.01, //진행된 수를 넣어주세요. 1이 100기준입니다.
+				size : 230, //도넛의 크기를 결정해줍니다.
+				startAngle : 1.5 * 3.14,
+				fill : {
+					gradient : [ "#ff4b1f", "#ff9068" ]
+				//도넛의 색을 결정해줍니다.
+				}
+			}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
+				$(this).find('strong').html(obj + '%' + '<br/>실패');
+			});
 		}
-	}).on('circle-animation-progress', function(event, progress) { //라벨을 넣어줍니다.
-		$(this).find('strong').html(d_tarExePercent + '%' + '<br/>실패');
-	});
-	
-	//초기 값(성공)
-	$('.circle2_2').circleProgress({ //들어갈 div class명을 넣어주세요
-		value : tarExePercent,  //진행된 수를 넣어주세요. 1이 100기준입니다.
-		size : 230, //도넛의 크기를 결정해줍니다.
-		startAngle : 1.5 * 3.14,
-		fill : {
-			gradient : [ "#0275d8", "#5bc0de" ]
-		//도넛의 색을 결정해줍니다.
-		}
-	}).on('circle-animation-progress', function(event, progress) {
-		$(this).find('strong').html(d_tarExePercent + '%' + '<br/>성공');
-	});
-
-	//운동 목표 실패 시
-	if(d_tarExePercent<100){
-		document.getElementById('ExeCircle').className = 'circle2';
-	}else{//운동 목표 성공 시
-		document.getElementById('ExeCircle').className = 'circle2_2';
 	}
-	
-	
+
 	/*==탄단지 그래프==*/
-	$("#carboPercent").animate({
-		width : carboPercent
-	}, 1000);
-	
-	$("#proteinPercent").animate({
-		width : proteinPercent
-	}, 1000);
-	
-	$("#fatPercent").animate({
-		width : fatPercent
-	}, 1000);
-	
+	function progressBarAnimate(){
+		$("#carboPercent").animate({
+			width : carboPercent+"%"
+		}, 1000);
+		
+		$("#proteinPercent").animate({
+			width : proteinPercent+"%"
+		}, 1000);
+		
+		$("#fatPercent").animate({
+			width : fatPercent+"%"
+		}, 1000);
+	}
+
 
 	/*클릭한 날짜 뿌려주기*/
 	document.getElementById("date").innerHTML = getType;
 
-	var dt = new Date(document.getElementById("date").innerText);
-	/*  var arrDayStr = ['일','월','화','수','목','금','토']; */
-
-	/*전 날로 이동*/
-	function preMonth() {
-		console.log(dt);
-		/* var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1)+'('+arrDayStr[dt.getDay()-1]+')'; */
-		//var preDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()-1);
-		preDt = dt.setDate(dt.getDate() - 30);
-
-		console.log(preDt);
-	}
-
-
-	/* threeDaysAgo.setDate(threeDaysAgo.getDate() - 3); */ // 2014-02-26 => 3일전으로~
-
-
-	/*다음날로 이동*/
-	function nextMonth() {
-		console.log(dt);
-		/* var nextDt = dt.getFullYear()+'-'+dt.getMonth()+'-'+(dt.getDate()+1)+'('+arrDayStr[dt.getDay()+1]+')'; */
-		var nextDt = dt.getFullYear() + '-' + dt.getMonth() + '-'
-				+ (dt.getDate() + 30);
-		console.log(nextDt);
-	}
 	
 	/*버튼 클릭시 일기 추가 팝업*/
 	$("#submitListBtn").click(function(){

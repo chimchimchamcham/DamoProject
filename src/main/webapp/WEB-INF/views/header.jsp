@@ -162,7 +162,7 @@
 						<li class="nav-item" style="margin-left: 40px;"><a
 							class="nav-link" href="calendar">캘린더</a></li>	
 						<li class="nav-item" style="margin-left: 40px;"><a
-							class="nav-link" href="javascript:void(0)">통계 그래프</a></li>
+							class="nav-link" href="statistics">통계 그래프</a></li>
 						</c:if>
 						<li class="nav-item dropdown justify-content-center"><a
 							class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"

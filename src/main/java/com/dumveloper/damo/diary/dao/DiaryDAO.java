@@ -63,6 +63,12 @@ public interface DiaryDAO {
 
 	int ExeDel(String he_no, String met_name); //운동 삭제
 
+	DamoDTO calculateResult(String date, String id);//히스토리 테이블 총 값 계산
+
+	int resultUpdate(DamoDTO dto);//계산된 값 업데이트
+
+	int getU_height(String id); //키 가져오기
+
 	/* ArrayList<HashMap<String, Object>> totalKcal(String date, String id); */  //c_dode별 칼로리 합산
 
 
