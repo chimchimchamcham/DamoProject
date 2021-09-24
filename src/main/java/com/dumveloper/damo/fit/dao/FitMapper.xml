@@ -36,8 +36,8 @@
 	
 	<insert id="fitWrite"
 		useGeneratedKeys = "true"
-		keyColumn = "k_no"
-		keyProperty = "ki_no"
+		keyColumn = "k_no,k_no"
+		keyProperty = "ki_no,k_no"
 		parameterType="damo">
 		INSERT INTO KNOWFIT(k_no,u_id,k_code,k_title,k_content,k_date,k_view,k_replyCnt,k_solutionYN,k_blindYN)
 		VALUES (k_no_seq.NEXTVAL,#{u_id},#{k_code},#{k_title},#{k_content},sysdate,0,0,'N','N')

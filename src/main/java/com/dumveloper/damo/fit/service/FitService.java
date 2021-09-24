@@ -75,6 +75,7 @@ public class FitService {
 		int success = fitdao.fitWrite(dto);
 		logger.info("success : {}",success);
 		logger.info("ki_no : {}",dto.getKi_no());
+		logger.info("k_no : {}",dto.getK_no());
 		
 		//(2) 이미지 저장
 		
@@ -125,7 +126,7 @@ public class FitService {
 		//ModelAndView
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/fitMain");
+		mav.setViewName("redirect:/fitDetail?k_no="+dto.getK_no());
 		rAttr.addFlashAttribute("msg", "작성이 완료되었습니다");
 		return mav;
 	}
