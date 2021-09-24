@@ -118,7 +118,7 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 	        (SELECT g_filename FROM grade WHERE g_code = u.g_code) g_filename,
 	        (SELECT count(*) FROM knowfit WHERE u_id = #{param1} AND k_blindyn = 'N') fitcnt,
 	        (SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') anscnt,
-	        u_choosecnt*100/(SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') choosepct,
+	        u_choosecnt*100/NVL(NULLIF((SELECT count(*) FROM knowfit_r WHERE u_id = #{param} AND kr_blindyn = 'N'),0),1) choosepct,
 	        (SELECT rnum
 	         FROM (SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
 	            U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt

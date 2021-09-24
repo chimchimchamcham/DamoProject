@@ -229,7 +229,7 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/addDir", method = RequestMethod.GET)
-	public String addDir(@RequestParam String k_no, @RequestParam String u_id) {
+	public @ResponseBody String addDir(@RequestParam String k_no, @RequestParam String u_id) {
 
 		logger.info("지식핏 사전추가 접속");
 		logger.info("k_no : {}", k_no);		
@@ -238,7 +238,7 @@ public class FitController {
 	}
 	
 	@RequestMapping(value = "/delDir", method = RequestMethod.GET)
-	public String delDir(@RequestParam String k_no, @RequestParam String u_id) {
+	public @ResponseBody String delDir(@RequestParam String k_no, @RequestParam String u_id) {
 
 		logger.info("지식핏 사전제거 접속");
 		logger.info("k_no : {}", k_no);		

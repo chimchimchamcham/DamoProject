@@ -100,7 +100,7 @@
 		WHERE U_ID = #{param1}
 	</select>	
 	<select id="fitDetail" resultType="damo">
-		SELECT K.k_no,K.u_id,C.c_name,K.k_title,K.k_content,K.k_date,K.k_view,K.k_replycnt,K.k_solutionyn,K.k_blindyn, G.g_filename 
+		SELECT K.k_no,K.u_id,U.u_nick,C.c_name,K.k_title,K.k_content,K.k_date,K.k_view,K.k_replycnt,K.k_solutionyn,K.k_blindyn, G.g_filename 
 		FROM knowfit K LEFT JOIN userinfo U on K.u_id = U.u_id JOIN GRADE G ON U.g_code = G.g_code JOIN code C ON K.k_code =  C.c_code WHERE K.k_no = #{k_no}
 		<!-- SELECT * FROM KnowFit WHERE k_no = #{k_no} -->
 	</select>
