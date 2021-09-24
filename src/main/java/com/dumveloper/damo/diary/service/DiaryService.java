@@ -361,7 +361,7 @@ public class DiaryService {
 			logger.info("---------------기존 diary 데이터---------------");
 			logger.info("이전 diary 섭취 총량 : {}",d_resulteat);
 			logger.info("이전 diary 탄수화물 총량 : {}",d_resultcarbo);
-			logger.info("이전 diary 탄수화물 총량 : {}",d_resultprotein);
+			logger.info("이전 diary 단백질 총량 : {}",d_resultprotein);
 			logger.info("이전 diary 지방 총량 : {}",d_resultfat);
 			logger.info("-----------------------------------------------");
 			
