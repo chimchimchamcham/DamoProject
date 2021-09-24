@@ -538,4 +538,17 @@ public String addDir(String k_no, String u_id) {
 		return ch;
 	}
 
+	public ModelAndView serchlist(String content) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		ArrayList<DamoDTO> title = fitdao.serchtitle(content);
+		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content);
+		mav.addObject("title",title);
+		mav.addObject("maincontent",maincontent);
+		mav.setViewName("./fit/search");
+		
+		return mav;
+	}
+
 }

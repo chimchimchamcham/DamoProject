@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -236,6 +237,16 @@ public class FitController {
 
 		return fitservice.addDir(k_no,u_id);	
 	}
+	
+	//검색
+	@RequestMapping(value = "/search/{content}")
+	public ModelAndView search(@PathVariable String content) {
+		logger.info("지식핏 검색 접속");
+		logger.info("content: {}", content);		
+		
+		return fitservice.serchlist(content);	
+	}
+		
 	
 	@RequestMapping(value = "/delDir", method = RequestMethod.GET)
 	public @ResponseBody String delDir(@RequestParam String k_no, @RequestParam String u_id) {

@@ -244,6 +244,27 @@
 	var loginFile="${sessionScope.loginFile}";
 	var loginNick="${sessionScope.loginNick}";
 	var loginManager="${sessionScope.loginManager}";
+	
+	
+	$('input#search').keypress(function(e){
+		if (e.keyCode == 13) {
+			if ($('input#search').val()!=null && $('input#search').val()!='') {	
+				var content = $('input#search').val();
+				location.href ='/'+'search'+'/'+content;
+			}else{
+				
+			}
+		}
+	});
+	
+	$('i.fa-search').click(function(){
+			if ($('input#search').val()!=null && $('input#search').val()!='') {
+				var content = $('input#search').val();
+				location.href ='./'+'search'+'/'+content;
+		}else{
+			
+		}
+	});
 </script>
 
 </html>
