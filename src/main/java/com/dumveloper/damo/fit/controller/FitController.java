@@ -262,4 +262,13 @@ public class FitController {
 
 		return fitservice.delDir(k_no,u_id);	
 	}
+	
+	@RequestMapping(value = "/fitNotify", method = RequestMethod.GET)
+	public @ResponseBody String fitNotify(@RequestParam HashMap<String, String> params) {
+
+		logger.info("지식핏 신고등록 접속");
+		logger.info("parmas : {}", params);		
+
+		return fitservice.fitNotify(params);
+	}
 }

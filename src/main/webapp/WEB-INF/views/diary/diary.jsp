@@ -644,7 +644,7 @@ a:hover {
 			},
 			success : function(data) {
 				console.log("업데이트 성공 여부 : " + data);
-				if(obj.attr('id') == 'd_tarExe' || obj.attr('id') == 'd_tarKcal' || obj.attr('id') == 'd_weight') {
+				if(obj.attr('id') == 'd_tarExe' || obj.attr('id') == 'd_tarKcal') {
 					window.location.reload();
 					window.scrollTo(0,0);
 				}

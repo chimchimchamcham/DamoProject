@@ -20,6 +20,43 @@
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 
+	<!-- 신고 모달 -->
+
+	<div class="modal fade" id="notify">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content" id="modalContent">
+				<!-- Modal Header -->
+				<div class="notify-header pt-2 pb-2">
+					<div class="modal-title ml-2 float-left" id="modalTitle">신고하기</div>
+					<button type="button" class="close mr-2" data-dismiss="modal">&times;</button>
+				</div>
+
+				<!-- Modal body -->
+				<div class="modal-body p" id="modalBody">
+					<div class="row">
+						<div id="n1_code"
+							class="mr-1 pt-2 text-secondary font-weight float-left col-md-4"></div>
+						<div id="ntfTitle" class="container col-md-4"></div>
+						<div id="n2_code" class="container form-group col-md-4">
+							<select name="n2_code" class="form-control">
+								<option></option>
+							</select>
+						</div>
+					</div>
+					<div id="contentWrap">
+						<textarea id="ntf_content" placeholder="신고 내용을 입력하세요."></textarea>
+					</div>
+					<button type="button"
+						class="btn btn-outline-secondary float-right mt-4"
+						data-dismiss="modal" id="ntfBtn" onclick="regNotify()">신고
+						등록</button>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
 	<!-- 질문 글 -->
 	<div id="fitQuestion" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
 		<div class="">
@@ -40,9 +77,11 @@
 				</c:if>
 			</c:if>
 			<!-- 유저와 글 작성자가 다를 경우 -->
-			<c:if test="${fitId ne sessionId }">
+			<c:if test="${fitId ne sessionId and sessionId ne null}">
 				<div class="d-inline-flex float-right">
-					<a href="#" class="notify float-right ml-3 mt-1">신고</a>
+					<a class="notify float-right ml-3 mt-1" data-toggle="modal"
+						data-target="#notify" title="qNotify" onclick="notify(this)">신고</a>
+
 				</div>
 			</c:if>
 		</div>
@@ -74,14 +113,8 @@
 		</c:forEach>
 
 		<div class="userInfo container mt-4 mb-3">
-			<c:choose>
-				<c:when test="${sessionId ne bean.u_id }">
-					<a href="myPage?u_id=${bean.u_id }">${bean.u_nick }</a>
-				</c:when>
-				<c:otherwise>${bean.u_nick }</c:otherwise>
-			</c:choose>
-
-			<img class="userGrade" src="resources/img/${bean.g_fileName }.png"
+			<a href="#">${bean.u_id }</a> <img class="userGrade"
+				src="resources/img/${bean.g_fileName }.png"
 				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
 			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
@@ -274,17 +307,8 @@
 					<!-- 답변자 정보 -->
 					<div class="title">
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
-							alt="${bean.g_fileName }">
-						<c:choose>
-							<c:when test="${sessionId ne ans.u_id }">
-								<span class="titleTxt"><a href="myPage?u_id=${ans.u_id }">${ans.u_nick }</a>님의
-									답변</span>
-							</c:when>
-							<c:otherwise>
-								<span class="titleTxt">${ans.u_nick }님의 답변</span>
-							</c:otherwise>
-						</c:choose>
-
+							alt="${bean.g_fileName }"> <span class="titleTxt"><a
+							href="#"> ${ans.u_nick }</a>님의 답변</span>
 						<!-- <a href="#"	class="notify float-right ml-3 mt-1">신고</a> -->
 					</div>
 					<!-- 답변 내용 -->
@@ -336,16 +360,8 @@
 					<div class="hhh">
 
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
-							alt="${bean.g_fileName }">
-						<c:choose>
-							<c:when test="${sessionId ne ans.u_id }">
-								<span class="titleTxt"><a href="myPage?u_id=${ans.u_id }">${ans.u_nick }</a>님의
-									답변</span>
-							</c:when>
-							<c:otherwise>
-								<span class="titleTxt">${ans.u_nick }님의 답변</span>
-							</c:otherwise>
-						</c:choose>
+							alt="${bean.g_fileName }"> <span class="titleTxt ml-2"><a
+							href="#"> ${ans.u_nick }</a>님의 답변</span>
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
@@ -356,8 +372,11 @@
 							</a>
 						</c:if>
 
-						<c:if test="${ans.u_id ne sessionId}">
-							<a href="#" class="notify float-right ml-3 mt-1">신고</a>
+						<c:if test="${ans.u_id ne sessionId and sessionId ne null}">
+							<a class="notify float-right ml-3 mt-1" data-toggle="modal"
+								data-target="#notify" title="${ans.kR_no},${ans.u_id}"
+								onclick="notify(this);">신고</a>
+							<!-- <a href="#" class="notify float-right ml-3 mt-1">신고</a> -->
 						</c:if>
 						<c:if test="${ans.u_id eq sessionId}">
 							<span class="float-right "><a href="javascript:void(0)"
@@ -416,6 +435,28 @@
 </body>
 
 <style>
+.notify-header {
+	background-color: red;
+	color: white;
+}
+
+#ntfBtn {
+	width: 100px;
+	background-color: red;
+	color: white;
+}
+
+#ntf_content {
+	resize: none;
+	padding: 20px;
+	width: 98%;
+	height: 150px;
+}
+
+#n2_code select {
+	width: 200px;
+}
+
 #fitQuestion {
 	border: 1px solid #D8D8D8;
 	border-top: 5px solid #0275d8;
@@ -508,7 +549,6 @@
 }
 
 #modalTitle {
-	padding-left: 210px;
 	font-weight: 500;
 }
 
@@ -565,6 +605,16 @@ a.notify, a.del {
 	color: #D8D8D8;
 }
 
+#n1_code {
+	height: 10px;
+}
+
+#ntfTitle {
+	white-space: nowrap;
+	width: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis; /* 말줄임 적용 */
+}
 /*  */
 #fitTitle {
 	border: 1px solid #D8D8D8;
@@ -601,15 +651,6 @@ a.notify, a.del {
 
 #link {
 	padding-right: 30px;
-}
-
-#modalTitle {
-	padding-left: 210px;
-	font-weight: 500;
-}
-
-#modalBody {
-	text-align: center;
 }
 
 #modalContent {
@@ -678,6 +719,7 @@ a.notify, a.del {
 	var loginNick = "${sessionScope.loginNick}";
 	var writerId = "${bean.u_id}";
 	var kNo = "${bean.k_no}";
+	var title = "${bean.k_title}";
 	var flag = '<c:out value="${loop_flag}"/>';//글 작성자가 아니고, 답변한 유저이면 true
 	//console.log(loginId);
 	//console.log(typeof(loginId));
@@ -685,6 +727,8 @@ a.notify, a.del {
 	var content;
 	var formName = document.fitAnsWrite;
 	var ansNo;
+	var ntfId;
+	var ntfNo;
 	//사진 추가 등록시 번호를 부여하는 변수
 	var uploadNo = 1;
 	//답변/수정 구분
@@ -714,12 +758,10 @@ a.notify, a.del {
 				"u_id" : loginId
 			},
 			dataType : "text",
-			async : false,
 			success : function(data) {
 				console.log(data);
 				if (data == '+') {
 					$("#dir").parent().next().html('+');
-
 				} else if (data == '-') {
 					$("#dir").parent().next().html('-');
 				}
@@ -914,10 +956,74 @@ a.notify, a.del {
 		myAnswer.css({
 			"display" : "none"
 		});//답변 숨기기
-		/* myAnswer.css({
-			"display" : "block"
-		}); */
 
+	}
+
+	function notify(e) {//신고를 눌렀을 경우
+		//console.log($(e).attr("title"));
+		var qna = $(e).attr("title");
+		var option = '<option value="" >신고분류 선택 </option>';
+		$("#n2_code").children().empty();
+		$("#ntf_content").val('');
+		if (qna == 'qNotify') {
+			ntfNo = kNo;
+			ntfId = writerId;
+			$("#n1_code").html('신고할 지식fit');
+			$("#ntfTitle").html(title);
+			$("#n1_code").attr("name", 'KNOWFIT');
+			option += '<option value="KNOWFIT_001" >음란/선정성 게시글 </option>';
+			option += '<option value="KNOWFIT_002" >도배/욕설 게시글 </option>';
+			option += '<option value="KNOWFIT_003" >권리침해(사생활침해/명예훼손/괴롭힘) 게시글 </option>';
+			option += '<option value="KNOWFIT_004" >광고/홍보성 게시글 </option>';
+			option += '<option value="KNOWFIT_005" >불법 정보(도박/사행성) 게시글 </option>';
+			option += '<option value="KNOWFIT_006" >분란 유도 게시글 </option>';
+			option += '<option value="KNOWFIT_007" >불법 촬영물 등 유통 게시글 </option>';
+			option += '<option value="KNOWFIT_008" >기타 </option>';
+
+		} else {
+			//console.log(qna.split(',')[0]);
+			//console.log(qna.split(',')[1]	);
+			ntfNo = qna.split(',')[0];
+			ntfId = qna.split(',')[1];
+			$("#n1_code").html("신고할 답변");
+			$("#n1_code").attr("name", 'KNOWFIT_R');
+			option += '<option value="KNOWFIT_R_001" >음란/선정성 답변 </option>';
+			option += '<option value="KNOWFIT_R_002" >도배/욕설 답변 </option>';
+			option += '<option value="KNOWFIT_R_003" >권리침해(사생활침해/명예훼손/괴롭힘) 답변 </option>';
+			option += '<option value="KNOWFIT_R_004" >광고/홍보성 답변 </option>';
+			option += '<option value="KNOWFIT_R_005" >불법 정보(도박/사행성) 답변 </option>';
+			option += '<option value="KNOWFIT_R_006" >분란 유도 답변 </option>';
+			option += '<option value="KNOWFIT_R_007" >불법 촬영물 등 유통 답변 </option>';
+			option += '<option value="KNOWFIT_R_008" >기타 </option>';
+
+		}
+		$("#n2_code").children().append(option);
+
+	}
+
+	function regNotify() {//신고 등록 눌렀을 때
+		$.ajax({
+			url : 'fitNotify',
+			method : 'GET',
+			data : {
+				"n1_code" : $("#n1_code").attr("name"),
+				"n2_code" : $("#n2_code option:selected").val(),
+				"n_sendid" : loginId,
+				"n_receiveid" : ntfId,
+				"n_content" : $("#ntf_content").val(),
+				"n_notifiedno" : ntfNo
+			},
+			success : function(data) {
+				console.log(data);
+				if (data != 'failed') {
+					alert(data);
+				}
+
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
 	}
 
 	//session.loginId
