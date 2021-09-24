@@ -83,7 +83,7 @@
             </div>
             <div id="fitSection" class="col-md-8">
                 <!-- 통계 -->
-                <div id="fitStatistics" class="row ml-0 mr-0 pt-2 pb-2 bg-white shadow">
+                <div id="fitStatistics" class="row ml-0 mr-0 pt-3 pb-0 bg-white shadow">
                     <div class="fitStatisticsCol col">
                         <p class="text-secondary">질문 수</p>
                         <p><span>${dto.fitcnt }</span><span>개</span></p>
@@ -196,9 +196,7 @@
 
 </body>
 <style>
-    body{
-        background-color:#EAEAED;
-    }
+
 
     /* 상단 회원정보 */
     #profileTop{
@@ -227,24 +225,25 @@
         left:260px;
     }
     #profileTopGradeImg{
-        width:50px;
-        height:50px;
+        width:30px;
+        height:30px;
         position:absolute;
-        top:340px;
-        left:105px;
+        top:350px;
+        left:135px;
     }
     #profileTopRanking{
         width:100px;
-        font-size: 1.8rem;
+        font-size: 1.2rem;
         font-weight:500;
         position:absolute;
-        top:345px;
+        top:350px;
         left:175px;
     }
 
     /* 테이블 프로필 */
     #profileTable{
         height:200px;
+		margin-top:80px;
     }
     
     #profileTable table{
@@ -258,7 +257,7 @@
     /* 통계 */
     .fitStatisticsCol{
         text-align: center;
-        font-size: 1.5rem;
+        font-size: 1.1rem;
         border-right:1px solid gray;
     }
     .fitStatisticsColLast{
@@ -270,10 +269,10 @@
         background-color:#EAEAED;
     }
     .tab-content>div{
-        height:553px;
+        height:658px;
     }
     .nav-links{
-        font-size: 1.3rem;
+        font-size: 1.0rem;
         font-weight:500;
         color:#585858;
         background-color: #A4A4A4;
@@ -291,7 +290,7 @@
         cursor:pointer;
     }
     .itemsTop{
-        font-size:1.3rem;
+        font-size:1.0rem;
     }
     /*완료 답변은 초록색으로,,,*/
     .solution{
@@ -302,7 +301,7 @@
         font-size:1rem;
     }
     .itemsBottom{
-        font-size:1.1rem;
+        font-size:1.0rem;
     }
 </style>
 <script>
