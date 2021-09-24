@@ -502,19 +502,40 @@ public class FitService {
 		return mav;	
 	}
 
+public String addDir(String k_no, String u_id) {
+		
+		int success = fitdao.addDir(k_no, u_id);
+		logger.info("success : {}",success);
+		String msg = "failed";
+		
+		if(success>0) {
+			msg = "add success";
+		}
+		return msg;
+	}
+
+	public String delDir(String k_no, String u_id) {
+		
+		int success = fitdao.delDir(k_no, u_id);
+		logger.info("success : {}",success);
+		String msg = "failed";
+		
+		if(success>0) {
+			msg = "delete success";
+		}
+		return msg;
+	}
+
 	public String chkDir(String k_no, String u_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ModelAndView addDir(String k_no, String u_id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public ModelAndView delDir(String k_no, String u_id) {
-		// TODO Auto-generated method stub
-		return null;
+		DamoDTO dto = new DamoDTO();
+		dto = fitdao.chkDir(k_no, u_id);
+		String ch;
+		if(dto != null) {
+			ch = "-";
+		}else{
+			ch = "+";
+		}
+		return ch;
 	}
 
 }

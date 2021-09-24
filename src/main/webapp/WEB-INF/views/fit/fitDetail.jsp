@@ -81,7 +81,7 @@
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
 				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
 						onclick="href">추가</button> -->
-				<span class="float-right ml-3 mt-1" onclick="href"><a><img
+				<span class="float-right ml-3 mt-1" onclick="dirAddDel()"><a><img
 						id="dir" src="resources/img/dir.png" alt="dir"></a><span></span></span>
 			</c:if>
 			<!-- </div> -->
@@ -681,13 +681,7 @@ a.notify, a.del {
 	if (loginId != writerId && loginId != '') {
 		chkDir();
 	}
-	
-	function dirPlus(){
 		
-	}
-	function dirMinus(){
-		
-	}
 	function chkDir() {
 		$.ajax({
 			url : 'chkDir',
@@ -701,11 +695,10 @@ a.notify, a.del {
 			success : function(data) {
 				console.log(data);
 				if(data=='+'){
-					$("#dir").next().html('+');
-				
+					$("#dir").parent().next().html('+');				
 					
 				}else if(data=='-'){
-					$("#dir").next().html('-');
+					$("#dir").parent().next().html('-');
 				}
 			},
 			error : function(e) {
@@ -714,6 +707,56 @@ a.notify, a.del {
 
 		});
 	}
+	
+	function dirAddDel(){
+		var dir = $("#dir").parent().next().html();
+		//console.log(dir);
+		//console.log(typeof(dir));
+		if(dir == '+'){
+			$.ajax({
+				url : 'addDir',
+				method : 'GET',
+				data : {
+					"k_no" : kNo,
+					"u_id" : loginId
+				},				
+				success : function(data) {
+					console.log(data);
+					if(data!='failed'){
+						$("#dir").parent().next().html('-');
+						
+					}
+						alert(data);
+					
+					
+					
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}else if(dir == '-'){
+			$.ajax({
+				url : 'delDir',
+				method : 'GET',
+				data : {
+					"k_no" : kNo,
+					"u_id" : loginId
+				},						
+				success : function(data) {
+					console.log(data);
+					if(data!='failed'){
+						$("#dir").parent().next().html('+');						
+					}
+					alert(data);
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}
+	}
+	
 
 	//flag 값에 따라 답변하기 변화
 	function hideAnsForm() {
