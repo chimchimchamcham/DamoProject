@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.diary.service.CalendarService;
-import com.dumveloper.damo.dto.DamoDTO;
 
 
 @RestController 
@@ -32,9 +30,13 @@ public class CalendarController {
 		 logger.info("로그인 아이디:{}",id);
 		 logger.info("캘린더 요청"); 
 		 
-		 return  service.list(id);
+		 ModelAndView mav = new ModelAndView();
+		 mav.setViewName("diary/calendar");
+		 return  mav;
 	 }
 	 
+	
+	
 	 @RequestMapping(value="getMonthData/{formattedDate}")
 	 public HashMap<String,String> getMonthData(@PathVariable String formattedDate,HttpSession session){
 		logger.info("월 목표, 몸무게 요청");
@@ -56,6 +58,12 @@ public class CalendarController {
 		return service.updateMD(monthId,changeDT,changeMonth,id);
 	 }
 	 
-	 
+	 @RequestMapping(value="getMonthEvent")
+	 public HashMap <String,Object>getMonthEvent(HttpSession session){
+		 logger.info("월 이벤트 이동");
+		 String loginId = (String) session.getAttribute("loginId");
+		 
+		 return  service.getMonthEvent(loginId);
+	 }
 	
 }
