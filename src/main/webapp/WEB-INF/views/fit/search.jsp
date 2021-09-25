@@ -29,7 +29,7 @@
 </head>
 <body>
 
-
+<jsp:include page="../header.jsp"></jsp:include>
 <div class="d-flex p-5">
 	<div class="container mx-auto my-5">
 		<div class="row d-flex justify-content-center align-content-center">
@@ -91,6 +91,8 @@
 </body>
 <script>
 
+var page;
+var nowwhatpage;
 
 //처음에 눌렀을때
 $(document).on('click','button',function(){
@@ -101,10 +103,11 @@ $(document).on('click','button',function(){
 		console.log("clickbtn",clickbtn);
 	
 	if (clickbtn=='전체') {
-		location.href ='/damo/'+'search'+'/'+'${whatcherch}'+'/1/3';
+		location.href = 'search'+'?content='+'${whatcherch}';
 	}else if(clickbtn=='제목') {
 		$('div.titleallcard').empty();		
 		$('div.contentallcard').empty();
+		
 		
 		
 		
