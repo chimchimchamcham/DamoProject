@@ -151,4 +151,8 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 		FROM knowfit k, mydir m
 		WHERE k.k_no = m.k_no AND k.k_blindyn = 'N' AND m.u_id = #{param1}
 	</select>
+	
+	<select id="alarmList" resultType="damo">
+		
+	</select>
 </mapper>
