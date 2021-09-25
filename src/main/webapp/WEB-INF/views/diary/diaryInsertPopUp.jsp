@@ -596,7 +596,7 @@ $("#submitBtn").click(function(){
 			if(data.success=="success"){
 				console.log("등록성공");
 				opener.parent.location.reload();
-				window.close();
+				window.location.reload();
 			}else{
 				console.log("등록실패");
 			}
