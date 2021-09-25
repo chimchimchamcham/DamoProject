@@ -15,6 +15,8 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link href='https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.css' rel='stylesheet' />
+<link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet'>
 <title>Insert title here</title>
 <style>
 .blackText{
@@ -35,6 +37,7 @@
 </style>
 
 <script>  
+//------------------달력---------------------//
   document.addEventListener('DOMContentLoaded', function() {
 	var loginId = "${sessionScope.loginId}"; //로그인한 아이디 가져오기
 	
@@ -43,14 +46,14 @@
     var calendar = new FullCalendar.Calendar(calendarEl, {
      headerToolbar:false,
      contentHeight:600,
-     eventDisplay:'inverse-background', //list-item : 동그라미 형태로 이벤트 표시,
+     /* eventDisplay:'inverse-background', */ //list-item : 동그라미 형태로 이벤트 표시,
      //aspectRatio:2, 세로 비율을 바꾸는거같음
       //initialDate: '2020-09-15', //초기에 어떤 날짜를 보여줄지 설정 설정안하면 현재 날짜로
      navLinks: false, //can click day/week names to navigate views
      editable: true, //드래그했을 때 이벤트 변경 시킬 것인지 설정 
      dayMaxEvents: false, // 이벤트가 많을 경우 more 링크 박스 형태 이벤트 출력
      showNonCurrentDates:false,
-     eventTextColor:'#000000',
+     fixedWeekCount:false,
 	 events:function(info,successCallback,failureCallback){
 	    	 $.ajax({
 		    	url:'getMonthEvent',
@@ -91,10 +94,12 @@
 		    			
 		    			
 		    			if(elem.d_success){
-		    				color='skyblue';
+		    				color='#54DEFD';
 		    			}else{
-		    				color='pink';
+		    				color='#FFEDED';
 		    			}
+		    			
+		    			//섭취
 		    			arr.push({
 		    				title:elem.d_resultEat+'kcal',
 		        			start:elem.d_date,
@@ -104,6 +109,7 @@
 		        	        textColor:'black'
 		    			});
 		    			
+		    			//운동
 		    			arr.push({
 		    				title:elem.d_resultExe+'kcal',
 		        			start:elem.d_date,
@@ -111,24 +117,21 @@
 		        	        borderColor:'pink',
 		        	        display:'list-item'
 		    			});
+		    			
+		    			//성공여부, 몸무게
 		    			arr.push({
 		    				title:elem.d_weight+"kg", 
 		    				start:elem.d_date,
 		    				backgroundColor:color,
 		    				display:'background'
 		    			});
-		    		/* 	arr.push({
-		    				title:elem.d_weight+"kg",
-		    				start:elem.d_date,
-		    				display:'background'
-		    			}) */
-		    			
+		    	
 		    			
 		    	console.log("-----------------------");
 		    		})
 		    		
 		    		console.log("event : ",arr);
-		    		console.log("successCallback:",successCallback(arr));
+		    		console.log("successCallback:",successCallback(arr)); 
 		    	},
 		    	error: function(error){
 		    		console.log(error);	
@@ -152,20 +155,24 @@
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
       	}
-      },eventClassNames:'black'
+      }
       
  	 });
-    calendar.render();
     
+    
+    calendar.render(); //캘린더 만들어지는 함수
+    
+ //------------------------------------------------------//   
     
     var date = calendar.getDate(); //현재 날짜 가져오기
   
-    
-    console.log(loginId);
     if(loginId == null || loginId == ''){
     	$("#tarKcal").attr("disabled",true); 
 		$("#tarExe").attr("disabled",true); 
 		$("#goal").attr("disabled",true); 
+		
+		$("#calendar_top").css("visibility","hidden");
+		$("#drawGoal").css("visibility","hidden");
     }
 	
     //현재 날짜기준 월 이동시 이동한 달 데이터 가져오기
@@ -195,8 +202,6 @@
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
-		//이동한 달의 이벤트 가져오기
-		getMonthEvent(loginId,formattedDate);
 		
 		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
 		console.log(reformattedDate);
@@ -215,8 +220,6 @@
 		
 		//이동한 달의 목표 섭취, 운동 칼로리 가져오기
 		getMonthData(formattedDate);
-		//이동한 달의 이벤트 가져오기
-		getMonthEvent(loginId,formattedDate);
 		
 		reformattedDate = formattedDate.toString().replace('-','년 ')+"월";
 		console.log(reformattedDate);
@@ -248,6 +251,15 @@
 	      		console.log(mm);
 	      		
 	      	} 
+	        
+	        var monthArr=['January','February','March','April','May','June','July','August','September','October','November','December'];
+	        var month;
+	        monthArr.forEach(function(month,index){
+	        	if(index == b){
+	        		console.log(month);
+	        	}
+	        })
+	        
 	      	
 	      	//1월 ,12월 사이에는 그냥 아래 경우로 구해주면 됨 
 	      	return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]);
@@ -298,7 +310,7 @@
 	    //목표 섭취 칼로리 벗어났을 때
 	    $("#tarKcal").focusout(function(){
 	    	console.log("섭취 칼로리 벗어남");
-	    	$(this).css("background-color","#F4F4E9");
+	    	
 	    	console.log($(this));
 	    	//원래 입력했던 데이터와 다를 때 변경
 	    	if($(this).val() == '' || $(this).val()==null){
@@ -316,7 +328,7 @@
 	    //목표 운동 칼로리 벗어났을 때
 	    $("#tarExe").focusout(function(){
 	    	console.log("운동 칼로리 벗어남");
-	    	$(this).css("background-color","#F4F4E9");
+	    	
 	    	
 	    	//console.log($(this).val())
 	    	
@@ -338,7 +350,7 @@
 	    $("#goal").focusout(function(){
 	    	console.log("목표 벗어남");
 	    	console.log($(this));
-	    	$(this).css("background-color","#F4F4E9");
+	    
 	    	
 	    	//console.log($(this).val())
 	    	
@@ -356,6 +368,7 @@
 	    	console.log("reqUpate 값 : "+obj.val());
 	    	console.log("reqUpdate 아이디 : "+obj.attr("id"));
 	    	var reqUrl = "updateMD/"+obj.attr("id")+"/"+obj.val()+"/"+formattedDate;
+	    	
 	    	console.log(reqUrl);
 	    	
 	    	$.ajax({
@@ -371,31 +384,6 @@
 	    	    });    
 	    }
 	  //----------------------------------------------//  	
-	  
-	  /*
-	  var requestUrl = 'getMonthEvent/'+loginId+'/'+'2021-08';
-	  console.log(requestUrl);
-	  //해당 월 이벤트 가져오기
-	  function getMonthEvent(){
-		  var arr=[];
-		  $.ajax({
-			 url:requestUrl,
-			 type:'get',
-			 dataType:'json',
-			 success:function(data){
-				console.log(data.list);
-				arr = data.list;
-			 },
-			 error:function(error){
-				 console.log(error);
-			 }
-			 
-		  });
-		  return arr;
-	  }
-	 */
-	 
-	 
 	 
   });	
 </script>
@@ -412,6 +400,17 @@ body {
 	max-width: 1100px;
 	margin: 0 auto;
 }
+
+#goal{
+	border:none;
+	border-radius:0;
+	border-bottom:2px solid #7C7F7F;
+	
+}
+#dateCal{
+	
+} 
+
 </style>
 </head>
 <body>
@@ -421,7 +420,7 @@ body {
 
 	<div class='p-3 mb-5 bg-white rounded'>
 
-		<div class='container pb-3'>
+		<div class='container'>
 			<a href="./goupdate">회원정보 수정</a> <a href="./diaryInsert">다이어리 추가</a>
 			<a href="./myPage">마이페이지 이동</a>
 
@@ -429,32 +428,34 @@ body {
 
 			<div class="row mb-3">
 
-				<div class="col-3 float-right">
-					<!-- col채우는 용도 -->
-				</div>
-
-				<div
-					class="col-6 d-flex align-items-center justify-content-center flex-column">
-					<div class="d-flex ">
+				<div class="col-12 d-flex align-items-center justify-content-center flex-column" style="text-align:center">
+					<div class="d-flex my-2">
 						<!-- --------------prev,년월,next 버튼----------- -->
-						<button type="button" class="btn m-1 btn-secondary" id="prev"><</button>
-						<h3 class="m-1 text-center d-flex align-self-center" id="dateCal"></h3>
-						<button type="button" class="m-1 btn btn-secondary" id="next">></button>
+						<button type="button" class="m-1 btn btn-light border-dark rounded-circle" id="prev">&#60;</button>
+							<span class="m-1 text-center d-flex align-self-center" id="dateCal" ></span>
+						<button type="button" class="m-1 btn btn-light border-dark rounded-circle" id="next">&#62;</button>
 					</div>
+			</div>
+			</div>
+			<div class="row pb-3" id="calendar_top">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4" style="text-align: center; position:relative">
 					<!-- 목표 입력 부분 -->
-					<input type="text" class="form-control" placeholder="목표를 입력하세요!"
+					<input type="text" class="form-control mx-auto" placeholder="목표를 입력하세요!"
 						aria-describedby="basic-addon3" id="goal"
 						value="<%-- ${monthContent} --%>"
-						style="text-align: center; background-color: #F4F4E9">
+						style="text-align: center; ">
+						<i class="bi bi-pencil" style="position:absolute; top:10px;right:20px"></i>
 					<!-- ---- -->
 				</div>
 
-				<div class="col-sm-2 m-1 float-right">
+				<div class="col-sm-4 pt-2 pr-4" style="text-align: center">
 					<!-- 남은 몸무게 -->
-					<span id="remainWeight" style="text-align: center">
+					<span id="remainWeight" class="float-right" >
 					
 					</span>
 					<!-- ---------- -->
+				</div>
 				</div>
 			</div>
 
@@ -477,12 +478,12 @@ body {
 						<div id="tarKcalInput">
 							<input type="text" class="form-control" placeholder="섭취 칼로리"
 								id="tarKcal" value="<%-- ${monthTarKcal} --%>"
-								style="text-align: center; background-color: #F4F4E9">
+								style="text-align: center;">
 						</div>
 					</div>
 					<!-- --------------------- -->
 					<!-- 목표 운동 칼로리 부분 -->
-					<div class="col-sm-4 d-flex m-1">
+					<div class="col-sm-4 d-flex m-1" >
 						<div class="d-flex pd-0 mr-1">
 							<span class="align-self-center"
 								style="font-size: 15px; font-weight: bold;">목표 운동 칼로리 :</span>
@@ -490,7 +491,7 @@ body {
 						<div class="">
 							<input type="text" class="form-control" placeholder="운동 칼로리"
 								id="tarExe" value="<%-- ${monthTarExe} --%>"
-								style="text-align: center; background-color: #F4F4E9">
+								style="text-align: center;">
 						</div>
 					</div>
 					<!-- --------------------- -->
