@@ -98,8 +98,15 @@
 	</c:if> 
 	]
       ,dateClick:function(date){
-    	 //console.log('Date:',date.dateStr);
-    	  //console.log('Resource ID:',date.dateStr);
+    	 console.log('Date:',date.dateStr);
+    	 
+    	 var clickDate=date.dateStr; //클릭한 날짜
+    	 var clickArr = clickDate.split("-");
+    	
+    	 var today = new Date(); //현재날짜 
+    	 var todayArr = clickArr.getFullYear();
+    	 
+    	 //console.log('Resource ID:',date.dateStr);
     	 if(loginId == null || loginId == ''){
     		alert("로그인을 하셔야 이용하실 수 있는 서비스 입니다."); 
     	 }else{
@@ -110,6 +117,8 @@
 	    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
 	    		  alert("목표 운동 칼로리를 입력해주세요!");
 	    	  }else{
+	    		if()  
+	    		  
 	    	 	location.href='goDiary?Date='+date.dateStr;
 	    	  }
       	}
