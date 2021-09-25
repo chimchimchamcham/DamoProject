@@ -30,9 +30,7 @@ public class CalendarController {
 		 logger.info("로그인 아이디:{}",id);
 		 logger.info("캘린더 요청"); 
 		 
-		 ModelAndView mav = new ModelAndView();
-		 mav.setViewName("diary/calendar");
-		 return  mav;
+		 return  service.list(id);
 	 }
 	 
 	
