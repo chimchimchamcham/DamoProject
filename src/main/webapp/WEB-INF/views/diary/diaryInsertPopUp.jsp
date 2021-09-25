@@ -12,14 +12,14 @@
 <title>Insert title here</title>
 <style>
 	body{
-		background-color:gray;
+		/* background-color:gray; */
 	}
 	.container-fluid{
 		margin:0;
 		padding:0;
 		width:600px;
 		height:800px;
-		background-color:#E5E5E5;
+		/* background-color:#E5E5E5; */
 	}
 	#header{
 		padding-top:10px;
@@ -82,7 +82,7 @@
 			<div class="col-1"></div>
 		</div>
 		<!-- 검색 결과 리스트 -->
-		<div class="container-fluid" style="z-index:1000; position:fixed; left:150px; width:240px; height:150px; color" id="search_list">
+		<div class="container-fluid" style="z-index:1000; position:fixed; left:150px; width:240px; height:150px; background-color:#E5E5E5;" id="search_list">
 			<ul class="list-group" style="overflow-y:scroll; overflow-x: hidden; height:150px; font-size:11px" id="search_ul">
 			 
 			</ul> 
@@ -592,6 +592,7 @@ $("#submitBtn").click(function(){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
+			
 		},
 		error:function(error){
 			console.log(error);
