@@ -66,4 +66,12 @@ public interface FitDAO {
 
 	int addDir(String k_no, String u_id);
 
+
+	//검색시 필요
+	ArrayList<DamoDTO> serchtitle(String content);
+	ArrayList<DamoDTO> serchcontent(String content);
+
+	int fitNotify(DamoDTO dto);
+
+
 }
