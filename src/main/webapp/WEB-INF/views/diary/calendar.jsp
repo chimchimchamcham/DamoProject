@@ -222,14 +222,13 @@
 	      		
 	      	} 
 	        
-	        var monthArr=['January','February','March','April','May','June','July','August','September','October','November','December'];
+/* 	        var monthArr=['January','February','March','April','May','June','July','August','September','October','November','December'];
 	        var month;
 	        monthArr.forEach(function(month,index){
 	        	if(index == b){
 	        		console.log(month);
 	        	}
-	        })
-	        
+	        }) */
 	      	
 	      	//1월 ,12월 사이에는 그냥 아래 경우로 구해주면 됨 
 	      	return yyyy + "-" + (mm[1] ? mm : "0" + mm[0]);
@@ -396,6 +395,10 @@ body {
     width:30px;
     height:30px;
   }
+  #successWeight{
+  	color: #273FEE;
+  	
+  }
 
 </style>
 </head>
@@ -460,7 +463,7 @@ body {
 						<div id="tarKcalInput">
 							<input type="text" class="form-control" placeholder="섭취 칼로리"
 								id="tarKcal" value="${monthTarKcal}"
-								style="text-align: center;">
+								style="text-align: center;" onkeypress="inNumber();">
 						</div>
 					</div>
 					<!-- --------------------- -->
@@ -473,7 +476,7 @@ body {
 						<div class="">
 							<input type="text" class="form-control" placeholder="운동 칼로리"
 								id="tarExe" value="${monthTarExe}"
-								style="text-align: center;">
+								style="text-align: center;" onkeypress="inNumber();">
 						</div>
 					</div>
 					<!-- --------------------- -->
@@ -494,13 +497,19 @@ body {
 var minus = ${tarWeight}-${weight};
 
 if(minus>0){
-	resultWeight="목표 달성 성공!!!";
+	resultWeight="<span id='successWeight'><i class='bi bi-trophy'></i> 목표 몸무게 달성</span>";
 }else{
-	resultWeight="남은 몸무게 : <span id='weightTitle'> "+minus+"kg</span>";
+	resultWeight="<i class='bi bi-speedometer2'></i>남은 몸무게 : <span id='weightTitle'> "+minus+"kg</span>";
 }
 	$("#remainWeight").html(resultWeight);
 
-
+	//입력한 내용이 숫자가 아니면 막아버리는 함수
+	function inNumber(){
+	    if(event.keyCode<48 || event.keyCode>57){
+	       event.returnValue=false;
+	    }
+	}
+	//-----------------//
 
 
 </script>

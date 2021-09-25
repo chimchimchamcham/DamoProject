@@ -100,7 +100,7 @@
 		<div id="content_eat">
 			<div class="row" id="eating_gram">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">분량(g)</div>
-				<div class="col-6" style="text-align:center;"><span id="default_gram"></span><input type="text" class="form-control" name="eating_gram" style="text-align:center;"></div>
+				<div class="col-6" style="text-align:center;"><span id="default_gram"></span><input type="text" class="form-control" name="eating_gram" style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row" id="eating_Kcal">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">칼로리(kcal)</div>
@@ -124,11 +124,11 @@
 		<div id="content_exe">
 			<div class="row" id="exe_time">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">시간(분)</div>
-				<div class="col-6" style="text-align:center;"><input type="text" class="form-control" name="exe_time" style="text-align:center;"></div>
+				<div class="col-6" style="text-align:center;"><input type="text" class="form-control" name="exe_time" style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row" id="exe_Kcal">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">칼로리(kcal)</div>
-				<div class="col-6" style="text-align:center;"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal"></div>
+				<div class="col-6" style="text-align:center;"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
@@ -140,7 +140,7 @@
 			<div class="row" id="water_ml">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">분량(ml)</div>
 				<div class="col-6">
-					<input type="text" class="form-control " name="water_ml"><!-- form-control is-valid -->
+					<input type="text" class="form-control " name="water_ml" onkeypress="inNumber();"><!-- form-control is-valid -->
 					<div class="invalid-feedback" style="display:none">
 	       				 0이상을 입력해주세요!
 	      			</div>
@@ -398,7 +398,7 @@ $("#deleteSearch").click(function(){
 	//검색칸 초기화
 	$("input[name=search_insert]").attr('readonly',false);
 	$("input[name=search_insert]").val('');
-	$("#search_ul li").remove();
+	$("#search_list").hide();
 	//이름 초기화
 	$("#default_msg").text('선택해주세요!'); 
 	
@@ -605,8 +605,16 @@ $("#submitBtn").click(function(){
 			console.log(error);
 		}
 	})
+	
+	
 });
 
-
+//입력한 내용이 숫자가 아니면 막아버리는 함수
+function inNumber(){
+    if(event.keyCode<48 || event.keyCode>57){
+       event.returnValue=false;
+    }
+}
+//-----------------//
 </script>
 </html>
