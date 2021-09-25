@@ -436,17 +436,24 @@ a:hover {
 					<i class="fas fa-plus"></i>
 				</button>
 
-				<label for="photo"><span
-					style="font-size: 18px; font-weight: bold; cursor: pointer;"
-					class="ml-1 text-primary"> 사진추가</span></label> <input type="file"
-					name="photo" id="photo"
-					accept="image/gif,image/jpeg,image/png,image/jpg">
-				<!-- 사진 -->
+<!-- -------------------- 사진 --------------------- -->
+				
+				<form id="photoForm" method="post">
+					<label for="photo">
+						<span style="font-size: 18px; font-weight: bold; cursor: pointer;" class="ml-1 text-primary"> 사진추가</span>
+					</label>
+					<input type="file" name="photo" id="photo" accept="image/gif,image/jpeg,image/png,image/jpg">
+					<input type="hidden" name="d_no" id="d_no" value=""> <!-- Ajax를 실행시켜 d_no를 여기에 넣는다 -->
+					
+				</form>
 			</div>
 
 			<!-- 이미지가 들어간다 -->
 			<div id="imageWrap"></div>
 		</div>
+
+
+<!-- -------------------- 사진 --------------------- -->
 
 		<hr />
 
@@ -655,51 +662,7 @@ a:hover {
 		});
 	}
 
-	var uploadNo = 1;
-	//파일 등록시 이벤트 (최대 4장)
-	$("input[name='photo']")
-			.on(
-					"change",
-					function(e) {
-						console.log('썸네일 등록');
 
-						//imageWrap에 자식요소가 4개 이상 있을 경우 업로드 막기
-						if ($("#imageWrap").children().length >= 4) {
-							alert("최대 4장까지만 업로드 가능합니다.");
-							$("#photo").val("");
-						} else {
-							var reader = new FileReader();
-
-							reader.onload = function(e) {
-
-								var content = '';
-								content += '<div class="imgWrap" style="display:inline; margin-right:10px;">';
-								content += '<img src="'+e.target.result+'" width="220px" ">';
-								content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
-								content += '<input type="hidden" name="imgNo" value="'+uploadNo+'">';
-								content += '</div>';
-
-								$("#imageWrap").append(content);
-
-								//file 객체 복사 함수
-								copyInputTypeFile(uploadNo);
-
-							};
-
-							reader.readAsDataURL(e.target.files[0]);
-
-						}//end else
-
-					});
-
-	//x를 클릭 했을 때 이미지 삭제하기
-	$(document).on("click", ".closeImgWrap", function() {
-		$(this).parent().remove();
-		changeImgIcon();
-
-		var imgNo = $(this).parent().find("input[type='hidden']").val();
-		deleteInputTyleFile(imgNo);
-	});
 
 	var search = location.search
 	var params = new URLSearchParams(search);
@@ -1016,6 +979,148 @@ a:hover {
 		window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight,"일기 항목 추가하기","width=580, height=380, left=700,top=400, resizable=no, scrollbars=no");
 		
 	})
+	
+	
+	/* ---------- 사진 관련 ---------- */
+	var diaryDate = "${param.Date}"; //현재 일기의 날짜 2021-09-01
+	console.log("현재 일기의 날짜 : ",diaryDate);
+	var loginId = "${sessionScope.loginId}"; //로그인한 사람의 Id
+	console.log("로그인한 사람의 Id : ",loginId);
+	var diaryD_no; //일기 고유번호
+	
+	//id와 날짜를 가지고 d_no를 가져오는 함수
+	$.ajax({
+			url : 'selectDiaryD_no',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'diaryDate' : diaryDate,
+				'loginId' : loginId
+			},
+			success : function(data) {
+				console.log("diaryD_no : ",data.diaryD_no);
+				diaryD_no = data.diaryD_no; //d_no 저장
+				$("#d_no").val(diaryD_no); //input hidden에 저장 (업로드 때 사용)
+				console.log($("#d_no").val());
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	
+	//사진명을 DB에서 가져오는 Ajax (먼저 날짜와 id로 d_no를 알아온 후 d_no와 일치하는 사진이름을 가져온다)
+	$.ajax({
+			url : 'diaryPhotoList',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'diaryDate' : diaryDate,
+				'loginId' : loginId
+			},
+			success : function(data) {
+				console.log("diaryPhotoList",data);
+				drawDiaryPhotoList(data.diaryPhotoList); //사진 뿌려주기
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	
+	//Ajax에서 불러온 사진을 #imageWrap에 뿌려주기
+	function drawDiaryPhotoList(list){
+		var content = "";
+		console.log("list.length",list.length);
+		list.forEach(function(item,index){
+			content += '<div class="imgWrap" style="display:inline; margin-right:10px;">';
+			content += '<img src="/photo/'+item+'" width="220px" ">';
+			content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+			content += '</div>';
+		});
+		$("#imageWrap").append(content);
+	}
+
+	//파일 등록시 이벤트 (최대 4장)
+	$("input[name='photo']").on("change",function(e) {
+		console.log('썸네일 등록');
+		//imageWrap에 자식요소가 4개 이상 있을 경우 업로드 막기
+		if ($("#imageWrap").children().length >= 4) {
+			alert("최대 4장까지만 업로드 가능합니다.");
+			$("#photo").val("");
+		} else {
+			/*var reader = new FileReader();
+			reader.onload = function(e) {
+				var content = '';
+				content += '<div class="imgWrap" style="display:inline; margin-right:10px;">';
+				content += '<img src="'+e.target.result+'" width="220px" ">';
+				content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+				content += '</div>';
+				$("#imageWrap").append(content);
+			};
+			reader.readAsDataURL(e.target.files[0]);
+			
+			console.log(e.target.files[0].name);*/ //등록된 이미지 파일명
+			diaryPhotoUpload(); //이미지 파일 업로드 함수
+		}//end else
+	});
+
+	//이미지 파일 업로드 함수
+	function diaryPhotoUpload(){
+		var form = $("#photoForm")[0];
+		console.log("$('#photoForm')[0]",$("#photoForm")[0]);
+		var formData = new FormData(form);
+		console.log("formData : ",formData);
+		
+		$.ajax({
+			url : 'diaryPhotoUpload',
+			type : 'post',
+			processData : false,
+			contentType : false,
+			data : formData,
+			success : function(data) {
+				console.log("diaryPhotoUpload data : ",data);
+				console.log("사진 업로드 성공 여부 : ",data.success);
+				drawDiaryPhotoList(data.diaryPhotoList);
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
+	
+	//x를 클릭 했을 때 이미지 삭제하기
+	$(document).on("click", ".closeImgWrap", function() {
+		var src = $(this).parent().children("img").attr("src");
+		var substrsrc = src.substring(7,src.length);
+		console.log("substrsrc : ",substrsrc);
+		
+		diaryPhotoDelete(this); //클릭한 사진을 삭제
+		
+		
+	});
+	
+	//x클릭한 사진을 삭제하는 함수
+	function diaryPhotoDelete(obj){
+		var src = $(obj).parent().children("img").attr("src");
+		var substrsrc = src.substring(7,src.length);
+		console.log("substrsrc : ",substrsrc);
+		
+		$.ajax({
+			url : 'diaryPhotoDelete',
+			type : 'get',
+			dataType : 'json',
+			data : {
+				'diaryD_no' : diaryD_no,
+				'newFileName' : substrsrc
+			},
+			success : function(data) {
+				console.log("diaryPhotoDelete",data.success);
+				$(obj).parent().remove(); //이미지 div를 삭제
+			},
+			error : function(error) {
+				console.log(error);
+			}
+		});
+	}
 	
 </script>
 

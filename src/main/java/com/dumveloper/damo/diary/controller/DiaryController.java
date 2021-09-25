@@ -12,15 +12,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dumveloper.damo.diary.service.DiaryService;
 import com.dumveloper.damo.dto.DamoDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class DiaryController {
@@ -119,5 +118,40 @@ public class DiaryController {
 			logger.info("운동 삭제 요청 : "+ he_no+"/ "+met_name);
 			return service.ExeDel(he_no,met_name);
 		}
-
+	
+	 @RequestMapping(value="/selectDiaryD_no")
+		public @ResponseBody HashMap<String, Object> selectDiaryD_no(@RequestParam HashMap<String,String> param) {
+			logger.info("일기 고유번호 요청 ");
+			logger.info("param : {} ",param);
+			
+			return service.selectDiaryD_no(param);
+		}
+	
+	 @RequestMapping(value="/diaryPhotoList")
+		public @ResponseBody HashMap<String, Object> diaryPhotoList(@RequestParam HashMap<String,String> param) {
+			logger.info("일기 이미지 리스트 요청 ");
+			logger.info("param : {} ",param);
+			
+			return service.diaryPhotoList(param);
+		}
+	 
+	 @RequestMapping(value="/diaryPhotoUpload")
+		public @ResponseBody HashMap<String, Object> diaryPhotoUpload(
+			@RequestParam String d_no,
+			MultipartHttpServletRequest mtf) {
+			logger.info("일기 이미지 업로드 요청 ");
+			logger.info("d_no : {}",d_no);
+			logger.info("mtf fileName : {}",mtf.getFile("photo").getOriginalFilename());
+			
+			return service.diaryPhotoUpload(d_no,mtf);
+		}
+	 
+	 @RequestMapping(value="/diaryPhotoDelete")
+		public @ResponseBody HashMap<String, Object> diaryPhotoDelete(
+			@RequestParam HashMap<String,String> param) {
+			logger.info("일기 이미지 삭제 요청 ");
+			logger.info("param : {}",param);
+			
+			return service.diaryPhotoDelete(param);
+		}
 }
