@@ -29,7 +29,7 @@
 </head>
 <body>
 
-<!--<jsp:include page="../header.jsp"></jsp:include>-->
+
 <div class="d-flex p-5">
 	<div class="container mx-auto my-5">
 		<div class="row d-flex justify-content-center align-content-center">
