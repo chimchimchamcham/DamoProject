@@ -32,7 +32,9 @@
   			<div class="col-sm-8 mx-auto">
   				<div class="mb-2">
   					<span>현재시각기준</span>
-  					<span style="float:right">${sessionScope.loginNick } 님의 순위  : ${myRanking }위</span>
+  					<c:if test="${myRanking ne null}">
+  						<span style="float:right">${sessionScope.loginNick } 님의 순위  : ${myRanking }위</span>
+  					</c:if>
   				</div>
   				
   				<table class="table table-hover">

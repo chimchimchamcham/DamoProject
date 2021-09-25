@@ -1,6 +1,10 @@
 package com.dumveloper.damo.diary.service;
 
+import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dumveloper.damo.diary.dao.DiaryDAO;
 import com.dumveloper.damo.dto.DamoDTO;
@@ -114,9 +120,25 @@ public class DiaryService {
 		return success;
 	}
 
-	public int weightUpdate(String d_no, String content) {
-		int success = dao.weightUpdate(d_no, content);
+	public int weightUpdate(String d_no, String content, String loginId) {
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		String today = simpleDateFormat.format(new Date()); //오늘날짜
+		logger.info("오늘 날짜 "+today);
+		
+		String date = simpleDateFormat.format(dao.getDate(d_no,loginId));//해당 일기 날짜 가져오기
+		logger.info("일기 날짜 "+date);
+		
+		int success = 0;
+		if(date.equals(today)) { //오늘 날짜일 경우 u_weight업데이트
+			success = dao.u_weightUpdate(content,loginId);
+			logger.info("회원정보 몸무게 업데이트");
+		}
+		
+		success = dao.d_weightUpdate(d_no, content);
 		logger.info("몸무게 업데이트 성공 : " + success);
+			
 		return success;
 	}
 
@@ -448,6 +470,70 @@ public class DiaryService {
 		int sucess = dao.ExeDel(he_no,met_name);
 		logger.info("운동 삭제 : "+sucess);
 		return sucess;
+	}
+
+	public HashMap<String, Object> diaryPhotoList(HashMap<String, String> param) {
+		HashMap<String, Object> map = new HashMap<>();
+		boolean success = false;
+		int d_no = dao.selectD_no(param);
+		logger.info("d_no: {}",d_no);
+		ArrayList<String> list = dao.diaryPhotoList(d_no);
+		logger.info("list size: {}",list.size());
+		success = true;
+		map.put("diaryD_no", d_no);
+		map.put("diaryPhotoList", list);
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> selectDiaryD_no(HashMap<String, String> param) {
+		HashMap<String, Object> map = new HashMap<>();
+		boolean success = false;
+		int d_no = dao.selectD_no(param);
+		logger.info("d_no: {}",d_no);
+		success = true;
+		map.put("diaryD_no", d_no);
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> diaryPhotoUpload(String d_no,MultipartHttpServletRequest mtf) {
+		HashMap<String, Object> map = new HashMap<>();
+		boolean success = false;
+		
+		//업로드처리
+		String root = "C:/upload/"; //이미지를 저장할 경로
+		
+		MultipartFile mf = mtf.getFile("photo");
+		String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+		long fileSize = mf.getSize(); // 파일 사이즈
+
+		logger.info("originFileName : " + originFileName);
+		logger.info("fileSize : " + fileSize);
+
+		String newFileName = System.currentTimeMillis() + originFileName.substring(originFileName.lastIndexOf("."));;
+		try {
+			mf.transferTo(new File(root + newFileName)); //파일을 업로드!! 간단
+			int imgUploadSuccess = dao.diaryPhotoUpload(d_no,newFileName);// 파일명을 DB에 저장
+			logger.info("imgUploadSuccess : {}",imgUploadSuccess);
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		success = true;
+		ArrayList<String> list = new ArrayList<>();
+		list.add(newFileName);
+		map.put("diaryPhotoList", list);
+		map.put("success", success);
+		return map;
+	}
+
+	public HashMap<String, Object> diaryPhotoDelete(HashMap<String, String> param) {
+		HashMap<String, Object> map = new HashMap<>();
+		int success = dao.diaryPhotoDelete(param);
+		logger.info("diaryPhotoDelete : {}",success);
+		map.put("success", success>0?true:false);
+		return map;
 	}
 
 }

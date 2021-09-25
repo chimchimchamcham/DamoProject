@@ -250,7 +250,11 @@ public class FitService {
 	public ModelAndView fitRanking(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", fitdao.fitRanking());
-		mav.addObject("myRanking", fitdao.myRanking((String)session.getAttribute("loginId")));
+		
+		String u_id = (String)session.getAttribute("loginId");
+		if(u_id != null && !u_id.equals("")) {
+			mav.addObject("myRanking", fitdao.myRanking(u_id));	
+		}
 		mav.setViewName("fit/fitRanking");
 		return mav;
 	}
