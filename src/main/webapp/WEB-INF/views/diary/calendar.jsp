@@ -102,11 +102,10 @@
     	 
     	 var clickDate=date.dateStr; //클릭한 날짜
     	 var clickArr = clickDate.split("-");
-    	
-    	 var today = new Date(); //현재날짜 
-    	 var todayArr = clickArr.getFullYear();
+    	 var today = new Date();
     	 
-    	 //console.log('Resource ID:',date.dateStr);
+    	 var clickMonth = new Date(clickArr[0],clickArr[1]-1,clickArr[2]);
+    	
     	 if(loginId == null || loginId == ''){
     		alert("로그인을 하셔야 이용하실 수 있는 서비스 입니다."); 
     	 }else{
@@ -117,17 +116,17 @@
 	    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
 	    		  alert("목표 운동 칼로리를 입력해주세요!");
 	    	  }else{
-	    		if()  
-	    		  
-	    	 	location.href='goDiary?Date='+date.dateStr;
+	    		  if(clickMonth.getTime() > today.getTime()){
+	    	    		 console.log("오늘 이후 날짜 클릭");
+	    	    		 alert("오늘 날짜까지만 작성 가능합니다.");
+	    	    	 }else{
+	    	    		 console.log("오늘 이전 날짜 클릭");
+	    	    		 location.href='goDiary?Date='+date.dateStr;
+	    	    	 }
+	    	 	//
 	    	  }
       	}
-      },eventRender: function(event, element) {
-    	     if(event.icon){          
-    	         element.find(".fc-title").prepend("<i class='fa fa-"+event.icon+"'></i>");
-    	      }
-    	   }        
- 
+      }
       
  	 });
     
