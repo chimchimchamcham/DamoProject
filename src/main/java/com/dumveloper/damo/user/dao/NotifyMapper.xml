@@ -9,4 +9,8 @@
 	<update id="updatenotify">
 		UPDATE his_notify SET HN_code = 'HN003' where HN_no = #{param1};
 	</update>
+	
+	<insert id="userNotify">
+		INSERT INTO Notify(N_NO,N_RECEIVEID,N_SENDID,N_CONTENT,N_DT,N1_CODE,N2_CODE) VALUES(n_no_seq.NEXTVAL,#{n_receiveid},#{n_sendid},#{n_content},sysdate,#{n1_code},#{n2_code})
+	</insert>
 </mapper>
