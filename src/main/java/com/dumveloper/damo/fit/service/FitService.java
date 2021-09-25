@@ -541,8 +541,12 @@ public String addDir(String k_no, String u_id) {
 		
 		ArrayList<DamoDTO> title = fitdao.serchtitle(content);
 		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content);
-		mav.addObject("title",title);
-		mav.addObject("maincontent",maincontent);
+		
+		
+		mav.addObject("title",title);//제목
+		mav.addObject("maincontent",maincontent);//내용
+
+		
 		mav.setViewName("./fit/search");
 		
 		return mav;
