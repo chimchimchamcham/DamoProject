@@ -592,7 +592,14 @@ $("#submitBtn").click(function(){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-			
+			console.log(data.success);
+			if(data.success=="success"){
+				console.log("등록성공");
+				opener.parent.location.reload();
+				window.close();
+			}else{
+				console.log("등록실패");
+			}
 		},
 		error:function(error){
 			console.log(error);
