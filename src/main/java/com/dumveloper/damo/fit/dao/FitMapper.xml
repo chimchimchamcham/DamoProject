@@ -171,11 +171,11 @@
 	</delete>
 	
 	<select id="serchtitle" resultType="damo">
-		SELECT k_no,k_title,k_content FROM KnowFit where k_title LIKE '%'||#{param1}||'%'
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_title LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
 	</select>
 	
 	<select id="serchcontent" resultType="damo">
-		SELECT k_no,k_title,k_content FROM KnowFit where k_content LIKE '%'||#{param1}||'%'
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_content LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
 	</select>
 	
 	<select id="serchtitledbcnt" resultType="int">

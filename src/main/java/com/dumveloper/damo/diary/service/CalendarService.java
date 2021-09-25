@@ -22,7 +22,7 @@ public class CalendarService {
 
 	@Autowired
 	CalendarDAO dao;
-/*
+	
 	public ModelAndView list(String id) {
 		LocalDate now = LocalDate.now();
 		logger.info("오늘 날짜 출력:{}", now);
@@ -54,7 +54,7 @@ public class CalendarService {
 		mav.setViewName("diary/calendar");
 		return mav;
 	}
-*/
+
 	// 달 변경시 Ajax로 한달 목표 섭취, 운동 칼로리 와 목표 던져주는 메서드
 	public HashMap<String, String> getMonthDByAjax(String id, String formattedDate) {
 		logger.info("요청한 달:{}", formattedDate);
