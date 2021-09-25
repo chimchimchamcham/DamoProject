@@ -64,7 +64,7 @@
 
 					<!-- 로그인 안 되어있을 경우(로그인 버튼) -->
 					<c:if test="${loginId eq null}">
-						<li><a class="nav-link" href="Gologin" id="userDropdown"
+						<li><a class="nav-link" href="/damo/Gologin" id="userDropdown"
 							role="button"> <span
 								class="mr-2 d-none d-lg-inline text-white-600 small">로그인</span>
 						</a></li>
@@ -193,7 +193,7 @@
 	$('i.fa-search').click(function(){
 			if ($('input#search').val()!=null && $('input#search').val()!='') {
 				var content = $('input#search').val();
-				location.href ='/damo/'+'search'+'/'+content+'/1/3';
+				location.href = './search'+'?content='+content;
 		}else{
 			
 		}
