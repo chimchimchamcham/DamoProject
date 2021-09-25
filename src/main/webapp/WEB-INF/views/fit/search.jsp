@@ -91,7 +91,10 @@
 </body>
 <script>
 
+var page;
+var nowwhatpage;
 
+//처음에 눌렀을때
 $(document).on('click','button',function(){
 	$('button').removeClass('active');
 	$(this).addClass('active');
@@ -100,17 +103,22 @@ $(document).on('click','button',function(){
 		console.log("clickbtn",clickbtn);
 	
 	if (clickbtn=='전체') {
-		$('div.titleallcard').removeClass('hidden');
-		$('div.contentallcard').removeClass('hidden');
+		location.href = 'search'+'?content='+'${whatcherch}';
 	}else if(clickbtn=='제목') {
-		$('div.titleallcard').removeClass('hidden');
-		$('div.contentallcard').addClass('hidden');
+		$('div.titleallcard').empty();		
+		$('div.contentallcard').empty();
+		
+		
+		
+		
+
 	}else if(clickbtn=='내용'){
-		$('div.titleallcard').addClass('hidden');
-		$('div.contentallcard').removeClass('hidden');
-	}
+		$('div.titleallcard').empty();		
+		$('div.contentallcard').empty();
 		
 		
+		
+	}	
 });
 
 
@@ -118,9 +126,6 @@ function goknowpage(k_no){
 	var content = k_no;
 	location.href ='/damo/fitDetail?k_no='+content;
 }
-
-
-
 
 </script>
 </html>

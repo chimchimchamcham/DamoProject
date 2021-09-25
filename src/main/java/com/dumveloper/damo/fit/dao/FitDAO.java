@@ -68,8 +68,8 @@ public interface FitDAO {
 
 
 	//검색시 필요
-	ArrayList<DamoDTO> serchtitle(String content);
-	ArrayList<DamoDTO> serchcontent(String content);
+	ArrayList<DamoDTO> serchtitle(String content, int start, int end);
+	ArrayList<DamoDTO> serchcontent(String content, int start, int end);
 	int serchtitledbcnt(String content);
 	int serchcontentdbcnt(String content);
 

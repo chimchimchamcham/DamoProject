@@ -165,4 +165,20 @@ GROUP BY d.d_no
 	select d_date from diary WHERE d_no=#{param1} AND u_id=#{param2}
 </select>
 
+<select id="selectD_no" parameterType="hashmap" resultType="int">
+	SELECT d_no FROM diary WHERE u_id = #{loginId} AND TO_CHAR(d_date,'yyyy-mm-dd') = #{diaryDate}
+</select>
+
+<select id="diaryPhotoList" resultType="String">
+	SELECT p_fileName FROM photo WHERE d_no = #{param1}
+</select>
+
+<insert id="diaryPhotoUpload">
+	INSERT INTO photo values(#{param1},#{param2})
+</insert>
+
+<delete id="diaryPhotoDelete">
+	DELETE FROM photo WHERE d_no = #{diaryD_no} AND p_fileName = #{newFileName}
+</delete>
+
 </mapper>

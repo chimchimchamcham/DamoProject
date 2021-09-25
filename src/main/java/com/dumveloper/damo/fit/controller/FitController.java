@@ -239,12 +239,15 @@ public class FitController {
 	}
 	
 	//검색
-	@RequestMapping(value = "/search/{content}")
-	public ModelAndView search(@PathVariable String content) {
+	@RequestMapping(value = "/search")
+	public ModelAndView search(@RequestParam String content) {
+		
 		logger.info("지식핏 검색 접속");
 		logger.info("content: {}", content);		
 		if(content != null) {
-		return fitservice.serchlist(content);	
+		int start = 1;
+		int end = 3;
+		return fitservice.serchlist(content,start,end);	
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("maincontent","검색결과가 없습니다");

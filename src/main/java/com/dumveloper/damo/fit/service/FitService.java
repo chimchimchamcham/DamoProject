@@ -250,7 +250,11 @@ public class FitService {
 	public ModelAndView fitRanking(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("list", fitdao.fitRanking());
-		mav.addObject("myRanking", fitdao.myRanking((String)session.getAttribute("loginId")));
+		
+		String u_id = (String)session.getAttribute("loginId");
+		if(u_id != null && !u_id.equals("")) {
+			mav.addObject("myRanking", fitdao.myRanking(u_id));	
+		}
 		mav.setViewName("fit/fitRanking");
 		return mav;
 	}
@@ -535,12 +539,12 @@ public String addDir(String k_no, String u_id) {
 		return ch;
 	}
 
-	public ModelAndView serchlist(String content) {
+	public ModelAndView serchlist(String content, int start, int end) {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		ArrayList<DamoDTO> title = fitdao.serchtitle(content);
-		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content);
+		ArrayList<DamoDTO> title = fitdao.serchtitle(content,start,end);
+		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content,start,end);
 		
 		int serchtitlecnt = fitdao.serchtitledbcnt(content);
 		int serchcontentcnt= fitdao.serchcontentdbcnt(content);
@@ -582,5 +586,26 @@ public String addDir(String k_no, String u_id) {
 
 		return msg;
 	}
-
+	/*
+	 * //ajax 검색 처음 눌렀을때 public HashMap<String, Object> seachall1to3(String content,
+	 * int start, int end) {
+	 * 
+	 * ArrayList<DamoDTO> title = fitdao.serchtitle(content,start,end);
+	 * ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content,start,end);
+	 * 
+	 * int serchtitlecnt = fitdao.serchtitledbcnt(content); int serchcontentcnt=
+	 * fitdao.serchcontentdbcnt(content);
+	 * 
+	 * int serchallcnt = serchtitlecnt+serchcontentcnt;
+	 * 
+	 * HashMap<String, Object> map = new HashMap<String, Object>();
+	 * 
+	 * map.put("whatcherch",content);//검색내용 map.put("title",title);//제목
+	 * map.put("maincontent",maincontent);//내용
+	 * map.put("titlecnt",serchtitlecnt);//제목수
+	 * map.put("contentcnt",serchcontentcnt);//내용수
+	 * map.put("allcnt",serchallcnt);//전부수
+	 * 
+	 * return map; }
+	 */
 }

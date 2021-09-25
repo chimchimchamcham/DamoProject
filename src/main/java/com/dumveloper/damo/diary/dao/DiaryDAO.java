@@ -74,6 +74,14 @@ public interface DiaryDAO {
 
 	int u_weightUpdate(String content, String loginId); //u_weight업데이트
 
+	ArrayList<String> diaryPhotoList(int d_no);
+
+	int selectD_no(HashMap<String, String> param);
+
+	int diaryPhotoUpload(String d_no, String newFileName);
+
+	int diaryPhotoDelete(HashMap<String, String> param);
+
 	/* ArrayList<HashMap<String, Object>> totalKcal(String date, String id); */  //c_dode별 칼로리 합산
 
 
