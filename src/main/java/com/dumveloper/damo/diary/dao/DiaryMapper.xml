@@ -33,8 +33,12 @@ SELECT C.C_TARKCAL, C.C_TAREXE, C.C_DATE, u.u_weight, u.u_id, u.u_height
 	UPDATE diary SET d_memo = #{param2} WHERE d_no = #{param1}
 </update>
 
-<update id="weightUpdate" parameterType="String">
+<update id="d_weightUpdate" parameterType="String">
 	UPDATE diary SET d_weight = #{param2} WHERE d_no = #{param1}
+</update>
+
+<update id="u_weightUpdate">
+	UPDATE userinfo SET u_weight = #{param1} WHERE u_id = #{param2}
 </update>
 
 <update id="eatTarKcalUpdate" parameterType="String">
@@ -157,6 +161,10 @@ GROUP BY d.d_no
 	SELECT u_height FROM userinfo WHERE u_id = #{param1}
 </select>
 
+<select id="getDate" resultType="Date">
+	select d_date from diary WHERE d_no=#{param1} AND u_id=#{param2}
+</select>
+
 <select id="selectD_no" parameterType="hashmap" resultType="int">
 	SELECT d_no FROM diary WHERE u_id = #{loginId} AND TO_CHAR(d_date,'yyyy-mm-dd') = #{diaryDate}
 </select>
@@ -172,4 +180,5 @@ GROUP BY d.d_no
 <delete id="diaryPhotoDelete">
 	DELETE FROM photo WHERE d_no = #{diaryD_no} AND p_fileName = #{newFileName}
 </delete>
+
 </mapper>

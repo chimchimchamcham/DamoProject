@@ -258,10 +258,10 @@ public class UserController {
 		return service.myPage(u_id);
 	}
 	
-	@RequestMapping(value = "/alarmList")
-	public @ResponseBody HashMap<String, Object> alarmList(@RequestParam String loginId) {
-		logger.info("알람 리스트 요청");
-		return service.alarmList(loginId);
-	}
+	/*
+	 * @RequestMapping(value = "/alarmList") public @ResponseBody HashMap<String,
+	 * Object> alarmList(@RequestParam String loginId) { logger.info("알람 리스트 요청");
+	 * return service.alarmList(loginId); }
+	 */
 	
 }

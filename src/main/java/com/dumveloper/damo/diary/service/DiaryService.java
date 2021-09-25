@@ -1,8 +1,10 @@
 package com.dumveloper.damo.diary.service;
 
+import java.text.SimpleDateFormat;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +120,25 @@ public class DiaryService {
 		return success;
 	}
 
-	public int weightUpdate(String d_no, String content) {
-		int success = dao.weightUpdate(d_no, content);
+	public int weightUpdate(String d_no, String content, String loginId) {
+		String pattern = "yyyy-MM-dd";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		String today = simpleDateFormat.format(new Date()); //오늘날짜
+		logger.info("오늘 날짜 "+today);
+		
+		String date = simpleDateFormat.format(dao.getDate(d_no,loginId));//해당 일기 날짜 가져오기
+		logger.info("일기 날짜 "+date);
+		
+		int success = 0;
+		if(date.equals(today)) { //오늘 날짜일 경우 u_weight업데이트
+			success = dao.u_weightUpdate(content,loginId);
+			logger.info("회원정보 몸무게 업데이트");
+		}
+		
+		success = dao.d_weightUpdate(d_no, content);
 		logger.info("몸무게 업데이트 성공 : " + success);
+			
 		return success;
 	}
 

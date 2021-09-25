@@ -2,6 +2,7 @@ package com.dumveloper.damo.diary.dao;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import com.dumveloper.damo.dto.DamoDTO;
@@ -16,7 +17,7 @@ public interface DiaryDAO {
 
 	int memoUpdate(String d_no, String content); //메모 업데이트
 
-	int weightUpdate(String d_no, String content);  //몸무게 업데이트
+	int d_weightUpdate(String d_no, String content);  //몸무게 업데이트
 
 	int eatTarKcalUpdate(String d_no, String content); //목표 섭취 칼로리 업데이트 
 
@@ -68,6 +69,10 @@ public interface DiaryDAO {
 	int resultUpdate(DamoDTO dto);//계산된 값 업데이트
 
 	int getU_height(String id); //키 가져오기
+
+	Date getDate(String d_no, String loginId); //해당 일기 날짜 가져오기
+
+	int u_weightUpdate(String content, String loginId); //u_weight업데이트
 
 	ArrayList<String> diaryPhotoList(int d_no);
 

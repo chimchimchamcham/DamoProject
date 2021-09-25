@@ -58,9 +58,10 @@ public class DiaryController {
 	 }
 	 
 	 @RequestMapping(value="/weightUpdate") 
-	 public @ResponseBody int weightUpdate(@RequestParam String d_no,@RequestParam String content) {
-		 logger.info("몸무게 업데이트 "+"/"+d_no+"/ 몸무게 :"+content);
-		return service.weightUpdate(d_no,content);
+	 public @ResponseBody int weightUpdate(@RequestParam String d_no,@RequestParam String content, HttpSession session) {
+		 String loginId = (String) session.getAttribute("loginId");
+		 logger.info("몸무게 업데이트 "+"/"+d_no+"/ 몸무게 :"+content+"/ 아이디 : "+loginId);
+		return service.weightUpdate(d_no,content,loginId);
 	 }
 	 
 	 @RequestMapping(value="/eatTarKcalUpdate") 

@@ -75,7 +75,7 @@
 </body>
 <script>
 var loginId = "${sessionScope.loginId}";
-
+/*
 $.ajax({
 	type:'GET',
 	url:'alarmList',
@@ -88,6 +88,6 @@ $.ajax({
 		console.log(e);
 	}
 	
-});
+});*/
 </script>
 </html>
