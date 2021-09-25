@@ -106,14 +106,14 @@
                 <div id="fitMenu" class="bg-white mt-3">
                     <!-- 탭 클릭 -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item mr-2">
+                        <li class="nav-item mr-2 shadow-sm">
                             <a class="nav-link nav-links navSelected rounded-top" data-toggle="tab" href="#myFitWrite">내가 쓴 Fit</a>
                         </li>
-                        <li class="nav-item mr-2">
+                        <li class="nav-item mr-2 shadow-sm">
                             <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitAnswer">내가 쓴 답변</a>
                         </li>
                         <c:if test="${sessionScope.loginId eq dto.u_id }">
-                        <li class="nav-item mr-2">
+                        <li class="nav-item mr-2 shadow-sm">
                             <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
                         </li>
                         </c:if>
@@ -258,16 +258,13 @@
     .fitStatisticsCol{
         text-align: center;
         font-size: 1.1rem;
-        border-right:1px solid gray;
+        border-right:1px solid #BDBDBD;
     }
     .fitStatisticsColLast{
         border-right:none;
     }
 
     /*탭 관련*/
-    ul.nav{
-        background-color:#EAEAED;
-    }
     .tab-content>div{
         height:658px;
     }
