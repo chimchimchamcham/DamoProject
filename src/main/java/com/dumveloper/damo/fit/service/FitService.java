@@ -604,4 +604,36 @@ public String addDir(String k_no, String u_id) {
 	 * 
 	 * return map; }
 	 */
+
+	
+	//검색 무한스크롤 cnt category의 내용 따라 무엇을 기준으로 검색할지 dao선택
+	public HashMap<String, Object> search_cnt(HashMap<String, String> params) {
+		String whatsherch = params.get("whatsherch");
+		int cnt = Integer.parseInt(params.get("cnt"));
+		String category = params.get("category");
+		
+		logger.info("whatsherch:{}",whatsherch);
+		logger.info("cnt:{}",cnt);
+		logger.info("category:{}",category);
+		
+		
+		int start = (cnt-1)*5+1;//1. 1,2. 6
+		int end = cnt*5;//1. 5,2. 10
+		
+		
+		
+		HashMap<String,Object> map = new HashMap<>();
+		ArrayList<DamoDTO> list = new ArrayList<DamoDTO>();
+		if (category=="제목") {
+			list = fitdao.dbserch_cnt_title(whatsherch,start,end);			
+		}else if(category=="내용"){
+			list = fitdao.dbserch_cnt_content(whatsherch,start,end);		
+		}
+
+		map.put("list", list);
+		map.put("listSize", list.size());
+		map.put("category", category);
+		
+		return map;
+	}
 }

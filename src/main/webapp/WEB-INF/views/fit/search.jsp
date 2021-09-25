@@ -91,8 +91,11 @@
 </body>
 <script>
 
-var page;
-var nowwhatpage;
+//무한 스크롤을 실행 시킨 횟수, 목록을 불러올 때 마다 +1씩 증가한다 버튼을 바꾸면 초기화
+var cnt = 1;
+//목록을 불러올 카테고리
+var category = '전체';
+var whatsherch = '${whatcherch}';
 
 //처음에 눌렀을때
 $(document).on('click','button',function(){
@@ -100,26 +103,56 @@ $(document).on('click','button',function(){
 	$(this).addClass('active');
 	
 	var clickbtn = $(this).text();
-		console.log("clickbtn",clickbtn);
+	console.log("clickbtn",clickbtn);
 	
 	if (clickbtn=='전체') {
 		location.href = 'search'+'?content='+'${whatcherch}';
+		cnt = 1;
+		category = '전체';
+		
 	}else if(clickbtn=='제목') {
 		$('div.titleallcard').empty();		
 		$('div.contentallcard').empty();
+		cnt = 1;
+		category = '제목';
+		sherch = whatsherch;
 		
-		
-		
-		
-
-	}else if(clickbtn=='내용'){
-		$('div.titleallcard').empty();		
+		newserchListCall(sherch,cnt,category);
+	}else if(clickbtn=='내용'){		
 		$('div.contentallcard').empty();
+		$('div.titleallcard').empty();
+		cnt = 1;
+		category = '내용';
+		sherch = whatsherch;
 		
-		
-		
+		newserchListCall(sherch,cnt,category);
 	}	
 });
+
+//제목 목록을 불러오는 함수 (페이징처리를 위한 cnt, 카테고리)
+function newserchListCall(sherch,cnt,category){
+	
+	
+	$.ajax({
+		url:'./serching/searchlist',
+	    type:'post',
+	    data:{'whatcherch':sherch,
+	    	'cnt':cnt,
+	        'category':category
+	    },
+	    dataType:'json',
+	    success:function(data){
+	        console.log(data.list);
+	        console.log(data.listSize);
+	        console.log(data.category);
+	    },
+	    error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
 
 
 function goknowpage(k_no){
