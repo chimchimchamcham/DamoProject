@@ -85,7 +85,7 @@ public class RestCheck {
 	public HashMap<String, Object> notifytable(@PathVariable int page) {
 		
 		HashMap<String, Object> map = service.notifylist(page);
-		
+
 		return map;
 	}
 	

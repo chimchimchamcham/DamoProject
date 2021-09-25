@@ -29,7 +29,7 @@
 </head>
 <body>
 
-<jsp:include page="../header.jsp"></jsp:include>
+<!--<jsp:include page="../header.jsp"></jsp:include>-->
 <div class="d-flex p-5">
 	<div class="container mx-auto my-5">
 		<div class="row d-flex justify-content-center align-content-center">
@@ -92,6 +92,7 @@
 <script>
 
 
+//처음에 눌렀을때
 $(document).on('click','button',function(){
 	$('button').removeClass('active');
 	$(this).addClass('active');
@@ -100,17 +101,21 @@ $(document).on('click','button',function(){
 		console.log("clickbtn",clickbtn);
 	
 	if (clickbtn=='전체') {
-		$('div.titleallcard').removeClass('hidden');
-		$('div.contentallcard').removeClass('hidden');
+		location.href ='/damo/'+'search'+'/'+'${whatcherch}'+'/1/3';
 	}else if(clickbtn=='제목') {
-		$('div.titleallcard').removeClass('hidden');
-		$('div.contentallcard').addClass('hidden');
+		$('div.titleallcard').empty();		
+		$('div.contentallcard').empty();
+		
+		
+		
+
 	}else if(clickbtn=='내용'){
-		$('div.titleallcard').addClass('hidden');
-		$('div.contentallcard').removeClass('hidden');
-	}
+		$('div.titleallcard').empty();		
+		$('div.contentallcard').empty();
 		
 		
+		
+	}	
 });
 
 
@@ -118,9 +123,6 @@ function goknowpage(k_no){
 	var content = k_no;
 	location.href ='/damo/fitDetail?k_no='+content;
 }
-
-
-
 
 </script>
 </html>

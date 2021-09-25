@@ -183,7 +183,7 @@
 		if (e.keyCode == 13) {
 			if ($('input#search').val()!=null && $('input#search').val()!='') {	
 				var content = $('input#search').val();
-				location.href ='./'+'search'+'/'+content;
+				location.href ='/damo/'+'search'+'/'+content+'/1/3';
 			}else{
 				
 			}
@@ -193,7 +193,7 @@
 	$('i.fa-search').click(function(){
 			if ($('input#search').val()!=null && $('input#search').val()!='') {
 				var content = $('input#search').val();
-				location.href ='./'+'search'+'/'+content;
+				location.href ='/damo/'+'search'+'/'+content+'/1/3';
 		}else{
 			
 		}
