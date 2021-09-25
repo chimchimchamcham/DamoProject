@@ -546,10 +546,17 @@ public String addDir(String k_no, String u_id) {
 		ArrayList<DamoDTO> title = fitdao.serchtitle(content);
 		ArrayList<DamoDTO> maincontent = fitdao.serchcontent(content);
 		
+		int serchtitlecnt = fitdao.serchtitledbcnt(content);
+		int serchcontentcnt= fitdao.serchcontentdbcnt(content);
 		
+		int serchallcnt = serchtitlecnt+serchcontentcnt;
+		
+		mav.addObject("whatcherch",content);//검색내용
 		mav.addObject("title",title);//제목
 		mav.addObject("maincontent",maincontent);//내용
-
+		mav.addObject("titlecnt",serchtitlecnt);//제목수
+		mav.addObject("contentcnt",serchcontentcnt);//내용수
+		mav.addObject("allcnt",serchallcnt);//전부수
 		
 		mav.setViewName("./fit/search");
 		
