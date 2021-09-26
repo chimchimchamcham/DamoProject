@@ -123,7 +123,7 @@
                         <tr class="border-top-0">
                           <th class="text-center">번호</th>
                           <th class="text-center">아이디</th>
-                          <th class="text-center">분류코드</th>
+                          <th class="text-center">분류이름</th>
                           <th class="text-center">등록날짜</th>
                           <th class="text-center">종료날짜</th>
                           <th class="text-center">관리자 아이디</th>
@@ -762,7 +762,7 @@ function userlistCall(page){//1
     	      content += "<tr>";
     	      content += "<td class='b_no'>"+list[i].b_no+"</td>";
     	      content += "<td>"+list[i].u_id+"</td>";
-    	      content += "<td>"+list[i].b_code+"</td>";
+    	      content += "<td>"+list[i].c_name+"</td>";
     	      
     	      var date = new Date(list[i].b_startdt);//등록날짜
 

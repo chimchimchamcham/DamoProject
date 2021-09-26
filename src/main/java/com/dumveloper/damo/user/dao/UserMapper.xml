@@ -85,7 +85,7 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 	</select>
 	
 	<select id="dbblack" resultType="damo">
-		SELECT  * FROM (select row_number() over (order by B_no desc)rnum,b_no,U_id,B_code,B_startDt,B_endDt,B_content,B_adminId from BlackList) where rnum BETWEEN #{param1} and #{param2}
+		SELECT  * FROM (select row_number() over (order by B_no desc)rnum,b.b_no,b.U_id,c.c_name,b.B_startDt,b.B_endDt,b.B_content,b.B_adminId from BlackList b,code c where b.B_code = c.c_code)where rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="nink_me_and_aother_check" resultType="int">
