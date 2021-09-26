@@ -107,7 +107,7 @@
 								<c:if test="${loginManager ne 'Y'}"> <!-- 일반회원 -->
 								<a
 									class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>
-								<a class="dropdown-item text-muted mt-1 mb-1" href="logout">내 지식사전</a>
+								<a class="dropdown-item text-muted mt-1 mb-1" href="myPage?u_id=${sessionScope.loginId }&myDirYN=Y">내 지식사전</a>
 								</c:if>
 							</div></li>
 					</ul>

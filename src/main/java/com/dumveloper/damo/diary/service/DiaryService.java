@@ -132,6 +132,7 @@ public class DiaryService {
 		
 		int success = 0;
 		if(date.equals(today)) { //오늘 날짜일 경우 u_weight업데이트
+			logger.info("-----------------");
 			success = dao.u_weightUpdate(content,loginId);
 			logger.info("회원정보 몸무게 업데이트");
 		}
@@ -530,6 +531,14 @@ public class DiaryService {
 
 	public HashMap<String, Object> diaryPhotoDelete(HashMap<String, String> param) {
 		HashMap<String, Object> map = new HashMap<>();
+		
+		//c드라이브에서 이미지 파일 삭제
+		String root = "C:/upload/"; //이미지를 저장할 경로
+		File file = new File(root+param.get("newFileName"));
+		boolean delSuccess = file.delete();
+		logger.info("delSuccess : {}",delSuccess);
+		
+		//DB에서 이미지 파일 이름 삭제
 		int success = dao.diaryPhotoDelete(param);
 		logger.info("diaryPhotoDelete : {}",success);
 		map.put("success", success>0?true:false);

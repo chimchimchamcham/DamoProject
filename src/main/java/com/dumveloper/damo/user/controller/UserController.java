@@ -4,7 +4,9 @@ package com.dumveloper.damo.user.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -253,15 +254,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/myPage")
-	public ModelAndView myPage(@RequestParam String u_id) {
+	public ModelAndView myPage(@RequestParam String u_id,@RequestParam(value = "myDirYN" , required = false)String myDirYN) {
 		logger.info("마이페이지  요청");
-		return service.myPage(u_id);
+		logger.info("myDirYN");
+		return service.myPage(u_id,myDirYN);
 	}
-	
-	/*
-	 * @RequestMapping(value = "/alarmList") public @ResponseBody HashMap<String,
-	 * Object> alarmList(@RequestParam String loginId) { logger.info("알람 리스트 요청");
-	 * return service.alarmList(loginId); }
-	 */
-	
+
 }

@@ -98,8 +98,14 @@
 	</c:if> 
 	]
       ,dateClick:function(date){
-    	 //console.log('Date:',date.dateStr);
-    	  //console.log('Resource ID:',date.dateStr);
+    	 console.log('Date:',date.dateStr);
+    	 
+    	 var clickDate=date.dateStr; //클릭한 날짜
+    	 var clickArr = clickDate.split("-");
+    	 var today = new Date();
+    	 
+    	 var clickMonth = new Date(clickArr[0],clickArr[1]-1,clickArr[2]);
+    	
     	 if(loginId == null || loginId == ''){
     		alert("로그인을 하셔야 이용하실 수 있는 서비스 입니다."); 
     	 }else{
@@ -110,15 +116,17 @@
 	    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
 	    		  alert("목표 운동 칼로리를 입력해주세요!");
 	    	  }else{
-	    	 	location.href='goDiary?Date='+date.dateStr;
+	    		  if(clickMonth.getTime() > today.getTime()){
+	    	    		 console.log("오늘 이후 날짜 클릭");
+	    	    		 alert("오늘 날짜까지만 작성 가능합니다.");
+	    	    	 }else{
+	    	    		 console.log("오늘 이전 날짜 클릭");
+	    	    		 location.href='goDiary?Date='+date.dateStr;
+	    	    	 }
+	    	 	//
 	    	  }
       	}
-      },eventRender: function(event, element) {
-    	     if(event.icon){          
-    	         element.find(".fc-title").prepend("<i class='fa fa-"+event.icon+"'></i>");
-    	      }
-    	   }        
- 
+      }
       
  	 });
     
@@ -469,7 +477,7 @@ body {
 						</div>
 					</div>
 					<!-- --------------------- -->
-					<div class="col-sm-4 d-flex justify-content-end pt-2" style="font-size:11px; font-weight:bold">
+					<div class="col-sm-4 d-flex justify-content-end pt-2" style="font-size:10px; font-weight:bold">
 						<span id="imgEatKcal" style="color:#FF0E75; " class="float-right mr-1">●</span><span class="mr-3">섭취 칼로리</span>
 						<span id="imgExeKcal" style="color:green; " class="float-right mr-1">●</span><span class="mr-3">운동 칼로리</span>
 						<span id="imgSuccess" style="color:#54DEFD; " class="float-right mr-1 ">■</span><span class="mr-3">목표성공</span>

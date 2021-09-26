@@ -53,6 +53,7 @@
 					        	<c:if test="${i.count eq 2 }"><img src="resources/img/silver_medal.png" width="30px" height="30px"></c:if>
 					        	<c:if test="${i.count eq 3 }"><img src="resources/img/bronze_medal.png" width="30px" height="30px"></c:if>
 					        	<c:if test="${i.count > 3 }"><span <c:if test="${dto.u_id eq sessionScope.loginId }">style="font-weight:700"</c:if>>&nbsp;&nbsp;&nbsp;${i.count }</span></c:if>			        	
+					        	<input type="hidden" value="${dto.u_id }">
 					        </td>
 					        <td>
 					        	<img src="resources/img/${dto.g_fileName }.png" width="30px" height="30px">
@@ -75,11 +76,15 @@
 		position : realtive;
 		margin-top : 20px;
 	}
-	th,td{
-		
+	tr:hover{
+		cursor : pointer;
 	}
 </style>
 <script>
-
+	$("tr").on("click",function(){
+		var u_id = $(this).find("input[type='hidden']").val();
+		console.log("u_id : ",u_id);
+		location.href="myPage?u_id="+u_id;
+	});
 </script>
 </html>

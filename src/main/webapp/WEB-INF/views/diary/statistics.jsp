@@ -14,10 +14,10 @@
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
-    <div id="dateWrap" class="container my-5">
-      <a href="#"><img id="prev" src="resources/img/prev.png" class="mr-5"></a>
-      <span id="year"></span><span>년</span> <span id="month"></span><span>월</span>
-      <a href="#"><img id="next" src="resources/img/next.png" class="ml-5"></a>
+    <div id="dateWrap" class="container mt-4">
+      <a href="#"><img id="prev" src="resources/img/prev.png" class="mb-2"></a>
+      <span id="year"></span><span id="yearstr">년</span> <span id="month"></span><span id="monthstr">월</span>
+      <a href="#"><img id="next" src="resources/img/next.png" class="mb-2"></a>
     </div>
     <div id="btnWrap" class="container mt-5 mb-5 pt-2">
       <button id="weight" class="btn btn-primary rounded-pill ml-3 mr-3">몸무게</button>
@@ -33,15 +33,18 @@
     text-align:center;
   }
   #dateWrap span{
-    font-size:1.1rem;
+    font-size:1.7rem;
+    font-weight:600;
   }
   #prev{
     width:30px;
     height:30px;
+    margin-right:60px;
   }
   #next{
     width:30px;
     height:30px;
+    margin-left:60px;
   }
   #btnWrap{
     text-align:center;

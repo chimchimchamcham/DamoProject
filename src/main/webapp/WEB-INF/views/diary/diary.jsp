@@ -52,7 +52,6 @@ a:hover {
 	text-decoration: line-through;
 	color:gray;
 }
-
 </style>
 </head>
 <body>
@@ -360,7 +359,7 @@ a:hover {
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse7">
 							<b>물</b>
-							<b class="float-right">1000ml</b>
+							<b class="float-right" id="waterML"></b>
 						</a>
 					</div>
 					<div id="collapse7" class="collapse hide"
@@ -370,7 +369,7 @@ a:hover {
 								<thead>
 									<tr>
 										<th>음식명</th>
-										<th>섭취량(g)</th>
+										<th>섭취량(ml)</th>
 										<th>탄수화물 (g)</th>
 										<th>단백질 (g)</th>
 										<th>지방(g)</th>
@@ -431,17 +430,22 @@ a:hover {
 			</div>
 
 			<div class="row">
-				<button type="button" class="btn btn-primary btn-sm "
-					style="width: 33px; height: 33px;" id="fileBtn">
-					<i class="fas fa-plus"></i>
-				</button>
+				
 
 <!-- -------------------- 사진 --------------------- -->
 				
 				<form id="photoForm" method="post">
-					<label for="photo">
+					<!-- <label for="photo">
+						<button type="button" class="btn btn-primary btn-sm "
+							style="width: 33px; height: 33px;" id="fileBtn">
+							<i class="fas fa-plus"></i>
+						</button>
 						<span style="font-size: 18px; font-weight: bold; cursor: pointer;" class="ml-1 text-primary"> 사진추가</span>
+					</label> -->
+					<label for="photo" class="btn btn-primary btn-sm" style="width: 33px; height: 33px;" id="fileBtn">
+							<i class="fas fa-plus"></i>
 					</label>
+					<span style="font-size:18px; font-weight:bold;" class="ml-1"> 사진추가</span>
 					<input type="file" name="photo" id="photo" accept="image/gif,image/jpeg,image/png,image/jpg">
 					<input type="hidden" name="d_no" id="d_no" value=""> <!-- Ajax를 실행시켜 d_no를 여기에 넣는다 -->
 					
@@ -484,7 +488,19 @@ a:hover {
 	</div>
 	<!-- --container end-- -->
 </body>
-
+<style>
+.imgWrap{
+	position:relative;
+	
+}
+.closeImgWrap{
+	position:absolute;
+	left:220px;
+}
+.closeImgWrap:hover{
+	cursor:pointer;
+}
+</style>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"
 	integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q=="
@@ -493,7 +509,7 @@ a:hover {
 <!-- <script src="chartjs-plugin-doughnutlabel.js"></script>
 <script src="chartjs-plugin-doughnutlabel.min.js"></script> -->
 <script>
-
+	
 
 	//몸무게 업데이트
 	$("input[name='weight']").focusout(function() {
@@ -801,8 +817,17 @@ a:hover {
 				
 				$("#"+element.hd_code).append(hisDailyListContent);
 				$("#"+element.hd_code).parents("#accordion").css("display","");
+				
+				//물 뿌려주기
+				if(element.hd_code == "HD007"){
+					console.log("물 등록");
+					$("#waterML").text(element.hd_eat+"ml");
+				}
+				
 
 			});
+			
+			
 
 			
 			//운동 목록 뿌려주기
@@ -821,6 +846,9 @@ a:hover {
 				$("#exerciseBox").parents("#accordion").css("display","");
 
 			});
+			
+			
+		
 			
 
 		},
@@ -1031,9 +1059,9 @@ a:hover {
 		var content = "";
 		console.log("list.length",list.length);
 		list.forEach(function(item,index){
-			content += '<div class="imgWrap" style="display:inline; margin-right:10px;">';
-			content += '<img src="/photo/'+item+'" width="220px" ">';
-			content += '<a href="#" class="closeImgWrap"><img src="resources/img/close.png" width="20px" height="20px"></a>';
+			content += '<div class="imgWrap" style="display:inline; margin-right:50px;">';
+			content += '<img src="/photo/'+item+'" width="220px" height:"220px">';
+			content += '<img src="resources/img/close.png" class="closeImgWrap" width="20px" height="20px">';
 			content += '</div>';
 		});
 		$("#imageWrap").append(content);
@@ -1080,6 +1108,7 @@ a:hover {
 				console.log("diaryPhotoUpload data : ",data);
 				console.log("사진 업로드 성공 여부 : ",data.success);
 				drawDiaryPhotoList(data.diaryPhotoList);
+				$("#photo").val(""); //input file 비우기
 			},
 			error : function(error) {
 				console.log(error);
@@ -1089,13 +1118,7 @@ a:hover {
 	
 	//x를 클릭 했을 때 이미지 삭제하기
 	$(document).on("click", ".closeImgWrap", function() {
-		var src = $(this).parent().children("img").attr("src");
-		var substrsrc = src.substring(7,src.length);
-		console.log("substrsrc : ",substrsrc);
-		
 		diaryPhotoDelete(this); //클릭한 사진을 삭제
-		
-		
 	});
 	
 	//x클릭한 사진을 삭제하는 함수
