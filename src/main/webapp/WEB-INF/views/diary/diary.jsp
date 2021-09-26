@@ -163,7 +163,7 @@ a:hover {
 					<button type="button" class="btn btn-primary btn-sm "
 						style="width: 33px; height: 33px;" id="submitListBtn">
 						<i class="fas fa-plus"></i>
-					</button> <span style="font-size: 18px; font-weight: bold" class="pl-1">
+					</button> <span style="font-size: 18px; font-weight: bold; color: #0275d8" class="pl-1">
 						추가하기</span>
 			</div>
 
@@ -820,7 +820,6 @@ a:hover {
 				
 				//물 뿌려주기
 				if(element.hd_code == "HD007"){
-					console.log("물 등록");
 					$("#waterML").text(element.hd_eat+"ml");
 				}
 				

@@ -110,7 +110,6 @@
     
     
     $(document).ready(function(){
-    	
         $(document).on("focusout focuson keyup",'#id', function() {
         	var x = $("#id").val();
         	var id = x;

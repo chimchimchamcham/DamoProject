@@ -618,31 +618,41 @@ public String addDir(String k_no, String u_id) {
 	
 	//검색 무한스크롤 cnt category의 내용 따라 무엇을 기준으로 검색할지 dao선택
 	public HashMap<String, Object> search_cnt(HashMap<String, String> params) {
-		String whatsherch = params.get("whatsherch");
+		String whatserch = params.get("whatserch");
 		int cnt = Integer.parseInt(params.get("cnt"));
 		String category = params.get("category");
 		
-		logger.info("whatsherch:{}",whatsherch);
-		logger.info("cnt:{}",cnt);
-		logger.info("category:{}",category);
+		logger.info("whatsherch:{}",whatserch);//검색할거
+		logger.info("cnt:{}",cnt);//페이지
+		logger.info("category:{}",category);//종류
 		
 		
 		int start = (cnt-1)*5+1;//1. 1,2. 6
 		int end = cnt*5;//1. 5,2. 10
+		logger.info("start:{}",start);
+		logger.info("end:{}",end);
 		
 		
+		int serchtitlecnt=0;
+		int serchcontentcnt=0;
 		
 		HashMap<String,Object> map = new HashMap<>();
-		ArrayList<DamoDTO> list = new ArrayList<DamoDTO>();
-		if (category=="제목") {
-			list = fitdao.dbserch_cnt_title(whatsherch,start,end);			
-		}else if(category=="내용"){
-			list = fitdao.dbserch_cnt_content(whatsherch,start,end);		
+		ArrayList<DamoDTO> list = new ArrayList<>();
+		if (category.equals("제목")) {
+			list = fitdao.serchtitle(whatserch,start,end);		
+			serchtitlecnt = fitdao.serchtitledbcnt(whatserch);
+		}else if(category.equals("내용")){
+			list = fitdao.serchcontent(whatserch,start,end);	
+			serchcontentcnt= fitdao.serchcontentdbcnt(whatserch);
 		}
 
+		logger.info("list:{}",list);
+		
 		map.put("list", list);
-		map.put("listSize", list.size());
+		map.put("titleSize",serchtitlecnt);
+		map.put("contentSize",serchcontentcnt);
 		map.put("category", category);
+		
 		
 		return map;
 	}

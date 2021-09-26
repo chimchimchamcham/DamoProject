@@ -19,10 +19,6 @@
 	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
-
-    body{
-      background: #eaeaed;
-    }
     .fixed, .fluid {
       background: white;
 
@@ -62,7 +58,7 @@ textarea{
 }
 </style>
 </head>
-<body>
+<body class="bg-light">
  <jsp:include page="../header.jsp"></jsp:include>
   <div class="conbox container-fluid justify-content-center align-items-center">
 
@@ -163,7 +159,7 @@ textarea{
                         <textarea name="u_intro"  class="form-control col-7" >${info.u_intro}</textarea>
                     
 	                    <div class="col-2 d-flex buttons">
-	                    	<a id="jointocheck" class="btn bg-secondary mr-1">취소</a>
+	                    	<a id="cancle" class="btn bg-secondary mr-1">취소</a>
 	                   		<button type="submit" id="jointocheck" class="btn btn-primary">수정</button>
 	                   	</div>
                    	</div>
@@ -181,6 +177,7 @@ textarea{
 var imgname = "${info.u_fileName}"
 var alarmboolean = "${info.u_alarmYN}";
 var updatealarm = '';
+var loginid = '${loginId}'
 
 var orinick = "${info.u_nick}";
 console.log(orinick)
@@ -245,7 +242,6 @@ $(document).ready(function(){
 		         console.log(error);
 		      }
 		   });
- 	   
     })
    
    
@@ -370,9 +366,9 @@ $(document).ready(function(){
 });
 
 
-
-
-
+$(document).on("click","#cancle", function() {
+	location.href="myPage?u_id="+loginid;
+});
 
 </script>
 </html>
