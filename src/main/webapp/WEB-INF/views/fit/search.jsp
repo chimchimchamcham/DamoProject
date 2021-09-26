@@ -174,6 +174,8 @@ function newserchListCall(serch,cnt,category){
 			}else if (category=='내용') {
 	        	console.log('cnt',cnt);
 				appendcontentlist(data.list,data.contentSize);
+			}else if(category=='전체'){
+				
 			}     
 	    },
 	    error:function(e){
