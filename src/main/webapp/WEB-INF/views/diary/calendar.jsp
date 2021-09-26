@@ -480,7 +480,7 @@ body {
 						</div>
 					</div>
 					<!-- --------------------- -->
-					<div class="col-sm-4 d-flex justify-content-end pt-2" style="font-size:10px; font-weight:bold">
+					<div class="col-sm-4 d-flex justify-content-end pt-2" style="font-size:11px; font-weight:bold; color:gray">
 						<span id="imgEatKcal" style="color:#FF0E75; " class="float-right mr-1">●</span><span class="mr-3">섭취 칼로리</span>
 						<span id="imgExeKcal" style="color:green; " class="float-right mr-1">●</span><span class="mr-3">운동 칼로리</span>
 						<span id="imgSuccess" style="color:#54DEFD; " class="float-right mr-1 ">■</span><span class="mr-3">목표성공</span>

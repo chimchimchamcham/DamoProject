@@ -13,6 +13,7 @@
 <style>
 	body{
 		/* background-color:gray; */
+		overflow:hidden;
 	}
 	.container-fluid{
 		margin:0;
@@ -104,19 +105,19 @@
 			</div>
 			<div class="row" id="eating_Kcal">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">칼로리(kcal)</div>
-				<div class="col-6"  id="Kcal_span" style="text-align:center;"><span id="default_Kcal"></span><input type="hidden" class="form-control" name="eating_Kcal"></div>
+				<div class="col-6"  id="Kcal_span" style="text-align:center;"><span id="default_Kcal"></span><input type="hidden" class="form-control" name="eating_Kcal" style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row" id="eating_Carbo">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">탄수화물(g)</div>
-				<div class="col-6"  id="Carbo_span" style="text-align:center;"><span id="default_Carbo"></span><input type="hidden" class="form-control" name="eating_Carbo"></div>
+				<div class="col-6"  id="Carbo_span" style="text-align:center;"><span id="default_Carbo"></span><input type="hidden" class="form-control" name="eating_Carbo" style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row" id="eating_Pro">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">단백질(g)</div>
-				<div class="col-6" id="Pro_span" style="text-align:center;"><span id="default_Pro"></span><input type="hidden" class="form-control" name="eating_Pro"></div>
+				<div class="col-6" id="Pro_span" style="text-align:center;"><span id="default_Pro"></span><input type="hidden" class="form-control" name="eating_Pro"  style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row" id="eating_Fat">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">지방(g)</div>
-				<div class="col-6"  id="Fat_span" style="text-align:center;"><span id="default_Fat"></span><input type="hidden" class="form-control" name="eating_Fat"></div>
+				<div class="col-6"  id="Fat_span" style="text-align:center;"><span id="default_Fat"></span><input type="hidden" class="form-control" name="eating_Fat"  style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 		</div>
 		<!-- ------------------------------ -->
@@ -128,7 +129,7 @@
 			</div>
 			<div class="row" id="exe_Kcal">
 				<div class="col-3" style="text-align:center; padding:3px; font-size:17px">칼로리(kcal)</div>
-				<div class="col-6" style="text-align:center;"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" onkeypress="inNumber();"></div>
+				<div class="col-6" style="text-align:center;"><span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" style="text-align:center;" onkeypress="inNumber();"></div>
 			</div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
 			<div class="row"><div class="col-3" style="width:540px; height:43px"></div></div>
@@ -203,6 +204,12 @@ $('select[name=selectAdd]').change(function(){
 	 $("input[name=eating_Carbo]").prop('type','hidden');
 	 $("input[name=eating_Pro]").prop('type','hidden');
 	 $("input[name=eating_Fat]").prop('type','hidden');
+	 
+	 $("input[name=search_food]").val('');
+	 $("input[name=eating_Kcal]").val('');
+	 $("input[name=eating_Carbo]").val('');
+	 $("input[name=eating_Pro]").val('');
+	 $("input[name=eating_Fat]").val('');
 	 
 	 //운동 칸 초기화
 	 $("input[name=exe_time]").val('');
@@ -333,6 +340,8 @@ var exeKcal;
 //물 마신량 불러오기
 var waterml;
 
+var emptyYN=false;
+
 //검색 리스트에서 항목 선택시 
 $("#search_ul").on("click","li",function(){
 	console.log($(this)[0].firstChild.className);
@@ -344,7 +353,9 @@ $("#search_ul").on("click","li",function(){
 	//직접 선택시 
 	if($(this)[0].firstChild.className=="empty"){
 		 console.log("직접선택 요청");
+		 $("#search").hide();//등록 버튼 보이기
 		 $("#default_msg").text(''); 
+		 emptyYN=true;
 		 //음식
 		 $("input[name=search_food]").prop('type','text');
 		 $("input[name=eating_Kcal]").prop('type','text');
@@ -352,8 +363,17 @@ $("#search_ul").on("click","li",function(){
 		 $("input[name=eating_Pro]").prop('type','text');
 		 $("input[name=eating_Fat]").prop('type','text');
 		 
+		 
 		 //운동
 		 $("input[name=exe_Kcal]").prop('type','text');
+		 
+		 if(selectMenu == 'foodlist'){
+			 $("input[name=search_food]").val('');
+			 $("input[name=eating_Kcal]").val('');
+			 $("input[name=eating_Carbo]").val('');
+			 $("input[name=eating_Pro]").val('');
+			 $("input[name=eating_Fat]").val('');
+		 }
 		 
 	//검색항목에서 선택시 	 
 	 }else{
@@ -411,6 +431,7 @@ $("#deleteSearch").click(function(){
 	$("#default_Carbo").text('');
 	$("#default_Pro").text('');
 	$("#default_Fat").text('');
+	
 	//직접입력칸 초기화
 	$("input[name=search_food]").prop('type','hidden');
 	 $("input[name=eating_Kcal]").prop('type','hidden');
@@ -439,6 +460,7 @@ $("input[name=eating_gram]").focusout(function(){
 	   console.log("섭취 칼로리 벗어남");
 	   console.log($(this));
 	
+	   if(!emptyYN){
 	    //원래 입력했던 데이터와 다를 때 변경
 	    if($(this).val() != $(this).prop('defaultValue')){
 	    	console.log('분량 변경');
@@ -458,7 +480,10 @@ $("input[name=eating_gram]").focusout(function(){
 	    	$("#default_Carbo").text(changeCarbo);
 	    	$("#default_Pro").text(changeProtein);
 	    	$("#default_Fat").text(changeFat);
-	    } 
+	    }
+	   }else{
+			weight=$(this).val();
+	   }
 });
 //-------------------------------------------------------------------------//
 
@@ -522,6 +547,11 @@ $("input[name = water_ml]").focusout(function(){
 	}
 });
 
+
+
+
+
+
 /*-----------------------------------------------*/
 var d_code; //분류코드
 var submitUrl = 'submitList';
@@ -550,19 +580,21 @@ $("#submitBtn").click(function(){
 		submitArr.hd_eat = gram;
 		submitArr.hd_foodname = food_name;
 		
-		if(changCnt >0){ //분량을 변경한 경우
-		 submitArr.hd_eat = gram;
-		 submitArr.hd_carbo = changeCarbo;
-		 submitArr.hd_protein = changeProtein;
-		 submitArr.hd_fat = changeFat;
-		 submitArr.hd_kcal = changeKcal;
-		}else{//변경하지 않은 경우
-		 submitArr.hd_eat = weight;
-		 submitArr.hd_carbo = carbo;
-		 submitArr.hd_protein = protein;
-		 submitArr.hd_fat = fat;
-		 submitArr.hd_kcal = kcal;
-		}
+			if(changCnt >0 && !emptyYN){ //분량을 변경한 경우
+			 submitArr.hd_eat = gram;
+			 submitArr.hd_carbo = changeCarbo;
+			 submitArr.hd_protein = changeProtein;
+			 submitArr.hd_fat = changeFat;
+			 submitArr.hd_kcal = changeKcal;
+			}else{//변경하지 않은 경우
+			 submitArr.hd_eat = weight;
+			 submitArr.hd_carbo = carbo;
+			 submitArr.hd_protein = protein;
+			 submitArr.hd_fat = fat;
+			 submitArr.hd_kcal = kcal;
+			}
+		
+		
 		
 	//운동의 경우
 	}else if(selectMenu =='met'){
