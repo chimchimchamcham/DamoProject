@@ -65,7 +65,7 @@ public class UserService {
 		dto.setU_id(param.get("id"));
 		dto.setU_name(param.get("name"));
 		dto.setU_nick(param.get("nick"));
-		dto.setU_nick(param.get("pw"));
+		dto.setU_pw(param.get("pw"));
 
 		/*
 		 * BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); String enc_pass
