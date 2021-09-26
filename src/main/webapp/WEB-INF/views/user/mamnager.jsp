@@ -396,7 +396,7 @@ $(document).on('click',".notifybody tr",function(){
 		
 			console.log("black_id:"+black_id);
 			console.log("loginId:"+loginId);
-			
+			var minday = "";
 	    	var content = "";
 				
 	 	     	content +=  "<div  class='col-12 row text-left'>";
@@ -414,18 +414,33 @@ $(document).on('click',".notifybody tr",function(){
 	   	    	var now = new Date();//등록날짜
 	   	 	
 			      let startyear = now.getFullYear();
-			      let startmonth = now.getMonth();
+			      let startmonth = now.getMonth()+1;
 			      let startday = now.getDate();
 			      
-			      let startedday = startyear+"/"+(startmonth+1)+"/"+startday;
+			      var startedday = startyear+"/"+startmonth+"/"+startday;
 	   	    	
 	   	    	
 	   	    	content +=   "<div class='col-2 my-3 m-1 text-right'>등록날짜 </div> <div class=' my-3 m-1'>"+startedday+"</div>";
 	   	    	content +=   "<div class='col-4 my-3 m-1 text-right'>종료날짜 </div> <div class=' my-3 m-1'>";
 	   	    	
-	   	    	startedday = startyear+"-"+(startmonth+1)+"-"+startday;
+	   	    	if(startmonth<10){
+	   	    		startmonth='0'+startmonth
+		   	    	} 
+		   	    if(startday<10){
+		   	    	startday='0'+startday
+		   	    	} 
 	   	    	
-	   	    	content +=	"<input type='date' min="+startedday+" id='endday' name='blackendtime'>";
+	   	    	
+	   	    	minday = startyear+"-"+startmonth+"-"+startday;
+	   	    	console.log("minday:",minday);
+
+	   	    	
+	   	    	
+	   	    	
+	   	    	
+	   	    	content +=	"<input type='date' id='endday' name='blackendtime'  max='2050-12-31'>";
+	   	    	
+	   	    	
 	   	    	
 	   	    	content +=	 "</div>";
 	   	    	content +=	 "<div class='col-12 row'>";
@@ -438,8 +453,7 @@ $(document).on('click',".notifybody tr",function(){
 	 	       $("#notifymyModal .modal-body").empty();
 	 	 	   $(".modal-body").empty();
 	 	 	   $("#blackmyModal .modal-body").append(content);
-	 	 	   
-	 	 	   
+	 	 	   	 	 	   
 	 			//블랙리스트 등록 버튼 눌렀을때
 	 		 	 $(document).on('click',"button.register",function(){
 	 		 		if (blacklistscopeoption_val!=undefined&&blacklistendday_val!=undefined&&blacklistcause_val!=undefined) {
@@ -448,8 +462,11 @@ $(document).on('click',".notifybody tr",function(){
 					}else{
 						alert('모든 값을 입력햐주세요');
 					}
+					
+	 		 		
+
 	 		 	});
-	 	 	   
+	 		 	document.getElementById("endday").setAttribute("min", minday);
 
 	      }
 	//동적으로 추가한 select value값
