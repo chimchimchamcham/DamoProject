@@ -73,7 +73,8 @@ public interface FitDAO {
 	int serchtitledbcnt(String content);
 	int serchcontentdbcnt(String content);
 
-	int fitNotify(DamoDTO dto);
+
+	
 
 
 

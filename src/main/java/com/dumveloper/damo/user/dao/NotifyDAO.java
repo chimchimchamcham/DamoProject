@@ -8,4 +8,7 @@ public interface NotifyDAO {
 
 	int userNotify(DamoDTO dto);
 
+	int fitNotify(DamoDTO dto);
+
+	int addHisNotify(DamoDTO dto);
 }
