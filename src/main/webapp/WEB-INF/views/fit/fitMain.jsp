@@ -202,9 +202,9 @@ function bestFitListDraw(list){
 	var content = "";
 	list.forEach(function(item, index){
 		
-        content += '<div class="card m-2 " style="width:250px;height:250px">';
-        content += 		'<div class="'+(item.k_solutionyn == 'Y'?'endFit ':'')+'card-body">';
-        content += 			'<h4 class="card-title mt-3"><span class="'+(item.k_solutionyn == 'Y'?'text-success ':'text-primary')+'">Q. </span>'+item.k_title+'</h4>';
+        content += '<div class="card m-2 '+(item.k_solutionYN == 'Y'?'endFit ':'')+'" style="width:250px;height:250px">';
+        content += 		'<div class="card-body">';
+        content += 			'<h4 class="card-title mt-3"><span class="'+(item.k_solutionYN == 'Y'?'text-success ':'text-primary')+'">Q. </span>'+item.k_title+'</h4>';
         content += 			'<div class="d-flex mt-3">';
         content += 				'<div class="p-2 flex-fill">'+item.k_name+'</div>';
         content += 				'<div class="p-2 flex-fill">'+item.u_nick+'</div>';   
@@ -225,9 +225,9 @@ function bestFitListDraw(list){
 function newFitListDraw(list){
 	var content = "";
 	list.forEach(function(item, index){
-        content += '<div class="card m-2 " style="width:250px;height:250px">';
-        content += 		'<div class="'+(item.k_solutionyn == 'Y'?'endFit ':'')+'card-body">';
-        content += 			'<h4 class="card-title mt-3"><span class="'+(item.k_solutionyn == 'Y'?'text-success ':'text-primary')+'">Q. </span>'+item.k_title+'</h4>';
+        content += '<div class="card m-2 '+(item.k_solutionYN == 'Y'?'endFit ':'')+'" style="width:250px;height:250px">';
+        content += 		'<div class="card-body">';
+        content += 			'<h4 class="card-title mt-3"><span class="'+(item.k_solutionYN == 'Y'?'text-success ':'text-primary')+'">Q. </span>'+item.k_title+'</h4>';
         content += 			'<div class="d-flex mt-3">';
         content += 				'<div class="p-2 flex-fill">'+item.k_name+'</div>';
         content += 				'<div class="p-2 flex-fill">'+item.u_nick+'</div>';   
