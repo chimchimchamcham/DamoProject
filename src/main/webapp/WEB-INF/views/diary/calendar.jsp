@@ -496,10 +496,10 @@ body {
 //현재 몸무게 - 목표 몸무게 비교
 var minus = ${tarWeight}-${weight};
 
-if(minus>0){
+if(minus>=0){
 	resultWeight="<span id='successWeight'><i class='bi bi-trophy'></i> 목표 몸무게 달성</span>";
 }else{
-	resultWeight="<i class='bi bi-speedometer2'></i>남은 몸무게 : <span id='weightTitle'> "+minus+"kg</span>";
+	resultWeight="<i class='bi bi-speedometer2'></i> 남은 몸무게 : <span id='weightTitle'> "+minus+"kg</span>";
 }
 	$("#remainWeight").html(resultWeight);
 
