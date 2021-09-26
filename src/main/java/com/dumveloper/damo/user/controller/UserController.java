@@ -4,7 +4,10 @@ package com.dumveloper.damo.user.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Pattern;
+
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -179,22 +181,64 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/join")
-	public ModelAndView join(Model model,@RequestParam HashMap<String, String> params) {
+	public ModelAndView join(@RequestParam HashMap<String, String> params) {
 		
 		ModelAndView mav = new ModelAndView();
 		
 		logger.info("joinnow");
 		
+		
+		// 전부 입력 체크
+		logger.info("회원정보 전부 !null값 체크");
 		for (String num : params.keySet()) {
 			if (params.get(num)==null||params.get(num)=="") {
 				String msg = "회원정보를 전부 입력해주세요";
 				mav.addObject("msg",msg);
 				mav.setViewName("/user/join");
-				
 				return mav;
-			}else{
-				logger.info("join : {}",params);
 			}
+		}
+		
+		//비밀번호 및 비밀번호 확인 일치 여부
+		logger.info("비밀번호 및 비밀번호 확인 일치 여부");
+		String pw = params.get("pw");
+		String pwcheck = params.get("pwcheck");
+		if (pw.equals(pwcheck)) {
+			
+		}else {			
+			String msg = "비밀번호랑 비밀번호 확인을 전부 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		
+		
+		String check = "^[a-zA-Z0-9]*$";
+		logger.info("아이디 영숫자 체크");
+		//아이디 영숫자 체크
+		String id = params.get("id");
+		if (Pattern.matches(check, id)==false) {
+			String msg = "아이디란에 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		logger.info("비밀번호 영숫자 체크");
+		//비밀번호 영숫자 체크
+		if (Pattern.matches(check, pw)==false) {
+			String msg = "비밀번호는 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		logger.info("이메일 영숫자 체크");
+		//이메일 영숫자 체크
+		String email = params.get("email");
+		if (Pattern.matches(check, email)==false) {
+			String msg = "이메일는 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
 		}
 		return service.join(params);
 	}
@@ -222,10 +266,26 @@ public class UserController {
 					mav.addObject("msg",msg);
 					mav.setViewName("/user/msg");
 					return mav;
-			}else{
-				logger.info("update : {}",params);
+				}else{
+					logger.info("update : {}",params);
+				}
 			}
-		}
+			
+			logger.info("update : {}",params);
+			String pw = params.get("pw");
+			logger.info("pw:{}",pw);
+			String pwcheck = params.get("pwcheck");
+			logger.info("pwcheck:{}",pwcheck);
+			
+			if (pw.equals(pwcheck)) {
+				logger.info("비밀번호랑 확인 일치함");
+			}else {
+				String msg = "비밀번호랑 비밀번호이 다릅니다";
+				mav.addObject("msg",msg);
+				mav.setViewName("/user/msg");
+				return mav;
+			}
+
 		return service.update(params,session);
 	}
 	
@@ -253,9 +313,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/myPage")
-	public ModelAndView myPage(@RequestParam String u_id) {
+	public ModelAndView myPage(@RequestParam String u_id,@RequestParam(value = "myDirYN" , required = false)String myDirYN) {
 		logger.info("마이페이지  요청");
-		return service.myPage(u_id);
+		logger.info("myDirYN");
+		return service.myPage(u_id,myDirYN);
 	}
 
 }

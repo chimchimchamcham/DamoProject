@@ -143,7 +143,7 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
        		   kr.kr_content, kr.kr_chooseyn, (SELECT c_name FROM code WHERE c_code = k.k_code) c_name  
 		FROM knowfit k, knowfit_r kr 
 		WHERE k.k_no = kr.k_no AND k.k_blindyn = 'N' AND 
-      		  kr.kr_blindyn = 'N' AND k.u_id = #{param1}
+      		  kr.kr_blindyn = 'N' AND kr.u_id = #{param1}
 	</select>
 	
 	<select id="myDirList" resultType="damo">

@@ -107,17 +107,17 @@
 								<c:if test="${loginManager ne 'Y'}"> <!-- 일반회원 -->
 								<a
 									class="dropdown-item text-muted mt-1" href="fitWriteForm">질문하기</a>
-								<a class="dropdown-item text-muted mt-1 mb-1" href="logout">내 지식사전</a>
+								<a class="dropdown-item text-muted mt-1 mb-1" href="myPage?u_id=${sessionScope.loginId }&myDirYN=Y">내 지식사전</a>
 								</c:if>
 							</div></li>
 					</ul>
 
 					<!--searchBar-->
-					<form class="form-inline my-2 my-lg-0">
-						<input class="form-control" type="text"
+					<form action="search" method="post" class=".serch form-inline my-2 my-lg-0">
+						<input class="form-control" type="text" name="content"
 							placeholder="지식Fit 제목/내용 검색..." id="search"
 							style="font-size: 12px; width: 200px;">
-						<button class="btn btn-white" type="button">
+						<button class="btn btn-white" type="button" onclick="submit()">
 							<i class="fas fa-search" aria-hidden="true"></i>
 						</button>
 					</form>
@@ -179,25 +179,14 @@
 	var loginManager="${sessionScope.loginManager}";
 	
 	
-	$('input#search').keypress(function(e){
-		if (e.keyCode == 13) {
-			if ($('input#search').val()!=null && $('input#search').val()!='') {	
-				var content = $('input#search').val();
-				location.href ='/damo/'+'search'+'/'+content+'/1/3';
-			}else{
-				
-			}
-		}
-	});
 	
-	$('i.fa-search').click(function(){
-			if ($('input#search').val()!=null && $('input#search').val()!='') {
-				var content = $('input#search').val();
-				location.href = './search'+'?content='+content;
-		}else{
-			
-		}
-	});
+    $("form input#search").on("keydown",function(key){
+        if(key.keyCode==13) {
+					$('form.serch').submit();
+        }
+    });
+	
+    	
 </script>
 
 </html>
