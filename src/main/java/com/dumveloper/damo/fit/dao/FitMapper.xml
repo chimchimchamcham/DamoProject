@@ -186,16 +186,6 @@
 		SELECT count(*) FROM KnowFit where k_content LIKE '%'||#{param1}||'%'
 	</select>
 	
-	
-	<select id="dbserch_cnt_title" resultType="damo">
-		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_title LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
-	</select>
-	
-	<select id="dbserch_cnt_content" resultType="damo">
-		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_content LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
-	</select>
-	
-	
 	<insert id="fitNotify">
 		INSERT INTO Notify VALUES(n_no_seq.NEXTVAL,#{n_receiveid},#{n_sendid},#{n_content},sysdate,#{n1_code},#{n2_code},#{n_notifiedno})
 	</insert>

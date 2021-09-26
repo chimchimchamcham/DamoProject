@@ -72,8 +72,6 @@ public interface FitDAO {
 	ArrayList<DamoDTO> serchcontent(String content, int start, int end);
 	int serchtitledbcnt(String content);
 	int serchcontentdbcnt(String content);
-	ArrayList<DamoDTO> dbserch_cnt_title(String whatsherch, int start, int end);
-	ArrayList<DamoDTO> dbserch_cnt_content(String whatsherch, int start, int end);
 
 	int fitNotify(DamoDTO dto);
 

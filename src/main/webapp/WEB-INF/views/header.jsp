@@ -183,7 +183,7 @@
 		if (e.keyCode == 13) {
 			if ($('input#search').val()!=null && $('input#search').val()!='') {	
 				var content = $('input#search').val();
-				location.href ='/damo/'+'search'+'/'+content+'/1/3';
+				location.href ='./search'+'?content='+content;
 			}else{
 				
 			}

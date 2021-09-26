@@ -257,6 +257,14 @@ public class FitController {
 	}
 		
 	
+	@RequestMapping(value = "/serchlist")
+	public @ResponseBody HashMap<String, Object> click_title(@RequestParam HashMap<String,String> params) {
+		logger.info("검색목록 접속");
+		return fitservice.search_cnt(params);
+
+	}
+	
+	
 	@RequestMapping(value = "/delDir", method = RequestMethod.GET)
 	public @ResponseBody String delDir(@RequestParam String k_no, @RequestParam String u_id) {
 
