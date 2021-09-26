@@ -305,7 +305,7 @@ $(document).ready(function(){
 	        $("#pwch").css("border-color","#ced4da");
 	        
 	        
-	        if (pw1==''||pw2==''||(pw1==''&&pw2=='')) {
+	        if (pw1==''&&pw2==''&&(pw1==''&&pw2=='')) {
 				$(".matchornotpw").text('');			
 		        $("#pw").css("border-color","#ced4da");
 		        $("#pwch").css("border-color","#ced4da");
