@@ -297,7 +297,9 @@
     	console.log('썸네일 등록');
     	
     	//기존의 썸네일을 삭제
-    	$("#imageWrap").empty();
+    	if($("#photo").val()!=""){//파일에 값이 있을 때 이미지 썸네일 을 삭제
+    		$("#imageWrap").empty();	
+    	}
     	
     	//썸네일 등록
     	var files = e.target.files;

@@ -361,10 +361,10 @@ public class UserService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		int pagePerNum = 10;// 10
-		int chagepage = page;// 2
-		int end = chagepage * pagePerNum;// 20
-		int start = end - pagePerNum + 1;// 20-10+1
-		logger.info(page + "/" + pagePerNum + "/" + end + "/" + start);
+		int chagepage = page;// 1
+		int end = chagepage * pagePerNum;// 10
+		int start = end - pagePerNum + 1;// 10-10+1
+		logger.info("notify:"+page + "/" + pagePerNum + "/" + end + "/" + start);
 
 		ArrayList<DamoDTO> notifylist = dao.dbnotify(start, end);
 
@@ -377,10 +377,11 @@ public class UserService {
 		map.put("cnt", totalCnt);
 
 		// 총갯수
-		int pages = (int) (totalCnt % pagePerNum > 0 ? Math.floor(totalCnt / pagePerNum) + 1
+		int pages = (int) (totalCnt % pagePerNum > 0 //  21%6>0
+				?Math.floor(totalCnt / pagePerNum) + 1
 				: Math.floor(totalCnt / pagePerNum));
 
-		page = page > pages ? pages : page;
+		page = page > pages ? pages : page; // 1.
 
 		map.put("currPage", page);
 		map.put("pages", pages);
