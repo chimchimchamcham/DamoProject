@@ -257,11 +257,5 @@ public class UserController {
 		logger.info("마이페이지  요청");
 		return service.myPage(u_id);
 	}
-	
-	/*
-	 * @RequestMapping(value = "/alarmList") public @ResponseBody HashMap<String,
-	 * Object> alarmList(@RequestParam String loginId) { logger.info("알람 리스트 요청");
-	 * return service.alarmList(loginId); }
-	 */
-	
+
 }
