@@ -30,43 +30,39 @@
 
 					<!-- 중요알람 (운영자 알람)-->
 					<div
-						class="alert alert-danger alert-dismissible fade show ml-1 mr-1">
+						class="alert alert-danger alert-dismissible fade show ml-1 mr-1" style="font-size: 14px;">
 						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						<strong>Danger!</strong> This alert box could indicate a dangerous
-						or potentially negative action.
+						<strong>게시글 제지 알람</strong><br/>작성하신 글이 관리자에 의해 제지 당하였습니다.<br/>
+						“물어보고 싶은 게 있는데요 이거 어떻게 된건가요?”
 					</div>
 
 					<!-- 일반알람-->
 					<a class="dropdown-item d-flex align-items-center p-2"
 						href="fitMain">
 						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
+							<div class="small text-gray-500">2021.09.26</div>
+							<span class="font-weight-bold" style="font-size: 14px;">작성하신 질문에 답변이 달렸습니다.<br/>
+						“물어보고 싶은 게 있는데요 이거 어떻게 된건가요?”
+						</span>
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center p-2" href="#">
-						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
+						<div style="opacity:0.3;">
+							<div class="small text-gray-500">2021.09.26</div>
+							<span class="font-weight-bold" style="font-size: 14px;">축하합니다!<br/>
+						회원님의 등급이 [주황아령]으로 승급 되었습니다.
+						</span>
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center p-2" href="#">
-						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
+						<div style="opacity:0.3;">
+							<div class="small text-gray-500">2021.09.25</div>
+							<span class="font-weight-bold" style="font-size: 14px;">작성하신 답변이 채택되었습니다.<br/>
+							"제 운동자세 좀 봐주실분 있나요? 부탁 드립니다!"</span>
 						</div>
 					</a> <a class="dropdown-item d-flex align-items-center p-2" href="#">
-						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
-						</div>
-					</a> <a class="dropdown-item d-flex align-items-center p-2" href="#">
-						<div>
-							<div class="small text-gray-500">December 12, 2019</div>
-							<span class="font-weight-bold">A new monthly report is
-								ready to download!</span>
+						<div style="opacity:0.3;">
+							<div class="small text-gray-500">2021.09.25</div>
+							<span class="font-weight-bold" style="font-size: 14px;">작성하신 답변이 채택되었습니다.<br/>
+							"안녕하세요? 제가 다이어트 식단을 짰는데 혹시 고구마 칼로리..."</span>
 						</div>
 					</a>
 				</div>
@@ -75,19 +71,5 @@
 </body>
 <script>
 var loginId = "${sessionScope.loginId}";
-/*
-$.ajax({
-	type:'GET',
-	url:'alarmList',
-	data:{"loginId":loginId},
-	dataType:'JSON',
-	success:function(data){
-		console.log(data);
-	},
-	error:function(e){
-		console.log(e);
-	}
-	
-});*/
 </script>
 </html>
