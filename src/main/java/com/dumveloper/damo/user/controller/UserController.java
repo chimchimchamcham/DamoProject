@@ -278,9 +278,9 @@ public class UserController {
 			logger.info("pwcheck:{}",pwcheck);
 			
 			if (pw.equals(pwcheck)) {
-				logger.info("체크성공");
+				logger.info("비밀번호랑 확인 일치함");
 			}else {
-				String msg = "비밀번호랑 비밀번호 확인을 전부 입력해주세요";
+				String msg = "비밀번호랑 비밀번호이 다릅니다";
 				mav.addObject("msg",msg);
 				mav.setViewName("/user/msg");
 				return mav;
