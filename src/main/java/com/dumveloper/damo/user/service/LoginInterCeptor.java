@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.dumveloper.damo.dto.DamoDTO;
-
 public class LoginInterCeptor extends HandlerInterceptorAdapter {
 
 	@Override
