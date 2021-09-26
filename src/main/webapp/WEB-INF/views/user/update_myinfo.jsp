@@ -19,10 +19,6 @@
 	    	font-size: 3px;
 	    	white-space: nowrap;
 	    }
-
-    body{
-      background: #eaeaed;
-    }
     .fixed, .fluid {
       background: white;
 
@@ -62,7 +58,7 @@ textarea{
 }
 </style>
 </head>
-<body>
+<body class="bg-light">
  <jsp:include page="../header.jsp"></jsp:include>
   <div class="conbox container-fluid justify-content-center align-items-center">
 

@@ -272,6 +272,7 @@ public class UserController {
 			}
 			
 			logger.info("update : {}",params);
+			
 			String pw = params.get("pw");
 			logger.info("pw:{}",pw);
 			String pwcheck = params.get("pwcheck");
