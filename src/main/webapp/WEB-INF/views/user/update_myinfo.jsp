@@ -62,7 +62,7 @@ textarea{
  <jsp:include page="../header.jsp"></jsp:include>
   <div class="conbox container-fluid justify-content-center align-items-center">
 
-  	<h3 class="mx-5 px-5 text-secondary">회원 정보 수정</h3>
+  	<h3 class="mx-5 px-5 text-secondary text-center">회원 정보 수정</h3>
     <div class="bg-white container d-flex flex-row justify-content-center px-5 pt-5 mb-5">
         <!--회원 수정(이미지,알림) 정보-->
         <div class="m-3 mr-5">
