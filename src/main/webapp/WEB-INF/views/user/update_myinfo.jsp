@@ -85,7 +85,7 @@ textarea{
         <!--회원 수정 정보-->
         <div class="userinfo d-flex m-3 ml-5">
             <div class="row col-12 d-flex justify-content-center align-items-center ">
-                <form action="update" method="post" class="row flex-column align-items-center justify-content-center mb-5">
+                <form action="update" method="post" id="submit" class="row flex-column align-items-center justify-content-center mb-5">
     
                     <div class="form-group row col-12 my-1">
                         <label for="id_name" class="text-center col-3  pl-0 my-1">아이디</label>
@@ -156,8 +156,8 @@ textarea{
                     
                     <div class="form-group row col-12">
                         <label for="id" style="height: 150px"; class="text-center col-3 pl-0 my-1 d-flex justify-content-center align-self-center">자기소개</label>
-                        <textarea name="u_intro"  class="form-control col-7" >${info.u_intro}</textarea>
-                    
+                        <textarea name="u_intro"  class="form-control col-5 textaa" >${info.u_intro}</textarea>
+                    	<div id="textCountWrap" class="align-self-end"><span id="textCount">0</span><span>/1000</span></div>
 	                    <div class="col-2 d-flex buttons">
 	                    	<a id="cancle" class="btn bg-secondary mr-1">취소</a>
 	                   		<button type="submit" id="jointocheck" class="btn btn-primary">수정</button>
@@ -173,6 +173,37 @@ textarea{
 
 </body>
 <script>
+
+
+//내용 글자수 카운트
+var textCount = 0;
+
+
+//키보드 입력시 문자수를 카운트
+$(".textaa").on("keyup keypress keydown",function(){
+	textCount = $(".textaa").val().length;
+    $("#textCount").html(textCount);
+    if(textCount>1000){
+    	$("#textCountWrap").css({"color":"red"});
+    }else{
+    	$("#textCountWrap").css({"color":"gray"});
+    }
+});
+
+
+
+//글등록 전 처리
+$("#jointocheck").click(function(){
+if($(".textaa").val().length>1000){
+		alert("글자수를 1000자 이하로 작성해주세요");
+		return false;
+	}
+	//빈 칸이 없으면 글쓰기 등록
+});
+
+
+
+
 
 var imgname = "${info.u_fileName}"
 var alarmboolean = "${info.u_alarmYN}";
