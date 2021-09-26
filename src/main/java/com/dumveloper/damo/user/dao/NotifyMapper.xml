@@ -10,7 +10,23 @@
 		UPDATE his_notify SET HN_code = 'HN003' where HN_no = #{param1};
 	</update>
 	
-	<insert id="userNotify">
+	<insert id="userNotify"
+	useGeneratedKeys = "true"
+		keyColumn = "n_no,n_dt"
+		keyProperty = "hn_no,hn_date"
+		parameterType="damo">
 		INSERT INTO Notify(N_NO,N_RECEIVEID,N_SENDID,N_CONTENT,N_DT,N1_CODE,N2_CODE) VALUES(n_no_seq.NEXTVAL,#{n_receiveid},#{n_sendid},#{n_content},sysdate,#{n1_code},#{n2_code})
+	</insert>
+	
+	<insert id="fitNotify"
+	useGeneratedKeys = "true"
+		keyColumn = "n_no,n_dt"
+		keyProperty = "hn_no,hn_date"
+		parameterType="damo">
+		INSERT INTO Notify VALUES(n_no_seq.NEXTVAL,#{n_receiveid},#{n_sendid},#{n_content},sysdate,#{n1_code},#{n2_code},#{n_notifiedno})
+	</insert>
+	
+	<insert id="addHisNotify">
+		INSERT INTO His_Notify VALUES(#{hn_no},#{hn_date},null,'HN001')
 	</insert>
 </mapper>
