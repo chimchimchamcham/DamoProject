@@ -223,10 +223,24 @@ public class UserController {
 					mav.addObject("msg",msg);
 					mav.setViewName("/user/msg");
 					return mav;
-			}else{
-				logger.info("update : {}",params);
+				}else{
+					logger.info("update : {}",params);
+				}
 			}
-		}
+			
+			logger.info("update : {}",params);
+			String pw = params.get("pw");
+			logger.info("pw:{}",pw);
+			String pwcheck = params.get("pwcheck");
+			logger.info("pwcheck:{}",pwcheck);
+			
+			if (pw != pwcheck) {
+				String msg = "비밀번호랑 비밀번호 확인을 전부 입력해주세요";
+				mav.addObject("msg",msg);
+				mav.setViewName("/user/msg");
+				return mav;
+			}
+
 		return service.update(params,session);
 	}
 	
