@@ -139,31 +139,31 @@ li:hover {
 					<div class="col-3"
 						style="text-align: center; padding: 3px; font-size: 17px">분량(g)</div>
 					<div class="col-6" style="text-align: center;">
-						<span id="default_gram"></span><input type="text" class="form-control" name="eating_gram" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="default_gram"></span><input type="text" class="form-control" name="eating_gram" style="text-align: center;"  onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row" id="eating_Kcal">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
 					<div class="col-6" id="Kcal_span" style="text-align: center;">
-						<span id="default_Kcal"></span><input type="hidden" class="form-control" name="eating_Kcal" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="default_Kcal"></span><input type="hidden" class="form-control" name="eating_Kcal" style="text-align: center;"  onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row" id="eating_Carbo">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">탄수화물(g)</div>
 					<div class="col-6" id="Carbo_span" style="text-align: center;">
-						<span id="default_Carbo"></span><input type="hidden" class="form-control" name="eating_Carbo" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="default_Carbo"></span><input type="hidden" class="form-control" name="eating_Carbo" style="text-align: center;"  onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row" id="eating_Pro">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">단백질(g)</div>
 					<div class="col-6" id="Pro_span" style="text-align: center;">
-						<span id="default_Pro"></span><input type="hidden" class="form-control" name="eating_Pro" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="default_Pro"></span><input type="hidden" class="form-control" name="eating_Pro" style="text-align: center;"  onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row" id="eating_Fat">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">지방(g)</div>
 					<div class="col-6" id="Fat_span" style="text-align: center;">
-						<span id="default_Fat"></span><input type="hidden" class="form-control" name="eating_Fat" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="default_Fat"></span><input type="hidden" class="form-control" name="eating_Fat" style="text-align: center;" onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 			</div>
@@ -173,13 +173,13 @@ li:hover {
 				<div class="row" id="exe_time">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">시간(분)</div>
 					<div class="col-6" style="text-align: center;">
-						<input type="text" class="form-control" name="exe_time" style="text-align: center;" onkeypress="checkForNumber();">
+						<input type="text" class="form-control" name="exe_time" style="text-align: center;" onKeydown="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row" id="exe_Kcal">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
 					<div class="col-6" style="text-align: center;">
-						<span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" style="text-align: center;" onkeypress="checkForNumber();">
+						<span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" style="text-align: center;" onKeypress="this.value=this.value.replace(/[^0-9]/g,'');">
 					</div>
 				</div>
 				<div class="row">
@@ -198,7 +198,7 @@ li:hover {
 				<div class="row" id="water_ml">
 					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">분량(ml)</div>
 					<div class="col-6">
-						<input type="text" class="form-control " name="water_ml" onkeypress="checkForNumber();">
+						<input type="text" class="form-control " name="water_ml"  onKeypress="this.value=this.value.replace(/[^0-9]/g,'');">
 						<!-- form-control is-valid -->
 						<div class="invalid-feedback" style="display: none">0이상을 입력해주세요!</div>
 					</div>
