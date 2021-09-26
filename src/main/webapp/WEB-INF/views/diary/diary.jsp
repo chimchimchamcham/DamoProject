@@ -856,7 +856,6 @@ a:hover {
 		}
 	}); /*-----뿌려주기 ajax end-----*/
 	
-	
 	//섭취 목록 삭제
  	$(document).on("click",".EatDelBtn",function(){
  		var hd_code = $(this).parents("tbody").attr("id"); //삭제할 음식의 코드 분류
