@@ -38,7 +38,7 @@ body {
 #content_head, #content_all {
 	margin: 0;
 	background-color: white;
-	width: 580px;
+	width: 560px;
 	height: 48px;
 	padding-top: 10px;
 }
@@ -68,6 +68,17 @@ li {
 li:hover {
 	background-color: lightgray;
 }
+
+#search_list{
+	background-color:white;
+	border-radius:0px;
+}
+
+#search_ul{
+	border:1px solid #B2B6B6;
+	border-top:none;
+	border-radius:0px;
+}
 </style>
 </head>
 <body>
@@ -76,8 +87,7 @@ li:hover {
 		<div class="container" id="content_head">
 			<div class="row">
 				<div class="col-3">
-					<select class="form-control form-control-sm float-right"
-						style="width: 100px; height: 38px;'" name="selectAdd">
+					<select class="form-control form-control-sm float-right" style="width: 100px; height: 38px;'" name="selectAdd">
 						<option value="select">--선택--</option>
 						<option value="breakfast">아침</option>
 						<option value="morning_snack">오전 간식</option>
@@ -94,8 +104,7 @@ li:hover {
 					<div class="input-group">
 						<input type="text" class="form-control" name="search_insert">
 						<span class="input-group-append bg-white">
-							<button class="btn border border-left-0" type="button"
-								id="deleteSearch">
+							<button class="btn border border-left-0" type="button" id="deleteSearch">
 								<i class="bi bi-x-circle"></i>
 							</button>
 						</span>
@@ -103,18 +112,13 @@ li:hover {
 				</div>
 				<!-- 검색 버튼 -->
 				<div class="col-2" id="search_btn">
-					<button type="button" class="btn btn-primary"
-						style="width: 80px; height: 38px;'" id="goSearch">검색</button>
+					<button type="button" class="btn btn-primary" style="width: 80px; height: 38px;'" id="goSearch">검색</button>
 				</div>
 				<div class="col-1"></div>
 			</div>
 			<!-- 검색 결과 리스트 -->
-			<div class="container-fluid"
-				style="z-index: 1000; position: fixed; left: 150px; width: 240px; height: 150px; background-color: #E5E5E5;"
-				id="search_list">
-				<ul class="list-group"
-					style="overflow-y: scroll; overflow-x: hidden; height: 150px; font-size: 11px"
-					id="search_ul">
+			<div class="container-fluid" style="z-index: 1000; position: fixed; left: 155px; width: 250px; height: 150px;" id="search_list">
+				<ul class="list-group" style="overflow-y: scroll; overflow-x: hidden; height: 150px; font-size: 11px" id="search_ul">
 
 				</ul>
 			</div>
@@ -124,11 +128,8 @@ li:hover {
 		<div class="container" id="content_all">
 			<!-- 선택한 이름  -->
 			<div class="row">
-				<div class="col-10" id="search_food"
-					style="font-size: 25px; font-weight: bold;">
-					<span id="default_msg">선택해주세요!</span><input type="hidden"
-						class="form-control" name="search_food" placeholder="입력하세요"
-						style="margin: 0 15px">
+				<div class="col-12" id="search_food" style="font-size: 25px; font-weight: bold; text-align:center">
+					<span id="default_msg">선택해주세요!</span><input type="hidden" class="form-control" name="search_food" placeholder="입력하세요" style="margin: 0 15px" >
 				</div>
 			</div>
 			<!-- ------------------------------------------------------------------ -->
@@ -138,45 +139,31 @@ li:hover {
 					<div class="col-3"
 						style="text-align: center; padding: 3px; font-size: 17px">분량(g)</div>
 					<div class="col-6" style="text-align: center;">
-						<span id="default_gram"></span><input type="text"
-							class="form-control" name="eating_gram"
-							style="text-align: center;" onkeypress="inNumber();">
+						<span id="default_gram"></span><input type="text" class="form-control" name="eating_gram" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row" id="eating_Kcal">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
 					<div class="col-6" id="Kcal_span" style="text-align: center;">
-						<span id="default_Kcal"></span><input type="hidden"
-							class="form-control" name="eating_Kcal"
-							style="text-align: center;" onkeypress="inNumber();">
+						<span id="default_Kcal"></span><input type="hidden" class="form-control" name="eating_Kcal" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row" id="eating_Carbo">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">탄수화물(g)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">탄수화물(g)</div>
 					<div class="col-6" id="Carbo_span" style="text-align: center;">
-						<span id="default_Carbo"></span><input type="hidden"
-							class="form-control" name="eating_Carbo"
-							style="text-align: center;" onkeypress="inNumber();">
+						<span id="default_Carbo"></span><input type="hidden" class="form-control" name="eating_Carbo" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row" id="eating_Pro">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">단백질(g)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">단백질(g)</div>
 					<div class="col-6" id="Pro_span" style="text-align: center;">
-						<span id="default_Pro"></span><input type="hidden"
-							class="form-control" name="eating_Pro"
-							style="text-align: center;" onkeypress="inNumber();">
+						<span id="default_Pro"></span><input type="hidden" class="form-control" name="eating_Pro" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row" id="eating_Fat">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">지방(g)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">지방(g)</div>
 					<div class="col-6" id="Fat_span" style="text-align: center;">
-						<span id="default_Fat"></span><input type="hidden"
-							class="form-control" name="eating_Fat"
-							style="text-align: center;" onkeypress="inNumber();">
+						<span id="default_Fat"></span><input type="hidden" class="form-control" name="eating_Fat" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 			</div>
@@ -184,20 +171,15 @@ li:hover {
 			<!-- 운동 선택했을 때 -->
 			<div id="content_exe">
 				<div class="row" id="exe_time">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">시간(분)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">시간(분)</div>
 					<div class="col-6" style="text-align: center;">
-						<input type="text" class="form-control" name="exe_time"
-							style="text-align: center;" onkeypress="inNumber();">
+						<input type="text" class="form-control" name="exe_time" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row" id="exe_Kcal">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">칼로리(kcal)</div>
 					<div class="col-6" style="text-align: center;">
-						<span id="exeKcal_span"></span><input type="hidden"
-							class="form-control" name="exe_Kcal" style="text-align: center;"
-							onkeypress="inNumber();">
+						<span id="exeKcal_span"></span><input type="hidden" class="form-control" name="exe_Kcal" style="text-align: center;" onkeypress="checkForNumber();">
 					</div>
 				</div>
 				<div class="row">
@@ -214,14 +196,11 @@ li:hover {
 			<!-- 물 선택했을 때 -->
 			<div id="content_water">
 				<div class="row" id="water_ml">
-					<div class="col-3"
-						style="text-align: center; padding: 3px; font-size: 17px">분량(ml)</div>
+					<div class="col-3" style="text-align: center; padding: 3px; font-size: 17px">분량(ml)</div>
 					<div class="col-6">
-						<input type="text" class="form-control " name="water_ml"
-							onkeypress="inNumber();">
+						<input type="text" class="form-control " name="water_ml" onkeypress="checkForNumber();">
 						<!-- form-control is-valid -->
-						<div class="invalid-feedback" style="display: none">0이상을
-							입력해주세요!</div>
+						<div class="invalid-feedback" style="display: none">0이상을 입력해주세요!</div>
 					</div>
 
 
@@ -245,8 +224,7 @@ li:hover {
 					<div class="col-3"></div>
 					<div class="col-6"></div>
 					<div class="col-3">
-						<button type="button" class="btn btn-primary"
-							style="width: 80px; height: 38px;'" id="submitBtn">등록</button>
+						<button type="button" class="btn btn-primary" style="width: 80px; height: 38px;'" id="submitBtn">등록</button>
 					</div>
 				</div>
 			</div>
@@ -254,6 +232,15 @@ li:hover {
 	</div>
 
 </body>
+<style>
+.list-group-item{
+	border:none;
+	margin:2px 0;
+
+}
+
+</style>
+
 <script>
 	var selectMenu = '';
 	var selectType = '';
@@ -879,6 +866,14 @@ li:hover {
 			event.returnValue = false;
 		}
 	}
+	
+	function checkForNumber() {
+		  var key = event.keyCode;
+		  if(!(key==8||key==9||key==13||key==46||key==144||
+		      (key>=48&&key<=57)||key==110||key==190)) {
+		      event.returnValue = false;
+		  }
+		}
 	//-----------------//
 </script>
 </html>

@@ -1003,7 +1003,7 @@ a:hover {
 	/*버튼 클릭시 일기 추가 팝업*/
 	$("#submitListBtn").click(function(){
 		console.log("일기 추가 팝업 요청");
-		window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight,"일기 항목 추가하기","width=580, height=380, left=700,top=400, resizable=no, scrollbars=no");
+		window.open("diaryInsert?d_no="+d_no+"&u_weight="+u_weight,"일기 항목 추가하기","width=560, height=380, left=700,top=400, resizable=no, scrollbars=no");
 		
 	})
 	

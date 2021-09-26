@@ -463,7 +463,7 @@ body {
 						<div id="tarKcalInput">
 							<input type="text" class="form-control" placeholder="섭취 칼로리"
 								id="tarKcal" value="${monthTarKcal}"
-								style="text-align: center;" onkeypress="inNumber();">
+								style="text-align: center;" onkeypress="inNumber()">
 						</div>
 					</div>
 					<!-- --------------------- -->
