@@ -359,7 +359,7 @@ a:hover {
 					<div class="card-header">
 						<a class="card-link" data-toggle="collapse" href="#collapse7">
 							<b>물</b>
-							<b class="float-right">1000ml</b>
+							<b class="float-right" id="waterML"></b>
 						</a>
 					</div>
 					<div id="collapse7" class="collapse hide"
@@ -369,7 +369,7 @@ a:hover {
 								<thead>
 									<tr>
 										<th>음식명</th>
-										<th>섭취량(g)</th>
+										<th>섭취량(ml)</th>
 										<th>탄수화물 (g)</th>
 										<th>단백질 (g)</th>
 										<th>지방(g)</th>
@@ -817,8 +817,17 @@ a:hover {
 				
 				$("#"+element.hd_code).append(hisDailyListContent);
 				$("#"+element.hd_code).parents("#accordion").css("display","");
+				
+				//물 뿌려주기
+				if(element.hd_code == "HD007"){
+					console.log("물 등록");
+					$("#waterML").text(element.hd_eat+"ml");
+				}
+				
 
 			});
+			
+			
 
 			
 			//운동 목록 뿌려주기
@@ -837,6 +846,9 @@ a:hover {
 				$("#exerciseBox").parents("#accordion").css("display","");
 
 			});
+			
+			
+		
 			
 
 		},

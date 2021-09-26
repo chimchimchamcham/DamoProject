@@ -52,9 +52,7 @@ public interface UserDAO {
 	ArrayList<DamoDTO> myFitList(String u_id);
 	ArrayList<DamoDTO> myAnsList(String u_id);
 	ArrayList<DamoDTO> myDirList(String u_id);
-	
-	//알람 관련
-	DamoDTO alarmList(String loginId); //알람 리스트 뽑아오기
+
 	
 	
 	
