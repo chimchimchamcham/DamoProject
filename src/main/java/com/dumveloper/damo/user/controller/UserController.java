@@ -4,6 +4,7 @@ package com.dumveloper.damo.user.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -180,22 +181,64 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/join")
-	public ModelAndView join(Model model,@RequestParam HashMap<String, String> params) {
+	public ModelAndView join(@RequestParam HashMap<String, String> params) {
 		
 		ModelAndView mav = new ModelAndView();
 		
 		logger.info("joinnow");
 		
+		
+		// 전부 입력 체크
+		logger.info("회원정보 전부 !null값 체크");
 		for (String num : params.keySet()) {
 			if (params.get(num)==null||params.get(num)=="") {
 				String msg = "회원정보를 전부 입력해주세요";
 				mav.addObject("msg",msg);
 				mav.setViewName("/user/join");
-				
 				return mav;
-			}else{
-				logger.info("join : {}",params);
 			}
+		}
+		
+		//비밀번호 및 비밀번호 확인 일치 여부
+		logger.info("비밀번호 및 비밀번호 확인 일치 여부");
+		String pw = params.get("pw");
+		String pwcheck = params.get("pwcheck");
+		if (pw.equals(pwcheck)) {
+			
+		}else {			
+			String msg = "비밀번호랑 비밀번호 확인을 전부 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		
+		
+		String check = "^[a-zA-Z0-9]*$";
+		logger.info("아이디 영숫자 체크");
+		//아이디 영숫자 체크
+		String id = params.get("id");
+		if (Pattern.matches(check, id)==false) {
+			String msg = "아이디란에 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		logger.info("비밀번호 영숫자 체크");
+		//비밀번호 영숫자 체크
+		if (Pattern.matches(check, pw)==false) {
+			String msg = "비밀번호는 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
+		}
+		logger.info("이메일 영숫자 체크");
+		//이메일 영숫자 체크
+		String email = params.get("email");
+		if (Pattern.matches(check, email)==false) {
+			String msg = "이메일는 영어 혹은 숫자만 입력해주세요";
+			mav.addObject("msg",msg);
+			mav.setViewName("/user/join");
+			return mav;
 		}
 		return service.join(params);
 	}
