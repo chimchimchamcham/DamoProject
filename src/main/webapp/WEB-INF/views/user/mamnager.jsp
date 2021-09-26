@@ -23,7 +23,13 @@
 	#notifymyModal div.modal-content{
 		min-height: 458px;
 	}
-	
+	.min{
+		min-width:1110px;
+		min-height:621px;
+	}
+	td{
+		max-height:50px;
+	}
     </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -34,7 +40,7 @@
 
 	
 </head>
-<body class="bg-secondary">
+<body class="bg-white">
 	<jsp:include page="../header.jsp"></jsp:include>
     <div class="container justify-content-center align-items-center mx-auto mt-5">
       <ul class="row list-group list-group-horizontal justify-content-start">
@@ -44,8 +50,8 @@
       </ul>
       <!--유저리스트-->
         <div class="usertable">
-            <div class="container row bg-light">
-                <div class="container bg-light">
+            <div class="container row bg-light min">
+                <div class="container bg-light mb-5 d-flex justify-content-center align-content-center">
                     <table class="table table-bordered m-3 userlist">
                         <thead>
                           <tr class="border-top-0">
@@ -55,7 +61,7 @@
                             <th class="text-center">이메일</th>
                           </tr>
                         </thead>
-                        <tbody class="userbody">
+                        <tbody class="userbody bg-light">
                         
                         <c:forEach items="${userlist}" var="dtouser">
                           <tr class="text-center">
@@ -70,7 +76,7 @@
                       </table>
                 </div>
             </div>
-            <div class="container row bg-light">
+            <div class="container row bg-light pb-5">
                 <ul class="pagination mx-auto userpage" id="pagination">
 
                 </ul>
@@ -79,10 +85,10 @@
         
 
         <!--신고목록-->
-        <div class="notifytable display-none">
-          <div class="container row bg-light">
-              <div class="container bg-light">
-                  <table class="table table-bordered m-3 userlist">
+        <div class="notifytable display-none ">
+          <div class="container row bg-light min">
+              <div class="container bg-light mb-5 d-flex justify-content-center align-content-center">
+                  <table class="table table-bordered m-3 notifylist">
                       <thead>
                         <tr class="border-top-0">
                           <th class="text-center">신고번호</th>
@@ -101,7 +107,7 @@
                     </table>
               </div>
           </div>
-          <div class="container row bg-light">
+          <div class="container row bg-light pb-5">
               <ul class="pagination mx-auto notifypage" id="pagination">
                  
               </ul>
@@ -109,10 +115,10 @@
 		</div>
 		
         <!--blacklist-->
-        <div class="blacktable display-none">
-          <div class="container row bg-light">
-              <div class="container bg-light">
-                  <table class="table table-bordered m-3 userlist">
+        <div class="blacktable display-none ">
+          <div class="container row bg-light min">
+              <div class="container bg-light mb-5 d-flex justify-content-center align-content-center">
+                  <table class="table table-bordered m-3 blacklist">
                       <thead>
                         <tr class="border-top-0">
                           <th class="text-center">번호</th>
@@ -131,7 +137,7 @@
                     </table>
               </div>
           </div>
-          <div class="container row bg-light">
+          <div class="container row bg-light mb-5">
               <ul class="pagination mx-auto blackpage" id="pagination">
               
               </ul>
@@ -310,16 +316,19 @@ $(document).on('click',".notifybody tr",function(){
 	 	    		content +=   	`<button type="button"  class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
 	 	    		content +=	"</div>";
 	        content +=  "</div>";	      
-
+	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
+	        var text = $(notify_jqname).text()
+	      if( text == '접수중'){
+	    	$("select option:eq(0)").prop("selected", false);
+	    	$("select option:eq(1)").val("HN001").prop("selected", true);
+		  }else{
+	    	$("select option").attr("selected", false);
+	        $("select option:eq(2)").attr("selected", true);
+	      }
 	   $(".modal-body").empty();
 	   $("#notifymyModal .modal-body").append(content);
-	 	    		if (notify_state!='처리완료'&&notify_state!='접수중') {//처리중
-	 	    			$('div.nopopbtn').empty();
-	 	    			$('div.nopopbtn').append(`<button type="button" class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`);
-	 	    		}else{//접수중
-	 	    			$('div.nopopbtn').empty();
-	 	    			$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
-	 	    		}
+	   
+	   
 		//동적으로 추가한 notifyscope 의 옵션 value값이 바뀌면
 		 var notifystatechange;
 		 $(document).on('change','#notifyscope',function(){
@@ -342,15 +351,11 @@ $(document).on('click',".notifybody tr",function(){
 		 	 	 	       if (notifystatechange=='HN001') {//접수중
 
 								$(notify_jqname).text('접수중');
-								$('div.nopopbtn').empty();
-								$('div.nopopbtn').append("<button type='button' class='notifytoblackbtn btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>");
-			 	    			
+								
 		 	 	 	       
 							}else if(notifystatechange=='HN002'){//처리중
 
 								$(notify_jqname).text('처리중');
-								$('div.nopopbtn').empty();
-								$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
 							}
 		 	 	 	       
 		 	 	 	       
@@ -368,7 +373,7 @@ $(document).on('click',".notifybody tr",function(){
 	 //블랙리스트 등록
 	 $(document).on('click',".notifytoblackbtn",function(){
 		$('h6.blacktitle').text('블랙리스트 등록');
-		var black_id = $('.receid').attr('id');//신고 받은 아이디
+		var black_id = $('.receid').text();//신고 받은 아이디
 		var notify_no = $('.noifyno').text();//신고창 num
 		var loginId = "${sessionScope.loginId}"; //로그인한 관리자 아이디 가져오기
 		var loginManager="${sessionScope.loginManager}";//로그인한 아이디가 ('Y')메니저일경우
@@ -418,7 +423,9 @@ $(document).on('click',".notifybody tr",function(){
 	   	    	content +=   "<div class='col-2 my-3 m-1 text-right'>등록날짜 </div> <div class=' my-3 m-1'>"+startedday+"</div>";
 	   	    	content +=   "<div class='col-4 my-3 m-1 text-right'>종료날짜 </div> <div class=' my-3 m-1'>";
 	   	    	
-	   	    	content +=	"<input type='date' id='endday' name='blackendtime'>";
+	   	    	startedday = startyear+"-"+(startmonth+1)+"-"+startday;
+	   	    	
+	   	    	content +=	"<input type='date' min="+startedday+" id='endday' name='blackendtime'>";
 	   	    	
 	   	    	content +=	 "</div>";
 	   	    	content +=	 "<div class='col-12 row'>";
@@ -428,13 +435,13 @@ $(document).on('click',".notifybody tr",function(){
 				content +=   	"<button type='button' class='register btn text-light btn-dark'>등록</button>";
 				content +=	"</div>";	
 	 	        content +=  "</div>";
+	 	       $("#notifymyModal .modal-body").empty();
 	 	 	   $(".modal-body").empty();
 	 	 	   $("#blackmyModal .modal-body").append(content);
 	 	 	   
 	 	 	   
 	 			//블랙리스트 등록 버튼 눌렀을때
 	 		 	 $(document).on('click',"button.register",function(){
-	 				
 	 		 		if (blacklistscopeoption_val!=undefined&&blacklistendday_val!=undefined&&blacklistcause_val!=undefined) {
 	 		 			var url = "./registerblacklist/"+black_id+"/"+loginId+"/"+blacklistscopeoption_val+'/'+blacklistendday_val+'/'+blacklistcause_val+'/'+notify_no;
 	 		 			$(location).attr('href',url);						

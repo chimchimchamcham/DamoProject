@@ -76,7 +76,7 @@
 	</update>
 	
 	<select id="dbuser" resultType="damo">
-		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL from userinfo) where rnum BETWEEN #{param1} and #{param2}
+		SELECT U_ID,U_NICK,U_NAME,U_EMAIL,U_ADMINYN FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL,U_ADMINYN from userinfo)where U_ADMINYN = 'N' and rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="dbnotify" resultType="damo">
