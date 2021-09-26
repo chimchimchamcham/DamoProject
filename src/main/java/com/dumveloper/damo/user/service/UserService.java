@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -189,6 +188,8 @@ public class UserService {
 		String id = (String) session.getAttribute("loginId");
 		DamoDTO dto = new DamoDTO();
 
+		logger.info("id : {}",id);
+		
 		dto.setU_id(id);
 		dto.setU_nick(param.get("nick"));
 		String mynick = param.get("nick");
@@ -204,12 +205,11 @@ public class UserService {
 		int success = dao.update(dto);// 이번에는 파라미터를 dto로 전달
 
 		int ismynick = dao.checkdbnink(mynick);// db에 있는 닉네임이 지금 파라메터에 들어가있는 닉네임 하고 동일하나 체크
-		System.out.println(ismynick);
 
 		if (ismynick == 1) {
 			if (success > 0) {
 				String msg = "수정에 성공했습니다";
-				String page = "/diary/calendar";// 마이페이지 만들어지면 그쪽으로
+				String page = "redirect:myPage?u_id="+id;// 마이페이지 만들어지면 그쪽으로
 
 				mav.addObject("msg", msg);
 				mav.setViewName(page);
@@ -227,7 +227,7 @@ public class UserService {
 
 				if (success > 0) {
 					msg = "수정에 성공했습니다";
-					page = "/diary/calendar";// 마이페이지 만들어지면 그쪽으로
+					page = "redirect:myPage?u_id="+id;// 마이페이지 만들어지면 그쪽으로
 
 				}
 

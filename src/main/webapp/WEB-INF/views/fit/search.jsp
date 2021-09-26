@@ -98,6 +98,9 @@ var category = '전체';
 var whatsherch = '${whatcherch}';
 console.log(whatsherch);
 
+var Tcnt=0;
+var Ccnt=0;
+
 $(window).scroll(function(){
 	//스크롤한 px
     var scrollTop = $(this).scrollTop();
@@ -130,7 +133,8 @@ $(document).on('click','button',function(){
 		cnt = 1;
 		console.log("cnt:",cnt);
 		category = '전체';
-		
+		 Tcnt=0;
+		 Ccnt=0;
 	}else if(clickbtn=='제목') {
 		$('div.titleallcard').empty();		
 		$('div.contentallcard').empty();
@@ -139,14 +143,18 @@ $(document).on('click','button',function(){
 		category = '제목';
 		serch = whatsherch;
 		newserchListCall(serch,cnt,category);
+		 Tcnt=0;
+		 Ccnt=0;
 	}else if(clickbtn=='내용'){		
-		$('div.contentallcard').empty();
 		$('div.titleallcard').empty();
+		$('div.contentallcard').empty();
 		cnt = 1;
 		console.log("cnt:",cnt);
 		category = '내용';
 		serch = whatsherch;
 		newserchListCall(serch,cnt,category);
+		 Tcnt=0;
+		 Ccnt=0;
 	}	
 });
 
@@ -186,7 +194,14 @@ function newserchListCall(serch,cnt,category){
 
 //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
 function appendtitlelist(list,listsize){
-	   var content = "";
+	
+	var content = "";
+	++Tcnt;
+	if (Tcnt===1) {
+		content += "<h6 class='col-12 mt-3'>제목 "+listsize+"건</h6>"
+		$(".titleallcard").append(content);
+	}	
+	content="";
 	   if (listsize!=0) {
 		   for(var i = 0; i<list.length; i++){
 		      
@@ -205,6 +220,7 @@ function appendtitlelist(list,listsize){
 	   	   content +=	"<div class='card-text'>검색한 결과가 없습니다</div>";
 	   	   content +="</div>";
 	   }
+	   
 			   ++cnt;
 			   console.log("cnt:",cnt);
 	   $(".titleallcard").append(content);
@@ -213,8 +229,15 @@ function appendtitlelist(list,listsize){
 
 
 //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
-function appendcontentlist(list,listsize){
-	   var content = "";
+function appendcontentlist(list,listsize){   
+		var content = "";
+		++Ccnt;
+		if (Ccnt===1) {
+			content += "<h6 class='col-12 mt-3'>내용 "+listsize+"건</h6>"
+			$(".contentallcard").append(content);
+		}	
+	   
+		var content = "";
 	  if (listsize!=0) {
 	   for(var i = 0; i<list.length; i++){
 		   
