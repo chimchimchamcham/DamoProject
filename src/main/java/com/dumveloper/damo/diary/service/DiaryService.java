@@ -132,6 +132,7 @@ public class DiaryService {
 		
 		int success = 0;
 		if(date.equals(today)) { //오늘 날짜일 경우 u_weight업데이트
+			logger.info("-----------------");
 			success = dao.u_weightUpdate(content,loginId);
 			logger.info("회원정보 몸무게 업데이트");
 		}
