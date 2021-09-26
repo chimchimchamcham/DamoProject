@@ -154,14 +154,14 @@
                     <!-- 탭 클릭 -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item mr-2 shadow-sm">
-                            <a class="nav-link nav-links <c:if test="${myDirYN eq 'N' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitWrite">내가 쓴 Fit</a>
+                            <a class="navLink nav-link nav-links <c:if test="${myDirYN eq 'N' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitWrite">내가 쓴 Fit</a>
                         </li>
                         <li class="nav-item mr-2 shadow-sm">
-                            <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitAnswer">내가 쓴 답변</a>
+                            <a class="navLink nav-link nav-links rounded-top" data-toggle="tab" href="#myFitAnswer">내가 쓴 답변</a>
                         </li>
                         <c:if test="${sessionScope.loginId eq dto.u_id }">
                         <li class="nav-item mr-2 shadow-sm">
-                            <a class="nav-link nav-links <c:if test="${myDirYN eq 'Y' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
+                            <a class="navLink nav-link nav-links <c:if test="${myDirYN eq 'Y' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
                         </li>
                         </c:if>
                     </ul>
@@ -369,8 +369,8 @@
 <script>
 
     //탭 클릭시 색을 변경
-    $(".nav-link").on("click",function(){
-        $(".nav-link").removeClass("navSelected");
+    $(".navLink").on("click",function(){
+        $(".navLink").removeClass("navSelected");
         $(this).addClass("navSelected");
     });
     
