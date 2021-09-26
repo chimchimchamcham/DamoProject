@@ -39,55 +39,39 @@
           <h2 style="padding-top:30px; font-style: italic;">"다이어트 혼자 하니? 다이어트도 모여서 하자!"</h2>
         </div>
       </div>
-      
-<!-- 
-    
-      <div class="row py-5" style="margin-top:-40px;">
-        <div class="col-6 text-center justify-content-start  m-auto" style="margin-top:150px;"><p><img src="resources/img/logo4.png" width="200"></p></div>
-       
-       <div class="col-6 text-center justify-content-end text-Inverse  m-auto" style="color:#0275d8">
-          <p style="font-size: 35px;  letter-spacing: 2px; font-style: italic; font-weight: bold" ><b style="font-size: 60px; padding-right:25px;">"</b>다이어트도<b style="font-size: 60px; padding-left:25px;">"</b>
-          <p style="font-size: 35px;  letter-spacing: 2px; font-style: italic; margin-top:-70px; font-weight: bold"><br/>모여서하자</p>
-          <h2 style="padding-top:13px; color:#6d839b">당신의 다이어트 일기를 시작해보세요</h2>
-        </div>
-      </div> 
-      
-      <div class="text-center mt-5 pt-3">
-        <a href="#about" class="btn-get-started scrollto mt-2" style="font-size: 13px;"><b>다모 시작하기</b></a>
-      </div>
--->
+
       <div class="row icon-boxes">
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
           <div class="icon-box">
-            <h4 class="title"><a href="">다모 캘린더</a></h4>
+            <h4 class="title"><a style="cursor: default;">다모 캘린더</a></h4>
             <p class="description">자신의 다이어트 목표를 세워보세요</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
           <div class="icon-box">
-            <h4 class="title"><a href="">다이어트 다이어리</a></h4>
+            <h4 class="title"><a style="cursor: default;">다이어트 다이어리</a></h4>
             <p class="description">식단과 운동 관리를 한번에!</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
           <div class="icon-box">
-            <h4 class="title"><a href="">통계 그래프</a></h4>
+            <h4 class="title"><a style="cursor: default;">통계 그래프</a></h4>
             <p class="description">몸무게, 섭취, 운동 그래프를 한눈에!</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
           <div class="icon-box">
-            <h4 class="title"><a href="">지식Fit</a></h4>
+            <h4 class="title"><a style="cursor: default;">지식Fit</a></h4>
             <p class="description">다이어트 고민을 올리고 정보를 공유해보세요</p>
           </div>
         </div>
 
       </div>
       <div class="text-center pt-4">
-        <a href="#about" class="btn-get-started scrollto">다모 시작하기</a>
+        <a href="Gologin" class="btn-get-started scrollto">다모 시작하기</a>
       </div>
     </div>
   </section><!-- End Hero -->
