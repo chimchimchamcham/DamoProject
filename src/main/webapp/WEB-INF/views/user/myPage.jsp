@@ -154,21 +154,21 @@
                     <!-- 탭 클릭 -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item mr-2 shadow-sm">
-                            <a class="nav-link nav-links navSelected rounded-top" data-toggle="tab" href="#myFitWrite">내가 쓴 Fit</a>
+                            <a class="nav-link nav-links <c:if test="${myDirYN eq 'N' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitWrite">내가 쓴 Fit</a>
                         </li>
                         <li class="nav-item mr-2 shadow-sm">
                             <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitAnswer">내가 쓴 답변</a>
                         </li>
                         <c:if test="${sessionScope.loginId eq dto.u_id }">
                         <li class="nav-item mr-2 shadow-sm">
-                            <a class="nav-link nav-links rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
+                            <a class="nav-link nav-links <c:if test="${myDirYN eq 'Y' }"> navSelected</c:if> rounded-top" data-toggle="tab" href="#myFitDictionary">내 사전</a>
                         </li>
                         </c:if>
                     </ul>
-                
+                <%-- <c:if test="${myDirYN eq 'N' }"> active</c:if> --%>
                   <!-- 탭 클릭시 보여지는 화면 -->
                     <div class="tab-content">
-                        <div id="myFitWrite" class="container tab-pane active overflow-auto shadow pl-4 pr-4"><br>
+                        <div id="myFitWrite" class="container tab-pane <c:if test="${myDirYN eq 'N' }"> active</c:if><c:if test="${myDirYN eq 'Y' }"> fade</c:if> overflow-auto shadow pl-4 pr-4"><br>
                             <!-- <div class="container shadow items solution">
                                 <div class="itemsTop container pt-3">
                                     <span class="q text-success">Q. </span>
@@ -216,7 +216,7 @@
                            </c:forEach>
                         </div>
                         <c:if test="${sessionScope.loginId eq dto.u_id }">
-                        <div id="myFitDictionary" class="container tab-pane fade overflow-auto shadow"><br>
+                        <div id="myFitDictionary" class="container tab-pane  <c:if test="${myDirYN eq 'Y' }"> active</c:if><c:if test="${myDirYN eq 'N' }"> fade</c:if>  overflow-auto shadow"><br>
                             <c:forEach items="${myDirList }" var="myDir">
                                <div class="container shadow items 
                                   <c:if test="${myDir.k_solutionYN eq 'Y'}"> solution</c:if>" onclick="location.href='fitDetail?k_no=${myDir.k_no}'">
@@ -367,6 +367,7 @@
 }
 </style>
 <script>
+
     //탭 클릭시 색을 변경
     $(".nav-link").on("click",function(){
         $(".nav-link").removeClass("navSelected");

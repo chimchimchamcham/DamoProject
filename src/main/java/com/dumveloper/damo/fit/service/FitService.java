@@ -154,6 +154,7 @@ public class FitService {
 	public ModelAndView fitUpdate(HashMap<String, String> params, List<String> imgNos, List<MultipartFile> files,
 			RedirectAttributes rAttr) {
 		
+		
 		//(1) 일반 변경
 		DamoDTO dto = new DamoDTO();
 		String k_no = params.get("k_no");
@@ -182,12 +183,17 @@ public class FitService {
 			
 			for(String imgNo : imgNos) {
 				if(photo.equals(imgNo)) {
+					logger.info("imgNo : {}",imgNo);
 					deleteYN = false; //같은 파일명이 존재해면 삭제하지 않는다.
 					break;
 				}
 			}
 			
 			if(deleteYN) {
+				//C드라이브에 있는 파일을 삭제
+				boolean delSuccess = new File("C:/upload/"+photo).delete();
+				logger.info("delSuccess : {}",delSuccess);
+				
 				//같은 파일명이 존재하지 않으면 삭제처리한다.
 				success = fitdao.knowfitImgDelete(k_no,photo,"Y","Y");
 			}

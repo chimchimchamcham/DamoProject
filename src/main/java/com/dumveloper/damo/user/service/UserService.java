@@ -443,9 +443,13 @@ public class UserService {
 		return map;
 	}
 
-	public ModelAndView myPage(String u_id) {
+	public ModelAndView myPage(String u_id,String myDirYN) {
 		// String u_id = (String) session.getAttribute("loginId");
-
+		
+		//상단바에서 내 사전 목록을 클릭했는지 여부
+		String myDir = myDirYN == null || myDirYN.equals("")?"N":"Y";
+		logger.info("myDirYN : {}",myDir);
+		
 		// 회원정보 테이블 + 순위 + 질문수 + 답변수 + 채택률
 		DamoDTO dto = dao.myPageUserInfo(u_id);
 
@@ -467,6 +471,7 @@ public class UserService {
 		mav.addObject("myFitList", myFitList);
 		mav.addObject("myAnsList", myAnsList);
 		mav.addObject("myDirList", myDirList);
+		mav.addObject("myDirYN", myDir);	
 
 		mav.setViewName("user/myPage");
 		return mav;
