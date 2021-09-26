@@ -41,7 +41,7 @@ public class FitController {
 		logger.info("메인 페이지 접속 요청");
 		String page= "main";
 		
-		if(session.getAttribute("loginId") != null) {
+		if(session.getAttribute("loginId") != null && session.getAttribute("loginManager").equals('N')) {
 			logger.info("캘린더 페이지 접속 요청");
 			page= "redirect:/calendar";
 		}
