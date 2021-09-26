@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,20 +21,17 @@ public class SerchRest {
 	
 	
 	@RestController
-	@RequestMapping(value = "/serching")// /rest로 요청이오면 이컨트롤러로 와라
+	@RequestMapping(value = "/searching")// /rest로 요청이오면 이컨트롤러로 와라
 	public class RestCheck {
 		
-			Logger logger = LoggerFactory.getLogger(this.getClass());
-			@Autowired FitService fitservice;
+		Logger logger = LoggerFactory.getLogger(this.getClass());
+		@Autowired FitService fitservice;
 
 		
-		@RequestMapping(value = "/title")
-		public void click_title(@RequestParam String matchid) {
-
-		}
-		
-		@RequestMapping(value = "/content")
-		public void click_content(@RequestParam String matchid) {
+		@RequestMapping(value = "/searchlist", method = RequestMethod.POST)
+		public HashMap<String, Object> click_title(@RequestParam HashMap<String,String> params) {
+			logger.info("검색목록 접속");
+			return fitservice.search_cnt(params);
 
 		}
 		

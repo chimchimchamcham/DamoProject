@@ -168,44 +168,7 @@ public class CalendarService {
 		}
 		
 
-		/*
-		 * String date; String weight; String resultEat; String resultExe; boolean
-		 * success;
-		 * 
-		 * DamoDTO eventDTO = new DamoDTO();//DB에서 가져온 배열에서 하나씩 가져와 담을 DTO
-		 * 
-		 * ArrayList<Map<String,String>> eventList = new
-		 * ArrayList<Map<String,String>>();
-		 * 
-		 * if(list.size()>0) {
-		 * 
-		 * for(int i=0;i<list.size();i++) {
-		 * 
-		 * eventDTO = list.get(i);
-		 * 
-		 * date = eventDTO.getD_date(); weight =
-		 * Integer.toString(eventDTO.getD_weight())+"kg"; resultEat =
-		 * Integer.toString(eventDTO.getD_resultEat())+"kcal"; resultExe =
-		 * Integer.toString(eventDTO.getD_resultExe())+"kcal"; success =
-		 * eventDTO.isD_success();
-		 * 
-		 * Map<String,String> eatMap= new HashMap<String,String>(); Map<String,String>
-		 * exeMap = new HashMap<String,String>(); Map<String,String> weightMap = new
-		 * HashMap<String,String>();
-		 * 
-		 * //섭취 이벤트 eatMap.put("title", resultEat); eatMap.put("start",date);
-		 * eatMap.put("backgroundColor", "green"); eatMap.put("borderColor", "green");
-		 * 
-		 * //운동 이벤트 exeMap.put("title", resultExe); exeMap.put("start",date);
-		 * exeMap.put("backgroundColor", "#E7C6B4"); exeMap.put("borderColor",
-		 * "#E7C6B4");
-		 * 
-		 * //몸무게 이벤트 weightMap.put("title", weight); weightMap.put("start", date);
-		 * if(success) { weightMap.put("color", "skyblue"); }else {
-		 * weightMap.put("color", "pink"); } weightMap.put("display", "background");
-		 * 
-		 * eventList.add(eatMap); eventList.add(exeMap); eventList.add(weightMap);
-		 */
+		
 
 		return map;
 	}
