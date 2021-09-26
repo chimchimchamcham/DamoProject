@@ -72,20 +72,20 @@
 	</update>
 
 	<update id="dbchangenotifystate">
-		UPDATE his_notify SET HN_CODE = #{param2} WHERE HN_NO = #{param1}
+		UPDATE his_notify SET HN_CODE = #{param2} WHERE HN_NO = #{param1} 
 	</update>
 	
 	<select id="dbuser" resultType="damo">
-		SELECT U_ID,U_NICK,U_NAME,U_EMAIL FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL from userinfo) where rnum BETWEEN #{param1} and #{param2}
+		SELECT U_ID,U_NICK,U_NAME,U_EMAIL,U_ADMINYN FROM (select row_number() over (order by U_JOINTM desc)rnum,U_ID,U_NICK,U_NAME,U_EMAIL,U_ADMINYN from userinfo)where U_ADMINYN = 'N' and rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="dbnotify" resultType="damo">
 select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2_name,c.c_name c_name from notify n,(SELECT n_no,n_receiveid,n_sendid FROM (select row_number() over (order by n_no desc)rnum,n_no,n_receiveid,n_sendid from notify)where rnum BETWEEN #{param1} and #{param2}),his_notify hn,code c,n1_code n1,n2_code n2
-		where n.n_no = hn.hn_no and hn.hn_code = c.c_code and n.n1_code = n1.n1_code and n.n2_code = n2.n2_code and n1.n1_code = n2.n1_code order by n_no
+		where n.n_no = hn.hn_no and hn.hn_code = c.c_code and n.n1_code = n1.n1_code and n.n2_code = n2.n2_code and n1.n1_code = n2.n1_code order by n_no desc
 	</select>
 	
 	<select id="dbblack" resultType="damo">
-		SELECT  * FROM (select row_number() over (order by B_no desc)rnum,b_no,U_id,B_code,B_startDt,B_endDt,B_content,B_adminId from BlackList) where rnum BETWEEN #{param1} and #{param2}
+		SELECT  * FROM (select row_number() over (order by B_no desc)rnum,b.b_no,b.U_id,c.c_name,b.B_startDt,b.B_endDt,b.B_content,b.B_adminId from BlackList b,code c where b.B_code = c.c_code)where rnum BETWEEN #{param1} and #{param2}
 	</select>
 
 	<select id="nink_me_and_aother_check" resultType="int">

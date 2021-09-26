@@ -34,7 +34,7 @@
 	<div class="container mx-auto my-5">
 		<div class="row d-flex justify-content-center align-content-center">
 			<div class="col-12 text-center mb-3">"${whatcherch}"검색 결과 총 ${allcnt}건</div>
-			<button class="col-1 btn btn-outline-primary active rounded-pill my-1 mr-2 px-1">전체</button>
+			<button class="col-1 btn btn-outline-primary active rounded-pill mr-2 px-1">전체</button>
 			<button class="col-1 btn btn-outline-primary rounded-pill px-1">제목</button>
 			<button class="col-1 btn btn-outline-primary rounded-pill ml-2 px-1">내용</button>
 		</div>

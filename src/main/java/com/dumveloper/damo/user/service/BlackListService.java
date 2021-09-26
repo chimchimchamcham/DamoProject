@@ -31,6 +31,7 @@ public class BlackListService {
 		notifydao.updatenotify(notifynum);
 		
 		
+		
 		ModelAndView mav = new ModelAndView();
 				
 		String msg = "블랙리스트를 등록했습니다";
