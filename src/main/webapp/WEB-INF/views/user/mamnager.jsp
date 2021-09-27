@@ -315,18 +315,27 @@ $(document).on('click',".notifybody tr",function(){
 	 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
 	 	    		content +=   	`<button type="button"  class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
 	 	    		content +=	"</div>";
-	        content +=  "</div>";	      
+	        content +=  "</div>";
+	        
+	        
 	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
 	        var text = $(notify_jqname).text()
+	        
+	       //팝업창 들어갈때 select에 선택 되게 하는거
 	      if( text == '접수중'){
 	    	$("select option:eq(0)").prop("selected", false);
 	    	$("select option:eq(1)").val("HN001").prop("selected", true);
-		  }else{
+		  }else if(text == '처리중'){
 	    	$("select option").attr("selected", false);
 	        $("select option:eq(2)").attr("selected", true);
 	      }
+	        
+	        
 	   $(".modal-body").empty();
 	   $("#notifymyModal .modal-body").append(content);
+	   
+	   
+
 	   
 	   
 		//동적으로 추가한 notifyscope 의 옵션 value값이 바뀌면
@@ -349,13 +358,17 @@ $(document).on('click',".notifybody tr",function(){
 		 	 	 	       
 		 	 	 	       
 		 	 	 	       if (notifystatechange=='HN001') {//접수중
-
+								//접수중이면 버튼 안보이게
 								$(notify_jqname).text('접수중');
-								
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
+									
 		 	 	 	       
 							}else if(notifystatechange=='HN002'){//처리중
-
+								//접수중이면 버튼 보이게
 								$(notify_jqname).text('처리중');
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' class='notifytoblackbtn btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>");
 							}
 		 	 	 	       
 		 	 	 	       
@@ -415,13 +428,15 @@ $(document).on('click',".notifybody tr",function(){
 	   	 	
 			      let startyear = now.getFullYear();
 			      let startmonth = now.getMonth()+1;
-			      let startday = now.getDate()+1;
+			      let startday = now.getDate();
 			      
 			      var startedday = startyear+"/"+startmonth+"/"+startday;
 	   	    	
 	   	    	
 	   	    	content +=   "<div class='col-2 my-3 m-1 text-right'>등록날짜 </div> <div class=' my-3 m-1'>"+startedday+"</div>";
 	   	    	content +=   "<div class='col-4 my-3 m-1 text-right'>종료날짜 </div> <div class=' my-3 m-1'>";
+	   	    	
+	   	    	startday = now.getDate()+1;
 	   	    	
 	   	    	if(startmonth<10){
 	   	    		startmonth='0'+startmonth

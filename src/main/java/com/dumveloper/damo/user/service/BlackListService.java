@@ -25,19 +25,27 @@ public class BlackListService {
 	public ModelAndView registerblacklist(String resivedid, String adminid, String scope, Date endtime, String content, int notifynum) {
 		logger.info("블랙리스트 등록 서비스");
 		
-	
-		
-		blackdao.dbregister(resivedid,scope,endtime,content,adminid);
-		notifydao.updatenotify(notifynum);
-		
-		
-		
 		ModelAndView mav = new ModelAndView();
-				
-		String msg = "블랙리스트를 등록했습니다";
-				
-		mav.addObject(msg, "msg");
-		mav.setViewName("redirect:/gouserlist");
+		
+		
+		int check = blackdao.checkrecbid(resivedid);
+		
+		if (check==0) {
+			
+			blackdao.dbregister(resivedid,scope,endtime,content,adminid);
+			notifydao.updatenotify(notifynum);			
+		
+			
+					
+			String msg = "블랙리스트를 등록했습니다";
+					
+			mav.addObject(msg, "msg");
+			mav.setViewName("redirect:/gouserlist");
+		}else{
+			String msg = "블랙리스트에"+resivedid+"는 이미 등록되어있습니다";
+			mav.addObject(msg, "msg");
+			mav.setViewName("redirect:/gouserlist");
+		}
 		
 		return mav;
 	}
