@@ -415,7 +415,7 @@ $(document).on('click',".notifybody tr",function(){
 	   	 	
 			      let startyear = now.getFullYear();
 			      let startmonth = now.getMonth()+1;
-			      let startday = now.getDate();
+			      let startday = now.getDate()+1;
 			      
 			      var startedday = startyear+"/"+startmonth+"/"+startday;
 	   	    	
