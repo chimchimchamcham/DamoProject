@@ -17,7 +17,7 @@
 <style>
 </style>
 </head>
-<body>
+<body style="background-color: #F2F2F2;">
 	<jsp:include page="../header.jsp"></jsp:include>
 
 	<!-- 신고 모달 -->
@@ -66,6 +66,7 @@
 	</div>
 
 	<!-- 질문 글 -->
+	<div class="container-fluid bg-light py-3">
 	<div id="fitQuestion" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
 		<div class="">
 			<span id="q">Q.</span> <span class="titleTxt">${bean.k_title }</span>
@@ -94,7 +95,7 @@
 			</c:if>
 		</div>
 		<br>
-		<div id="qContent">${bean.k_content }</div>
+		<div id="qContent" >${bean.k_content }</div>
 		<br>
 		<div id="qPhoto">
 			<c:forEach items="${qPhoto }" var="photo">
@@ -119,9 +120,16 @@
 			</c:if>
 		</c:forEach>
 
-		<div class="userInfo container mt-4 mb-3">
-			<a href="myPage?u_id=${bean.u_id }">${bean.u_id }</a>
-			<img class="userGrade" src="resources/img/${bean.g_fileName }.png" alt="${bean.g_fileName }">
+		<div class="userInfo container mt-0 mb-0">
+		
+			<div class="row">
+			<hr/>
+				<div class="col-sm-6 float-left p-0 text-left">
+				<img class="userGrade" src="resources/img/${bean.g_fileName }.png" alt="${bean.g_fileName }">
+			<a href="myPage?u_id=${bean.u_id }" style="color:black;">${bean.u_id }</a>
+			</div>
+			
+			<div class="col-sm-6 float-right text-right">
 			${bean.k_date } | 조회수 ${bean.k_view }
 			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
@@ -132,8 +140,10 @@
 			</c:if>
 			<!-- </div> -->
 		</div>
-
+		</div>
+		</div>
 	</div>
+</div>
 
 	<!-- 중간 상자 -->
 	<!-- 기본은 답변하기가 출력 -->
@@ -184,7 +194,7 @@
 		</c:otherwise>
 	</c:choose>
 
-	<div id="goAnsForm" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
+	<div id="goAnsForm" class="container p-3 bg-light" >
 		<div class="row">
 			<div id="title" class="col-md-8">
 				<h3 class="titleTxt">${sessionScope.loginNick }님,답변해주세요!</h3>
@@ -473,6 +483,7 @@
 
 #goAnsForm {
 	border: 1px solid #D8D8D8;
+	font-size: 17px;
 	/* height: 150px; */
 	/* display: none; */
 }
@@ -514,7 +525,7 @@
 }
 
 .titleTxt {
-	font-size: 30px;
+	font-size: 27px;
 	font-weight: 700;
 	margin-right: 20px;
 	vertical-align: middle;
