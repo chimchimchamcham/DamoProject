@@ -108,14 +108,14 @@
     var checktext  = /^[a-zA-Z0-9]*$/ig;
     var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
     	
-    
+    //한글 입력시 제거
     	$( 'input#id' ).on("blur keyup", function() {
     		$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) );
     	});
     
     
     
-    //이름,닉네임,이메일 특수문자 제거
+    //아이디,이름,닉네임,이메일 특수문자 제거
   function chkChar(obj){
     var RegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;	//정규식 구문
     if (RegExp.test(obj.value)) {
