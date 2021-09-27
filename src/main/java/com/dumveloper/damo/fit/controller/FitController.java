@@ -215,13 +215,13 @@ public class FitController {
 	}
 
 	@RequestMapping(value = "/chooseFitAns", method = RequestMethod.GET)
-	public ModelAndView chooseFitAns(@RequestParam String kr_no, @RequestParam String k_no) {
+	public ModelAndView chooseFitAns(@RequestParam String kr_no, @RequestParam String k_no, @RequestParam String ans_id) {
 
 		logger.info("지식핏 답변채택 접속");
 		logger.info("k_no : {}", k_no);
 		logger.info("kr_no : {}", kr_no);
-
-		return fitservice.chooseFitAns(k_no,kr_no);
+		logger.info("ans_id : {}", ans_id);
+		return fitservice.chooseFitAns(k_no,kr_no,ans_id);
 	
 	}
 	

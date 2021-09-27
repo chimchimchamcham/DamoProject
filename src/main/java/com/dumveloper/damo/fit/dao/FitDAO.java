@@ -66,12 +66,17 @@ public interface FitDAO {
 
 	int addDir(String k_no, String u_id);
 
+	void upChooseCnt(DamoDTO dto);
 
+	void upGcode(DamoDTO dto);
+	
 	//검색시 필요
 	ArrayList<DamoDTO> serchtitle(String content, int start, int end);
 	ArrayList<DamoDTO> serchcontent(String content, int start, int end);
 	int serchtitledbcnt(String content);
 	int serchcontentdbcnt(String content);
+
+
 
 
 	

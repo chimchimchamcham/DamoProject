@@ -494,14 +494,22 @@ public class FitService {
 				return mav;
 	}
 
-	public ModelAndView chooseFitAns(String k_no, String kr_no) {
+	public ModelAndView chooseFitAns(String k_no, String kr_no, String ans_id) {
 		ModelAndView mav = new ModelAndView();
+		DamoDTO dto = new DamoDTO();
+		dto.setK_no(Integer.parseInt(k_no));
+		dto.setkR_no(kr_no);
+		dto.setU_id(ans_id);
 		String chk = fitdao.chkChoose(k_no);
 		logger.info("" + chk);
 		// logger.info("" + chk.equals("N"));
 		if (chk.equals("N")) {
-			fitdao.chooseFitAns(kr_no);
-			fitdao.upFitAns(k_no);
+			fitdao.chooseFitAns(kr_no);//채택여부 y로
+			fitdao.upFitAns(k_no);//해결여부 y로
+			fitdao.upChooseCnt(dto);//회원정보 채택수 +1
+			logger.info("chooseCnt : {}", dto.getU_chooseCnt());
+			logger.info("G_code : {}", dto.getG_code());
+			fitdao.upGcode(dto);//등급분류코드 바꾸기
 		}
 
 		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
