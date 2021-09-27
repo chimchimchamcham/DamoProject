@@ -64,9 +64,10 @@
             <span>@</span>
         </div>
         <select class="col-3 form-control m-1" id="emailand" name="emailand">
-                <option>google.com</option>
-                <option>daum.com</option>
-                <option>naver.com</option>
+        		<option value=''>---선택---</option>
+                <option value="google.com">google.com</option>
+                <option value="daum.com">daum.com</option>
+                <option value="naver.com">naver.com</option>
         </select>
         <div class="matchornotemail col-1 display-5 text-right pt-3"></div>
     </div>
@@ -216,20 +217,23 @@
      	   
         })
         
+        //이메일 입력칸에 입력했을때
        $(document).on("focusout focuson keyup","#email", function() {
         	var x = $("#email").val();
         	var email = x;
         	
-       if ($("#emailand").val()!=null) {
+       if ($("#emailand").val()!=null&&$("#emailand").val()!=''&&x!=null&&x!='') {
     	   
     	   var emailback = $("#emailand").val();
+    	   
      	   $.ajax({
  		      url : './check/matchemail',
  		      type : 'post',
  		      data : {matchemail:email,matcheback:emailback},
  		      dataType : 'json',
  		      success : function(data){
- 		         if (data == 0) {
+ 		    	 console.log(data);
+ 		         if (data === 0) {
  		        	$(".matchornotemail").text('');
  		        	$(".matchornotemail").text('사용가능한 이메일 입니다');
  		        	$(".matchornotemail").css('color','green');
@@ -240,7 +244,7 @@
  						$(".matchornotemail").text('');
 					}
  		        	
-				}else{
+				}else if(data>0){
 					$(".matchornotemail").text('');
  		        	$(".matchornotemail").text('중복된 이메일 입니다');
  		        	$(".matchornotemail").css('color','red');
@@ -252,8 +256,54 @@
  		         console.log(error);
  		      }
  		   });				
-			}	
+			}
         })
+        
+    //이메일 뒤칸에 클릭했을때    
+    $(document).on("focusout focuson click","#emailand", function() {
+        	var x = $("#email").val();
+        	var email = x;
+        	
+       if ($("#emailand").val()!=null&&$("#emailand").val()!=''&&x!=null&&x!='') {
+    	   
+    	   var emailback = $("#emailand").val();
+    	   
+     	   $.ajax({
+ 		      url : './check/matchemail',
+ 		      type : 'post',
+ 		      data : {matchemail:email,matcheback:emailback},
+ 		      dataType : 'json',
+ 		      success : function(data){
+ 		    	 console.log(data);
+ 		         if (data === 0) {
+ 		        	$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('사용가능한 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','green');
+ 		        	$("#emailand").css("border-color","#ced4da");
+					
+ 		        	if (email=='') {
+ 						console.log('email');
+ 						$(".matchornotemail").text('');
+					}
+ 		        	
+				}else if(data>0){
+					$(".matchornotemail").text('');
+ 		        	$(".matchornotemail").text('중복된 이메일 입니다');
+ 		        	$(".matchornotemail").css('color','red');
+ 		        	$("#emailand").css("border-color","red");
+				}
+ 		         
+ 		      },
+ 		      error : function(error){
+ 		         console.log(error);
+ 		      }
+ 		   });				
+			}
+        })
+        
+        
+        
+        
         
         
      $(document).on("focusout focuson keyup","#pw", function() {
@@ -318,6 +368,66 @@
         
         
     });
+   
+	//아이디 체크
+	var id = $(".matchornotid").text();
+	var id_endnumcheck = $(".dont_use_englishandnum").text();
+	//닉네임 체크
+	var nink =$(".matchornotnink").text();
+	//이메일 체크
+	var email = $(".matchornotemail").text();
+	//비밀번호 체크
+	var pass = $(".matchornotpw").text();
+	
+    
+    
+    $(document).on("click","#jointocheck", function() {
+    	
+    	//아이디 체크
+    	 id = $(".matchornotid").text();
+    	 id_endnumcheck = $(".dont_use_englishandnum").text();
+    	//닉네임 체크
+    	 nink =$(".matchornotnink").text();
+    	//이메일 체크
+    	 email = $(".matchornotemail").text();
+    	//비밀번호 체크
+    	 pass = $(".matchornotpw").text();
+    	
+    	//아이디 중복 체크
+    	if (id=='사용가능한 아이디 입니다'&&id_endnumcheck!='영어,숫자만 입력할수 있습니다') {
+			
+			
+			//닉네임 중복 체크
+	    	if (nink=='사용가능한 닉네임 입니다') {
+				
+				
+		    	//이메일 중복 체크
+		    	if (email=='사용가능한 이메일 입니다') {
+					
+					//비밀번호 체크
+					if (pass=='비밀번호가 일치합니다') {
+			    		
+					}else{
+						alert('비밀번호를 체크 해주세요');
+						return false;
+					}
+					
+				}else{
+					alert('이메일를 체크 해주세요');
+					return false;
+				}
+				
+			}else{
+				alert('닉네임를 체크 해주세요');
+				return false;
+			}
+			
+		}else{
+			alert('아이디를 체크 해주세요');
+			return false;
+		}
+    })
+    
     
     
     var msg="${msg}";
