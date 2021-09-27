@@ -80,8 +80,9 @@
 	</select>
 
 	<select id="dbnotify" resultType="damo">
-select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2_name,c.c_name c_name from notify n,(SELECT n_no,n_receiveid,n_sendid FROM (select row_number() over (order by n_no desc)rnum,n_no,n_receiveid,n_sendid from notify)where rnum BETWEEN #{param1} and #{param2}),his_notify hn,code c,n1_code n1,n2_code n2
-		where n.n_no = hn.hn_no and hn.hn_code = c.c_code and n.n1_code = n1.n1_code and n.n2_code = n2.n2_code and n1.n1_code = n2.n1_code order by n_no desc
+		select  A.n_no,A.n_receiveid,A.n_sendid,n1.n1_name,n2.n2_name,c.c_name from
+(select rownum as rnum,n_no,n_receiveid,n_sendid,n1_code,n2_code,n_dt from notify,his_notify where notify.n_no = his_notify.hn_no order by n_no desc )A,his_notify hn,code c,n1_code n1,n2_code n2
+where A.n_no = hn.hn_no and hn.hn_code = c.c_code and A.n1_code = n1.n1_code and A.n2_code = n2.n2_code and n1.n1_code = n2.n1_code and  A.rnum BETWEEN #{param1} and #{param2} order by n_no desc
 	</select>
 	
 	<select id="dbblack" resultType="damo">

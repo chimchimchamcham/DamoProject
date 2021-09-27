@@ -757,6 +757,9 @@ function userlistCall(page){//1
    function notifylistPrint(list){
    	   var content = "";
    	   for(var i = 0; i<list.length; i++){
+   		   
+   		   
+   		   
    	      content += "<tr id="+list[i].n_no+">";
    	      content += "<td class='n_no'>"+list[i].n_no+"</td>";
    	      content += "<td>"+list[i].n_receiveid+"</td>";
