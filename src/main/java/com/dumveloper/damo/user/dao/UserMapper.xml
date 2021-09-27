@@ -16,7 +16,9 @@
 	</select>
 
 	<select id="dbblacklist" resultType="hashmap">
-		SELECT U_ID,TO_CHAR(B_ENDDT,'YYYY-MM-DD')AS ENDTIME,B_CONTENT FROM BLACKLIST WHERE U_ID = #{param1}
+		SELECT B.U_ID ,TO_CHAR(B.B_ENDDT,'YYYY-MM-DD') AS ENDTIME ,B.B_CONTENT 
+FROM BLACKLIST B,(SELECT U_ID, MAX(B_ENDDT) B_ENDDT FROM BLACKlIST GROUP BY U_ID) BM
+WHERE B.U_ID = BM.U_ID AND B.B_ENDDT = BM.B_ENDDT AND B.U_ID = #{param1}
 	</select>
 
 	<select id="dbfilename" resultType="string">
