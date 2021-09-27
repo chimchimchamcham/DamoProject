@@ -513,10 +513,10 @@ public String addDir(String k_no, String u_id) {
 		
 		int success = fitdao.addDir(k_no, u_id);
 		logger.info("success : {}",success);
-		String msg = "failed";
+		String msg = "내 사전 추가에 실패하였습니다.";
 		
 		if(success>0) {
-			msg = "add success";
+			msg = "내 사전에 추가되었습니다.";
 		}
 		return msg;
 	}
@@ -525,10 +525,10 @@ public String addDir(String k_no, String u_id) {
 		
 		int success = fitdao.delDir(k_no, u_id);
 		logger.info("success : {}",success);
-		String msg = "failed";
+		String msg = "내 사전에서 삭제를 실패하였습니다.";
 		
 		if(success>0) {
-			msg = "delete success";
+			msg = "내 사전에서 삭제되었습니다.";
 		}
 		return msg;
 	}

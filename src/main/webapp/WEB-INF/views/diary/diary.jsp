@@ -404,7 +404,7 @@ a:hover {
 								<thead>
 									<tr>
 										<th>운동명</th>
-										<th>운동시간</th>
+										<th>운동시간(분)</th>
 										<th colspan="2">소모 칼로리</th>
 									</tr>
 								</thead>
