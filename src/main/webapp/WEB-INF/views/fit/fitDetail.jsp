@@ -119,26 +119,18 @@
 				</div>
 			</c:if>
 		</c:forEach>
-
-<<<<<<< HEAD
+<hr/>
 		<div class="userInfo container mt-0 mb-0">
 		
 			<div class="row">
-			<hr/>
+			
 				<div class="col-sm-6 float-left p-0 text-left">
 				<img class="userGrade" src="resources/img/${bean.g_fileName }.png" alt="${bean.g_fileName }">
-			<a href="myPage?u_id=${bean.u_id }" style="color:black;">${bean.u_id }</a>
+			<a href="myPage?u_id=${bean.u_id }" style="color:black;">${bean.u_nick }</a>
 			</div>
 			
 			<div class="col-sm-6 float-right text-right">
 			${bean.k_date } | 조회수 ${bean.k_view }
-=======
-		<div class="userInfo container mt-4 mb-3">
-			<a href="myPage?u_id=${bean.u_id }">${bean.u_nick }</a> <img
-				class="userGrade" src="resources/img/${bean.g_fileName }.png"
-				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
->>>>>>> 316bc53e9c4ffd012bbbc0fc573f2b0a26b62324
-			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
 				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
 						onclick="href">추가</button> -->
