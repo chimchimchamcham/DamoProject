@@ -45,6 +45,7 @@ public class UserController {
 		//블랙리스트 여부
 		HashMap<Object, String> blacklistcheck = service.check(id);
 		//블랙리스트랑 일치하는 아이디가 있으면
+		logger.info("blacklistcheckYN : {}", blacklistcheck == null?"null":"notnull");
 	if (blacklistcheck!=null) {
 		
 		logger.info("blacklistcheck:{}",blacklistcheck);

@@ -14,7 +14,7 @@
 
     <div class="container mt-3">
         <div class="d-flex justify-content-between mb-3">
-            <div class="p-2">많이본 Q&A</div>
+            <div class="p-2">추천 Q&A</div>
             <button id="fitWriteForm" type="button" class="btn btn-primary rounded-pill pl-3 pr-3 mr-5" style="width:100px">질문하기</button>
         </div>
 
@@ -98,30 +98,6 @@
       }
 </style>
 <script>
-//무한 스크롤
-$(window).scroll(function(){
-    //스크롤한 px
-    var scrollTop = $(this).scrollTop();
-    //console.log('scrollTop',scrollTop);
-    //보여지는 세로 높이
-    var innerHeight = $(this).innerHeight();
-    //console.log('innerHeight',innerHeight);    
-    //페이지 자체의 높이
-    var height = $(document).height();
-    //console.log('height',height);
-
-    //console.log('scrollTop+innerHeight',scrollTop+innerHeight);
-
-    if(scrollTop+innerHeight>=height){
-        /* var content = "";
-        content += '<div id="spinner" style="text-align: center;">';
-        content += '<div class="spinner-border text-primary m-5"></div>';
-        content += '</div>';    
-        $("#newFitList").append(content); */
-        newFitListCall(cnt, category);
-    }
-    
-});
 
 //최신 지식핏 목록 불러오기
 
@@ -188,7 +164,7 @@ function newFitListCall(cnts, category){
 	        if(data.success && data.listSize>0){
 	        	cnt++;
 	        	console.log('cnt',cnt);
-	        	$("#spinner").remove();
+	        	//$("#spinner").remove();
 	        }
 	    },
 	    error:function(e){
@@ -249,6 +225,30 @@ $("#fitWriteForm").on("click",function(){
 	location.href="fitWriteForm";
 });
 
+//무한 스크롤
+$(window).scroll(function(){
+    //스크롤한 px
+    var scrollTop = $(this).scrollTop();
+    //console.log('scrollTop',scrollTop);
+    //보여지는 세로 높이
+    var innerHeight = $(this).innerHeight();
+    //console.log('innerHeight',innerHeight);    
+    //페이지 자체의 높이
+    var height = $(document).height();
+    //console.log('height',height);
+
+    //console.log('scrollTop+innerHeight',scrollTop+innerHeight);
+
+    if(scrollTop+innerHeight>=height){
+        /* var content = "";
+        content += '<div id="spinner" style="text-align: center;">';
+        content += '<div class="spinner-border text-primary m-5"></div>';
+        content += '</div>';    
+        $("#newFitList").append(content); */
+        newFitListCall(cnt, category);
+    }
+    
+});
 //msg가 있으면 보여주기
 var msg = "${msg}";
 if(msg != ""){
