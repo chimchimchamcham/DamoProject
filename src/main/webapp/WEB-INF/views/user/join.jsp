@@ -38,17 +38,17 @@
     
     <div class="form-group row col-12">
         <label for="id" class="text-left col-2 m-1">아이디:</label>
-        <input type="text" class="col-5 form-control m-1 " id="id" name="id"/>
+        <input type="text" class="col-5 form-control m-1 " id="id" name="id" onkeyup="chkChar(this)"/>
         <div class="dont_use_englishandnum col-3 display-5 text-danger text-center pt-3"></div>
         <div class="matchornotid col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">
         <label for="name" class="text-left col-2 m-1">이름:</label>
-        <input type="text" class="col-5 form-control m-1" name="name">
+        <input type="text" class="col-5 form-control m-1" name="name" id="name" onkeyup="chkChar(this)">
     </div>
     <div class="form-group row col-12">   
         <label for="nick" class="text-left col-2 m-1">닉네임:</label>
-        <input type="text" class="col-7 form-control m-1" id="nick" name="nick">
+        <input type="text" class="col-7 form-control m-1" id="nick" name="nick" onkeyup="chkChar(this)">
         <div class="matchornotnink col-1 display-5 text-right pt-3"></div>
     </div>
     <div class="form-group row col-12">  
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group row col-12"> 
         <label for="email" class="text-left col-2 m-1">이메일:</label>
-        <input type="text" class="col-4 form-control m-1" id="email" name="email">
+        <input type="text" class="col-4 form-control m-1" id="email" name="email" onkeyup="chkChar(this)">
         <div class="input-group-append">
             <span>@</span>
         </div>
@@ -106,7 +106,25 @@
 <script type="text/javascript">
     // 입력을 제한 할 특수문자의 정규식
     var checktext  = /^[a-zA-Z0-9]*$/ig;
+    var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+    	
+    //한글 입력시 제거
+    	$( 'input#id' ).on("blur keyup", function() {
+    		$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) );
+    	});
     
+    
+    
+    //아이디,이름,닉네임,이메일 특수문자 제거
+  function chkChar(obj){
+    var RegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;	//정규식 구문
+    if (RegExp.test(obj.value)) {
+      // 특수문자 모두 제거    
+      obj.value = obj.value.replace(RegExp , '');
+    }
+  }
+
+
     
     
     
