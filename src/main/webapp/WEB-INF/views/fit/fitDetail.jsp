@@ -107,8 +107,7 @@
 			</c:forEach>
 		</div>
 		<c:forEach items="${qPhoto }" var="link">
-			<c:if test="${link.ki_imgYN eq 'N' }">
-				${ link.ki_name}
+			<c:if test="${link.ki_imgYN eq 'N' }">				
 				<div id="qVideo">
 					<iframe id="video"
 						src="https://www.youtube.com/embed/${link.ki_name }"
@@ -373,7 +372,7 @@
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
-								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'">
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'&ans_id=${ans.u_id}'">
 								<span class="container fitChoose"> <img class="fitChoose"
 									alt="fitChoose" src="resources/img/fitChoose.png">채택하기
 							</span>
