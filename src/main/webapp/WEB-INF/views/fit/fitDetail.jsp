@@ -120,6 +120,7 @@
 			</c:if>
 		</c:forEach>
 
+<<<<<<< HEAD
 		<div class="userInfo container mt-0 mb-0">
 		
 			<div class="row">
@@ -131,6 +132,12 @@
 			
 			<div class="col-sm-6 float-right text-right">
 			${bean.k_date } | 조회수 ${bean.k_view }
+=======
+		<div class="userInfo container mt-4 mb-3">
+			<a href="myPage?u_id=${bean.u_id }">${bean.u_nick }</a> <img
+				class="userGrade" src="resources/img/${bean.g_fileName }.png"
+				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
+>>>>>>> 316bc53e9c4ffd012bbbc0fc573f2b0a26b62324
 			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
 				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
@@ -382,7 +389,7 @@
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
-								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'&ans_id=${ans.u_id}'">
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}&ans_id=${ans.u_id}'">
 								<span class="container fitChoose"> <img class="fitChoose"
 									alt="fitChoose" src="resources/img/fitChoose.png">채택하기
 							</span>
