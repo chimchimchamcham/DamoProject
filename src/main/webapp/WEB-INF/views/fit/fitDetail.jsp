@@ -120,7 +120,7 @@
 		</c:forEach>
 
 		<div class="userInfo container mt-4 mb-3">
-			<a href="myPage?u_id=${bean.u_id }">${bean.u_id }</a> <img
+			<a href="myPage?u_id=${bean.u_id }">${bean.u_nick }</a> <img
 				class="userGrade" src="resources/img/${bean.g_fileName }.png"
 				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
 			<!-- <div class="d-inline-flex float-right"> -->
@@ -372,7 +372,7 @@
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
-								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}'&ans_id=${ans.u_id}'">
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}&ans_id=${ans.u_id}'">
 								<span class="container fitChoose"> <img class="fitChoose"
 									alt="fitChoose" src="resources/img/fitChoose.png">채택하기
 							</span>
