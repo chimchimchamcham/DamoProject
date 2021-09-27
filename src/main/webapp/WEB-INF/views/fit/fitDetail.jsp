@@ -321,7 +321,7 @@
 		<c:forEach items="${answer}" var="ans">
 			<!-- 채택된 답변 -->
 			<c:if test="${ans.kR_chooseYN eq 'Y' }">
-				<div id="choosedAns" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4 bg-light">
+				<div id="choosedAns" class="container mt-3 mb-5 pt-4 pb-5 pl-5 pr-4 bg-light">
 					<!-- 답변자 정보 -->
 					<div class="title">
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
@@ -365,7 +365,7 @@
 							</c:if>
 						</c:forEach>
 					</div>
-					<div>${ans.kR_date }
+					<div style="padding-top:50px;">${ans.kR_date }
 						<!-- <button type="button"
 							class="btn btn-primary float-right ml-3 mt-1">댓글</button> -->
 					</div>
@@ -386,8 +386,8 @@
 						<!-- 채택된 답변이 없을 때 채택하기 생성 -->
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
-								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}&ans_id=${ans.u_id}'">
-								<span class="container fitChoose"> <i class="fitChoose fas fa-check p-0" ></i>채택하기
+								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}&ans_id=${ans.u_id}'" id="coxorBtn">
+								<span class="container fitChoose"> <i class="fitChoose fas fa-check" style="margin-right:-10px"></i>채택하기
 							</span>
 							</a>
 						</c:if>
@@ -400,7 +400,7 @@
 								onclick="notify(this);" style="font-size:15px; font-weight: lighter;">신고</a>
 						</c:if>
 						<c:if test="${ans.u_id eq sessionId}">
-							<span class="float-right "><a href="javascript:void(0)"
+							<span class="float-right " style="font-size:15px; font-weight: lighter;"><a href="javascript:void(0)"
 								class="upd ml-3 mt-1" data-no="${ans.kR_no}"
 								onclick="updateAns(this)">수정</a> |<a
 								href="fitAnsDel?kr_no=${ans.kR_no}&k_no=${bean.k_no}"
@@ -408,7 +408,8 @@
 						</c:if>
 					</div>
 					<br>
-					<div class="aContent container mt-1">${ans.kR_content }</div>
+					
+					<div class="aContent container mt-3">${ans.kR_content }</div>
 					<br>
 					<div class="aPhoto">
 						<c:forEach items="${ aPhoto }" var="photo">
@@ -758,6 +759,17 @@ a.notify, a.del {
 #photoRegister:hover, #linkRegister:hover{
 	opacity:0.7;
 }
+
+#coxorBtn{
+	background-color: #eaeaea;
+	border-radius: 20px;
+	padding:5px 0 10px 0;
+	cursor: pointer;
+}
+
+#coxorBtn:hover{
+	opacity: 0.5;
+}
 </style>
 <script type="text/javascript">
 	//console.log(${bean.k_solutionYN});
@@ -880,7 +892,7 @@ a.notify, a.del {
 		} else if (flag == 'change') {
 			/* $("#goAnsForm h3").html("답변을 채택해 주세요!"); */
 			$("#title").html(
-					'<h3 class="titleTxt">' + loginNick
+					'<h3 class="titleTxt" style="font-size: 23px; color:#424242">' + loginNick
 							+ '님, 답변을 채택해 주세요!</h3>답변 채택 부탁드립니다!');
 			$("#right").css({
 				"display" : "none"
