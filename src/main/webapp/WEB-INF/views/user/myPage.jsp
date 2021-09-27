@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +34,7 @@
 				<div class="row">
 					<span id="n1_code" class="container pr-0 mr-0 col-md-4">신고할
 						사용자</span> <span id="ntfTitle" class="container pl-0 pr-0 ml-0 col-md-4"
-						style="text-align: left">${dto.u_nick }</span> <span id="n2_code"
+						style="text-align: left">${dto.u_nick}</span> <span id="n2_code"
 						class="container pl-0 form-group col-md-4"> <select
 						name="n2_code" class="form-control " style="width: 150px">
 							<option value="" selected>신고분류 선택</option>
@@ -72,7 +73,9 @@
                    <c:if test="${dto.u_fileName ne 'default-profile.png' }">
                       <img id="profileTopImg" class="rounded-circle" src="/photo/${dto.u_fileName }">
                    </c:if>
-                    <div id="profileTopNick">${dto.u_nick }</div>
+                    <div id="profileTopNick">${fn:substring(dto.u_nick,0,8) }
+                    	<c:if test="${fn:length(dto.u_nick) > 8}">...</c:if>
+                    </div>
                     <c:if test="${sessionScope.loginId eq dto.u_id }">
                        <button id="userInfoUpdateBtn" type="button" class="btn btn-secondary btn-sm">수정</button>
                     </c:if>
@@ -187,11 +190,11 @@
                                           <c:if test="${myFit.k_solutionYN eq 'Y'}"> text-success</c:if>
                                           <c:if test="${myFit.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
                                        </span>
-                                       <span class="title">${myFit.k_title }</span>
+                                       <span class="title">${fn:substring(myFit.k_title,0,35) }<c:if test="${fn:length(myFit.k_title) > 35}">...</c:if></span>
                                        <span class="category text-secondary float-right">${myFit.c_name }</span>
                                    </div>
                                    <div class="itemsBottom container pt-2">
-                                       <p class="text-secondary">${myFit.k_content }</p>
+                                       <p class="text-secondary">${fn:substring(myFit.k_content,0,70) }<c:if test="${fn:length(myFit.k_content) > 70}">...</c:if></p>
                                    </div>
                                </div>
                             </c:forEach>      
@@ -202,7 +205,7 @@
                                   <c:if test="${myAns.kR_chooseYN eq 'Y'}"> solution</c:if>" onclick="location.href='fitDetail?k_no=${myAns.k_no}'">
                                    <div class="itemsTop container pt-3">
                                        <span class="text-secondary">Q. </span>
-                                       <span class="title text-secondary">${myAns.k_title }</span>
+                                       <span class="title text-secondary">${fn:substring(myAns.k_title,0,35) }<c:if test="${fn:length(myAns.k_title) > 35}">...</c:if></span>
                                        <span class="category text-secondary float-right">${myAns.c_name}</span>
                                    </div>
                                    <div class="itemsBottom container pt-2">
@@ -210,7 +213,7 @@
                                           <c:if test="${myAns.kR_chooseYN eq 'Y'}"> text-success</c:if>
                                           <c:if test="${myAns.kR_chooseYN ne 'Y'}"> text-primary</c:if>">A. 
                                        </span>
-                                       <span>${myAns.kR_content }</span>
+                                       <span>${fn:substring(myAns.kR_content,0,70) }<c:if test="${fn:length(myAns.kR_content) > 70}">...</c:if></span>
                                    </div>
                                </div>
                            </c:forEach>
@@ -225,11 +228,11 @@
                                           <c:if test="${myDir.k_solutionYN eq 'Y'}"> text-success</c:if>
                                           <c:if test="${myDir.k_solutionYN ne 'Y'}"> text-primary</c:if>">Q. 
                                        </span>
-                                       <span class="title">${myDir.k_title }</span>
+                                       <span class="title">${fn:substring(myDir.k_title,0,35) }<c:if test="${fn:length(myDir.k_title) > 35}">...</c:if></span>
                                        <span class="category text-secondary float-right">${myDir.c_name }</span>
                                    </div>
                                    <div class="itemsBottom container pt-2">
-                                       <p class="text-secondary">${myDir.k_content }</p>
+                                       <p class="text-secondary">${fn:substring(myDir.k_content,0,70) }<c:if test="${fn:length(myDir.k_content) > 70}">...</c:if></p>
                                    </div>
                                </div>
                             </c:forEach> 
@@ -286,11 +289,15 @@
         top:350px;
         left:175px;
     }
+    #profileTopIntro{
+    	overflow-y:scroll;
+    	height:150px;
+    }
 
     /* 테이블 프로필 */
     #profileTable{
         height:200px;
-      margin-top:80px;
+      margin-top:30px;
     }
     
     #profileTable table{
