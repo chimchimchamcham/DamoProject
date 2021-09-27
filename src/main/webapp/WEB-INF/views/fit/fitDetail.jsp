@@ -1252,7 +1252,9 @@ a.notify, a.del {
 						console.log('썸네일 등록');
 						if (ansOrUp == 0) {
 							//기존의 썸네일을 삭제
-							$("#imageWrap").empty();
+							if($("#photo").val()!=""){
+								$("#imageWrap").empty();
+							}
 
 							//썸네일 등록
 							var files = e.target.files;
