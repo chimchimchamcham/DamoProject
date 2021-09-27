@@ -121,9 +121,9 @@
 		</c:forEach>
 
 		<div class="userInfo container mt-4 mb-3">
-			<a href="myPage?u_id=${bean.u_id }">${bean.u_id }</a> <img
-				class="userGrade" src="resources/img/${bean.g_fileName }.png"
-				alt="${bean.g_fileName }"> ${bean.k_date } | 조회수 ${bean.k_view }
+			<a href="myPage?u_id=${bean.u_id }">${bean.u_id }</a>
+			<img class="userGrade" src="resources/img/${bean.g_fileName }.png" alt="${bean.g_fileName }">
+			${bean.k_date } | 조회수 ${bean.k_view }
 			<!-- <div class="d-inline-flex float-right"> -->
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
 				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
@@ -515,7 +515,7 @@
 }
 
 .titleTxt {
-	font-size: 2.3rem;
+	font-size: 30px;
 	font-weight: 700;
 	margin-right: 20px;
 	vertical-align: middle;
@@ -541,8 +541,17 @@
 }
 
 #category {
-	width: 120px;
+	width: 100px;
 	vertical-align: middle;
+	background-color: #eaeaea;
+	border-radius: 30px;
+	padding: 3px 10px;
+	font-size: 13px;
+	color: #666;
+}
+
+#qContent{
+	font-size: 17px;
 }
 
 #photo {
