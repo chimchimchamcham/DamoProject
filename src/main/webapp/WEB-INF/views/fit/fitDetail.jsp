@@ -1259,7 +1259,7 @@ a.notify, a.del {
 							console.log(e.target.files);
 							console.log(e.target.files.length);
 
-							if (e.target.files.length >= 4) {
+							if (e.target.files.length >= 5) {
 								alert("최대 4장까지만 업로드 가능합니다.");
 								$("#photo").val("");
 							} else {
@@ -1305,7 +1305,7 @@ a.notify, a.del {
 
 						} else if (ansOrUp == 1) {
 							//imageWrap에 자식요소가 4개 이상 있을 경우 업로드 막기
-							if ($("#imageWrap").children().length >= 4) {
+							if ($("#imageWrap").children().length >= 5) {
 								alert("최대 4장까지만 업로드 가능합니다.");
 								$("#photo").val("");
 							} else {
