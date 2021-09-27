@@ -74,7 +74,6 @@
 
 			<c:set var="fitId" value="${bean.u_id}" />
 			<c:set var="sessionId" value="${sessionScope.loginId}" />
-
 			<c:if test="${bean.k_solutionYN eq 'N' }">
 				<c:if test="${fitId eq sessionId }">
 					<div class="d-inline-flex float-right">
@@ -85,6 +84,7 @@
 					</div>
 				</c:if>
 			</c:if>
+			<hr/>
 			<!-- 유저와 글 작성자가 다를 경우 -->
 			<c:if test="${fitId ne sessionId and sessionId ne null}">
 				<div class="d-inline-flex float-right">
@@ -119,8 +119,8 @@
 				</div>
 			</c:if>
 		</c:forEach>
-<hr/>
-		<div class="userInfo container mt-0 mb-0">
+
+		<div class="userInfo container mt-0 mb-0 pt-4">
 		
 			<div class="row">
 			
@@ -134,8 +134,10 @@
 			<c:if test="${sessionId ne bean.u_id and sessionId ne null}">
 				<!-- <button type="button" class="btn btn-primary float-right ml-3 mt-1"
 						onclick="href">추가</button> -->
-				<span class="float-right ml-3 mt-1" onclick="dirAddDel()"><a><img
-						id="dir" src="resources/img/dir.png" alt="dir"></a><span></span></span>
+				<span class="float-right ml-4 mt-1" onclick="dirAddDel()"><a><i class="fas fa-book-open fa-lg" id="dir"></i>
+				</a>
+				<span></span>
+				</span>
 			</c:if>
 			<!-- </div> -->
 		</div>
@@ -193,37 +195,37 @@
 		</c:otherwise>
 	</c:choose>
 
-	<div id="goAnsForm" class="container p-3 bg-light" >
+	<div id="goAnsForm" class="container bg-light my-4" >
 		<div class="row">
 			<div id="title" class="col-md-8">
-				<h3 class="titleTxt">${sessionScope.loginNick }님,답변해주세요!</h3>
-				채택수를 채워서 등급을 올려보세요!
+				<h3 class="titleTxt" style="font-size: 23px; color:#424242">${sessionScope.loginNick }님, 답변해주세요!</h3>
+				채택수를 채워서 등급을 올려보세요
 			</div>
-			<div id="right" class="col-md-4">
+			<div id="right" class="col-md-4 float-right text-right">
 				<button type="button" id="ansBtn"
-					class="btn btn-primary float-right ml-3 mt-1"
+					class="btn btn-primary float-right mr-5 mt-4"
 					onclick="openAnsForm()">답변하기</button>
 			</div>
 		</div>
 
 		<div id="ansForm" class="container">
-			<hr>
+
 			<form name="fitAnsWrite" action="fitAnsWrite?k_no=${bean.k_no }"
 				method="post" enctype="multipart/form-data">
 
 
-				<div id="fitContent" class="container pt-4 pl-5">
+				<div id="fitContent" class="container pt-4 pl-5 mb-4">
 					<div class="d-inline-flex"></div>
 					<div class="d-inline-flex float-left">
 						<label for="photo" class="mr-3"><img
 							src="resources/img/image.png" alt="사진등록" width="30px"
-							height="30px" id="photoRegister"></label> <input type="file"
+							height="30px" id="photoRegister" style="cursor: pointer;"></label> <input type="file"
 							name="photo" multiple id="photo"
 							accept="image/gif,image/jpeg,image/png,image/jpg">
 						<!-- 사진 -->
 						<a class="mr-3" data-toggle="modal" data-target="#myModal"><img
 							src="resources/img/link.png" alt="링크등록" width="30px"
-							height="30px" id="linkRegister"></a>
+							height="30px" id="linkRegister"  style="cursor: pointer;"></a>
 
 						<!-- 링크를 입력하는 모달 -->
 						<!-- The Modal -->
@@ -254,7 +256,7 @@
 
 					<hr />
 
-					<div id="contentWrap">
+					<div id="contentWrap" >
 						<!-- 글이 들어간다 -->
 						<textarea id="k_content" name="k_content"
 							placeholder="질문과 관련된 답변 등록 부탁드립니다.
@@ -263,8 +265,8 @@
             "></textarea>
 						<!-- 내용 -->
 						<!-- 글자수 카운트 -->
-						<div id="textCountWrap">
-							<span id="textCount">0</span><span>/1000</span>
+						<div id="textCountWrap" >
+							<span id="textCount" class="mb-3">0</span><span>/1000</span>
 						</div>
 					</div>
 					<hr />
@@ -311,15 +313,15 @@
 
 	<!-- 답변이 있을 때  -->
 	<c:if test="${bean.k_replyCnt != 0 }">
-		<div class="container">
-			<span id="a">A.</span><span class="titleTxt">${bean.k_replyCnt}개
+		<div class="container mt-4">
+			<span id="a" >A.</span><span class="titleTxt">${bean.k_replyCnt}개
 			</span>
 		</div>
 
 		<c:forEach items="${answer}" var="ans">
 			<!-- 채택된 답변 -->
 			<c:if test="${ans.kR_chooseYN eq 'Y' }">
-				<div id="choosedAns" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4">
+				<div id="choosedAns" class="container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4 bg-light">
 					<!-- 답변자 정보 -->
 					<div class="title">
 						<img class="ansGrade" src="resources/img/${ans.g_fileName }.png"
@@ -327,8 +329,9 @@
 							href="myPage?u_id=${ans.u_id }"> ${ans.u_nick }</a>님의 답변</span>
 						<!-- <a href="#"	class="notify float-right ml-3 mt-1">신고</a> -->
 					</div>
+					<hr/>
 					<!-- 답변 내용 -->
-					<div class="aContent ">${ans.kR_content }</div>
+					<div class="aContent bg-light">${ans.kR_content }</div>
 
 					<br>
 					<div class="aPhoto">
@@ -371,7 +374,9 @@
 			<!-- 채택되지 않은 답변들 -->
 
 			<c:if test="${ans.kR_chooseYN eq 'N' and ans.kR_blindYN eq 'N'}">
-				<div class="ansContainer container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4 ">
+			
+				<div class="ansContainer container mt-3 mb-3 pt-4 pb-4 pl-5 pr-4 bg-light">
+				
 					<!-- 답변자 정보 -->
 					<div class="hhh">
 
@@ -382,18 +387,17 @@
 						<c:if test="${bean.k_solutionYN eq 'N' && bean.u_id eq sessionId}">
 							<a
 								onclick="location.href='chooseFitAns?kr_no=${ans.kR_no}&k_no=${bean.k_no}&ans_id=${ans.u_id}'">
-								<span class="container fitChoose"> <img class="fitChoose"
-									alt="fitChoose" src="resources/img/fitChoose.png">채택하기
+								<span class="container fitChoose"> <i class="fitChoose fas fa-check p-0" ></i>채택하기
 							</span>
 							</a>
 						</c:if>
 
 						<c:if test="${ans.u_id ne sessionId and sessionId ne null}">
+						<hr/>
 							<a class="notify float-right ml-3 mt-1" data-toggle="modal"
 								data-target="#notify"
 								title="${ans.kR_no},${ans.u_id},${ans.u_nick}"
-								onclick="notify(this);">신고</a>
-							<!-- <a href="#" class="notify float-right ml-3 mt-1">신고</a> -->
+								onclick="notify(this);" style="font-size:15px; font-weight: lighter;">신고</a>
 						</c:if>
 						<c:if test="${ans.u_id eq sessionId}">
 							<span class="float-right "><a href="javascript:void(0)"
@@ -482,10 +486,18 @@
 
 #goAnsForm {
 	border: 1px solid #D8D8D8;
-	font-size: 17px;
+	font-size: 16px;
+	
 	/* height: 150px; */
 	/* display: none; */
 }
+
+#title{
+font-size: 15px;
+padding:20px 0 20px 60px;
+color:#A4A4A4
+}
+
 
 #ansForm {
 	display: none;
@@ -497,12 +509,13 @@
 	/* display: none; */
 }
 
+
 #fitTitle .row {
 	vertical-align: middle;
 }
 
 #choosedAns {
-	border: 1px solid #5cb85c;
+	border: 1px solid #D8D8D8;
 	border-top: 5px solid #5cb85c;
 	transition: 0.5s;
 }
@@ -523,7 +536,7 @@
 	vertical-align: middle;
 }
 
-.titleTxt {
+.titleTxt, .hhh {
 	font-size: 27px;
 	font-weight: 700;
 	margin-right: 20px;
@@ -587,10 +600,13 @@
 	position: relative;
 }
 
-#dir {
-	width: 50px;
-	height: 50px;
+#dir{
+	cursor: pointer;
 }
+
+/* #dir:hover{
+	opacity:0.9;
+} */
 
 /* .userInfo{
 	height: 20px;
@@ -601,8 +617,7 @@
 }
 
 .ansGrade {
-	width: 45px;
-	height: 45px;
+	width: 30px;
 	vertical-align: middle;
 }
 
@@ -739,6 +754,10 @@ a.notify, a.del {
 #uploadFile {
 	display: none;
 }
+
+#photoRegister:hover, #linkRegister:hover{
+	opacity:0.7;
+}
 </style>
 <script type="text/javascript">
 	//console.log(${bean.k_solutionYN});
@@ -789,8 +808,10 @@ a.notify, a.del {
 				console.log(data);
 				if (data == '+') {
 					$("#dir").parent().next().html('+');
+					$("#dir").css("opacity","0.5");
 				} else if (data == '-') {
 					$("#dir").parent().next().html('-');
+					$("#dir").css("opacity","0.9");
 				}
 			},
 			error : function(e) {
@@ -816,7 +837,7 @@ a.notify, a.del {
 					console.log(data);
 					if (data != 'failed') {
 						$("#dir").parent().next().html('-');
-
+						$("#dir").css("opacity","0.9");
 					}
 					alert(data);
 
@@ -837,6 +858,7 @@ a.notify, a.del {
 					console.log(data);
 					if (data != 'failed') {
 						$("#dir").parent().next().html('+');
+						$("#dir").css("opacity","0.5");
 					}
 					alert(data);
 				},
@@ -884,17 +906,17 @@ a.notify, a.del {
 		if (flag == 'true') {//답변글 수정을 눌렀을 경우			
 			$("#right")
 					.append(
-							'<button id="submit" type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansUpdate()">답변수정</button>');
+							'<button id="submit" type="submit" class="btn ans btn-primary float-right mr-5 mt-4" onclick="ansUpdate()">답변수정</button>');
 			$("#right")
 					.append(
-							'<button type="button" class="btn ans btn-outline-primary float-right ml-3 mt-1" onclick="closeAnsForm()">수정취소</button>');
+							'<button type="button" class="btn ans btn-outline-primary float-right mr-2 mt-4" onclick="closeAnsForm()">수정취소</button>');
 		} else {//답변하기를 눌렀을 경우
 			$("#right")
 					.append(
-							'<button id="submit" type="submit" class="btn ans btn-primary float-right ml-3 mt-1" onclick="ansWrite()">답변등록</button>');
+							'<button id="submit" type="submit" class="btn ans btn-primary float-right mr-5 mt-4" onclick="ansWrite()">답변등록</button>');
 			$("#right")
 					.append(
-							'<button type="button" class="btn ans btn-outline-primary float-right ml-3 mt-1" onclick="closeAnsForm()">등록취소</button>');
+							'<button type="button" class="btn ans btn-outline-primary float-right mr-2 mt-4" onclick="closeAnsForm()">등록취소</button>');
 		}
 		//답변글 작성 폼을 보여준다
 		$("#ansForm").css({
