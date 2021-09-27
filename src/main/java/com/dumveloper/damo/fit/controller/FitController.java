@@ -38,16 +38,15 @@ public class FitController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model ,HttpSession session) {
 
-		logger.info("메인 페이지 접속 요청");
 		String page= "main";
 		
 		//로그인 되어있을 때
 		if(session.getAttribute("loginId") != null) {
-			if(session.getAttribute("loginManager").equals('N')) { //일반회원일 경우
-				logger.info("캘린더 페이지 접속 요청");
+			if(session.getAttribute("loginManager").equals("N")) { //일반회원일 경우
+				logger.info("캘린더 페이지 접속 요청"+session.getAttribute("loginManager"));
 				page= "redirect:/calendar";
-			}else { //관리자일 경우
-				logger.info("관리페이지 접속 요청");
+			}else{ //관리자일 경우
+				logger.info("관리페이지 접속 요청"+session.getAttribute("loginManager"));
 				page= "redirect:/gouserlist";
 			}
 		}
