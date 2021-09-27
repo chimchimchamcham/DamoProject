@@ -771,7 +771,7 @@ a.notify, a.del {
 	opacity: 0.5;
 }
 </style>
-<script type="text/javascript">
+<script type="text/javascript" type="text/javascript" charset="utf-8">
 	//console.log(${bean.k_solutionYN});
 	var loginId = "${sessionScope.loginId}";
 	var loginNick = "${sessionScope.loginNick}";

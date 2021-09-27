@@ -47,7 +47,7 @@
 				    </thead>
 				    <tbody>
 				    	<c:forEach items="${list}" var="dto" varStatus="i">
-					      <tr>
+					      <tr class="myPage">
 					        <td>
 					        	<c:if test="${i.count eq 1 }"><img src="resources/img/gold_medal.png" width="30px" height="30px"></c:if>
 					        	<c:if test="${i.count eq 2 }"><img src="resources/img/silver_medal.png" width="30px" height="30px"></c:if>
@@ -76,12 +76,12 @@
 		position : realtive;
 		margin-top : 20px;
 	}
-	tr:hover{
+	.myPage:hover{
 		cursor : pointer;
 	}
 </style>
 <script>
-	$("tr").on("click",function(){
+	$(".myPage").on("click",function(){
 		var u_id = $(this).find("input[type='hidden']").val();
 		console.log("u_id : ",u_id);
 		location.href="myPage?u_id="+u_id;

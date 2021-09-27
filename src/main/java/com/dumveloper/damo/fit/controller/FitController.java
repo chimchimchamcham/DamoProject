@@ -235,7 +235,7 @@ public class FitController {
 		return fitservice.chkDir(k_no,u_id);		
 	}
 	
-	@RequestMapping(value = "/addDir", method = RequestMethod.GET)
+	@RequestMapping(value = "/addDir", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody String addDir(@RequestParam String k_no, @RequestParam String u_id) {
 
 		logger.info("지식핏 사전추가 접속");
@@ -271,7 +271,7 @@ public class FitController {
 	}
 	
 	
-	@RequestMapping(value = "/delDir", method = RequestMethod.GET)
+	@RequestMapping(value = "/delDir", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody String delDir(@RequestParam String k_no, @RequestParam String u_id) {
 
 		logger.info("지식핏 사전제거 접속");
