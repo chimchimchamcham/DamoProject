@@ -38,6 +38,9 @@ a:hover {text-decoration: underline; color: black;}
 	img:hover{
 		cursor: pointer;
 	}
+	textarea{
+	resize: none;
+	}
 </style>
 <body>
     <div class="container-fluid">
@@ -45,10 +48,9 @@ a:hover {text-decoration: underline; color: black;}
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
           <div class="card border-0 shadow rounded-3 my-5">
             <div class="card-body p-4 p-sm-5">
-              <h5 class="card-title text-center fw-light fs-5">비밀번호 찾기</h5>
               <form method="post" action="gojoin" class="row d-flex justify-content-center align-items-center my-3">
                 <div class="row">
-                  <img src="resources/img/logo3.png" class="col-10 mx-auto mb-2" onclick="location.href='./'">
+                  <img src="resources/img/logo3.png" class="col-7 mx-auto mb-2" onclick="location.href='./'">
                 </div>
 
                 <div class="form-check-inline d-flex flex-column w-100">

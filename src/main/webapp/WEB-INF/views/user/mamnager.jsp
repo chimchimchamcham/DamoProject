@@ -289,11 +289,17 @@ $(document).on('click',".notifybody tr",function(){
   	    	content +="<div class='row col-12 p-0'>"
   	    	content +=   "<div class='col-2 p-0'>대분류 코드 </div> <div class='col-5'>"+list[0].n1_name;
   	    	
-	    		if (notify_state!='처리완료') {//처리완료 이 면
+	    		if (notify_state=='접수중') {//접수중 이 면
+		  	    	content +=   "<select name='notifyscope' id='notifyscope' class='float-right' style='width: 11rem' >";
+		   	    	content +=     	"<option value=''>선택</option>";
+		   	    	content +=     	"<option value='HN001' selected>접수중</option>";
+		   	    	content +=     	"<option value='HN002'>처리중</option>";
+		   	    	content += 	 "</select>";
+	    		}else if(notify_state=='처리중'){//처리중 이 면
 		  	    	content +=   "<select name='notifyscope' id='notifyscope' class='float-right' style='width: 11rem' >";
 		   	    	content +=     	"<option value=''>선택</option>";
 		   	    	content +=     	"<option value='HN001'>접수중</option>";
-		   	    	content +=     	"<option value='HN002'>처리중</option>";
+		   	    	content +=     	"<option value='HN002' selected>처리중</option>";
 		   	    	content += 	 "</select>";
 	    		}
 
@@ -312,21 +318,42 @@ $(document).on('click',".notifybody tr",function(){
   	    	content +=	 "<div class='col-12 row p-0'>";
   	    	content +=       "<textarea class='col-12 form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
   	    	content +=   "</div>";
+
+	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
+	        var text = $(notify_jqname).text()
+  	    	
+  	    	if (text=='처리중') {
 	 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
 	 	    		content +=   	`<button type="button"  class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
 	 	    		content +=	"</div>";
-	        content +=  "</div>";	      
-	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
-	        var text = $(notify_jqname).text()
+	 	    		
+	 	    		
+	 	    		
+  	    	}else if(text=='접수중'){
+ 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
+ 	    		content +=   	"<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>";
+ 	    		content +=	"</div>";
+ 	    		
+  	    	}
+	        content +=  "</div>";
+	        
+	        
+
+	        
+	       //팝업창 들어갈때 select에 선택 되게 하는거
 	      if( text == '접수중'){
-	    	$("select option:eq(0)").prop("selected", false);
-	    	$("select option:eq(1)").val("HN001").prop("selected", true);
-		  }else{
+
+		  }else if(text == '처리중'){
 	    	$("select option").attr("selected", false);
 	        $("select option:eq(2)").attr("selected", true);
 	      }
+	        
+	        
 	   $(".modal-body").empty();
 	   $("#notifymyModal .modal-body").append(content);
+	   
+	   
+
 	   
 	   
 		//동적으로 추가한 notifyscope 의 옵션 value값이 바뀌면
@@ -349,13 +376,17 @@ $(document).on('click',".notifybody tr",function(){
 		 	 	 	       
 		 	 	 	       
 		 	 	 	       if (notifystatechange=='HN001') {//접수중
-
+								//접수중이면 버튼 안보이게
 								$(notify_jqname).text('접수중');
-								
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>");
+									
 		 	 	 	       
 							}else if(notifystatechange=='HN002'){//처리중
-
+								//처리중 버튼 보이게
 								$(notify_jqname).text('처리중');
+								$('div.nopopbtn').empty();
+								$('div.nopopbtn').append("<button type='button' class='notifytoblackbtn btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>");
 							}
 		 	 	 	       
 		 	 	 	       
@@ -422,6 +453,8 @@ $(document).on('click',".notifybody tr",function(){
 	   	    	
 	   	    	content +=   "<div class='col-2 my-3 m-1 text-right'>등록날짜 </div> <div class=' my-3 m-1'>"+startedday+"</div>";
 	   	    	content +=   "<div class='col-4 my-3 m-1 text-right'>종료날짜 </div> <div class=' my-3 m-1'>";
+	   	    	
+	   	    	startday = now.getDate()+1;
 	   	    	
 	   	    	if(startmonth<10){
 	   	    		startmonth='0'+startmonth

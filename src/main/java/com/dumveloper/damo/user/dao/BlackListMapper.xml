@@ -12,4 +12,14 @@
 	</insert>
 
 
+	<select id="checkrecbid" resultType="int">
+		SELECT COUNT(U_ID) FROM blacklist WHERE U_ID = #{param1}
+	</select>
+
+	<select id="checkadmin" resultType="int">
+		SELECT COUNT(*) FROM userinfo WHERE U_adminYN = 'Y' and u_id = #{param1}
+	</select>
+
+
+
 </mapper>

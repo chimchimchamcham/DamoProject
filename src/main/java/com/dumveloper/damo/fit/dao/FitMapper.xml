@@ -158,6 +158,19 @@
 		UPDATE knowfit SET k_solutionYN = 'Y' WHERE k_no = #{k_no}
 	</update>
 	
+	<update id="upChooseCnt" parameterType="damo">
+		UPDATE userinfo SET u_chooseCnt = u_chooseCnt+1 WHERE u_id = #{u_id}
+		<selectKey keyColumn="u_chooseCnt" keyProperty="u_chooseCnt" resultType="damo" order="AFTER">
+		SELECT u_chooseCnt FROM	userinfo WHERE u_id = #{u_id}
+		</selectKey>		
+	</update>
+	
+	<update id="upGcode" parameterType="damo">
+		 		UPDATE UserInfo 
+		 		SET g_code =  (select G_CODE from grade WHERE G_STANDARD &lt;= #{u_chooseCnt} AND G_MAXSTANDARD &gt;= #{u_chooseCnt})
+		 		where u_id = #{u_id}
+	</update>
+	
 	<select id="chkDir" resultType="damo">
 		SELECT * FROM Mydir WHERE k_no = #{param1} AND u_id = #{param2}		
 	</select>

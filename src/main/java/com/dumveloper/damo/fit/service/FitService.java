@@ -494,14 +494,22 @@ public class FitService {
 				return mav;
 	}
 
-	public ModelAndView chooseFitAns(String k_no, String kr_no) {
+	public ModelAndView chooseFitAns(String k_no, String kr_no, String ans_id) {
 		ModelAndView mav = new ModelAndView();
+		DamoDTO dto = new DamoDTO();
+		dto.setK_no(Integer.parseInt(k_no));
+		dto.setkR_no(kr_no);
+		dto.setU_id(ans_id);
 		String chk = fitdao.chkChoose(k_no);
 		logger.info("" + chk);
 		// logger.info("" + chk.equals("N"));
 		if (chk.equals("N")) {
-			fitdao.chooseFitAns(kr_no);
-			fitdao.upFitAns(k_no);
+			fitdao.chooseFitAns(kr_no);//채택여부 y로
+			fitdao.upFitAns(k_no);//해결여부 y로
+			fitdao.upChooseCnt(dto);//회원정보 채택수 +1
+			logger.info("chooseCnt : {}", dto.getU_chooseCnt());
+			logger.info("G_code : {}", dto.getG_code());
+			fitdao.upGcode(dto);//등급분류코드 바꾸기
 		}
 
 		mav.setViewName("redirect:/fitDetail?k_no=" + k_no);
@@ -513,10 +521,10 @@ public String addDir(String k_no, String u_id) {
 		
 		int success = fitdao.addDir(k_no, u_id);
 		logger.info("success : {}",success);
-		String msg = "failed";
+		String msg = "내 사전 추가에 실패하였습니다.";
 		
 		if(success>0) {
-			msg = "add success";
+			msg = "내 사전에 추가되었습니다.";
 		}
 		return msg;
 	}
@@ -525,10 +533,10 @@ public String addDir(String k_no, String u_id) {
 		
 		int success = fitdao.delDir(k_no, u_id);
 		logger.info("success : {}",success);
-		String msg = "failed";
+		String msg = "내 사전에서 삭제를 실패하였습니다.";
 		
 		if(success>0) {
-			msg = "delete success";
+			msg = "내 사전에서 삭제되었습니다.";
 		}
 		return msg;
 	}

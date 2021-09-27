@@ -53,6 +53,7 @@ public class UserController {
 		String b_id = blacklistcheck.get("U_ID");
 		String b_content = blacklistcheck.get("B_CONTENT");
 		String b_endtime = blacklistcheck.get("ENDTIME");
+		
 		//블랙리스트 끝나는 시간
 		Date endtime = new SimpleDateFormat("yyyy-MM-dd").parse(b_endtime);
 		SimpleDateFormat newdateformat = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,6 +96,7 @@ public class UserController {
 				session.setAttribute("loginFile",file);//사진경로
 				session.setAttribute("loginNick",nick);//닉네임
 				session.setAttribute("loginManager",manager);//관리자여부Y/N
+				logger.info((String)session.getAttribute("loginManager"));
 				
 			}else {
 				mav.setViewName("/user/login");
@@ -129,6 +131,7 @@ public class UserController {
 			session.setAttribute("loginFile",file);//사진경로
 			session.setAttribute("loginNick",nick);//닉네임
 			session.setAttribute("loginManager",manager);//관리자여부Y/N
+			logger.info((String)session.getAttribute("loginManager"));
 			
 		}else {
 			mav.setViewName("/user/login");

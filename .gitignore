@@ -2,3 +2,4 @@
 .settings/
 target/
 src/test/
+src/main/webapp/WEB-INF/views/user/mamnager.jsp.rej
