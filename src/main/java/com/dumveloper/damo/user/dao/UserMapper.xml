@@ -97,7 +97,7 @@ select distinct n.n_no,n.n_receiveid,n.n_sendid,n1.n1_name n1_name,n2.n2_name n2
 	</select>
 	
 	<select id="notifyallCount" resultType="int">
- 		select count(*) from notify
+ 		select count(*) from notify n,His_Notify h where n.n_no = h.hn_no
 	</select>
 
 	<select id="blackallCount" resultType="int">
