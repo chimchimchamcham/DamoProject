@@ -101,6 +101,8 @@ console.log(whatsherch);
 var Tcnt=0;
 var Ccnt=0;
 
+var dontprint = 0//더이상 불러오는 검색이 없으면 1로 변신
+
 $(window).scroll(function(){
 	//스크롤한 px
     var scrollTop = $(this).scrollTop();
@@ -113,7 +115,7 @@ $(window).scroll(function(){
     //console.log('height',height);
 
     //console.log('scrollTop+innerHeight',scrollTop+innerHeight);
-    if(scrollTop + innerHeight+5 >= height){
+    if(scrollTop + innerHeight+5 >= height&&dontprint==0){
     	newserchListCall(whatsherch,cnt,category);
     }
 });
@@ -129,17 +131,20 @@ $(document).on('click','button',function(){
 	var serch;
 	
 	if (clickbtn=='전체') {
+		dontprint = 0
 		location.href = 'search'+'?content='+'${whatcherch}';
 		cnt = 1;
-		console.log("cnt:",cnt);
+		//console.log("cnt:",cnt);
 		category = '전체';
 		 Tcnt=0;
 		 Ccnt=0;
+		 dontprint = 1
 	}else if(clickbtn=='제목') {
 		$('div.titleallcard').empty();		
 		$('div.contentallcard').empty();
 		cnt = 1;
-		console.log("cnt:",cnt);
+		dontprint = 0
+		//console.log("cnt:",cnt);
 		category = '제목';
 		serch = whatsherch;
 		newserchListCall(serch,cnt,category);
@@ -149,7 +154,8 @@ $(document).on('click','button',function(){
 		$('div.titleallcard').empty();
 		$('div.contentallcard').empty();
 		cnt = 1;
-		console.log("cnt:",cnt);
+		dontprint = 0
+		//console.log("cnt:",cnt);
 		category = '내용';
 		serch = whatsherch;
 		newserchListCall(serch,cnt,category);
@@ -157,6 +163,8 @@ $(document).on('click','button',function(){
 		 Ccnt=0;
 	}	
 });
+
+
 
 //제목 목록을 불러오는 함수 (페이징처리를 위한 cnt, 카테고리)
 function newserchListCall(serch,cnt,category){
@@ -171,11 +179,13 @@ function newserchListCall(serch,cnt,category){
 	    },
 	    dataType:'json',
 	    success:function(data){
-	    	console.log(data);
+/* 	    	console.log(data);
 	        console.log(data.list);
 	        console.log(data.titleSize);
 	        console.log(data.contentSize);
-	        console.log(data.category);
+	        console.log(data.category); */
+	        
+	       if (dontprint==0) {
 	        if (category=='제목') {
 	        	console.log('cnt',cnt);
 				appendtitlelist(data.list,data.titleSize);
@@ -184,7 +194,7 @@ function newserchListCall(serch,cnt,category){
 				appendcontentlist(data.list,data.contentSize);
 			}else if(category=='전체'){
 				
-			}     
+			}}    
 	    },
 	    error:function(e){
 			console.log(e);
@@ -194,7 +204,7 @@ function newserchListCall(serch,cnt,category){
 
 //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
 function appendtitlelist(list,listsize){
-	
+	console.log("list.length:",list.length);
 	var content = "";
 	++Tcnt;
 	if (Tcnt===1) {
@@ -202,7 +212,7 @@ function appendtitlelist(list,listsize){
 		$(".titleallcard").append(content);
 	}	
 	content="";
-	   if (listsize!=0) {
+	   if (listsize!=0&&list.length!=0) {
 		   for(var i = 0; i<list.length; i++){
 		      
 			   content += "<div class='card-group row'>";
@@ -219,8 +229,8 @@ function appendtitlelist(list,listsize){
 	   	   content +="<div class='card-body'>";					
 	   	   content +=	"<div class='card-text'>검색한 결과가 없습니다</div>";
 	   	   content +="</div>";
+	   		dontprint = 1
 	   }
-	   
 			   ++cnt;
 			   console.log("cnt:",cnt);
 	   $(".titleallcard").append(content);
@@ -230,6 +240,7 @@ function appendtitlelist(list,listsize){
 
 //리스트 뿌려주는 ajax에는 c태그 안먹힘= 블랙리스트
 function appendcontentlist(list,listsize){   
+		console.log("list.length:",list.length);
 		var content = "";
 		++Ccnt;
 		if (Ccnt===1) {
@@ -238,7 +249,7 @@ function appendcontentlist(list,listsize){
 		}	
 	   
 		var content = "";
-	  if (listsize!=0) {
+	  if (listsize!=0&&list.length!=0) {
 	   for(var i = 0; i<list.length; i++){
 		   
 		   content += "<div class='card-group row'>";
@@ -255,6 +266,7 @@ function appendcontentlist(list,listsize){
 	   	   content +="<div class='card-body'>";					
 	   	   content +=	"<div class='card-text'>검색한 결과가 없습니다</div>";
 	   	   content +="</div>";
+	   		dontprint = 1
 	   }
 		   ++cnt;
 		   console.log("cnt:",cnt);
