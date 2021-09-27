@@ -874,6 +874,8 @@ li:hover {
 		      event.returnValue = false;
 		  }
 		}
+	
+	$("input[name=exe_time]").val()
 	//-----------------//
 </script>
 </html>
