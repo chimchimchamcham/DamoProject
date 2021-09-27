@@ -312,14 +312,23 @@ $(document).on('click',".notifybody tr",function(){
   	    	content +=	 "<div class='col-12 row p-0'>";
   	    	content +=       "<textarea class='col-12 form-control py-4' style='resize: none; height:100px' readonly>"+list[0].n_content+"</textarea>";
   	    	content +=   "</div>";
+
+	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
+	        var text = $(notify_jqname).text()
+  	    	
+  	    	if (text=='처리중') {
 	 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
 	 	    		content +=   	`<button type="button"  class="notifytoblackbtn btn text-light btn-danger" data-dismiss="modal">블랙리스트 등록</button>`;
 	 	    		content +=	"</div>";
+  	    	}else if(text=='접수중'){
+ 	    		content +=   "<div class='nopopbtn col-12 row d-flex justify-content-end'>";
+ 	    		content +=   	"<button type='button' style='visibility: hidden;' class='btn text-light btn-danger'>블랙리스트 투명 블록</button>";
+ 	    		content +=	"</div>";
+  	    	}
 	        content +=  "</div>";
 	        
 	        
-	        var notify_jqname =  "#"+notifyval+"\t"+'td.state';
-	        var text = $(notify_jqname).text()
+
 	        
 	       //팝업창 들어갈때 select에 선택 되게 하는거
 	      if( text == '접수중'){
@@ -365,7 +374,7 @@ $(document).on('click',".notifybody tr",function(){
 									
 		 	 	 	       
 							}else if(notifystatechange=='HN002'){//처리중
-								//접수중이면 버튼 보이게
+								//처리중 버튼 보이게
 								$(notify_jqname).text('처리중');
 								$('div.nopopbtn').empty();
 								$('div.nopopbtn').append("<button type='button' class='notifytoblackbtn btn text-light btn-danger' data-dismiss='modal'>블랙리스트 등록</button>");
