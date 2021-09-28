@@ -114,24 +114,24 @@ where A.n_no = hn.hn_no and hn.hn_code = c.c_code and A.n1_code = n1.n1_code and
 			select * from blacklist b,code c where b.b_no = #{param1} and b.b_code = c.c_code
 	</select>
 
-	<select id="myPageUserInfo" resultType="damo">
-		SELECT u_id, u_pw, u_name, u_email, u_nick, u_age, u_weight, u_tarweight, u_height, u_gender, u_intro, u_filename, u_choosecnt,
-	        (SELECT g_filename FROM grade WHERE g_code = u.g_code) g_filename,
-	        (SELECT count(*) FROM knowfit WHERE u_id = #{param1} AND k_blindyn = 'N') fitcnt,
-	        (SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') anscnt,
-	        u_choosecnt*100/NVL(NULLIF((SELECT count(*) FROM knowfit_r WHERE u_id = #{param} AND kr_blindyn = 'N'),0),1) choosepct,
-	        (SELECT rnum
-	         FROM (SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
-	            U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
-	            FROM (SELECT u_id, u_nick, u_filename, u_choosecnt FROM userinfo WHERE u_blindyn = 'N') U,
-	            (SELECT u_id, count(*) anscnt FROM knowFit_R GROUP BY u_id) K
-	            WHERE U.u_id = K.u_id(+)
-	            ORDER BY U.u_choosecnt DESC, anscnt DESC)
-	         WHERE U_ID = #{param1}
-	        ) ranking
-		FROM userinfo u
-		WHERE u_id = #{param1}
-	</select>
+   <select id="myPageUserInfo" resultType="damo">
+      SELECT u_id, u_pw, u_name, u_email, u_nick, u_age, u_weight, u_tarweight, u_height, u_gender, u_intro, u_filename, u_choosecnt,
+           (SELECT g_filename FROM grade WHERE g_code = u.g_code) g_filename,
+           (SELECT count(*) FROM knowfit WHERE u_id = #{param1} AND k_blindyn = 'N') fitcnt,
+           (SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N') anscnt,
+           u_choosecnt*100/NVL(NULLIF((SELECT count(*) FROM knowfit_r WHERE u_id = #{param1} AND kr_blindyn = 'N'),0),1) choosepct,
+           (SELECT rnum
+            FROM (SELECT ROW_NUMBER() OVER(ORDER BY u_choosecnt DESC) AS rnum, 
+               U.u_id, U.u_nick, U.u_filename, U.u_choosecnt, NVL(K.anscnt,0) anscnt
+               FROM (SELECT u_id, u_nick, u_filename, u_choosecnt FROM userinfo) U,
+               (SELECT u_id, count(*) anscnt FROM knowFit_R GROUP BY u_id) K
+               WHERE U.u_id = K.u_id(+)
+               ORDER BY U.u_choosecnt DESC, anscnt DESC)
+            WHERE U_ID = #{param1}
+           ) ranking
+      FROM userinfo u
+      WHERE u_id = #{param1}
+   </select>
 	
 	<select id="myFitList" resultType="damo">
 		SELECT k_no, k_code, k_title, k_content, k_solutionyn, (SELECT c_name FROM code WHERE c_code = k_code) c_name 
