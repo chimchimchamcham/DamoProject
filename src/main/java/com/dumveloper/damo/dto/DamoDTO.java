@@ -26,6 +26,7 @@ public class DamoDTO {
 	private int u_chooseCnt; //채택 수
 	private String g_code; //등급 분류 코드
 	
+	
 	private int anscnt; //답변수 cnt (명예의 전당,마이페이지에서 사용)
 	private int fitcnt; //질문수 cnt (마이페이지에서 사용)
 	private int choosePct; //채택률 (마이페이지에서 사용)
