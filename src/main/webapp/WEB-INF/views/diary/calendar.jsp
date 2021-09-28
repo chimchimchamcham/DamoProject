@@ -116,8 +116,14 @@
 	    	  }else if($("#tarExe").val() == '' || $("#tarExe").val() == null){
 	    		  alert("목표 운동 칼로리를 입력해주세요!");
 	    	  }else{
-	    	    	console.log("오늘 이전 날짜 클릭");
-	    	    	location.href='goDiary?Date='+date.dateStr;
+	    		 /*  if(clickMonth.getTime() > today.getTime()){
+	    	    		 console.log("오늘 이후 날짜 클릭");
+	    	    		 alert("오늘 날짜까지만 작성 가능합니다.");
+	    	    	 }else{ */
+	    	    		 console.log("오늘 이전 날짜 클릭");
+	    	    		 location.href='goDiary?Date='+date.dateStr;
+	    	  /*   	 } */
+	    	 	//
 	    	  }
       	}
       }
@@ -493,7 +499,7 @@ var minus = ${tarWeight}-${weight};
 if(minus>=0){
 	resultWeight="<span id='successWeight'><i class='bi bi-trophy'></i> 목표 몸무게 달성</span>";
 }else{
-	resultWeight="<i class='bi bi-speedometer2'></i> 남은 몸무게 : <span id='weightTitle'> "+minus+"kg</span>";
+	resultWeight="<i class='bi bi-speedometer2'></i> 목표 몸무게까지 <span id='weightTitle'> "+minus+"kg</span>";
 }
 	$("#remainWeight").html(resultWeight);
 

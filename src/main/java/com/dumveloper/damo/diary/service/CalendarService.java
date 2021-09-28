@@ -42,6 +42,8 @@ public class CalendarService {
 			int tarWeight = weightData.getU_tarWeight();
 			int weight = weightData.getU_weight();
 
+			logger.info("몸무게 : {}",weight);
+			
 			mav.addObject("list", list);
 			mav.addObject("monthTarExe", monthData.get(0));
 			mav.addObject("monthTarKcal", monthData.get(1));
