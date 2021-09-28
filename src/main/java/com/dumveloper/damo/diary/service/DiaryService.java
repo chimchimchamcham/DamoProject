@@ -409,7 +409,7 @@ public class DiaryService {
 		logger.info("조회할 일기 번호 : {}",d_no);
 		
 		DamoDTO getDTO = dao.searchDiary(d_no); //기존 일기에 쓰여진 데이터 가져오기
-		
+		int d_resultexe = getDTO.getD_resultExe();
 		if(HisDailyYN) {//섭취일 경우
 			logger.info("일기 섭취 칼로리 합계, 탄단지 수정"); 
 			
@@ -417,7 +417,7 @@ public class DiaryService {
 			int d_resultcarbo = getDTO.getD_resultCarbo();
 			int d_resultprotein = getDTO.getD_resultProtein();
 			int d_resultfat = getDTO.getD_resultFat();
-			
+
 			logger.info("---------------기존 diary 데이터---------------");
 			logger.info("이전 diary 섭취 총량 : {}",d_resulteat);
 			logger.info("이전 diary 탄수화물 총량 : {}",d_resultcarbo);
@@ -437,6 +437,10 @@ public class DiaryService {
 			logger.info("합친 diary 지방 총량 : {}",hd_fat);
 			logger.info("-----------------------------------------------");
 			
+			logger.info("---------------운동 데이터---------------");
+			logger.info("diary 운동 열량 확인 : {}",d_resultexe);
+			logger.info("------------------------------------- --");
+			
 			setDto.setD_resultEat(hd_kcal);
 			setDto.setD_resultCarbo(hd_carbo);
 			setDto.setD_resultProtein(hd_protein);
@@ -447,7 +451,16 @@ public class DiaryService {
 			
 		}else {//운동일 경우
 			logger.info("운동 칼로리 합계 수정");
-			int d_resultexe = getDTO.getD_resultExe();
+			logger.info("---------------운동 데이터---------------");
+			logger.info("diary 운동 열량 확인 : {}",d_resultexe);
+			logger.info("------------------------------------- --");
+			
+			logger.info("-------추가한 운동 데이터--------");
+			logger.info("추가한 운동 열량 : {}",dto.getHe_kcal());
+			logger.info("-------------------------------");
+			
+			logger.info(" ----최종 운동 소모 칼로리 합계 : {}",dto.getHe_kcal()+d_resultexe+"--------");
+			
 			he_kcal = dto.getHe_kcal()+d_resultexe;
 			
 			setDto.setD_resultExe(he_kcal);

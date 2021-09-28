@@ -146,10 +146,21 @@ SELECT * FROM checklist_diary WHERE cd_no = (SELECT d_no FROM diary WHERE TO_CHA
 </delete>
 
 <select id="calculateResult" parameterType="String"  resultType="damo">
-	SELECT d.d_no , NVL(SUM(hd.hd_kcal),0) as d_resultEat, NVL(SUM(he.he_kcal),0) as d_resultExe,  NVL(SUM(hd.hd_carbo),0)as d_resultCarbo,  NVL(SUM(hd.hd_protein),0)as d_resultProtein, NVL(SUM(hd.hd_fat),0)as d_resultFat
-		FROM diary d, his_daily hd, his_exercise he
-	WHERE d.d_no = hd.hd_no(+) AND d.d_no = he.he_no(+) AND d.d_no=(SELECT d_no FROM diary WHERE TO_CHAR(d_date,'YYYY-MM-DD') =#{param1} AND u_id=#{param2})
-GROUP BY d.d_no
+	SELECT D.D_NO, NVL(HD.HD_KCAL,0) d_resultEat, NVL(HE.HE_KCAL,0) d_resultExe, 
+    NVL(HD.HD_CARBO,0) d_resultCarbo, NVL(HD.HD_PROTEIN,0) d_resultProtein, NVL(HD.HD_FAT,0) d_resultFat 
+FROM DIARY D, 
+    (
+    SELECT HD_NO, SUM(HD_CARBO) HD_CARBO, SUM(HD_PROTEIN) HD_PROTEIN, SUM(HD_FAT) HD_FAT, SUM(HD_KCAL) HD_KCAL 
+    FROM HIS_DAILY 
+    GROUP BY HD_NO
+    ) HD,
+    (
+    SELECT HE_NO, SUM(HE_KCAL) HE_KCAL
+    FROM HIS_EXERCISE 
+    GROUP BY HE_NO    
+    ) HE
+WHERE D.D_NO = HD.HD_NO(+) AND D.D_NO = HE.HE_NO(+) 
+    AND D.D_NO = (SELECT D_NO FROM DIARY WHERE TO_CHAR(D_DATE,'YYYY-MM-DD') = #{param1} AND U_ID = #{param2})
 </select>
 
 <update id="resultUpdate" parameterType="damo">
