@@ -79,7 +79,51 @@
                     <c:if test="${sessionScope.loginId eq dto.u_id }">
                        <button id="userInfoUpdateBtn" type="button" class="btn btn-secondary btn-sm">수정</button>
                     </c:if>
-                    <img id="profileTopGradeImg" src="resources/img/${dto.g_fileName}.png" class="rounded-circle">
+                     <!-- 모달 버튼 -->
+                    <img id="profileTopGradeImg" src="resources/img/${dto.g_fileName}.png" class="rounded-circle" data-toggle="modal" data-target="#myModal">
+					
+					  <!-- 모달 본체 -->
+					  <div class="modal" id="myModal">
+					    <div class="modal-dialog modal-xl modal-dialog-centered">
+					      <div class="modal-content">
+					      
+					        <!-- 모달 헤더 -->
+					        <div class="modal-header">
+					          <h4 class="modal-title">등급설명</h4>
+					          <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        </div>
+					        
+					        <!-- 모달 내용 -->
+					        <div class="modal-body">
+					          <div class="container">
+					          	<div class="row">
+					          		<div class="col-lg-6 border-right-1 mb-4">
+					          			<table id="gradeTable" class="gradeTable">
+					          				<tr><th>계급</th><th>계급명</th><th>등업조건</th></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level1.png" width="40px" height="40px"></td><td>빨강아령</td><td>없음</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level2.png" width="40px" height="40px"></td><td>주황아령</td><td>채택수 3</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level3.png" width="40px" height="40px"></td><td>노랑아령</td><td>채택수 30</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level4.png" width="40px" height="40px"></td><td>초록아령</td><td>채택수 200</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level5.png" width="40px" height="40px"></td><td>파랑아령</td><td>채택수 500</td></tr>
+					          			</table>
+					          		</div>
+					          		<div class="col-lg-6 mb-4">
+					          			<table id="gradeTable" class="gradeTable">
+					          				<tr><th>계급</th><th>계급명</th><th>등업조건</th></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level6.png" width="40px" height="40px"></td><td>남색아령</td><td>채택수 1000</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level7.png" width="40px" height="40px"></td><td>보라색아령</td><td>채택수 2500</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level8.png" width="40px" height="40px"></td><td>핑크아령</td><td>채택수 5500</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level9.png" width="40px" height="40px"></td><td>은색아령</td><td>채택수 15000</td></tr>
+					          				<tr><td class="gradeImg"><img src="resources/img/level10.png" width="40px" height="40px"></td><td>금색아령</td><td>채택수 30000</td></tr>
+					          			</table>
+					          		</div>
+					          	</div>
+					          </div>
+					        </div><!-- end body -->
+					        
+					      </div>
+					    </div>
+					  </div>
                     <div id="profileTopRanking"><span>${dto.ranking }</span><span>위</span></div>
                 </div>
 
@@ -371,6 +415,22 @@
 	padding: 20px;
 	width: 98%;
 	height: 150px;
+}
+
+/* 신고 모달 관련 */
+.gradeTable{
+	width:100%;
+}
+.gradeTable th{
+	text-align : left;
+	padding-left : 10px;
+	font-size : 1.2rem;
+	padding-bottom : 10px;
+}
+#gradeTable td{
+	padding : 10px;
+	text_align : right;
+	font-size:1.2rem;
 }
 </style>
 <script>

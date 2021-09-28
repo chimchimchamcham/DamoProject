@@ -771,7 +771,7 @@ a.notify, a.del {
 	opacity: 0.5;
 }
 </style>
-<script type="text/javascript">
+<script type="text/javascript" type="text/javascript" charset="utf-8">
 	//console.log(${bean.k_solutionYN});
 	var loginId = "${sessionScope.loginId}";
 	var loginNick = "${sessionScope.loginNick}";
@@ -1252,7 +1252,9 @@ a.notify, a.del {
 						console.log('썸네일 등록');
 						if (ansOrUp == 0) {
 							//기존의 썸네일을 삭제
-							$("#imageWrap").empty();
+							if($("#photo").val()!=""){
+								$("#imageWrap").empty();
+							}
 
 							//썸네일 등록
 							var files = e.target.files;

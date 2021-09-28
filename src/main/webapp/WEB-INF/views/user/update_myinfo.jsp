@@ -103,7 +103,7 @@ textarea{
 
                     <div class="form-group row col-12 my-1">
                         <label for="nick" class="text-left col-3 pl-0 my-1 d-flex justify-content-center align-self-center">닉네임</label>
-                        <input type="text" class="col-4 form-control my-1" name="nick" id="nick" value="${info.u_nick}">
+                        <input type="text" class="col-4 form-control my-1" name="nick" id="nick" value="${info.u_nick}" onkeyup="chkChar(this)">
                         <div class="text-left col-2 m-1 matchornotnink"></div>
                     </div>
 
@@ -177,6 +177,28 @@ textarea{
 
 //내용 글자수 카운트
 var textCount = 0;
+
+
+// 입력을 제한 할 특수문자의 정규식
+var checktext  = /^[a-zA-Z0-9]*$/ig;
+var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi
+	
+//한글 입력시 제거
+	$( 'input#id' ).on("blur keyup", function() {
+		$(this).val( $(this).val().replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' ) );
+	});
+
+
+
+//아이디,이름,닉네임,이메일 특수문자 제거
+function chkChar(obj){
+var RegExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\'\"\\\(\=]/gi;	//정규식 구문
+if (RegExp.test(obj.value)) {
+  // 특수문자 모두 제거    
+  obj.value = obj.value.replace(RegExp , '');
+}
+}
+
 
 
 //키보드 입력시 문자수를 카운트

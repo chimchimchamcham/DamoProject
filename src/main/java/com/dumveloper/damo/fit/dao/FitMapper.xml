@@ -184,11 +184,11 @@
 	</delete>
 	
 	<select id="serchtitle" resultType="damo">
-		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_title LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date desc) NUM, k.* FROM KnowFit k where k_title LIKE '%'||#{param1}||'%' ORDER BY k_date desc) WHERE NUM BETWEEN #{param2} AND #{param3}
 	</select>
 	
 	<select id="serchcontent" resultType="damo">
-		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date) NUM, k.* FROM KnowFit k where k_content LIKE '%'||#{param1}||'%' ORDER BY k_date) WHERE NUM BETWEEN #{param2} AND #{param3}
+		SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY k_date desc) NUM, k.* FROM KnowFit k where k_content LIKE '%'||#{param1}||'%' ORDER BY k_date desc) WHERE NUM BETWEEN #{param2} AND #{param3}
 	</select>
 	
 	<select id="serchtitledbcnt" resultType="int">

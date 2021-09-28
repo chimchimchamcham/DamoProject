@@ -210,7 +210,7 @@ public class UserService {
 			if (success > 0) {
 				String msg = "수정에 성공했습니다";
 				String page = "redirect:myPage?u_id="+id;// 마이페이지 만들어지면 그쪽으로
-
+				session.setAttribute("loginNick",param.get("nick"));//닉네임
 				mav.addObject("msg", msg);
 				mav.setViewName(page);
 			}
@@ -227,11 +227,13 @@ public class UserService {
 
 				if (success > 0) {
 					msg = "수정에 성공했습니다";
+					session.setAttribute("loginNick",param.get("nick"));//닉네임
 					page = "redirect:myPage?u_id="+id;// 마이페이지 만들어지면 그쪽으로
 
 				}
 
 				mav.addObject("msg", msg);
+				session.setAttribute("loginNick",param.get("nick"));//닉네임
 				mav.setViewName(page);
 				logger.info("update success : {}", success);
 			}
@@ -360,29 +362,32 @@ public class UserService {
 	public HashMap<String, Object> notifylist(int page) {// 신고 리스트
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		int pagePerNum = 10;// 10
-		int chagepage = page;// 1
-		int end = chagepage * pagePerNum;// 10
-		int start = end - pagePerNum + 1;// 10-10+1
-		logger.info("notify:"+page + "/" + pagePerNum + "/" + end + "/" + start);
+		int pagePerNum = 10;// 10 //10
+		int chagepage = page;// 1 //2
+		int end = chagepage * pagePerNum;// 10 //20
+		int start = end - pagePerNum + 1;// 10-10+1 //20-10+1
+		logger.info("notify:"+page + "/" + pagePerNum + "/" + end + "/" + start);//1/10/10/1 //2/10/20/11
 
-		ArrayList<DamoDTO> notifylist = dao.dbnotify(start, end);
+		ArrayList<DamoDTO> notifylist = dao.dbnotify(start, end);//1~10개 가져와라 //11~20
 
 		// 2 데이터 총 갯수 -> 만들수있는 페이지 수
 		int totalCnt = dao.notifyallCount();
-		logger.info("totalCnt:" + totalCnt);
-		logger.info(notifylist.size() + "/" + totalCnt);
+		logger.info("totalCnt:" + totalCnt);//11 뿌려줄수있는 총 리스트 수
+		logger.info(notifylist.size() + "/" + totalCnt);//가져온 리스트 수 11
 
 		map.put("notifylist", notifylist);
 		map.put("cnt", totalCnt);
 
-		// 총갯수
-		int pages = (int) (totalCnt % pagePerNum > 0 //  21%6>0
-				?Math.floor(totalCnt / pagePerNum) + 1
+		// 패이지수
+		int pages = (int) (totalCnt % pagePerNum > 0 //  11%11>0
+				?Math.floor(totalCnt / pagePerNum) + 1//1+1
 				: Math.floor(totalCnt / pagePerNum));
 
 		page = page > pages ? pages : page; // 1.
-
+		//1=1>2?2:1
+		
+		logger.info("page:{}",page);
+		
 		map.put("currPage", page);
 		map.put("pages", pages);
 
