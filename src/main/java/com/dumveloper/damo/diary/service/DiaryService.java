@@ -81,8 +81,8 @@ public class DiaryService {
          logger.info("표준 체중 : " + StandardWeight + " / 권장 섭취 칼로리 : " + Kcal);
 
          int carbo = Kcal /2/4; // 권장 탄수화물
-         int protein = Kcal /1/4; // 권장 단백질
-         int fat = Kcal /1/4; // 권장 지방
+         int protein = Kcal /4/4; // 권장 단백질
+         int fat = Kcal /4/9; // 권장 지방
          logger.info("권장 탄수화물 : " + carbo + " / 권장 단백질 : " + protein + "/ 권장 지방 : " + fat);
          
          dto.setD_carbo(carbo);

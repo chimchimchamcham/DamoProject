@@ -5,7 +5,7 @@
 	<select id="myChart" resultType="damo">
 		SELECT d.u_id, d.d_date, d.d_weight, d.d_resulteat, d.d_resultexe, d.d_tarkcal, d.d_tarexe,
         	TO_NUMBER(TO_CHAR(d.d_date, 'dd')) d_dateDay,
-        (SELECT u_tarWeight FROM userinfo WHERE u_id = 'test1') u_tarWeight
+        (SELECT u_tarWeight FROM userinfo WHERE u_id = #{param1}) u_tarWeight
 		FROM diary d 
 		WHERE u_id = #{param1} AND TO_CHAR(d.d_date, 'YYYYMM') = #{param2}
 		ORDER BY d.d_date
